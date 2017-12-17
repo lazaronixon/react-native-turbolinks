@@ -24,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNTurbolinks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTurbolinks.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		871703651FE623C700BD9B9C /* Turbolinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Turbolinks.framework; path = ../../../Desktop/Turbolinks.framework; sourceTree = "<group>"; };
+		8717036A1FE624A200BD9B9C /* Turbolinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Turbolinks.framework; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNTurbolinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTurbolinks.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNTurbolinks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTurbolinks.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -53,7 +55,17 @@
 				B3E7B5881CC2AC0600A0062D /* RNTurbolinks.h */,
 				B3E7B5891CC2AC0600A0062D /* RNTurbolinks.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				871703641FE623C200BD9B9C /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		871703641FE623C200BD9B9C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8717036A1FE624A200BD9B9C /* Turbolinks.framework */,
+				871703651FE623C700BD9B9C /* Turbolinks.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,8 +215,12 @@
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
-				"$(inherited)",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
@@ -219,6 +235,10 @@
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

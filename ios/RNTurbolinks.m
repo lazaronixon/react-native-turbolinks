@@ -1,13 +1,12 @@
-
 #import "RNTurbolinks.h"
-#import <React/RCTLog.h>
+@import Turbolinks;
 
 @implementation RNTurbolinks
 
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(printLog) {
-  RCTLogInfo(@"It is working!!");
+  NSLog(@"It is working!!");
 }
 
 @end
