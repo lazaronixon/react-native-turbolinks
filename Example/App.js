@@ -11,6 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
+import RNTurbolinks from 'react-native-turbolinks'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -20,6 +21,11 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component<{}> {
+
+  componentDidMount() {
+    RNTurbolinks.printLog()
+  }
+
   render() {
     return (
       <View style={styles.container}>

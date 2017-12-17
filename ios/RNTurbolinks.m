@@ -1,13 +1,13 @@
 
 #import "RNTurbolinks.h"
+#import <React/RCTLog.h>
 
 @implementation RNTurbolinks
 
-- (dispatch_queue_t)methodQueue
-{
-    return dispatch_get_main_queue();
+RCT_EXPORT_MODULE();
+
+RCT_EXPORT_METHOD(printLog) {
+  RCTLogInfo(@"It is working!!");
 }
-RCT_EXPORT_MODULE()
 
 @end
-  
