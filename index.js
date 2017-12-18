@@ -1,6 +1,8 @@
-
 import { NativeModules } from 'react-native';
+import TurbolinksView from './TurbolinksView';
+import Turbolinks from './Turbolinks';
 
-const { RNTurbolinks } = NativeModules;
-
-export default RNTurbolinks;
+module.exports = {
+  Turbolinks,
+  TurbolinksView,
+};
