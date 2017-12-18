@@ -208,7 +208,7 @@ SWIFT_CLASS("_TtC10Turbolinks7Session")
 
 
 
-SWIFT_PROTOCOL_NAMED("VisitableDelegate")
+SWIFT_PROTOCOL("_TtP10Turbolinks17VisitableDelegate_")
 @protocol VisitableDelegate
 - (void)visitableViewWillAppear:(id <Visitable> _Nonnull)visitable;
 - (void)visitableViewDidAppear:(id <Visitable> _Nonnull)visitable;
@@ -228,7 +228,7 @@ SWIFT_PROTOCOL_NAMED("VisitableDelegate")
 
 @class VisitableView;
 
-SWIFT_PROTOCOL_NAMED("Visitable")
+SWIFT_PROTOCOL("_TtP10Turbolinks9Visitable_")
 @protocol Visitable
 @property (nonatomic, weak) id <VisitableDelegate> _Nullable visitableDelegate;
 @property (nonatomic, readonly, strong) VisitableView * _Null_unspecified visitableView;

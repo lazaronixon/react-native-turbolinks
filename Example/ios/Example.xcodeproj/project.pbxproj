@@ -36,8 +36,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ExampleTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		87BF82D61FE7705D00855075 /* Turbolinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BF82D51FE7705D00855075 /* Turbolinks.framework */; };
-		87BF82D71FE7705D00855075 /* Turbolinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87BF82D51FE7705D00855075 /* Turbolinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		87BF82D91FE7778100855075 /* Turbolinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BF82D81FE7778000855075 /* Turbolinks.framework */; };
+		87BF82DA1FE7778100855075 /* Turbolinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87BF82D81FE7778000855075 /* Turbolinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		D7117D356A324F2CA1AF7941 /* libRNTurbolinks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E4A29D9A34E4AF9873FBB64 /* libRNTurbolinks.a */; };
 /* End PBXBuildFile section */
@@ -318,7 +318,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				87BF82D71FE7705D00855075 /* Turbolinks.framework in Embed Frameworks */,
+				87BF82DA1FE7778100855075 /* Turbolinks.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,7 +351,7 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		87BF82D51FE7705D00855075 /* Turbolinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Turbolinks.framework; sourceTree = "<group>"; };
+		87BF82D81FE7778000855075 /* Turbolinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Turbolinks.framework; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		C7D8310F70CF4A3C9C503A4A /* RNTurbolinks.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTurbolinks.xcodeproj; path = "../node_modules/react-native-turbolinks/ios/RNTurbolinks.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -372,7 +372,7 @@
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				87BF82D61FE7705D00855075 /* Turbolinks.framework in Frameworks */,
+				87BF82D91FE7778100855075 /* Turbolinks.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -576,7 +576,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				87BF82D51FE7705D00855075 /* Turbolinks.framework */,
+				87BF82D81FE7778000855075 /* Turbolinks.framework */,
 				13B07FAE1A68108700A75B9A /* Example */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ExampleTests */,
