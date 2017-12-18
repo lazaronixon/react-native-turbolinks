@@ -4,9 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>.DS_Store</key>
+		<data>
+		6PbahegYdD+RTbqIU7cgaGNByCE=
+		</data>
 		<key>Headers/Turbolinks-Swift.h</key>
 		<data>
-		rqzxBNv/l72c1MPemwvQ9ZOz+MY=
+		sFzeH1w/FrHNUJx++Ca8Oa0B9ww=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -18,7 +22,7 @@
 		</data>
 		<key>Modules/Turbolinks.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		45jWWRAPeUXEwWgHtdl4IWYQ63M=
+		FGJ5lqMQKObOl7N/A7exCNK/8Nk=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -35,11 +39,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			rqzxBNv/l72c1MPemwvQ9ZOz+MY=
+			sFzeH1w/FrHNUJx++Ca8Oa0B9ww=
 			</data>
 			<key>hash2</key>
 			<data>
-			93b2fYGhH4X7U3uD94yL6iQwSWf/ViD+i2fId9SdSnw=
+			6+uAzP/sfDSeC8JMqO98bwlAM7HLhhd8wUB0zRp957M=
 			</data>
 		</dict>
 		<key>Modules/Turbolinks.swiftmodule/x86_64.swiftdoc</key>
@@ -57,11 +61,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			45jWWRAPeUXEwWgHtdl4IWYQ63M=
+			FGJ5lqMQKObOl7N/A7exCNK/8Nk=
 			</data>
 			<key>hash2</key>
 			<data>
-			8Vl8k023lv+lwywK159oRHK2qsatd+UqWwMQYZ+Lci8=
+			zHHaF7t8bk2GdPobWJZNe8PiB/o0aaRYLlXx/QjiKsE=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

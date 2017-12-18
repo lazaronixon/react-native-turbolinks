@@ -190,10 +190,12 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 SWIFT_MODULE_NAMESPACE_PUSH("Turbolinks")
 
 
+@protocol Visitable;
 
 SWIFT_CLASS("_TtC10Turbolinks7Session")
 @interface Session : NSObject
 - (nonnull instancetype)init;
+- (void)visit:(id <Visitable> _Nonnull)visitable;
 @end
 
 @class WKWebView;
@@ -206,7 +208,33 @@ SWIFT_CLASS("_TtC10Turbolinks7Session")
 
 
 
+SWIFT_PROTOCOL_NAMED("VisitableDelegate")
+@protocol VisitableDelegate
+- (void)visitableViewWillAppear:(id <Visitable> _Nonnull)visitable;
+- (void)visitableViewDidAppear:(id <Visitable> _Nonnull)visitable;
+- (void)visitableDidRequestReload:(id <Visitable> _Nonnull)visitable;
+- (void)visitableDidRequestRefresh:(id <Visitable> _Nonnull)visitable;
+@end
 
+
+@interface Session (SWIFT_EXTENSION(Turbolinks)) <VisitableDelegate>
+- (void)visitableViewWillAppear:(id <Visitable> _Nonnull)visitable;
+- (void)visitableViewDidAppear:(id <Visitable> _Nonnull)visitable;
+- (void)visitableDidRequestReload:(id <Visitable> _Nonnull)visitable;
+- (void)visitableDidRequestRefresh:(id <Visitable> _Nonnull)visitable;
+@end
+
+
+
+@class VisitableView;
+
+SWIFT_PROTOCOL_NAMED("Visitable")
+@protocol Visitable
+@property (nonatomic, weak) id <VisitableDelegate> _Nullable visitableDelegate;
+@property (nonatomic, readonly, strong) VisitableView * _Null_unspecified visitableView;
+@property (nonatomic, readonly, copy) NSURL * _Null_unspecified visitableURL;
+- (void)visitableDidRender;
+@end
 
 
 @class NSCoder;
@@ -221,7 +249,12 @@ SWIFT_CLASS("_TtC10Turbolinks13VisitableView")
 @class NSBundle;
 
 SWIFT_CLASS("_TtC10Turbolinks23VisitableViewController")
-@interface VisitableViewController : UIViewController
+@interface VisitableViewController : UIViewController <Visitable>
+@property (nonatomic, weak) id <VisitableDelegate> _Nullable visitableDelegate;
+@property (nonatomic, copy) NSURL * _Null_unspecified visitableURL;
+- (nonnull instancetype)initWithUrl:(NSURL * _Nonnull)url;
+@property (nonatomic, readonly, strong) VisitableView * _Null_unspecified visitableView;
+- (void)visitableDidRender;
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
 - (void)viewDidAppear:(BOOL)animated;

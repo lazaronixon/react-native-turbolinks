@@ -11,26 +11,30 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+@import Turbolinks;
 
 @implementation AppDelegate
+
+  UINavigationController *navigationController;
+  Session *session;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"Example"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
-  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
-
+  
+  navigationController = [UINavigationController new];
+  session = [[Session alloc] init];
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
+  self.window.rootViewController = navigationController;
   [self.window makeKeyAndVisible];
+  
+  NSURL *urlInit = [NSURL URLWithString:@"https://3.basecamp.com/sign_in"];
+  VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:urlInit];
+  [navigationController pushViewController:visitableViewController animated:YES];
+  [session visit:visitableViewController];
+  
   return YES;
 }
 
