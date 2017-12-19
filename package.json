@@ -1,4 +1,3 @@
-
 {
   "name": "react-native-turbolinks",
   "version": "1.0.0",
@@ -10,9 +9,10 @@
   "keywords": [
     "react-native"
   ],
-  "author": "",
-  "license": "",
+  "author": "Lázaro Nixon",
+  "license": "MIT",
   "peerDependencies": {
+    "react": "^16.2.0",
     "react-native": "^0.51.0"
   }
 }
