@@ -10,6 +10,11 @@
 
 RCT_EXPORT_MODULE();
 
+- (UIView *)viewWithProps:(__unused NSDictionary *)props
+{
+    return [self view];
+}
+
 - (UIView *)view
 {
     if(!self.turbolinks){
