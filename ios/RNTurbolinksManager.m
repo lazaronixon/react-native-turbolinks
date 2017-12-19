@@ -19,6 +19,10 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(visit)
 {
     NSLog(@"Visiting ------------------");
+    NSURL *urlInit = [NSURL URLWithString:@"https://3.basecamp.com/sign_in"];
+    VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:urlInit];
+    [navigationController pushViewController:visitableViewController animated:YES];
+    [session visit:visitableViewController];
 }
 
 @end

@@ -1,5 +1,16 @@
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { requireNativeComponent } from 'react-native';
 
-const RNTurboLinks = requireNativeComponent('RNTurbolinks', null)
+class TurboLinks extends Component {
+  render() {
+    return <RNTurboLinks {...this.props} />;
+  }
+}
 
-module.exports = RNTurboLinks;
+TurboLinks.propTypes = {
+};
+
+var RNTurboLinks = requireNativeComponent('RNTurbolinks', TurboLinks)
+
+module.exports = TurboLinks;
