@@ -12,17 +12,17 @@ import {
   View,
   NativeModules
 } from 'react-native';
-import { TurbolinksView, Turbolinks } from 'react-native-turbolinks'
+import Turbolinks from 'react-native-turbolinks'
 
 export default class App extends Component<{}> {
 
   componentDidMount() {
-    Turbolinks.visit()
+    //Turbolinks.visit()
   }
 
   render() {
     return (
-      <TurbolinksView/>
+      <Turbolinks/>
     );
   }
 }
