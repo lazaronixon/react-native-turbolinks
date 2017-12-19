@@ -1,35 +1,25 @@
 #import "RNTTurbolinksManager.h"
+#import <React/RCTUIManager.h>
 @import Turbolinks;
 
 @implementation RNTTurbolinksManager
+{
+    UINavigationController *navigationController;
+    Session *session;
+}
 
 RCT_EXPORT_MODULE();
 
-    UINavigationController *navigationController;
-    Session *session;
-
--(id)init {
-    if ( self = [super init] ) {
-        navigationController = [UINavigationController new];
-        session = [[Session alloc] init];
-    }
-    return self;
+- (UIView *)view
+{
+    navigationController = [UINavigationController new];
+    session = [[Session alloc] init];
+    return navigationController.view;
 }
-
-#pragma mark MKTurbolinkViewDelegate
 
 RCT_EXPORT_METHOD(visit)
 {
-    NSLog(@"testetestetsteste");
-    //NSURL *urlInit = [NSURL URLWithString:@"https:3.basecamp.com/sign_in"];
-    //VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:urlInit];
-    //[navigationController pushViewController:visitableViewController animated:YES];
-    //[session visit:visitableViewController];
-}
-
-- (UIView *)view
-{
-    return navigationController.view;
+   NSLog(@"testetestetsteste");
 }
 
 @end
