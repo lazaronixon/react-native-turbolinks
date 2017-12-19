@@ -1,28 +1,23 @@
 #import "RNTurbolinksManager.h"
+#import "RNTurbolinks.h"
+#import <React/RCTBridge.h>
 @import Turbolinks;
 
 @implementation RNTurbolinksManager
-{
-    UINavigationController *navigationController;
-    Session *session;
-}
 
 RCT_EXPORT_MODULE();
 
 - (UIView *)view
 {
-    navigationController = [UINavigationController new];
-    session = [[Session alloc] init];
-    return navigationController.view;
+    if(!self.turbolinks){
+        self.turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
+    }
+    return self.turbolinks.view;
 }
 
 RCT_EXPORT_METHOD(visit)
 {
     NSLog(@"Visiting ------------------");
-    NSURL *urlInit = [NSURL URLWithString:@"https://3.basecamp.com/sign_in"];
-    VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:urlInit];
-    [navigationController pushViewController:visitableViewController animated:YES];
-    [session visit:visitableViewController];
 }
 
 @end
