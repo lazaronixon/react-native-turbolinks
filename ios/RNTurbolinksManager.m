@@ -1,7 +1,10 @@
 #import "RNTurbolinksManager.h"
 #import "RNTurbolinks.h"
 #import <React/RCTBridge.h>
-@import Turbolinks;
+#import <React/UIView+React.h>
+
+@interface RNTurbolinksManager()
+@end
 
 @implementation RNTurbolinksManager
 
@@ -12,7 +15,7 @@ RCT_EXPORT_MODULE();
     if(!self.turbolinks){
         self.turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
     }
-    return self.turbolinks.view;
+    return self.turbolinks;
 }
 
 RCT_EXPORT_METHOD(visit)

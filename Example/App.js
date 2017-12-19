@@ -11,7 +11,7 @@ import Turbolinks from 'react-native-turbolinks'
 export default class App extends Component<{}> {
 
   componentDidMount() {
-    //this.turboLinksRef.visit();
+    this.turboLinksRef.visit();
   }
 
   render() {

@@ -1,6 +1,6 @@
 @class RNTurbolinksManager;
 
-@interface RNTurbolinks : UINavigationController
+@interface RNTurbolinks : UIView
 
 - (id)initWithManager:(RNTurbolinksManager*)manager bridge:(RCTBridge *)bridge;
 
