@@ -1,3 +1,6 @@
-import { requireNativeComponent } from 'react-native';
+import { requireNativeComponent, NativeModules } from 'react-native';
 
-module.exports = requireNativeComponent('RNTTurbolinks', null);
+const RNTurbolinksView = requireNativeComponent('RNTurbolinks', null);
+const RNTurbolinksManager = NativeModules.RNTurbolinksManager;
+
+module.exports = RNTurbolinksView;

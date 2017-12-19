@@ -1,5 +1,4 @@
 import TurbolinksView from './TurbolinksView';
+import Turbolinks from './Turbolinks';
 
-module.exports = {
-  TurbolinksView
-};
+module.exports = { TurbolinksView, Turbolinks };

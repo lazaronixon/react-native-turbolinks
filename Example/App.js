@@ -9,18 +9,20 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  NativeModules
 } from 'react-native';
 import { TurbolinksView, Turbolinks } from 'react-native-turbolinks'
 
 export default class App extends Component<{}> {
 
   componentDidMount() {
+    Turbolinks.visit()
   }
 
   render() {
     return (
-      <TurbolinksView ref={(c) => this.turboLinksRef = c} style={{flex: 1}}/>
+      <TurbolinksView/>
     );
   }
 }
