@@ -12,7 +12,7 @@
   "author": "Lázaro Nixon",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^16.2.0",
+    "react": "16.2.0",
     "react-native": "^0.51.0"
   }
 }

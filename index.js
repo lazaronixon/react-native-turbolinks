@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { requireNativeComponent } from 'react-native';
+import { requireNativeComponent, NativeModules } from 'react-native';
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager
 
