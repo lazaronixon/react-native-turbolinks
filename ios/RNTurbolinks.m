@@ -2,7 +2,6 @@
 #import "RNTurbolinks.h"
 #import "RNTurbolinksManager.h"
 
-#import <React/UIView+React.h>
 
 @interface RNTurbolinks ()
 
