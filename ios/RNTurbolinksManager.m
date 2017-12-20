@@ -17,21 +17,21 @@ RCT_EXPORT_MODULE();
 
 - (UIView *)view
 {
-    self.session = [[Session alloc] init];
-    if(!self.turbolinks){
-        self.turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
+    _session = [[Session alloc] init];
+    if(!_turbolinks){
+        _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
+        UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+        [rootViewController presentViewController:_turbolinks animated:NO completion:nil];
     }
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    [rootViewController presentViewController:self.turbolinks animated:NO completion:nil];
-    return self.turbolinks.view;
+    return _turbolinks.view;
 }
 
 RCT_EXPORT_METHOD(visit)
 {
     NSURL *urlInit = [NSURL URLWithString:@"https:/3.basecamp.com/sign_in"];
     VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:urlInit];
-    [self.turbolinks pushViewController:visitableViewController animated:YES];
-    [self.session visit:visitableViewController];
+    [_turbolinks pushViewController:visitableViewController animated:YES];
+    [_session visit:visitableViewController];
 }
 
 @end
