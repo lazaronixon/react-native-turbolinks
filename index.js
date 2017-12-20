@@ -9,8 +9,8 @@ export default class TurboLinks extends Component {
     return <RNTurboLinks {...this.props} />;
   }
 
-  visit() {
-    RNTurbolinksManager.visit()
+  visit(url) {
+    RNTurbolinksManager.visit(url)
   }
 
 }

@@ -26,10 +26,9 @@ RCT_EXPORT_MODULE();
     return _turbolinks.view;
 }
 
-RCT_EXPORT_METHOD(visit)
+RCT_EXPORT_METHOD(visit:(NSString *)url)
 {
-    NSURL *urlInit = [NSURL URLWithString:@"https:/3.basecamp.com/sign_in"];
-    VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:urlInit];
+    VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:[RCTConvert NSURL:url]];
     [_turbolinks pushViewController:visitableViewController animated:YES];
     [_session visit:visitableViewController];
 }
