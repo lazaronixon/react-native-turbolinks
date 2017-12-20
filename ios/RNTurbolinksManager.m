@@ -20,8 +20,8 @@ RCT_EXPORT_MODULE();
     _session = [[Session alloc] init];
     if(!_turbolinks){
         _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
-        UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-        [rootViewController presentViewController:_turbolinks animated:NO completion:nil];
+        UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [topController presentViewController:_turbolinks animated:NO completion:nil];
     }
     return _turbolinks.view;
 }
