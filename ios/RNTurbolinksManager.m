@@ -21,6 +21,8 @@ RCT_EXPORT_MODULE();
     if(!self.turbolinks){
         self.turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
     }
+    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    [rootViewController presentViewController:self.turbolinks animated:NO completion:nil];
     return self.turbolinks.view;
 }
 

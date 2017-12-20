@@ -16,7 +16,7 @@
 {
     if ((self = [super init])) {
         self.manager = manager;
-        self.bridge = bridge;
+        self.bridge = bridge;        
     }
     return self;
 }
