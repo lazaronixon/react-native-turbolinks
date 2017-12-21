@@ -1,5 +1,6 @@
 #import "RNTurbolinksManager.h"
 #import "RNTurbolinks.h"
+#import "WebKit/WKWebView.h"
 
 @import Turbolinks;
 
@@ -29,6 +30,20 @@ RCT_EXPORT_MODULE();
     return _turbolinks.view;
 }
 
+- (void)sessionDidLoadWebView:(Session * _Nonnull)session {
+    session.webView.navigationDelegate = session;
+}
+
+- (void)session:(Session * _Nonnull)session openExternalURL:(NSURL * _Nonnull)URL {
+    [[UIApplication sharedApplication] openURL:URL];
+}
+
+- (void)sessionDidFinishRequest:(Session * _Nonnull)session {
+}
+
+- (void)sessionDidStartRequest:(Session * _Nonnull)session {
+}
+
 - (void)session:(Session * _Nonnull)session didFailRequestForVisitable:(id<Visitable> _Nonnull)visitable withError:(NSError * _Nonnull)error {
 }
 
@@ -36,18 +51,6 @@ RCT_EXPORT_MODULE();
     VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:URL];
     [_turbolinks pushViewController:visitableViewController animated:YES];
     [_session visit:visitableViewController];
-}
-
-- (void)session:(Session * _Nonnull)session openExternalURL:(NSURL * _Nonnull)URL {
-}
-
-- (void)sessionDidFinishRequest:(Session * _Nonnull)session {
-}
-
-- (void)sessionDidLoadWebView:(Session * _Nonnull)session {
-}
-
-- (void)sessionDidStartRequest:(Session * _Nonnull)session {
 }
 
 RCT_CUSTOM_VIEW_PROPERTY(url, NSstring, RNTurbolinks)

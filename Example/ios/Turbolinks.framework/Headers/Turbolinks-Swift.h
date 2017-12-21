@@ -197,16 +197,17 @@ typedef SWIFT_ENUM(NSInteger, Action) {
 
 
 @protocol SessionDelegate;
+@class WKWebView;
 @protocol Visitable;
 
 SWIFT_CLASS("_TtC10Turbolinks7Session")
 @interface Session : NSObject
 @property (nonatomic, weak) id <SessionDelegate> _Nullable delegate;
+@property (nonatomic, readonly, strong) WKWebView * _Nonnull webView;
 - (nonnull instancetype)init;
 - (void)visit:(id <Visitable> _Nonnull)visitable;
 @end
 
-@class WKWebView;
 @class WKNavigationAction;
 
 @interface Session (SWIFT_EXTENSION(Turbolinks)) <WKNavigationDelegate>
