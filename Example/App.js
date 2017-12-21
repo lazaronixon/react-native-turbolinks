@@ -10,7 +10,7 @@ export default class App extends Component<{}> {
 
   render() {
     return (
-      <Turbolinks ref={(tl) => { this.turboLinksRef = tl; }}/>
+      <Turbolinks ref={tl => this.turboLinksRef = tl}/>
     );
   }
 }
