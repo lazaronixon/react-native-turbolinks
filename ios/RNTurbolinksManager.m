@@ -20,7 +20,7 @@ RCT_EXPORT_MODULE();
 {
     _session = [[Session alloc] init];
     _session.delegate = self;
-    
+
     if(!_turbolinks){
         _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
     }
@@ -28,20 +28,6 @@ RCT_EXPORT_MODULE();
     [_turbolinks.navigationBar setTranslucent:YES];
     
     return _turbolinks.view;
-}
-
-- (void)sessionDidLoadWebView:(Session * _Nonnull)session {
-    session.webView.navigationDelegate = session;
-}
-
-- (void)session:(Session * _Nonnull)session openExternalURL:(NSURL * _Nonnull)URL {
-    [[UIApplication sharedApplication] openURL:URL];
-}
-
-- (void)sessionDidFinishRequest:(Session * _Nonnull)session {
-}
-
-- (void)sessionDidStartRequest:(Session * _Nonnull)session {
 }
 
 - (void)session:(Session * _Nonnull)session didFailRequestForVisitable:(id<Visitable> _Nonnull)visitable withError:(NSError * _Nonnull)error {
@@ -52,6 +38,23 @@ RCT_EXPORT_MODULE();
     [_turbolinks pushViewController:visitableViewController animated:YES];
     [_session visit:visitableViewController];
 }
+
+- (void)sessionDidLoadWebView:(Session * _Nonnull)session {
+    session.webView.navigationDelegate = session;
+}
+
+- (void)session:(Session * _Nonnull)session openExternalURL:(NSURL * _Nonnull)URL {
+    [[UIApplication sharedApplication] openURL:URL];
+}
+
+- (void)sessionDidStartRequest:(Session * _Nonnull)session {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+}
+
+- (void)sessionDidFinishRequest:(Session * _Nonnull)session {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+}
+
 
 RCT_CUSTOM_VIEW_PROPERTY(url, NSstring, RNTurbolinks)
 {
