@@ -50,12 +50,9 @@ RCT_EXPORT_MODULE();
 - (void)sessionDidStartRequest:(Session * _Nonnull)session {
 }
 
-RCT_EXPORT_METHOD(visit:(NSString *)url)
+RCT_CUSTOM_VIEW_PROPERTY(url, NSstring, RNTurbolinks)
 {
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    [rootViewController presentViewController:_turbolinks animated:NO completion:nil];
-    
-    VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:[RCTConvert NSURL:url]];
+    VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:[RCTConvert NSURL:json]];
     [_turbolinks pushViewController:visitableViewController animated:YES];
     [_session visit:visitableViewController];
 }

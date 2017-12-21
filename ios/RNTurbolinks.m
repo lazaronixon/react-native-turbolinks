@@ -21,4 +21,12 @@
     return self;
 }
 
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    [rootViewController presentViewController:self animated:NO completion:nil];
+    [self.navigationBar setTranslucent:YES];
+}
+
 @end

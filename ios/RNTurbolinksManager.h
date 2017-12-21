@@ -9,6 +9,4 @@
   @property (nonatomic, strong) RNTurbolinks *turbolinks;
   @property (nonatomic, strong) Session *session;
 
-- (void)visit:(NSString *) url;
-
 @end

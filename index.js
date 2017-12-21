@@ -9,13 +9,10 @@ export default class TurboLinks extends Component {
     return <RNTurboLinks {...this.props} />;
   }
 
-  visit(url) {
-    RNTurbolinksManager.visit(url)
-  }
-
 }
 
 TurboLinks.propTypes = {
+  url: PropTypes.string.isRequired
 };
 
 var RNTurboLinks = requireNativeComponent('RNTurbolinks', TurboLinks)
