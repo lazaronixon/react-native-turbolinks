@@ -1,3 +1,5 @@
+@import Turbolinks;
+
 @class RNTurbolinksManager;
 
 @interface RNTurbolinks : UINavigationController

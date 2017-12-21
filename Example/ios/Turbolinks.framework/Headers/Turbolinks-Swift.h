@@ -188,12 +188,20 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #pragma clang diagnostic ignored "-Wnullability"
 
 SWIFT_MODULE_NAMESPACE_PUSH("Turbolinks")
+typedef SWIFT_ENUM(NSInteger, Action) {
+  ActionAdvance = 0,
+  ActionReplace = 1,
+  ActionRestore = 2,
+};
 
 
+
+@protocol SessionDelegate;
 @protocol Visitable;
 
 SWIFT_CLASS("_TtC10Turbolinks7Session")
 @interface Session : NSObject
+@property (nonatomic, weak) id <SessionDelegate> _Nullable delegate;
 - (nonnull instancetype)init;
 - (void)visit:(id <Visitable> _Nonnull)visitable;
 @end
@@ -225,6 +233,17 @@ SWIFT_PROTOCOL("_TtP10Turbolinks17VisitableDelegate_")
 @end
 
 
+
+
+SWIFT_PROTOCOL("_TtP10Turbolinks15SessionDelegate_")
+@protocol SessionDelegate
+- (void)session:(Session * _Nonnull)session didProposeVisitToURL:(NSURL * _Nonnull)URL withAction:(enum Action)action;
+- (void)session:(Session * _Nonnull)session didFailRequestForVisitable:(id <Visitable> _Nonnull)visitable withError:(NSError * _Nonnull)error;
+- (void)session:(Session * _Nonnull)session openExternalURL:(NSURL * _Nonnull)URL;
+- (void)sessionDidLoadWebView:(Session * _Nonnull)session;
+- (void)sessionDidStartRequest:(Session * _Nonnull)session;
+- (void)sessionDidFinishRequest:(Session * _Nonnull)session;
+@end
 
 @class VisitableView;
 

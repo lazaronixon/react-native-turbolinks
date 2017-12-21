@@ -4,7 +4,7 @@
 
 @class RNTurbolinks;
 
-@interface RNTurbolinksManager : RCTViewManager;
+@interface RNTurbolinksManager : RCTViewManager<SessionDelegate>;
 
   @property (nonatomic, strong) RNTurbolinks *turbolinks;
   @property (nonatomic, strong) Session *session;

@@ -18,22 +18,46 @@ RCT_EXPORT_MODULE();
 - (UIView *)view
 {
     _session = [[Session alloc] init];
+    _session.delegate = self;
+    
     if(!_turbolinks){
         _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
     }
+    
+    [_turbolinks.navigationBar setTranslucent:YES];
+    
     return _turbolinks.view;
+}
+
+- (void)session:(Session * _Nonnull)session didFailRequestForVisitable:(id<Visitable> _Nonnull)visitable withError:(NSError * _Nonnull)error {
+}
+
+- (void)session:(Session * _Nonnull)session didProposeVisitToURL:(NSURL * _Nonnull)URL withAction:(enum Action)action {
+    VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:URL];
+    [_turbolinks pushViewController:visitableViewController animated:YES];
+    [_session visit:visitableViewController];
+}
+
+- (void)session:(Session * _Nonnull)session openExternalURL:(NSURL * _Nonnull)URL {
+}
+
+- (void)sessionDidFinishRequest:(Session * _Nonnull)session {
+}
+
+- (void)sessionDidLoadWebView:(Session * _Nonnull)session {
+}
+
+- (void)sessionDidStartRequest:(Session * _Nonnull)session {
 }
 
 RCT_EXPORT_METHOD(visit:(NSString *)url)
 {
-    [_turbolinks.navigationBar setTranslucent:YES];
+    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    [rootViewController presentViewController:_turbolinks animated:NO completion:nil];
     
     VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:[RCTConvert NSURL:url]];
     [_turbolinks pushViewController:visitableViewController animated:YES];
     [_session visit:visitableViewController];
-    
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    [rootViewController presentViewController:_turbolinks animated:NO completion:nil];
 }
 
 @end

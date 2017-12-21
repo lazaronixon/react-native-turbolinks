@@ -14,9 +14,9 @@
 
 - (id)initWithManager:(RNTurbolinksManager*)manager bridge:(RCTBridge *)bridge
 {
-    if ((self = [super init])) {
+    if ((self = [super init])) {        
         _manager = manager;
-        _bridge = bridge;
+        _bridge = bridge;        
     }
     return self;
 }
