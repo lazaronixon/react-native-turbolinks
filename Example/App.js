@@ -5,12 +5,12 @@ import Turbolinks from 'react-native-turbolinks'
 export default class App extends Component<{}> {
 
   componentDidMount() {
-    this.turboLinksRef.visit('http://localhost:9292');
+    this.turboLinks.visit('http://localhost:9292');
   }
 
   render() {
     return (
-      <Turbolinks ref={tl => this.turboLinksRef = tl}/>
+      <Turbolinks ref={tl => this.turboLinks = tl}/>
     );
   }
 }
