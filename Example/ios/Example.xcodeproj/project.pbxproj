@@ -295,6 +295,13 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		87E0E45C1FEC7C3600012CEF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4464032DDF4A494BBCE243F4 /* RNTurbolinks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNTurbolinks;
+		};
 		ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -600,6 +607,14 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		87E0E4361FEC7C3600012CEF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87E0E45D1FEC7C3600012CEF /* libRNTurbolinks.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		ADBDB9201DFEBF0600ED6528 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -768,6 +783,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 87E0E4361FEC7C3600012CEF /* Products */;
+					ProjectRef = 4464032DDF4A494BBCE243F4 /* RNTurbolinks.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1017,6 +1036,13 @@
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
 			remoteRef = 87BF82BC1FE7409E00855075 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		87E0E45D1FEC7C3600012CEF /* libRNTurbolinks.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNTurbolinks.a;
+			remoteRef = 87E0E45C1FEC7C3600012CEF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */ = {

@@ -12,6 +12,6 @@
   "author": "Lázaro Nixon",
   "license": "MIT",
   "dependencies": {
-    "react": "^16.2.0"
+    "react": "16.0.0"
   }
 }
