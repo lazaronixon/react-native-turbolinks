@@ -30,10 +30,10 @@ RCT_EXPORT_MODULE();
     return _turbolinks.view;
 }
 
-- (void)session:(Session * _Nonnull)session didFailRequestForVisitable:(id<Visitable> _Nonnull)visitable withError:(NSError * _Nonnull)error {
+- (void)session:(Session *)session didFailRequestForVisitable:(id<Visitable>)visitable withError:(NSError *)error {
 }
 
-- (void)session:(Session * _Nonnull)session didProposeVisitToURL:(NSURL * _Nonnull)URL withAction:(enum Action)action {
+- (void)session:(Session *)session didProposeVisitToURL:(NSURL *)URL withAction:(enum Action)action {
     VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:URL];
     if (action == ActionAdvance) {
         [_turbolinks pushViewController:visitableViewController animated:YES];
@@ -44,19 +44,19 @@ RCT_EXPORT_MODULE();
     [_session visit:visitableViewController];
 }
 
-- (void)sessionDidLoadWebView:(Session * _Nonnull)session {
+- (void)sessionDidLoadWebView:(Session *)session {
     session.webView.navigationDelegate = session;
 }
 
-- (void)session:(Session * _Nonnull)session openExternalURL:(NSURL * _Nonnull)URL {
+- (void)session:(Session *)session openExternalURL:(NSURL *)URL {
     [[UIApplication sharedApplication] openURL:URL];
 }
 
-- (void)sessionDidStartRequest:(Session * _Nonnull)session {
+- (void)sessionDidStartRequest:(Session *)session {
     [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
 }
 
-- (void)sessionDidFinishRequest:(Session * _Nonnull)session {
+- (void)sessionDidFinishRequest:(Session *)session {
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
 }
 
