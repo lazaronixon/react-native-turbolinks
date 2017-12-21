@@ -5,7 +5,7 @@ import Turbolinks from 'react-native-turbolinks'
 export default class App extends Component<{}> {
 
   componentDidMount() {
-    this.turboLinksRef.visit('https://3.basecamp.com/sign_in');
+    this.turboLinksRef.visit('http://localhost:9292');
   }
 
   render() {
