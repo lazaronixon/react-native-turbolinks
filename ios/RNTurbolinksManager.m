@@ -20,7 +20,7 @@ RCT_EXPORT_MODULE();
 {
     _session = [[Session alloc] init];
     _session.delegate = self;
-
+    
     if(!_turbolinks){
         _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
     }
@@ -35,7 +35,12 @@ RCT_EXPORT_MODULE();
 
 - (void)session:(Session * _Nonnull)session didProposeVisitToURL:(NSURL * _Nonnull)URL withAction:(enum Action)action {
     VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:URL];
-    [_turbolinks pushViewController:visitableViewController animated:YES];
+    if (action == ActionAdvance) {
+        [_turbolinks pushViewController:visitableViewController animated:YES];
+    } else if (action == ActionReplace) {
+        [_turbolinks popViewControllerAnimated:NO];
+        [_turbolinks pushViewController:visitableViewController animated:NO];
+    }
     [_session visit:visitableViewController];
 }
 
@@ -54,7 +59,6 @@ RCT_EXPORT_MODULE();
 - (void)sessionDidFinishRequest:(Session * _Nonnull)session {
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
 }
-
 
 RCT_CUSTOM_VIEW_PROPERTY(url, NSstring, RNTurbolinks)
 {
