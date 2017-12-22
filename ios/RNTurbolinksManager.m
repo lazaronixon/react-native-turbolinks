@@ -56,6 +56,10 @@ RCT_EXPORT_MODULE();
     [_session visit:visitableViewController];
 }
 
+-(void)dealloc {
+    _turbolinks.view = nil;
+}
+
 RCT_EXPORT_METHOD(initialize) {
     [_turbolinks.navigationBar setTranslucent:YES];
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
