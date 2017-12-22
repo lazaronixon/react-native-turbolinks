@@ -4,6 +4,6 @@
 
 @interface RNTurbolinks : UINavigationController
 
-- (id)initWithManager:(RNTurbolinksManager*)manager bridge:(RCTBridge *)bridge;
+- (id)initWithBridge:(RCTBridge*)bridge;
 
 @end
