@@ -1,6 +1,9 @@
 #import "RNTurbolinksManager.h"
 #import "RNTurbolinks.h"
 #import "WebKit/WKWebView.h"
+#import "WebKit/WKWebViewConfiguration.h"
+#import "WebKit/WKUserContentController.h"
+#import "WebKit/WKProcessPool.h"
 
 @import Turbolinks;
 
@@ -9,15 +12,13 @@
 
 @implementation RNTurbolinksManager
 
+RCT_EXPORT_MODULE();
+
 - (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
 }
 
-RCT_EXPORT_MODULE();
-
 - (UIView *)view {
-    _session = [[Session alloc] init];
-    _session.delegate = self;
     if(!_turbolinks){
         _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
     }
@@ -58,8 +59,24 @@ RCT_EXPORT_MODULE();
     [_session visit:visitableViewController];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(url, NSstring, RNTurbolinks) {
-    [self presentVisitableForSession:[RCTConvert NSURL:json] withAction:ActionAdvance];
+RCT_EXPORT_METHOD(initialize) {
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+    configuration.processPool = [[WKProcessPool alloc] init];
+    configuration.applicationNameForUserAgent = _userAgent;
+    _session = [[Session alloc] initWithWebViewConfiguration:configuration];
+    _session.delegate = self;
+    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    [rootViewController presentViewController:_turbolinks animated:NO completion:nil];
+    [_turbolinks.navigationBar setTranslucent:YES];
+    [self presentVisitableForSession:_url withAction:ActionAdvance];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(url, NSString, RNTurbolinks) {
+    _url = [RCTConvert NSURL:json];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(userAgent, NSString, RNTurbolinks) {
+    _userAgent = [RCTConvert NSString:json];
 }
 
 @end

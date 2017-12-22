@@ -58,7 +58,7 @@
 		</data>
 		<key>Headers/Turbolinks-Swift.h</key>
 		<data>
-		0C4LGuhYYGLWirpuRTvMB3yrucU=
+		S7NVvACR359+BueRzyGBaEXUGQA=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -70,7 +70,7 @@
 		</data>
 		<key>Modules/Turbolinks.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		1CLEs87O3cW940CqgKbs7kFt2Q4=
+		GNWCEPkoO/wIeLTPsGHERQPzZps=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -234,11 +234,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0C4LGuhYYGLWirpuRTvMB3yrucU=
+			S7NVvACR359+BueRzyGBaEXUGQA=
 			</data>
 			<key>hash2</key>
 			<data>
-			VSrjjFTS+KFhprMKTzZdM5DtS0NoddI8nRUU5+YzQQE=
+			BXADvwjm65j74aeGiJTxyiKsKOYCYPnRvlTJX9Kmmjo=
 			</data>
 		</dict>
 		<key>Modules/Turbolinks.swiftmodule/x86_64.swiftdoc</key>
@@ -256,11 +256,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			1CLEs87O3cW940CqgKbs7kFt2Q4=
+			GNWCEPkoO/wIeLTPsGHERQPzZps=
 			</data>
 			<key>hash2</key>
 			<data>
-			dD0XiNMo0ICvS8se4yBelNgU49urhb4kIVraK7P+lr8=
+			F5GnDUReNicTjUcjI6Jr3sw3Bo2G6IZ5Gd7weMNmYbc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
