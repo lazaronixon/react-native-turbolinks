@@ -13,7 +13,7 @@
 @implementation RNTurbolinks
 
 - (id)initWithManager:(RNTurbolinksManager*)manager bridge:(RCTBridge *)bridge {
-    if ((self = [super initWithFrame:CGRectZero])) {
+    if ((self = [super init])) {
         _manager = manager;
         _bridge = bridge;
     }

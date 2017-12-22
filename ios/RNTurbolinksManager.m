@@ -19,11 +19,7 @@ RCT_EXPORT_MODULE();
 
 - (UIView *)view {
     _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
-    _navigationController = [[UINavigationController alloc] init];
-    _navigationController.view.frame = _turbolinks.bounds;
-    [_navigationController.navigationBar setTranslucent:YES];
-    [_turbolinks addSubview:_navigationController.view];
-    return _turbolinks;
+    return _turbolinks.view;
 }
 
 - (void)session:(Session *)session didProposeVisitToURL:(NSURL *)URL withAction:(enum Action)action {
@@ -52,15 +48,16 @@ RCT_EXPORT_MODULE();
 -(void) presentVisitableForSession:(NSURL *)URL withAction:(enum Action)action {
     VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:URL];
     if (action == ActionAdvance) {
-        [_navigationController pushViewController:visitableViewController animated:YES];
+        [_turbolinks pushViewController:visitableViewController animated:YES];
     } else if (action == ActionReplace) {
-        [_navigationController popViewControllerAnimated:NO];
-        [_navigationController pushViewController:visitableViewController animated:NO];
+        [_turbolinks popViewControllerAnimated:NO];
+        [_turbolinks pushViewController:visitableViewController animated:NO];
     }
     [_session visit:visitableViewController];
 }
 
 RCT_EXPORT_METHOD(initialize) {
+    [_turbolinks.navigationBar setTranslucent:YES];
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
     configuration.applicationNameForUserAgent = _userAgent;
     _session = [[Session alloc] initWithWebViewConfiguration:configuration];
