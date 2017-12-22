@@ -22,7 +22,7 @@ TurboLinks.propTypes = {
 };
 
 TurboLinks.defaultProps = {
-  userAgent: 'Turbolinks Mobile'
+  userAgent: 'RNTurbolinks'
 };
 
 var RNTurboLinks = requireNativeComponent('RNTurbolinks', TurboLinks)
