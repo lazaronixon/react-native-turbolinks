@@ -6,7 +6,7 @@ export default class App extends Component<{}> {
 
   render() {
     return (
-      <Turbolinks url="http://localhost:9292"/>
+      <Turbolinks url="http://localhost:9292" style={{flex: 1}}/>
     );
   }
 }
