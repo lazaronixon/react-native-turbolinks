@@ -3,7 +3,6 @@
 #import "WebKit/WKWebView.h"
 #import "WebKit/WKWebViewConfiguration.h"
 #import "WebKit/WKUserContentController.h"
-#import "WebKit/WKProcessPool.h"
 
 @import Turbolinks;
 
@@ -61,7 +60,6 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(initialize) {
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    configuration.processPool = [[WKProcessPool alloc] init];
     configuration.applicationNameForUserAgent = _userAgent;
     _session = [[Session alloc] initWithWebViewConfiguration:configuration];
     _session.delegate = self;
