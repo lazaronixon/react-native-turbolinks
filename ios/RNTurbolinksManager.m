@@ -18,7 +18,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (UIView *)view {
-    _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
+    if(!_turbolinks) _turbolinks = [[RNTurbolinks alloc] initWithManager:self bridge:self.bridge];
     return _turbolinks.view;
 }
 
