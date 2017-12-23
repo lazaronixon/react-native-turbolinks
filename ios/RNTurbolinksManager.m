@@ -17,12 +17,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (UIView *)view {
-    if(!_turbolinks) {
-        _turbolinks = [[RNTurbolinks alloc] initWithBridge:self.bridge];
-        _navigationController = [[UINavigationController alloc] init];
-        _navigationController.view.frame = _turbolinks.bounds;
-        [_turbolinks addSubview:_navigationController.view];
-    }
+    if(!_turbolinks) _turbolinks = [[RNTurbolinks alloc] initWithBridge:self.bridge];
     return _turbolinks;
 }
 
@@ -52,10 +47,10 @@ RCT_EXPORT_MODULE();
 -(void) presentVisitableForSession:(NSURL *)URL withAction:(enum Action)action {
     VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:URL];
     if (action == ActionAdvance) {
-        [_navigationController pushViewController:visitableViewController animated:YES];
+        [_turbolinks.navigationController pushViewController:visitableViewController animated:YES];
     } else if (action == ActionReplace) {
-        [_navigationController popViewControllerAnimated:NO];
-        [_navigationController pushViewController:visitableViewController animated:NO];
+        [_turbolinks.navigationController popViewControllerAnimated:NO];
+        [_turbolinks.navigationController pushViewController:visitableViewController animated:NO];
     }
     [_session visit:visitableViewController];
 }
@@ -64,14 +59,9 @@ RCT_EXPORT_MODULE();
     if (_turbolinks.onMessage) _turbolinks.onMessage(@{@"message": message.body});
 }
 
--(void)dealloc {
-    _navigationController.view = nil;
-}
-
 RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
 
 RCT_EXPORT_METHOD(initialize) {
-    [_navigationController.navigationBar setTranslucent:YES];
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
     [configuration.userContentController addScriptMessageHandler:self name:_userAgent];
     configuration.applicationNameForUserAgent = _userAgent;
