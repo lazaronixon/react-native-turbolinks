@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 import Turbolinks from 'react-native-turbolinks'
 
-export default class App extends Component<{}> {
+export default class App extends React.Component {
 
-  showMessage = (event) => {
-    alert(event.nativeEvent.data);
+  showMessage = (message) => {
+    alert(message);
   }
 
   render() {

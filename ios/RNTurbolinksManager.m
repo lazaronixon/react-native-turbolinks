@@ -61,7 +61,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    if (_turbolinks.onMessage) _turbolinks.onMessage(@{@"data": message.body});
+    if (_turbolinks.onMessage) _turbolinks.onMessage(@{@"message": message.body});
 }
 
 -(void)dealloc {
@@ -73,8 +73,8 @@ RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
 RCT_EXPORT_METHOD(initialize) {
     [_navigationController.navigationBar setTranslucent:YES];
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    configuration.applicationNameForUserAgent = _userAgent;
     [configuration.userContentController addScriptMessageHandler:self name:_userAgent];
+    configuration.applicationNameForUserAgent = _userAgent;
     _session = [[Session alloc] initWithWebViewConfiguration:configuration];
     _session.delegate = self;
     [self presentVisitableForSession:_url withAction:ActionAdvance];
