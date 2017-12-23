@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import { requireNativeComponent, NativeModules } from 'react-native';
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager
 
-export default class TurboLinks extends Component {
+export default class TurboLinks extends React.Component {
 
   componentDidMount() {
     RNTurbolinksManager.initialize();
