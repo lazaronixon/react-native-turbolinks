@@ -1,8 +1,7 @@
 #import "RNTurbolinksManager.h"
 #import "RNTurbolinks.h"
-#import "WebKit/WKWebView.h"
-#import "WebKit/WKWebViewConfiguration.h"
-#import "WebKit/WKUserContentController.h"
+#import <WebKit/WebKit.h>
+#import "UIView+React.h"
 
 @import Turbolinks;
 
@@ -18,8 +17,13 @@ RCT_EXPORT_MODULE();
 }
 
 - (UIView *)view {
-    if(!_turbolinks) _turbolinks = [[RNTurbolinks alloc] initWithBridge:self.bridge];
-    return _turbolinks.view;
+    if(!_turbolinks) {
+        _turbolinks = [[RNTurbolinks alloc] initWithBridge:self.bridge];
+        _navigationController = [[UINavigationController alloc] init];
+        _navigationController.view.frame = _turbolinks.bounds;
+        [_turbolinks addSubview:_navigationController.view];
+    }
+    return _turbolinks;
 }
 
 - (void)session:(Session *)session didProposeVisitToURL:(NSURL *)URL withAction:(enum Action)action {
@@ -48,22 +52,29 @@ RCT_EXPORT_MODULE();
 -(void) presentVisitableForSession:(NSURL *)URL withAction:(enum Action)action {
     VisitableViewController *visitableViewController = [[VisitableViewController alloc] initWithUrl:URL];
     if (action == ActionAdvance) {
-        [_turbolinks pushViewController:visitableViewController animated:YES];
+        [_navigationController pushViewController:visitableViewController animated:YES];
     } else if (action == ActionReplace) {
-        [_turbolinks popViewControllerAnimated:NO];
-        [_turbolinks pushViewController:visitableViewController animated:NO];
+        [_navigationController popViewControllerAnimated:NO];
+        [_navigationController pushViewController:visitableViewController animated:NO];
     }
     [_session visit:visitableViewController];
 }
 
--(void)dealloc {
-    _turbolinks.view = nil;
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    if (_turbolinks.onMessage) _turbolinks.onMessage(@{@"data": message.body});
 }
 
+-(void)dealloc {
+    _navigationController.view = nil;
+}
+
+RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
+
 RCT_EXPORT_METHOD(initialize) {
-    [_turbolinks.navigationBar setTranslucent:YES];
+    [_navigationController.navigationBar setTranslucent:YES];
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
     configuration.applicationNameForUserAgent = _userAgent;
+    [configuration.userContentController addScriptMessageHandler:self name:_userAgent];
     _session = [[Session alloc] initWithWebViewConfiguration:configuration];
     _session.delegate = self;
     [self presentVisitableForSession:_url withAction:ActionAdvance];

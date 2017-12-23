@@ -10,15 +10,20 @@ export default class TurboLinks extends Component {
     RNTurbolinksManager.initialize();
   }
 
+  _onMessage= (event) => {
+    if (!this.props.onMessage) this.props.onMessage(event);
+  }
+
   render() {
-    return <RNTurboLinks {...this.props} />;
+    return <RNTurboLinks onMessage={this._onMessage} {...this.props} />;
   }
 
 }
 
 TurboLinks.propTypes = {
   url: PropTypes.string.isRequired,
-  userAgent: PropTypes.string
+  userAgent: PropTypes.string,
+  onMessage: PropTypes.func,
 };
 
 TurboLinks.defaultProps = {
