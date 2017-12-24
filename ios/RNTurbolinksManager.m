@@ -1,7 +1,6 @@
 #import "RNTurbolinksManager.h"
 #import "RNTurbolinks.h"
 #import <WebKit/WebKit.h>
-#import "UIView+React.h"
 
 @import Turbolinks;
 
@@ -17,7 +16,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (UIView *)view {
-    if(!_turbolinks) _turbolinks = [[RNTurbolinks alloc] initWithBridge:self.bridge];
+    _turbolinks = [[RNTurbolinks alloc] initWithBridge:self.bridge];
     return _turbolinks;
 }
 
