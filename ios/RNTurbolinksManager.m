@@ -16,8 +16,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (UIView *)view {
-    _turbolinks = [[RNTurbolinks alloc] initWithBridge:self.bridge];
-    return _turbolinks;
+    return _turbolinks = [[RNTurbolinks alloc] initWithBridge:self.bridge];
 }
 
 - (void)session:(Session *)session didProposeVisitToURL:(NSURL *)URL withAction:(enum Action)action {
