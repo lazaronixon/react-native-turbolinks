@@ -4,11 +4,11 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTViewManager {
     
-    var turbolinks: RNTurbolinks!
+    fileprivate var turbolinks: RNTurbolinks!
     
     override func view() -> UIView {
-        self.turbolinks = RNTurbolinks()
-        return self.turbolinks
+        turbolinks = RNTurbolinks()
+        return turbolinks
     }
     
     override static func requiresMainQueueSetup() -> Bool {
@@ -17,23 +17,19 @@ class RNTurbolinksManager: RCTViewManager {
     
     @objc func initialize() -> Void {
         DispatchQueue.main.sync {
-            presentVisitableForSession(session, url:self.turbolinks.url)
+            presentVisitableForSession(session, url:turbolinks.url)
         }
-    }
-    
-    fileprivate var application: UIApplication {
-        return UIApplication.shared
     }
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
-        configuration.userContentController.add(self, name: self.turbolinks.userAgent)
-        configuration.applicationNameForUserAgent = self.turbolinks.userAgent
+        configuration.userContentController.add(self, name: turbolinks.userAgent)
+        configuration.applicationNameForUserAgent = turbolinks.userAgent
         return configuration
     }()
     
     fileprivate lazy var session: Session = {
-        let session = Session(webViewConfiguration: self.webViewConfiguration)
+        let session = Session(webViewConfiguration: webViewConfiguration)
         session.delegate = self
         return session
     }()
@@ -59,18 +55,18 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func sessionDidStartRequest(_ session: Session) {
-        application.isNetworkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func sessionDidFinishRequest(_ session: Session) {
-        application.isNetworkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 }
 
 extension RNTurbolinksManager: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let message = message.body as? String {
-            self.turbolinks.onMessage?(["message": message]);
+            turbolinks.onMessage?(["message": message]);
         }
     }
 }

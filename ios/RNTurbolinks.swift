@@ -8,7 +8,7 @@ class RNTurbolinks: UIView  {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.navigationController = self.createNavigationController()
+        navigationController = createNavigationController()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -16,11 +16,11 @@ class RNTurbolinks: UIView  {
     }
     
     fileprivate func createNavigationController() -> UINavigationController {
-        let navigationController = UINavigationController()
-        navigationController.view.frame = bounds
-        navigationController.navigationBar.isTranslucent = true
-        addSubview(navigationController.view)
-        return navigationController
+        let navController = UINavigationController()
+        navController.view.frame = bounds
+        navController.navigationBar.isTranslucent = true
+        addSubview(navController.view)
+        return navController
     }
     
     @objc func setUrl(_ urlParam: NSString) {
