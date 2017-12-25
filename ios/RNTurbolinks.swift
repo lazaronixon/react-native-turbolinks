@@ -25,7 +25,7 @@ class RNTurbolinks: UIView  {
     }
     
     @objc func setUrl(_ urlParam: NSString) {
-        url = URL(string: RCTConvert.nsString(urlParam))
+        url = RCTConvert.nsurl(urlParam)
     }
     
     @objc func setUserAgent(_ userAgentParam: NSString) {
