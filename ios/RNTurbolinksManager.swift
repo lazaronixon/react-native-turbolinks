@@ -48,7 +48,7 @@ class RNTurbolinksManager: RCTViewManager {
 
 extension RNTurbolinksManager: SessionDelegate {
     func session(_ session: Session, didProposeVisitToURL URL: URL, withAction action: Action) {
-        turbolinks.onVisit?(["data": ["path": URL.path, "action": action]])
+        turbolinks.onVisit?(["data": ["path": URL.path, "action": action.rawValue]])
         presentVisitableForSession(session, url: URL, action: action)
     }
     
