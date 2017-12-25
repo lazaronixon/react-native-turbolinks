@@ -14,10 +14,15 @@ export default class TurboLinks extends React.Component {
     if (this.props.onMessage) this.props.onMessage(event.nativeEvent.message);
   }
 
+  _onVisit = (event) => {
+    if (this.props.onVisit) this.props.onVisit(event.nativeEvent.data);
+  }
+
   render() {
     return <RNTurboLinks
              {...this.props}
              onMessage={this._onMessage}
+             onVisit={this._onVisit}
            />;
   }
 
@@ -27,6 +32,7 @@ TurboLinks.propTypes = {
   url: PropTypes.string.isRequired,
   userAgent: PropTypes.string,
   onMessage: PropTypes.func,
+  onVisit: PropTypes.func,
 };
 
 TurboLinks.defaultProps = {

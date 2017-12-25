@@ -6,4 +6,5 @@ RCT_EXTERN_METHOD(initialize)
 RCT_EXPORT_VIEW_PROPERTY(url, NSString)
 RCT_EXPORT_VIEW_PROPERTY(userAgent, NSString)
 RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onVisit, RCTDirectEventBlock)
 @end

@@ -5,6 +5,7 @@ class RNTurbolinks: UIView  {
     var url: URL!
     var userAgent: String!
     var onMessage: RCTDirectEventBlock!
+    var onVisit: RCTDirectEventBlock!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,4 +35,9 @@ class RNTurbolinks: UIView  {
     @objc func setOnMessage(_ onMessageParam: @escaping RCTDirectEventBlock) {
         onMessage = onMessageParam
     }
+    
+    @objc func setOnVisit(_ onVisitParam: @escaping RCTDirectEventBlock) {
+        onVisit = onVisitParam
+    }
+    
 }
