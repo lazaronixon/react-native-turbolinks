@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		87DD56851FE9A6C3006AFE38 /* RNTurbolinks.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DD56841FE9A6C3006AFE38 /* RNTurbolinks.m */; };
-		B3E7B58A1CC2AC0600A0062D /* RNTurbolinksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNTurbolinksManager.m */; };
+		876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */; };
+		876100DA1FF020FD00C90539 /* RNTurbolinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876100D91FF020FD00C90539 /* RNTurbolinks.swift */; };
+		877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +26,10 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNTurbolinks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTurbolinks.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		87DD56831FE9A6BA006AFE38 /* RNTurbolinks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNTurbolinks.h; sourceTree = "<group>"; };
-		87DD56841FE9A6C3006AFE38 /* RNTurbolinks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTurbolinks.m; sourceTree = "<group>"; };
-		B3E7B5881CC2AC0600A0062D /* RNTurbolinksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTurbolinksManager.h; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* RNTurbolinksManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTurbolinksManager.m; sourceTree = "<group>"; };
+		876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTurbolinksManager.swift; sourceTree = "<group>"; };
+		8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNTurbolinksManagerBridge.m; sourceTree = "<group>"; };
+		8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNTurbolinks-Bridging-Header.h"; sourceTree = "<group>"; };
+		876100D91FF020FD00C90539 /* RNTurbolinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTurbolinks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +54,10 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				87DD56841FE9A6C3006AFE38 /* RNTurbolinks.m */,
-				87DD56831FE9A6BA006AFE38 /* RNTurbolinks.h */,
-				B3E7B5881CC2AC0600A0062D /* RNTurbolinksManager.h */,
-				B3E7B5891CC2AC0600A0062D /* RNTurbolinksManager.m */,
+				876100D91FF020FD00C90539 /* RNTurbolinks.swift */,
+				8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */,
+				8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */,
+				876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,6 +93,7 @@
 				TargetAttributes = {
 					58B511DA1A9E6C8500147676 = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0920;
 					};
 				};
 			};
@@ -117,8 +119,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87DD56851FE9A6C3006AFE38 /* RNTurbolinks.m in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* RNTurbolinksManager.m in Sources */,
+				877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */,
+				876100DA1FF020FD00C90539 /* RNTurbolinks.swift in Sources */,
+				876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +212,8 @@
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -219,16 +224,23 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNTurbolinks;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RNTurbolinks-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -239,10 +251,14 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNTurbolinks;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RNTurbolinks-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
