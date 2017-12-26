@@ -25,15 +25,14 @@ class RNTurbolinksManager: RCTViewManager {
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         DispatchQueue.main.sync {
             let route = RCTConvert.nsDictionary(routeParam)!
-            if (route["component"] != nil) {
-              let component = RCTConvert.nsString(route["component"])!
-              let title = RCTConvert.nsString(route["title"]) ?? ""
-                presentNativeView(component, title: title)
+            if (route["url"] != nil) {
+              let url = RCTConvert.nsurl(route["url"])!
+              let action = RCTConvert.nsString(route["action"]) ?? Action.Advance.rawValue
+              presentVisitableForSession(session, url: url, action: Action.init(rawValue: action)!)
             } else {
-                let url = RCTConvert.nsurl(route["url"])!
-                let action = RCTConvert.nsString(route["action"]) ?? Action.Advance.rawValue
-                let actionEnum = Action.init(rawValue: action)!
-                presentVisitableForSession(session, url: url, action: actionEnum)
+                let component = RCTConvert.nsString(route["component"])!
+                let title = RCTConvert.nsString(route["title"]) ?? ""
+                presentNativeView(component, title: title)
             }
         }
     }
