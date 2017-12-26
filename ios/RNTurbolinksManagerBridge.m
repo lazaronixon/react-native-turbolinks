@@ -8,4 +8,5 @@ RCT_EXPORT_VIEW_PROPERTY(url, NSString)
 RCT_EXPORT_VIEW_PROPERTY(userAgent, NSString)
 RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onVisit, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onError, RCTDirectEventBlock)
 @end

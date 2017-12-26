@@ -15,6 +15,10 @@ export default class App extends Component {
     }
   }
 
+  handleError = (data) => {
+    this.turboLinks.visit({component: "ErrorView", title: ""})
+  }
+
   render() {
     return (
       <Turbolinks ref={(tl) => this.turboLinks = tl}
@@ -22,6 +26,7 @@ export default class App extends Component {
                   userAgent="turbolinksDemo"
                   onMessage={this.showMessage}
                   onVisit={this.handleVisit}
+                  onError={this.handleError}
                   style={{flex: 1}}/>
     )
   }

@@ -6,6 +6,11 @@ const RNTurbolinksManager = NativeModules.RNTurbolinksManager
 
 export default class TurboLinks extends Component {
 
+  static constants = {
+    ErrorCode: RNTurbolinksManager.ErrorCode,
+    Action: RNTurbolinksManager.Action
+  };  
+
   componentDidMount() {
     RNTurbolinksManager.initialize();
   }
@@ -22,20 +27,26 @@ export default class TurboLinks extends Component {
     if (this.props.onVisit) this.props.onVisit(event.nativeEvent.data);
   }
 
+  _onError = (event) => {
+    if (this.props.onError) this.props.onError(event.nativeEvent.data);
+  }
+
   render() {
     return <RNTurboLinks
              {...this.props}
-             onMessage={this._onMessage}
              onVisit={this._onVisit}
+             onError={this._onError}
+             onMessage={this._onMessage}
            />
   }
 }
 
 TurboLinks.propTypes = {
   url: PropTypes.string.isRequired,
+  onVisit: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
   userAgent: PropTypes.string,
-  onMessage: PropTypes.func,
-  onVisit: PropTypes.func
+  onMessage: PropTypes.func
 }
 
 TurboLinks.defaultProps = {

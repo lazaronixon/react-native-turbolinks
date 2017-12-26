@@ -6,6 +6,7 @@ class RNTurbolinks: UIView  {
     var userAgent: String!
     var onMessage: RCTDirectEventBlock!
     var onVisit: RCTDirectEventBlock!
+    var onError: RCTDirectEventBlock!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,6 +33,10 @@ class RNTurbolinks: UIView  {
     
     @objc func setOnVisit(_ onVisitParam: @escaping RCTDirectEventBlock) {
         onVisit = onVisitParam
+    }
+    
+    @objc func setOnError(_ onErrorParam: @escaping RCTDirectEventBlock) {
+        onError = onErrorParam
     }
     
 }

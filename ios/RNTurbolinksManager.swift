@@ -69,6 +69,20 @@ class RNTurbolinksManager: RCTViewManager {
         turbolinks.navigationController.pushViewController(viewController, animated: true)
         turbolinks.navigationController.navigationBar.isTranslucent = false
     }
+    
+    override func constantsToExport() -> [AnyHashable: Any]! {
+        return [
+            "ErrorCode": [
+                "httpFailure": ErrorCode.httpFailure.rawValue,
+                "networkFailure": ErrorCode.networkFailure.rawValue,
+            ],
+            "Action": [
+                "advance": Action.Advance.rawValue,
+                "replace": Action.Replace.rawValue,
+                "restore": Action.Restore.rawValue,
+            ]
+        ]
+    }
 }
 
 extension RNTurbolinksManager: SessionDelegate {
@@ -77,6 +91,7 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
+        turbolinks.onError?(["data": ["code": error.code, "statusCode": error.userInfo["statusCode"]]])
     }
     
     func sessionDidStartRequest(_ session: Session) {
