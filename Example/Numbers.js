@@ -1,12 +1,30 @@
-import React from 'react';
-import { AppRegistry, View, Text }from 'react-native';
+import React, { Component } from 'react';
+import { FlatList, View, Text, StyleSheet }from 'react-native';
 
-export default class Numbers extends React.Component {
+export default class Numbers extends Component {
+
+  dataSource() {
+    var data = [];
+    for (var i = 1; i <= 100; i++) data.push({key: "Row " + i});
+    return data;
+  }
+
   render() {
     return (
-      <View>
-        <Text>Tap me to load the next scene</Text>
+      <View style={{flex: 1}}>
+        <FlatList
+          data={this.dataSource()}
+          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+        />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+})

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Turbolinks from 'react-native-turbolinks'
 
-export default class App extends React.Component {
+export default class App extends Component {
 
   showMessage = (message) => {
     alert(message)

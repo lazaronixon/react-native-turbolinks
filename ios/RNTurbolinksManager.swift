@@ -59,6 +59,7 @@ class RNTurbolinksManager: RCTViewManager {
             turbolinks.navigationController.pushViewController(visitable, animated: false)
         }
         session.visit(visitable)
+        turbolinks.navigationController.navigationBar.isTranslucent = true
     }
     
     fileprivate func presentNativeView(_ component: String, title: String) {

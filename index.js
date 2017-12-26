@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 import { requireNativeComponent, NativeModules } from 'react-native';
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager
 
-export default class TurboLinks extends React.Component {
+export default class TurboLinks extends Component {
 
   componentDidMount() {
     RNTurbolinksManager.initialize();
   }
 
-  visit(route) {
+  visit = (route) => {
     RNTurbolinksManager.visit(route);
   }
 
