@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, View, Text, StyleSheet }from 'react-native';
 
-export default class Numbers extends Component {
+export default class NumbersView extends Component {
 
   dataSource() {
     var data = [];

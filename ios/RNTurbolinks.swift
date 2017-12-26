@@ -20,9 +20,8 @@ class RNTurbolinks: UIView  {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func setInitialRoute(_ initialRouteParam: NSDictionary) {
-        var initialRoute = RCTConvert.nsDictionary(initialRouteParam)!
-        url = RCTConvert.nsurl(initialRoute["url"])
+    @objc func setUrl(_ urlParam: NSDictionary) {
+        url = RCTConvert.nsurl(urlParam)
     }
     
     @objc func setUserAgent(_ userAgentParam: NSString) {

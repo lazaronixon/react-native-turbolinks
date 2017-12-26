@@ -32,11 +32,7 @@ export default class TurboLinks extends Component {
 }
 
 TurboLinks.propTypes = {
-  initialRoute: PropTypes.oneOfType([
-    PropTypes.shape({ url: PropTypes.string }),
-    PropTypes.shape({ component: PropTypes.string, title: PropTypes.string
-    })
-  ]).isRequired,
+  url: PropTypes.string.isRequired,
   userAgent: PropTypes.string,
   onMessage: PropTypes.func,
   onVisit: PropTypes.func

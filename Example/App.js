@@ -7,9 +7,9 @@ export default class App extends Component {
     alert(message)
   }
 
-  _onVisit = (data) => {
+  handleVisit = (data) => {
     if (data.path == "/numbers") {
-      this.turboLinks.visit({component: "Numbers", title: "Numbers"})
+      this.turboLinks.visit({component: "NumbersView", title: "Numbers"})
     } else {
       this.turboLinks.visit({url: data.url, action: data.action})
     }
@@ -18,10 +18,10 @@ export default class App extends Component {
   render() {
     return (
       <Turbolinks ref={(tl) => this.turboLinks = tl}
-                  initialRoute={{url: "http://localhost:9292"}}
+                  url="http://localhost:9292"
                   userAgent="turbolinksDemo"
                   onMessage={this.showMessage}
-                  onVisit={this._onVisit}
+                  onVisit={this.handleVisit}
                   style={{flex: 1}}/>
     )
   }

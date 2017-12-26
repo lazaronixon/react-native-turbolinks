@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native';
 import App from './App';
-import Numbers from './Numbers';
+import NumbersView from './NumbersView';
 
 AppRegistry.registerComponent('Example', () => App);
-AppRegistry.registerComponent('Numbers', () => Numbers);
+AppRegistry.registerComponent('NumbersView', () => NumbersView);
