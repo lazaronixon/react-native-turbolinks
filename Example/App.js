@@ -16,7 +16,7 @@ export default class App extends Component {
   }
 
   handleError = (data) => {
-    this.turboLinks.present({component: "ErrorView", passProps: {errorData: data}})
+    this.turboLinks.present({component: "ErrorView", passProps: {error: data}})
   }
 
   showMessage = (message) => {
