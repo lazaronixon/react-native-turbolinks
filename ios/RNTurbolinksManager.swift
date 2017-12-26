@@ -15,8 +15,10 @@ class RNTurbolinksManager: RCTViewManager {
         return true;
     }
     
-    @objc func presentComponent(_ component: String) -> Void {
+    @objc func present(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         DispatchQueue.main.sync {
+            let route = RCTConvert.nsDictionary(routeParam)!
+            let component = RCTConvert.nsString(route["component"])!
             let customViewController = session.topmostVisitable as! CustomViewController
             customViewController.renderComponent(rootViewForComponent(component))
         }

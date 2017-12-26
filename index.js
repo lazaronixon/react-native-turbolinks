@@ -15,8 +15,8 @@ export default class TurboLinks extends Component {
     RNTurbolinksManager.visit(route);
   }
 
-  presentComponent= (component) => {
-    RNTurbolinksManager.presentComponent(component);
+  present= (component) => {
+    RNTurbolinksManager.present(component);
   }
 
   _onMessage = (event) => {

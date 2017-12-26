@@ -3,8 +3,8 @@ import Turbolinks from 'react-native-turbolinks'
 
 export default class App extends Component {
 
-  showMessage = (message) => {
-    alert(message)
+  componentDidMount = () => {
+    this.turboLinks.visit({url: "http://localhost:9292"})
   }
 
   handleVisit = (data) => {
@@ -16,20 +16,20 @@ export default class App extends Component {
   }
 
   handleError = (data) => {
-    this.turboLinks.presentComponent("ErrorView")
+    this.turboLinks.present({component: "ErrorView"})
   }
 
-  componentDidMount = () => {
-    this.turboLinks.visit({url: "http://localhost:9292"})
+  showMessage = (message) => {
+    alert(message)
   }
 
   render() {
     return (
       <Turbolinks ref={(tl) => this.turboLinks = tl}
                   userAgent="turbolinksDemo"
-                  onMessage={this.showMessage}
                   onVisit={this.handleVisit}
                   onError={this.handleError}
+                  onMessage={this.showMessage}
                   style={{flex: 1}}/>
     )
   }
