@@ -16,7 +16,7 @@ export default class App extends Component {
   }
 
   handleError = (data) => {
-    this.turboLinks.visit({component: "ErrorView", title: ""})
+    this.turboLinks.presentComponent("ErrorView")
   }
 
   render() {

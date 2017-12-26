@@ -12,6 +12,7 @@ class RNTurbolinks: UIView  {
         super.init(frame: frame)
         self.navigationController = UINavigationController()
         self.navigationController.view.frame = bounds
+        self.navigationController.navigationBar.isTranslucent = false
         addSubview(navigationController.view)
     }
     

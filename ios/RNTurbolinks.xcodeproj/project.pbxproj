@@ -10,6 +10,7 @@
 		876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */; };
 		876100DA1FF020FD00C90539 /* RNTurbolinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876100D91FF020FD00C90539 /* RNTurbolinks.swift */; };
 		877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */; };
+		877053131FF27E910089741D /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877053121FF27E900089741D /* CustomViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,7 @@
 		8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNTurbolinksManagerBridge.m; sourceTree = "<group>"; };
 		8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNTurbolinks-Bridging-Header.h"; sourceTree = "<group>"; };
 		876100D91FF020FD00C90539 /* RNTurbolinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTurbolinks.swift; sourceTree = "<group>"; };
+		877053121FF27E900089741D /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				877053121FF27E900089741D /* CustomViewController.swift */,
 				876100D91FF020FD00C90539 /* RNTurbolinks.swift */,
 				8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */,
 				8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */,
@@ -122,6 +125,7 @@
 				877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */,
 				876100DA1FF020FD00C90539 /* RNTurbolinks.swift in Sources */,
 				876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */,
+				877053131FF27E910089741D /* CustomViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,9 @@ export default class ErrorView extends Component {
     return (
       <View style={{flex: 1}}>
         <Text>Erro</Text>
+        <Text>Erro</Text>
+        <Text>Erro</Text>
+        <Text>Erro</Text>
       </View>
     )
   }

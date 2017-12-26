@@ -9,7 +9,7 @@ export default class TurboLinks extends Component {
   static constants = {
     ErrorCode: RNTurbolinksManager.ErrorCode,
     Action: RNTurbolinksManager.Action
-  };  
+  };
 
   componentDidMount() {
     RNTurbolinksManager.initialize();
@@ -17,6 +17,10 @@ export default class TurboLinks extends Component {
 
   visit = (route) => {
     RNTurbolinksManager.visit(route);
+  }
+
+  presentComponent= (component) => {
+    RNTurbolinksManager.presentComponent(component);
   }
 
   _onMessage = (event) => {

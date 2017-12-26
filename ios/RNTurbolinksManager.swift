@@ -5,7 +5,7 @@ import Turbolinks
 class RNTurbolinksManager: RCTViewManager {
     
     fileprivate var turbolinks: RNTurbolinks!
-    fileprivate var jsCodeLocation = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource: nil)
+    fileprivate var visitable: VisitableViewController!
     
     override func view() -> UIView {
         turbolinks = RNTurbolinks()
@@ -19,6 +19,13 @@ class RNTurbolinksManager: RCTViewManager {
     @objc func initialize() -> Void {
         DispatchQueue.main.sync {
             presentVisitableForSession(session, url:turbolinks.url)
+        }
+    }
+    
+    @objc func presentComponent(_ component: String) -> Void {
+        DispatchQueue.main.sync {
+            let customViewController = visitable as! CustomViewController
+            customViewController.renderComponent(rootViewForComponent(component))
         }
     }
     
@@ -37,6 +44,11 @@ class RNTurbolinksManager: RCTViewManager {
         }
     }
     
+    fileprivate func rootViewForComponent(_ component: String) -> RCTRootView {
+        let jsCodeLocation = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource: nil)
+        return RCTRootView(bundleURL: jsCodeLocation, moduleName: component, initialProperties: nil, launchOptions: nil)
+    }
+    
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController.add(self, name: turbolinks.userAgent)
@@ -51,7 +63,7 @@ class RNTurbolinksManager: RCTViewManager {
     }()
     
     fileprivate func presentVisitableForSession(_ session: Session, url: URL, action: Action = .Advance) {
-        let visitable = VisitableViewController(url: url)
+        self.visitable = CustomViewController(url: url)
         if action == .Advance {
             turbolinks.navigationController.pushViewController(visitable, animated: true)
         } else if action == .Replace {
@@ -59,15 +71,13 @@ class RNTurbolinksManager: RCTViewManager {
             turbolinks.navigationController.pushViewController(visitable, animated: false)
         }
         session.visit(visitable)
-        turbolinks.navigationController.navigationBar.isTranslucent = true
     }
     
     fileprivate func presentNativeView(_ component: String, title: String) {
         let viewController = UIViewController()
-        viewController.view = RCTRootView(bundleURL: jsCodeLocation, moduleName: component, initialProperties: nil, launchOptions: nil)!
+        viewController.view = rootViewForComponent(component)
         viewController.title = title
         turbolinks.navigationController.pushViewController(viewController, animated: true)
-        turbolinks.navigationController.navigationBar.isTranslucent = false
     }
     
     override func constantsToExport() -> [AnyHashable: Any]! {
@@ -91,6 +101,7 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
+        self.visitable = visitable as! CustomViewController
         turbolinks.onError?(["data": ["code": error.code, "statusCode": error.userInfo["statusCode"]]])
     }
     
