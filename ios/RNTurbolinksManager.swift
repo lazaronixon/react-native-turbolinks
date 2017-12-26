@@ -5,7 +5,6 @@ import Turbolinks
 class RNTurbolinksManager: RCTViewManager {
     
     fileprivate var turbolinks: RNTurbolinks!
-    fileprivate var visitable: VisitableViewController!
     
     override func view() -> UIView {
         turbolinks = RNTurbolinks()
@@ -24,7 +23,7 @@ class RNTurbolinksManager: RCTViewManager {
     
     @objc func presentComponent(_ component: String) -> Void {
         DispatchQueue.main.sync {
-            let customViewController = visitable as! CustomViewController
+            let customViewController = session.topmostVisitable as! CustomViewController
             customViewController.renderComponent(rootViewForComponent(component))
         }
     }
@@ -63,7 +62,7 @@ class RNTurbolinksManager: RCTViewManager {
     }()
     
     fileprivate func presentVisitableForSession(_ session: Session, url: URL, action: Action = .Advance) {
-        self.visitable = CustomViewController(url: url)
+        let visitable = CustomViewController(url: url)
         if action == .Advance {
             turbolinks.navigationController.pushViewController(visitable, animated: true)
         } else if action == .Replace {
@@ -101,7 +100,6 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
-        self.visitable = visitable as! CustomViewController
         turbolinks.onError?(["data": ["code": error.code, "statusCode": error.userInfo["statusCode"]]])
     }
     
