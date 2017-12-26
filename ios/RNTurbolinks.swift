@@ -1,16 +1,14 @@
 @objc(RNTurbolinks)
 class RNTurbolinks: UIView  {
     
-    weak var bridge: RCTBridge!
     var navigationController: UINavigationController!
     var url: URL!
     var userAgent: String!
     var onMessage: RCTDirectEventBlock!
     var onVisit: RCTDirectEventBlock!
     
-    init(bridge: RCTBridge) {
-        super.init(frame: CGRect.zero)
-        self.bridge = bridge
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.navigationController = UINavigationController()
         self.navigationController.view.frame = bounds
         addSubview(navigationController.view)

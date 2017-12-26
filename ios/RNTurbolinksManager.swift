@@ -8,7 +8,7 @@ class RNTurbolinksManager: RCTViewManager {
     fileprivate var jsCodeLocation = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource: nil)
     
     override func view() -> UIView {
-        turbolinks = RNTurbolinks.init(bridge: self.bridge)
+        turbolinks = RNTurbolinks()
         return turbolinks
     }
     
