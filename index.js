@@ -10,6 +10,10 @@ export default class TurboLinks extends React.Component {
     RNTurbolinksManager.initialize();
   }
 
+  visit(route) {
+    RNTurbolinksManager.visit(route);
+  }
+
   _onMessage = (event) => {
     if (this.props.onMessage) this.props.onMessage(event.nativeEvent.message);
   }
@@ -23,20 +27,23 @@ export default class TurboLinks extends React.Component {
              {...this.props}
              onMessage={this._onMessage}
              onVisit={this._onVisit}
-           />;
+           />
   }
-
 }
 
 TurboLinks.propTypes = {
-  url: PropTypes.string.isRequired,
+  initialRoute: PropTypes.oneOfType([
+    PropTypes.shape({ url: PropTypes.string }),
+    PropTypes.shape({ component: PropTypes.string, title: PropTypes.string
+    })
+  ]).isRequired,
   userAgent: PropTypes.string,
   onMessage: PropTypes.func,
-  onVisit: PropTypes.func,
-};
+  onVisit: PropTypes.func
+}
 
 TurboLinks.defaultProps = {
   userAgent: 'RNTurbolinks'
-};
+}
 
 var RNTurboLinks = requireNativeComponent('RNTurbolinks', TurboLinks)

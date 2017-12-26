@@ -5,9 +5,10 @@ import Turbolinks
 class RNTurbolinksManager: RCTViewManager {
     
     fileprivate var turbolinks: RNTurbolinks!
+    fileprivate var jsCodeLocation = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource: nil)
     
     override func view() -> UIView {
-        turbolinks = RNTurbolinks()
+        turbolinks = RNTurbolinks.init(bridge: self.bridge)
         return turbolinks
     }
     
@@ -18,6 +19,21 @@ class RNTurbolinksManager: RCTViewManager {
     @objc func initialize() -> Void {
         DispatchQueue.main.sync {
             presentVisitableForSession(session, url:turbolinks.url)
+        }
+    }
+    
+    @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
+        DispatchQueue.main.sync {
+            let route = RCTConvert.nsDictionary(routeParam)!
+            if (route["component"] != nil) {
+              let component = RCTConvert.nsString(route["component"])!
+              let title = RCTConvert.nsString(route["title"])!
+              presentNativeView(component, title: title)
+            } else {
+                let url = RCTConvert.nsurl(route["url"])!
+                let action = RCTConvert.nsString(route["action"])!
+                presentVisitableForSession(session, url: url, action: Action.init(rawValue: action)!)
+            }
         }
     }
     
@@ -44,12 +60,19 @@ class RNTurbolinksManager: RCTViewManager {
         }
         session.visit(visitable)
     }
+    
+    fileprivate func presentNativeView(_ component: String, title: String) {
+        let viewController = UIViewController()
+        viewController.view = RCTRootView(bundleURL: jsCodeLocation, moduleName: component, initialProperties: nil, launchOptions: nil)!
+        viewController.title = title
+        turbolinks.navigationController.pushViewController(viewController, animated: true)
+        turbolinks.navigationController.navigationBar.isTranslucent = false
+    }
 }
 
 extension RNTurbolinksManager: SessionDelegate {
     func session(_ session: Session, didProposeVisitToURL URL: URL, withAction action: Action) {
-        turbolinks.onVisit?(["data": ["path": URL.path, "action": action.rawValue]])
-        presentVisitableForSession(session, url: URL, action: action)
+        turbolinks.onVisit?(["data": ["url": URL.absoluteString, "path": URL.path, "action": action.rawValue]])
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {

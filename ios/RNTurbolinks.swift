@@ -1,31 +1,29 @@
 @objc(RNTurbolinks)
 class RNTurbolinks: UIView  {
     
+    weak var bridge: RCTBridge!
     var navigationController: UINavigationController!
     var url: URL!
     var userAgent: String!
     var onMessage: RCTDirectEventBlock!
     var onVisit: RCTDirectEventBlock!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        navigationController = createNavigationController()
+    init(bridge: RCTBridge) {
+        super.init(frame: CGRect.zero)
+        self.bridge = bridge
+        self.navigationController = UINavigationController()
+        self.navigationController.navigationBar.isTranslucent = true
+        self.navigationController.view.frame = bounds
+        addSubview(navigationController.view)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func createNavigationController() -> UINavigationController {
-        let navController = UINavigationController()
-        navController.view.frame = bounds
-        navController.navigationBar.isTranslucent = true
-        addSubview(navController.view)
-        return navController
-    }
-    
-    @objc func setUrl(_ urlParam: NSString) {
-        url = RCTConvert.nsurl(urlParam)
+    @objc func setInitialRoute(_ initialRouteParam: NSDictionary) {
+        var initialRoute = RCTConvert.nsDictionary(initialRouteParam)!
+        url = RCTConvert.nsurl(initialRoute["url"])
     }
     
     @objc func setUserAgent(_ userAgentParam: NSString) {
