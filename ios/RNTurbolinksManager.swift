@@ -19,8 +19,9 @@ class RNTurbolinksManager: RCTViewManager {
         DispatchQueue.main.sync {
             let route = RCTConvert.nsDictionary(routeParam)!
             let component = RCTConvert.nsString(route["component"])!
+            let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
             let customViewController = session.topmostVisitable as! CustomViewController
-            customViewController.renderComponent(rootViewForComponent(component))
+            customViewController.renderComponent(rootViewForComponent(component, props: props))
         }
     }
     
@@ -34,14 +35,15 @@ class RNTurbolinksManager: RCTViewManager {
             } else {
                 let component = RCTConvert.nsString(route["component"])!
                 let title = RCTConvert.nsString(route["title"]) ?? ""
-                presentNativeView(component, title: title)
+                let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
+                presentNativeView(component, title: title, props: props)
             }
         }
     }
     
-    fileprivate func rootViewForComponent(_ component: String) -> RCTRootView {
+    fileprivate func rootViewForComponent(_ component: String, props: Dictionary<AnyHashable, Any>) -> RCTRootView {
         let jsCodeLocation = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource: nil)
-        return RCTRootView(bundleURL: jsCodeLocation, moduleName: component, initialProperties: nil, launchOptions: nil)
+        return RCTRootView(bundleURL: jsCodeLocation, moduleName: component, initialProperties: props, launchOptions: nil)
     }
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
@@ -68,9 +70,9 @@ class RNTurbolinksManager: RCTViewManager {
         session.visit(visitable)
     }
     
-    fileprivate func presentNativeView(_ component: String, title: String) {
+    fileprivate func presentNativeView(_ component: String, title: String, props: Dictionary<AnyHashable, Any>) {
         let viewController = UIViewController()
-        viewController.view = rootViewForComponent(component)
+        viewController.view = rootViewForComponent(component, props: props)
         viewController.title = title
         turbolinks.navigationController.pushViewController(viewController, animated: true)
     }

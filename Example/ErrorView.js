@@ -9,7 +9,7 @@ export default class ErrorView extends Component {
         <Text>Erro</Text>
         <Text>Erro</Text>
         <Text>Erro</Text>
-        <Text>Erro</Text>
+        <Text>{this.props.errorData.code}</Text>
       </View>
     )
   }
