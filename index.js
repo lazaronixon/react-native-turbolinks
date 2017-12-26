@@ -11,10 +11,6 @@ export default class TurboLinks extends Component {
     Action: RNTurbolinksManager.Action
   };
 
-  componentDidMount() {
-    RNTurbolinksManager.initialize();
-  }
-
   visit = (route) => {
     RNTurbolinksManager.visit(route);
   }
@@ -46,7 +42,6 @@ export default class TurboLinks extends Component {
 }
 
 TurboLinks.propTypes = {
-  url: PropTypes.string.isRequired,
   onVisit: PropTypes.func.isRequired,
   onError: PropTypes.func.isRequired,
   userAgent: PropTypes.string,

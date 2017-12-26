@@ -15,12 +15,6 @@ class RNTurbolinksManager: RCTViewManager {
         return true;
     }
     
-    @objc func initialize() -> Void {
-        DispatchQueue.main.sync {
-            presentVisitableForSession(session, url:turbolinks.url)
-        }
-    }
-    
     @objc func presentComponent(_ component: String) -> Void {
         DispatchQueue.main.sync {
             let customViewController = session.topmostVisitable as! CustomViewController
@@ -33,12 +27,13 @@ class RNTurbolinksManager: RCTViewManager {
             let route = RCTConvert.nsDictionary(routeParam)!
             if (route["component"] != nil) {
               let component = RCTConvert.nsString(route["component"])!
-              let title = RCTConvert.nsString(route["title"])!
-              presentNativeView(component, title: title)
+              let title = RCTConvert.nsString(route["title"]) ?? ""
+                presentNativeView(component, title: title)
             } else {
                 let url = RCTConvert.nsurl(route["url"])!
-                let action = RCTConvert.nsString(route["action"])!
-                presentVisitableForSession(session, url: url, action: Action.init(rawValue: action)!)
+                let action = RCTConvert.nsString(route["action"]) ?? Action.Advance.rawValue
+                let actionEnum = Action.init(rawValue: action)!
+                presentVisitableForSession(session, url: url, action: actionEnum)
             }
         }
     }

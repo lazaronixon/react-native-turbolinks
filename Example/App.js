@@ -19,10 +19,13 @@ export default class App extends Component {
     this.turboLinks.presentComponent("ErrorView")
   }
 
+  componentDidMount = () => {
+    this.turboLinks.visit({url: "http://localhost:9292"})
+  }
+
   render() {
     return (
       <Turbolinks ref={(tl) => this.turboLinks = tl}
-                  url="http://localhost:9292"
                   userAgent="turbolinksDemo"
                   onMessage={this.showMessage}
                   onVisit={this.handleVisit}

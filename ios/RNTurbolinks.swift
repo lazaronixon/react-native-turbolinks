@@ -2,7 +2,6 @@
 class RNTurbolinks: UIView  {
     
     var navigationController: UINavigationController!
-    var url: URL!
     var userAgent: String!
     var onMessage: RCTDirectEventBlock!
     var onVisit: RCTDirectEventBlock!
@@ -18,10 +17,6 @@ class RNTurbolinks: UIView  {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc func setUrl(_ urlParam: NSDictionary) {
-        url = RCTConvert.nsurl(urlParam)
     }
     
     @objc func setUserAgent(_ userAgentParam: NSString) {
