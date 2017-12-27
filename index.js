@@ -11,16 +11,12 @@ export default class TurboLinks extends Component {
     Action: RNTurbolinksManager.Action
   };
 
-  visit = (route) => {
+  visit(route) {
     RNTurbolinksManager.visit(route);
   }
 
-  present= (component) => {
+  present(component) {
     RNTurbolinksManager.present(component);
-  }
-
-  _onMessage = (event) => {
-    if (this.props.onMessage) this.props.onMessage(event.nativeEvent.message);
   }
 
   _onVisit = (event) => {
@@ -29,6 +25,10 @@ export default class TurboLinks extends Component {
 
   _onError = (event) => {
     if (this.props.onError) this.props.onError(event.nativeEvent.data);
+  }
+
+  _onMessage = (event) => {
+    if (this.props.onMessage) this.props.onMessage(event.nativeEvent.message);
   }
 
   render() {

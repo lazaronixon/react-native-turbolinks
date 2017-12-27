@@ -3,7 +3,7 @@ import Turbolinks from 'react-native-turbolinks'
 
 export default class App extends Component {
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.turboLinks.visit({url: 'http://localhost:9292'})
   }
 

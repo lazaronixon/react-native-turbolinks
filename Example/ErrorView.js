@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, StyleSheet }from 'react-native';
+import { FlatList, View, Button, Text, StyleSheet }from 'react-native';
 import Turbolinks from 'react-native-turbolinks'
 
 export default class ErrorView extends Component {
+
+  retry = () => {
+    alert('reload')
+  }
 
   render() {
     const errorCode = this.props.error.code;
@@ -35,6 +39,7 @@ export default class ErrorView extends Component {
       <View style={styles.container}>
         <Text style={styles.h1}>{title}</Text>
         <Text style={styles.p}>{message}</Text>
+        <Button onPress={this.retry} title="Retry" />
       </View>
     )
   }
