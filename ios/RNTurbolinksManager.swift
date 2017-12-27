@@ -15,9 +15,9 @@ class RNTurbolinksManager: RCTViewManager {
         let route = RCTConvert.nsDictionary(routeParam)!
         let component = RCTConvert.nsString(route["component"])
         let title = RCTConvert.nsString(route["title"])
-        let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
+        let props = RCTConvert.nsDictionary(route["passProps"])
         let customViewController = session.topmostVisitable as! CustomViewController
-        let rootView = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)!
+        let rootView = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         customViewController.customView = rootView
         customViewController.customTitle = title
         customViewController.renderComponent()
@@ -27,9 +27,9 @@ class RNTurbolinksManager: RCTViewManager {
         let route = RCTConvert.nsDictionary(routeParam)!
         let title = RCTConvert.nsString(route["title"])
         if (route["url"] != nil) {
-          let url = RCTConvert.nsurl(route["url"])!
-          let action = RCTConvert.nsString(route["action"]) ?? Action.Advance.rawValue
-          let actionEnum = Action.init(rawValue: action)!
+            let url = RCTConvert.nsurl(route["url"])!
+            let action = RCTConvert.nsString(route["action"])
+            let actionEnum = Action.init(rawValue: action ?? "advance")!
             presentVisitableForSession(session, url: url, title: title, action: actionEnum)
         } else {
             let component = RCTConvert.nsString(route["component"])!
