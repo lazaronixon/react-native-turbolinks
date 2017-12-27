@@ -4,7 +4,7 @@
 @interface RCT_EXTERN_MODULE(RNTurbolinksManager, RCTViewManager)
 RCT_EXTERN_METHOD(reload)
 RCT_EXTERN_METHOD(visit:(NSDictionary *))
-RCT_EXTERN_METHOD(present:(NSDictionary *))
+RCT_EXTERN_METHOD(replace:(NSDictionary *))
 RCT_EXPORT_VIEW_PROPERTY(userAgent, NSString)
 RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onVisit, RCTDirectEventBlock)

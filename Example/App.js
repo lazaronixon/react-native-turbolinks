@@ -41,7 +41,7 @@ export default class App extends Component {
         break;
       }
     }
-    this.turboLinks.present({component: 'ErrorView', passProps: {title: title, message: message}})
+    this.turboLinks.replace({component: 'ErrorView', passProps: {title: title, message: message}})
   }
 
   showMessage = (message) => {

@@ -11,16 +11,16 @@ class RNTurbolinksManager: RCTViewManager {
         return turbolinks
     }
     
-    @objc func present(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
+    @objc func replace(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let route = RCTConvert.nsDictionary(routeParam)!
         let component = RCTConvert.nsString(route["component"])
         let title = RCTConvert.nsString(route["title"])
         let props = RCTConvert.nsDictionary(route["passProps"])
-        let customViewController = session.topmostVisitable as! CustomViewController
         let rootView = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
-        customViewController.customView = rootView
-        customViewController.customTitle = title
-        customViewController.renderComponent()
+        let visitable = session.topmostVisitable as! CustomViewController
+        visitable.customView = rootView
+        visitable.customTitle = title
+        visitable.renderComponent()
     }
     
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
@@ -58,13 +58,13 @@ class RNTurbolinksManager: RCTViewManager {
     
     fileprivate func presentVisitableForSession(_ session: Session, url: URL, title: String?, action: Action = .Advance) {
         let visitable = CustomViewController(url: url)
+        visitable.customTitle = title
         if action == .Advance {
             turbolinks.navigationController.pushViewController(visitable, animated: true)
         } else if action == .Replace {
             turbolinks.navigationController.popViewController(animated: false)
             turbolinks.navigationController.pushViewController(visitable, animated: false)
         }
-        visitable.customTitle = title
         session.visit(visitable)
     }
     
