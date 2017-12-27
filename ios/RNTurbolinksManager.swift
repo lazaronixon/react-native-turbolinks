@@ -11,14 +11,6 @@ class RNTurbolinksManager: RCTViewManager {
         return turbolinks
     }
     
-    override static func requiresMainQueueSetup() -> Bool {
-        return true;
-    }
-    
-    override var methodQueue: DispatchQueue {
-        get { return DispatchQueue.main }
-    }
-    
     @objc func present(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let route = RCTConvert.nsDictionary(routeParam)!
         let component = RCTConvert.nsString(route["component"])!
@@ -72,6 +64,14 @@ class RNTurbolinksManager: RCTViewManager {
         viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         viewController.title = title
         turbolinks.navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    override static func requiresMainQueueSetup() -> Bool {
+        return true;
+    }
+    
+    override var methodQueue: DispatchQueue {
+        get { return DispatchQueue.main }
     }
     
     override func constantsToExport() -> [AnyHashable: Any]! {
