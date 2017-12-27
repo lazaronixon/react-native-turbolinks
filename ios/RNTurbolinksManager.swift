@@ -13,24 +13,27 @@ class RNTurbolinksManager: RCTViewManager {
     
     @objc func present(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let route = RCTConvert.nsDictionary(routeParam)!
-        let component = RCTConvert.nsString(route["component"])!
+        let component = RCTConvert.nsString(route["component"])
+        let title = RCTConvert.nsString(route["title"])
         let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
         let customViewController = session.topmostVisitable as! CustomViewController
         let rootView = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)!
-        customViewController.renderComponent(rootView)
+        customViewController.customView = rootView
+        customViewController.customTitle = title
+        customViewController.renderComponent()
     }
     
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let route = RCTConvert.nsDictionary(routeParam)!
+        let title = RCTConvert.nsString(route["title"])
         if (route["url"] != nil) {
           let url = RCTConvert.nsurl(route["url"])!
           let action = RCTConvert.nsString(route["action"]) ?? Action.Advance.rawValue
           let actionEnum = Action.init(rawValue: action)!
-          presentVisitableForSession(session, url: url, action: actionEnum)
+            presentVisitableForSession(session, url: url, title: title, action: actionEnum)
         } else {
             let component = RCTConvert.nsString(route["component"])!
-            let title = RCTConvert.nsString(route["title"]) ?? ""
-            let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
+            let props = RCTConvert.nsDictionary(route["passProps"])
             presentNativeView(component, title: title, props: props)
         }
     }
@@ -53,7 +56,7 @@ class RNTurbolinksManager: RCTViewManager {
         return session
     }()
     
-    fileprivate func presentVisitableForSession(_ session: Session, url: URL, action: Action = .Advance) {
+    fileprivate func presentVisitableForSession(_ session: Session, url: URL, title: String?, action: Action = .Advance) {
         let visitable = CustomViewController(url: url)
         if action == .Advance {
             turbolinks.navigationController.pushViewController(visitable, animated: true)
@@ -61,10 +64,11 @@ class RNTurbolinksManager: RCTViewManager {
             turbolinks.navigationController.popViewController(animated: false)
             turbolinks.navigationController.pushViewController(visitable, animated: false)
         }
+        visitable.customTitle = title
         session.visit(visitable)
     }
     
-    fileprivate func presentNativeView(_ component: String, title: String, props: Dictionary<AnyHashable, Any>) {
+    fileprivate func presentNativeView(_ component: String, title: String?, props: Dictionary<AnyHashable, Any>?) {
         let viewController = UIViewController()
         viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         viewController.title = title

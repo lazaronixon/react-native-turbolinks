@@ -3,10 +3,10 @@ import UIKit
 
 class CustomViewController: Turbolinks.VisitableViewController {
     
-    fileprivate var customView: UIView?;
+    var customTitle: String?;
+    var customView: UIView?;
     
-    func renderComponent(_ customViewParam: UIView) {
-        customView = customViewParam
+    func renderComponent() {
         customView!.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView!)
         installErrorViewConstraints()
@@ -20,6 +20,11 @@ class CustomViewController: Turbolinks.VisitableViewController {
     @objc func retry(_ sender: AnyObject) {
         customView?.removeFromSuperview()
         reloadVisitable()
+    }
+    
+    override func visitableDidRender() {
+        super.visitableDidRender()
+        if customTitle != nil { title = customTitle }
     }
 }
 
