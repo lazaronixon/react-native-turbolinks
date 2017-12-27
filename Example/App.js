@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import Turbolinks from 'react-native-turbolinks'
+import Turbolinks from 'react-native-turbolinks';
+import PubSub from 'pubsub-js';
 
 export default class App extends Component {
 
   componentDidMount() {
-    this.turboLinks.visit({url: 'http://localhost:9292'})
+    PubSub.subscribe('retryEvent',this.turboLinks.retry);
+    this.turboLinks.visit({url: 'http://localhost:9292'});
   }
 
   handleVisit = (data) => {

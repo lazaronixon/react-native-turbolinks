@@ -11,6 +11,10 @@ export default class TurboLinks extends Component {
     Action: RNTurbolinksManager.Action
   };
 
+  retry() {
+    RNTurbolinksManager.retry();
+  }
+
   visit(route) {
     RNTurbolinksManager.visit(route);
   }
@@ -44,8 +48,8 @@ export default class TurboLinks extends Component {
 TurboLinks.propTypes = {
   onVisit: PropTypes.func.isRequired,
   onError: PropTypes.func.isRequired,
+  onMessage: PropTypes.func,
   userAgent: PropTypes.string,
-  onMessage: PropTypes.func
 }
 
 TurboLinks.defaultProps = {

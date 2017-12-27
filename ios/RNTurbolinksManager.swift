@@ -35,6 +35,11 @@ class RNTurbolinksManager: RCTViewManager {
         }
     }
     
+    @objc func retry() -> Void {
+        let customViewController = session.topmostVisitable as! CustomViewController
+        customViewController.retry(self)
+    }
+    
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController.add(self, name: turbolinks.userAgent)

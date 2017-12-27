@@ -8,6 +8,7 @@
   "dependencies": {
     "react": "16.0.0",
     "react-native": "^0.51.0",
-    "react-native-turbolinks": "file:../"
+    "react-native-turbolinks": "file:../",
+    "pubsub-js": "^1.5.7"
   }
 }
