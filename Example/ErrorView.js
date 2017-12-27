@@ -10,36 +10,10 @@ export default class ErrorView extends Component {
   }
 
   render() {
-    const errorCode = this.props.error.code;
-    const statusCode = this.props.error.statusCode;
-    const httpFailure = Turbolinks.constants.ErrorCode.httpFailure;
-    const networkFailure = Turbolinks.constants.ErrorCode.networkFailure;
-    let title = null;
-    let message = null;
-    switch (errorCode) {
-      case httpFailure: {
-        switch (statusCode) {
-          case 404:
-            title = 'Page Not Found';
-            message = 'There doesn’t seem to be anything here.';
-            break;
-          default:
-            title = 'Unknown Error';
-            message = 'An unknown error occurred.';
-            break;
-        }
-        break;
-      }
-      case networkFailure: {
-        title = 'Can’t Connect';
-        message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.';
-        break;
-      }
-    }
     return (
       <View style={styles.container}>
-        <Text style={styles.h1}>{title}</Text>
-        <Text style={styles.p}>{message}</Text>
+        <Text style={styles.h1}>{this.props.title}</Text>
+        <Text style={styles.p}>{this.props.message}</Text>
         <Button onPress={this.retry} title="Retry" />
       </View>
     )

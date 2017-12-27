@@ -12,9 +12,8 @@ export default class NumbersView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <FlatList
-          data={this.dataSource()}
-          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
+        <FlatList data={this.dataSource()}
+                  renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
       </View>
     )
   }

@@ -18,7 +18,30 @@ export default class App extends Component {
   }
 
   handleError = (data) => {
-    this.turboLinks.present({component: 'ErrorView', passProps: {error: data}})
+    const httpFailure = Turbolinks.constants.ErrorCode.httpFailure;
+    const networkFailure = Turbolinks.constants.ErrorCode.networkFailure;
+    let title = null;
+    let message = null;
+    switch (data.code) {
+      case httpFailure: {
+        switch (data.statusCode) {
+          case 404:
+            title = 'Page Not Found';
+            message = 'There doesn’t seem to be anything here.';
+            break;
+          default:
+            title = 'Unknown Error';
+            message = 'An unknown error occurred.';
+        }
+        break;
+      }
+      case networkFailure: {
+        title = 'Can’t Connect';
+        message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.';
+        break;
+      }
+    }
+    this.turboLinks.present({component: 'ErrorView', passProps: {title: title, message: message}})
   }
 
   showMessage = (message) => {
