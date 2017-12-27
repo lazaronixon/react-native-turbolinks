@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { FlatList, View, Button, Text, StyleSheet }from 'react-native';
-import Turbolinks from 'react-native-turbolinks';
-import PubSub from 'pubsub-js';
+import React, { Component } from 'react'
+import { FlatList, View, Button, Text, StyleSheet }from 'react-native'
+import Turbolinks from 'react-native-turbolinks'
+import PubSub from 'pubsub-js'
 
 export default class ErrorView extends Component {
 

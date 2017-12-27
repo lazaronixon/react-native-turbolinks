@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { requireNativeComponent, NativeModules } from 'react-native';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { requireNativeComponent, NativeModules } from 'react-native'
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager
 
@@ -9,30 +9,30 @@ export default class TurboLinks extends Component {
   static constants = {
     ErrorCode: RNTurbolinksManager.ErrorCode,
     Action: RNTurbolinksManager.Action
-  };
+  }
 
   reload() {
-    RNTurbolinksManager.reload();
+    RNTurbolinksManager.reload()
   }
 
   visit(route) {
-    RNTurbolinksManager.visit(route);
+    RNTurbolinksManager.visit(route)
   }
 
   replace(route) {
-    RNTurbolinksManager.replace(route);
+    RNTurbolinksManager.replace(route)
   }
 
   _onVisit = (event) => {
-    if (this.props.onVisit) this.props.onVisit(event.nativeEvent.data);
+    if (this.props.onVisit) this.props.onVisit(event.nativeEvent.data)
   }
 
   _onError = (event) => {
-    if (this.props.onError) this.props.onError(event.nativeEvent.data);
+    if (this.props.onError) this.props.onError(event.nativeEvent.data)
   }
 
   _onMessage = (event) => {
-    if (this.props.onMessage) this.props.onMessage(event.nativeEvent.message);
+    if (this.props.onMessage) this.props.onMessage(event.nativeEvent.message)
   }
 
   render() {

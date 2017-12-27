@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import Turbolinks from 'react-native-turbolinks';
-import PubSub from 'pubsub-js';
+import React, { Component } from 'react'
+import Turbolinks from 'react-native-turbolinks'
+import PubSub from 'pubsub-js'
 
 export default class App extends Component {
 
   componentDidMount() {
-    PubSub.subscribe('retryEvent',this.turboLinks.reload);
-    this.turboLinks.visit({url: 'http://localhost:9292'});
+    PubSub.subscribe('retryEvent',this.turboLinks.reload)
+    this.turboLinks.visit({url: 'http://localhost:9292'})
   }
 
   handleVisit = (data) => {
@@ -18,27 +18,27 @@ export default class App extends Component {
   }
 
   handleError = (data) => {
-    const httpFailure = Turbolinks.constants.ErrorCode.httpFailure;
-    const networkFailure = Turbolinks.constants.ErrorCode.networkFailure;
-    let title = null;
-    let message = null;
+    const httpFailure = Turbolinks.constants.ErrorCode.httpFailure
+    const networkFailure = Turbolinks.constants.ErrorCode.networkFailure
+    let title = null
+    let message = null
     switch (data.code) {
       case httpFailure: {
         switch (data.statusCode) {
           case 404:
-            title = 'Page Not Found';
-            message = 'There doesn’t seem to be anything here.';
-            break;
+            title = 'Page Not Found'
+            message = 'There doesn’t seem to be anything here.'
+            break
           default:
-            title = 'Unknown Error';
-            message = 'An unknown error occurred.';
+            title = 'Unknown Error'
+            message = 'An unknown error occurred.'
         }
-        break;
+        break
       }
       case networkFailure: {
-        title = 'Can’t Connect';
-        message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.';
-        break;
+        title = 'Can’t Connect'
+        message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.'
+        break
       }
     }
     this.turboLinks.replace({component: 'ErrorView', passProps: {title: title, message: message}})
