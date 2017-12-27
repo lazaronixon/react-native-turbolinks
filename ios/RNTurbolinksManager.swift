@@ -32,7 +32,8 @@ class RNTurbolinksManager: RCTViewManager {
             if (route["url"] != nil) {
               let url = RCTConvert.nsurl(route["url"])!
               let action = RCTConvert.nsString(route["action"]) ?? Action.Advance.rawValue
-              presentVisitableForSession(session, url: url, action: Action.init(rawValue: action)!)
+              let actionEnum = Action.init(rawValue: action)!
+              presentVisitableForSession(session, url: url, action: actionEnum)
             } else {
                 let component = RCTConvert.nsString(route["component"])!
                 let title = RCTConvert.nsString(route["title"]) ?? ""
