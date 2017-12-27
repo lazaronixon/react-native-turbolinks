@@ -15,31 +15,31 @@ class RNTurbolinksManager: RCTViewManager {
         return true;
     }
     
+    override var methodQueue: DispatchQueue {
+        get { return DispatchQueue.main }
+    }
+    
     @objc func present(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        DispatchQueue.main.sync {
-            let route = RCTConvert.nsDictionary(routeParam)!
-            let component = RCTConvert.nsString(route["component"])!
-            let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
-            let customViewController = session.topmostVisitable as! CustomViewController
-            let rootView = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)!
-            customViewController.renderComponent(rootView)
-        }
+        let route = RCTConvert.nsDictionary(routeParam)!
+        let component = RCTConvert.nsString(route["component"])!
+        let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
+        let customViewController = session.topmostVisitable as! CustomViewController
+        let rootView = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)!
+        customViewController.renderComponent(rootView)
     }
     
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        DispatchQueue.main.sync {
-            let route = RCTConvert.nsDictionary(routeParam)!
-            if (route["url"] != nil) {
-              let url = RCTConvert.nsurl(route["url"])!
-              let action = RCTConvert.nsString(route["action"]) ?? Action.Advance.rawValue
-              let actionEnum = Action.init(rawValue: action)!
-              presentVisitableForSession(session, url: url, action: actionEnum)
-            } else {
-                let component = RCTConvert.nsString(route["component"])!
-                let title = RCTConvert.nsString(route["title"]) ?? ""
-                let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
-                presentNativeView(component, title: title, props: props)
-            }
+        let route = RCTConvert.nsDictionary(routeParam)!
+        if (route["url"] != nil) {
+          let url = RCTConvert.nsurl(route["url"])!
+          let action = RCTConvert.nsString(route["action"]) ?? Action.Advance.rawValue
+          let actionEnum = Action.init(rawValue: action)!
+          presentVisitableForSession(session, url: url, action: actionEnum)
+        } else {
+            let component = RCTConvert.nsString(route["component"])!
+            let title = RCTConvert.nsString(route["title"]) ?? ""
+            let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
+            presentNativeView(component, title: title, props: props)
         }
     }
     
@@ -114,4 +114,3 @@ extension RNTurbolinksManager: WKScriptMessageHandler {
         }
     }
 }
-
