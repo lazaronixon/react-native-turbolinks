@@ -42,8 +42,7 @@ class RNTurbolinksManager: RCTViewManager {
     }
     
     fileprivate func rootViewForComponent(_ component: String, props: Dictionary<AnyHashable, Any>) -> RCTRootView {
-        let jsCodeLocation = RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index", fallbackResource: nil)
-        return RCTRootView(bundleURL: jsCodeLocation, moduleName: component, initialProperties: props, launchOptions: nil)
+        return RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
     }
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
