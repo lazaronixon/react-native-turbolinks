@@ -11,8 +11,8 @@ export default class TurboLinks extends Component {
     Action: RNTurbolinksManager.Action
   };
 
-  retry() {
-    RNTurbolinksManager.retry();
+  reload() {
+    RNTurbolinksManager.reload();
   }
 
   visit(route) {

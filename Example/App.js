@@ -5,7 +5,7 @@ import PubSub from 'pubsub-js';
 export default class App extends Component {
 
   componentDidMount() {
-    PubSub.subscribe('retryEvent',this.turboLinks.retry);
+    PubSub.subscribe('retryEvent',this.turboLinks.reload);
     this.turboLinks.visit({url: 'http://localhost:9292'});
   }
 

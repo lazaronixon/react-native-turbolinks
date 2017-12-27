@@ -17,7 +17,7 @@ class CustomViewController: Turbolinks.VisitableViewController {
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": customView! ]))
     }
     
-    @objc func retry(_ sender: AnyObject) {
+    func reload() {
         customView?.removeFromSuperview()
         reloadVisitable()
     }

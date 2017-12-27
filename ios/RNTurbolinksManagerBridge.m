@@ -2,7 +2,7 @@
 #import <React/RCTViewManager.h>
 
 @interface RCT_EXTERN_MODULE(RNTurbolinksManager, RCTViewManager)
-RCT_EXTERN_METHOD(retry)
+RCT_EXTERN_METHOD(reload)
 RCT_EXTERN_METHOD(visit:(NSDictionary *))
 RCT_EXTERN_METHOD(present:(NSDictionary *))
 RCT_EXPORT_VIEW_PROPERTY(userAgent, NSString)

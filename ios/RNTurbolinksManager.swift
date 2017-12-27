@@ -38,9 +38,9 @@ class RNTurbolinksManager: RCTViewManager {
         }
     }
     
-    @objc func retry() -> Void {
+    @objc func reload() -> Void {
         let customViewController = session.topmostVisitable as! CustomViewController
-        customViewController.retry(self)
+        customViewController.reload()
     }
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
