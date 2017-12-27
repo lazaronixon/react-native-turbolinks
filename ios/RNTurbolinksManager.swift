@@ -21,7 +21,8 @@ class RNTurbolinksManager: RCTViewManager {
             let component = RCTConvert.nsString(route["component"])!
             let props = RCTConvert.nsDictionary(route["passProps"]) ?? Dictionary()
             let customViewController = session.topmostVisitable as! CustomViewController
-            customViewController.renderComponent(rootViewForComponent(component, props: props))
+            let rootView = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)!
+            customViewController.renderComponent(rootView)
         }
     }
     
@@ -39,10 +40,6 @@ class RNTurbolinksManager: RCTViewManager {
                 presentNativeView(component, title: title, props: props)
             }
         }
-    }
-    
-    fileprivate func rootViewForComponent(_ component: String, props: Dictionary<AnyHashable, Any>) -> RCTRootView {
-        return RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
     }
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
@@ -71,7 +68,7 @@ class RNTurbolinksManager: RCTViewManager {
     
     fileprivate func presentNativeView(_ component: String, title: String, props: Dictionary<AnyHashable, Any>) {
         let viewController = UIViewController()
-        viewController.view = rootViewForComponent(component, props: props)
+        viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         viewController.title = title
         turbolinks.navigationController.pushViewController(viewController, animated: true)
     }
