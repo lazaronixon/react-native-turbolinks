@@ -6,7 +6,7 @@ const RNTurbolinksManager = NativeModules.RNTurbolinksManager
 
 export default class TurboLinks extends Component {
 
-  static constants = {
+  static Constants = {
     ErrorCode: RNTurbolinksManager.ErrorCode,
     Action: RNTurbolinksManager.Action
   }

@@ -24,9 +24,9 @@ export default class App extends Component {
   }
 
   handleError = (data) => {
-    const httpFailure = Turbolinks.constants.ErrorCode.httpFailure
-    const networkFailure = Turbolinks.constants.ErrorCode.networkFailure
-    const replace = Turbolinks.constants.Action.replace
+    const httpFailure = Turbolinks.Constants.ErrorCode.httpFailure
+    const networkFailure = Turbolinks.Constants.ErrorCode.networkFailure
+    const replace = Turbolinks.Constants.Action.replace
     switch (data.code) {
       case httpFailure: {
         switch (data.statusCode) {
