@@ -36,19 +36,19 @@ export default class App extends Component {
           case 404:
             var title = 'Page Not Found'
             var message = 'There doesn’t seem to be anything here.'
-            this.turboLinks.replace({component: 'ErrorView', passProps: {title: title, message: message}})
+            this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
             break
           default:
             var title = 'Unknown Error'
             var message = 'An unknown error occurred.'
-            this.turboLinks.replace({component: 'ErrorView', passProps: {title: title, message: message}})
+            this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         }
         break
       }
       case networkFailure: {
         var title = 'Can’t Connect'
         var message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.'
-        this.turboLinks.replace({component: 'ErrorView', passProps: {title: title, message: message}})
+        this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         break
       }
     }

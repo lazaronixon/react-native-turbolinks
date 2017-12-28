@@ -11,7 +11,7 @@ class RNTurbolinksManager: RCTViewManager {
         return turbolinks
     }
     
-    @objc func replace(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
+    @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let route = RCTConvert.nsDictionary(routeParam)!
         let component = RCTConvert.nsString(route["component"])
         let title = RCTConvert.nsString(route["title"])

@@ -27,8 +27,8 @@ export default class TurboLinks extends Component {
     RNTurbolinksManager.visit(route)
   }
 
-  replace(route) {
-    RNTurbolinksManager.replace(route)
+  replaceWith(route) {
+    RNTurbolinksManager.replaceWith(route)
   }
 
   _onVisit = (event) => {
