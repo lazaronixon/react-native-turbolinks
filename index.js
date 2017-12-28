@@ -11,8 +11,12 @@ export default class TurboLinks extends Component {
     Action: RNTurbolinksManager.Action
   }
 
-  reload() {
-    RNTurbolinksManager.reload()
+  reloadVisitable() {
+    RNTurbolinksManager.reloadVisitable()
+  }
+
+  reloadSession() {
+    RNTurbolinksManager.reloadSession()
   }
 
   visit(route) {

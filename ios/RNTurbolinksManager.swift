@@ -26,7 +26,7 @@ class RNTurbolinksManager: RCTViewManager {
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let route = RCTConvert.nsDictionary(routeParam)!
         let title = RCTConvert.nsString(route["title"])
-        if (route["url"] != nil) {
+        if route["url"] != nil {
             let url = RCTConvert.nsurl(route["url"])!
             let action = RCTConvert.nsString(route["action"])
             let actionEnum = Action.init(rawValue: action ?? "advance")!
@@ -34,13 +34,18 @@ class RNTurbolinksManager: RCTViewManager {
         } else {
             let component = RCTConvert.nsString(route["component"])!
             let props = RCTConvert.nsDictionary(route["passProps"])
-            presentNativeView(component, title: title, props: props)
+            let wrapped = RCTConvert.bool(route["wrapped"]) || route["wrapped"] == nil
+            presentNativeView(component, title: title, wrapped: wrapped, props: props)
         }
     }
     
-    @objc func reload() -> Void {
-        let customViewController = session.topmostVisitable as! CustomViewController
-        customViewController.reload()
+    @objc func reloadVisitable() -> Void {
+        let visitable = session.topmostVisitable as! CustomViewController
+        visitable.reload()
+    }
+    
+    @objc func reloadSession() -> Void {
+        session.reload()
     }
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
@@ -68,11 +73,15 @@ class RNTurbolinksManager: RCTViewManager {
         session.visit(visitable)
     }
     
-    fileprivate func presentNativeView(_ component: String, title: String?, props: Dictionary<AnyHashable, Any>?) {
+    fileprivate func presentNativeView(_ component: String, title: String?, wrapped: Bool = true, props: Dictionary<AnyHashable, Any>?) {
         let viewController = UIViewController()
         viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         viewController.title = title
-        turbolinks.navigationController.pushViewController(viewController, animated: true)
+        if wrapped {
+            turbolinks.navigationController.pushViewController(viewController, animated: true)
+        } else {
+            turbolinks.navigationController.present(viewController, animated: true, completion: nil)
+        }
     }
     
     override static func requiresMainQueueSetup() -> Bool {
