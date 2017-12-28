@@ -16,17 +16,13 @@ class MyScene extends Component {
   state = { url: 'http://localhost:9292/sign-in' }
 
   handleNavigationStateChange = (navState) => {
-    if (this.state.url != navState.url) {
-      PubSub.publish('reloadEvent')
-      this.props.navigator.pop()
-    }
+    if (this.state.url != navState.url) { PubSub.publish('authenticatedEvent') }
     this.setState({ url: navState.url })
   }
 
   render() {
     return (
-      <WebView ref={(wv) => this.webview = wv }
-               source={{uri: this.state.url }}
+      <WebView source={{uri: this.state.url }}
                onNavigationStateChange={this.handleNavigationStateChange}/>
     )
   }

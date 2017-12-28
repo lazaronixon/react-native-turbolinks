@@ -19,6 +19,10 @@ export default class TurboLinks extends Component {
     RNTurbolinksManager.reloadSession()
   }
 
+  dismiss() {
+    RNTurbolinksManager.dismiss()
+  }
+
   visit(route) {
     RNTurbolinksManager.visit(route)
   }

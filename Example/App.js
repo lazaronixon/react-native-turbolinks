@@ -6,8 +6,13 @@ export default class App extends Component {
 
   componentDidMount() {
     PubSub.subscribe('retryEvent', this.turboLinks.reloadVisitable)
-    PubSub.subscribe('reloadEvent', this.turboLinks.reloadSession)
+    PubSub.subscribe('authenticatedEvent', this.handleAuthenticated)
     this.turboLinks.visit({url: 'http://localhost:9292'})
+  }
+
+  handleAuthenticated = () => {
+    this.turboLinks.reloadSession()
+    this.turboLinks.dismiss()
   }
 
   handleVisit = (data) => {
@@ -21,11 +26,12 @@ export default class App extends Component {
   handleError = (data) => {
     const httpFailure = Turbolinks.constants.ErrorCode.httpFailure
     const networkFailure = Turbolinks.constants.ErrorCode.networkFailure
+    const replace = Turbolinks.constants.Action.replace
     switch (data.code) {
       case httpFailure: {
         switch (data.statusCode) {
           case 401:
-            this.turboLinks.visit({component: 'AuthenticationView', wrapped: false})
+            this.turboLinks.visit({component: 'AuthenticationView', action: replace})
             break
           case 404:
             var title = 'Page Not Found'

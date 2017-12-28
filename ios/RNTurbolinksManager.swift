@@ -26,16 +26,15 @@ class RNTurbolinksManager: RCTViewManager {
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let route = RCTConvert.nsDictionary(routeParam)!
         let title = RCTConvert.nsString(route["title"])
+        let action = RCTConvert.nsString(route["action"])
+        let actionEnum = Action.init(rawValue: action ?? "advance")!
         if route["url"] != nil {
             let url = RCTConvert.nsurl(route["url"])!
-            let action = RCTConvert.nsString(route["action"])
-            let actionEnum = Action.init(rawValue: action ?? "advance")!
             presentVisitableForSession(session, url: url, title: title, action: actionEnum)
         } else {
             let component = RCTConvert.nsString(route["component"])!
             let props = RCTConvert.nsDictionary(route["passProps"])
-            let wrapped = RCTConvert.bool(route["wrapped"]) || route["wrapped"] == nil
-            presentNativeView(component, title: title, wrapped: wrapped, props: props)
+            presentNativeView(component, title: title, action: actionEnum, props: props)
         }
     }
     
@@ -46,6 +45,10 @@ class RNTurbolinksManager: RCTViewManager {
     
     @objc func reloadSession() -> Void {
         session.reload()
+    }
+    
+    @objc func dismiss() -> Void {
+        turbolinks.navigationController.dismiss(animated: true, completion: nil)
     }
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
@@ -73,13 +76,13 @@ class RNTurbolinksManager: RCTViewManager {
         session.visit(visitable)
     }
     
-    fileprivate func presentNativeView(_ component: String, title: String?, wrapped: Bool = true, props: Dictionary<AnyHashable, Any>?) {
+    fileprivate func presentNativeView(_ component: String, title: String?, action: Action = .Advance, props: Dictionary<AnyHashable, Any>?) {
         let viewController = UIViewController()
         viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         viewController.title = title
-        if wrapped {
+        if action == .Advance {
             turbolinks.navigationController.pushViewController(viewController, animated: true)
-        } else {
+        } else if action == .Replace {
             turbolinks.navigationController.present(viewController, animated: true, completion: nil)
         }
     }
