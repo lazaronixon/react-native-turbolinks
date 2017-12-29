@@ -1,16 +1,21 @@
 {
   "name": "react-native-turbolinks",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Turbolinks for React Native.",
+  "author": "Lázaro Nixon <lazaronixon@hotmail.com>",
+  "homepage": "https://github.com/lazaronixon/react-native-turbolinks",
+  "license": "MIT",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lazaronixon/react-native-turbolinks.git"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "react",
+    "native",
+    "turbolinks"
   ],
-  "author": "Lázaro Nixon",
-  "license": "MIT",
   "dependencies": {
     "react": "16.0.0"
   }
