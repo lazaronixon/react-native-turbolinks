@@ -4,16 +4,19 @@ A implementation of ![Turbolinks for iOS](https://github.com/turbolinks/turbolin
 ## Getting started
 `$ npm install react-native-turbolinks --save`
 
-### Installation
-### Step 1
 `$ react-native link`
 
-### Step 2 (iOS)
-Drag `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode Embedded Binaries.
+### Installation iOS
+
+### Step 1
+Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode Embedded Binaries.
 
 Check `"Copy items if need"` when it is prompted.
 
 ![Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
+
+### Step 2
+On XCode add a empty swift file clicking with right mouse button on main folder project and then click on `Create Bridging Header` when prompted.
 
 This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the ![guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
 
