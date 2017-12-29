@@ -34,7 +34,7 @@ class RNTurbolinksManager: RCTViewManager {
         } else {
             let component = RCTConvert.nsString(route["component"])!
             let props = RCTConvert.nsDictionary(route["passProps"])
-            presentNativeView(component, title: title, action: actionEnum, props: props)
+            presentNativeView(component, title: title, props: props, action: actionEnum)
         }
     }
     
@@ -76,7 +76,7 @@ class RNTurbolinksManager: RCTViewManager {
         session.visit(visitable)
     }
     
-    fileprivate func presentNativeView(_ component: String, title: String?, action: Action = .Advance, props: Dictionary<AnyHashable, Any>?) {
+    fileprivate func presentNativeView(_ component: String, title: String?, props: Dictionary<AnyHashable, Any>?, action: Action = .Advance) {
         let viewController = UIViewController()
         viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         viewController.title = title
@@ -130,8 +130,6 @@ extension RNTurbolinksManager: SessionDelegate {
 
 extension RNTurbolinksManager: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if let message = message.body as? String {
-            turbolinks.onMessage?(["message": message]);
-        }
+        if let message = message.body as? String { turbolinks.onMessage?(["message": message]) }
     }
 }
