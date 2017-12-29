@@ -1,8 +1,8 @@
 import { AppRegistry } from 'react-native'
-import App from './App'
-import NumbersView from './NumbersView'
-import ErrorView from './ErrorView'
-import AuthenticationView from './AuthenticationView'
+import App from './components/App'
+import NumbersView from './components/NumbersView'
+import ErrorView from './components/ErrorView'
+import AuthenticationView from './components/AuthenticationView'
 
 AppRegistry.registerComponent('Example', () => App)
 AppRegistry.registerComponent('NumbersView', () => NumbersView)
