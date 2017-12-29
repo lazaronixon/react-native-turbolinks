@@ -9,9 +9,7 @@ A implementation of ![Turbolinks for iOS](https://github.com/turbolinks/turbolin
 ### Installation iOS
 
 ### Step 1
-Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode Embedded Binaries.
-
-Check `"Copy items if need"` when it is prompted.
+Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode Embedded Binaries and then check `"Copy items if need"` when it is prompted.
 
 ![Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
 
