@@ -133,7 +133,7 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
-        turbolinks.onError?(["data": ["code": error.code, "statusCode": error.userInfo["statusCode"]]])
+        turbolinks.onError?(["data": ["code": error.code, "statusCode": error.userInfo["statusCode"], "description": error.localizedDescription]])
     }
     
     func sessionDidStartRequest(_ session: Session) {
