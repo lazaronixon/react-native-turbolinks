@@ -1,45 +1,72 @@
-
-# react-native-turbolinks
+# React Native Turbolinks
+A implementation of [Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and [Turbolinks Android (Coming soon)](https://github.com/turbolinks/turbolinks-android) for React Native.
 
 ## Getting started
-
 `$ npm install react-native-turbolinks --save`
 
-### Mostly automatic installation
+### Installation
+### Step 1
+`$ react-native link`
 
-`$ react-native link react-native-turbolinks`
+### Step 2
+Drag `/node_modules/react-native-turbolinks/ios/turbolinks.framework` to XCode Embedded Binaries.
+![Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/screenshots/install-turbolinks-framework-ios.jpg)
 
-### Manual installation
-
-
-#### iOS
-
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-turbolinks` and add `RNTurbolinks.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNTurbolinks.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
-
-#### Android
-
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.RNTurbolinksPackage;` to the imports at the top of the file
-  - Add `new RNTurbolinksPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
-  	```
-  	include ':react-native-turbolinks'
-  	project(':react-native-turbolinks').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-turbolinks/android')
-  	```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      compile project(':react-native-turbolinks')
-  	```
-
-
-## Usage
+## Basic Usage
 ```javascript
-import RNTurbolinks from 'react-native-turbolinks';
+import React, { Component } from 'react'
+import Turbolinks from 'react-native-turbolinks'
 
-// TODO: What to do with the module?
-RNTurbolinks;
+export default class App extends Component {
+
+  componentDidMount() {
+    this.turboLinks.visit({url: 'http://localhost:9292'})
+  }
+
+  handleVisit = (data) => {
+    this.turboLinks.visit({url: data.url, action: data.action})
+  }
+
+  handleError = (data) => {
+    alert(data.description)
+  }
+
+  render() {
+    return (
+      <Turbolinks ref={(tl) => this.turboLinks = tl}
+                  onVisit={this.handleVisit}
+                  onError={this.handleError}
+                  style={{flex: 1}}/>
+    )
+  }
+}
 ```
-  
+
+## Running the Demo
+This repository includes a demo application to show off features of the framework. The demo bundles a simple HTTP server that serves a Turbolinks 5 web app on localhost at port 9292.
+
+To run the demo, clone this repository to your computer and change into its directory. Then, start the demo server by running `Example/demo-server` from the command line.
+
+Once you’ve started the demo server, explore the demo application in the Simulator by running `react-native run-ios` on Example folder.
+
+## Properties
+
+#### `onVisit`
+
+#### `onError`
+
+#### `onMessage`
+
+#### `userAgent`
+
+## Methods
+
+#### `visit`
+
+#### `replaceWith`
+
+#### `reloadVisitable`
+
+#### `reloadSession`
+
+#### `dismiss`
