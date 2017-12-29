@@ -89,7 +89,11 @@ Dismiss a overlaped view presented by visiting a component with replace action.
 ## Constants
 
 `Turbolinks.Constants.ErrorCode.httpFailure: 0`
+
 `Turbolinks.Constants.ErrorCode.networkFailure: 1`
+
 `Turbolinks.Constants.Action.advance: 'advance'`
+
 `Turbolinks.Constants.Action.replace: 'replace'`
+
 `Turbolinks.Constants.Action.restore: 'restore'`
