@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
+    <title><%= @title %></title>
+    <script src="/turbolinks.js"></script>
+    <script>
+      document.addEventListener("click", function(event) {
+        if (event.target && event.target.matches("[data-behavior~=post-message]")) {
+          webkit.messageHandlers.turbolinksDemo.postMessage("Hello from JavaScript!");
+          event.preventDefault();
+        }
+      });
+    </script>
+    <style>
+      *:not(input):not(textarea) { -webkit-user-select: none }
+      html { -webkit-text-size-adjust: 100% }
+      body { margin: 0; padding: 0 20px }
+      body, input { font: -apple-system-body }
+      h1 { font: -apple-system-headline }
+      footer { font: -apple-system-footnote; color: rgb(128, 128, 128); margin-top: 30px }
+      a { color: rgb(0, 122, 255); text-decoration: none }
+      ul { margin: 0; padding: 0 20px }
+      code span { font-size: 0 }
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+    <footer>
+      Rendered on <%= Time.now.strftime("%Y-%m-%d at %H:%M:%S") %>
+    </footer>
+  </body>
+</html>
