@@ -10,7 +10,7 @@ A implementation of [Turbolinks for iOS](https://github.com/turbolinks/turbolink
 
 ### Step 2
 Drag `/node_modules/react-native-turbolinks/ios/turbolinks.framework` to XCode Embedded Binaries.
-![Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/screenshots/install-turbolinks-framework-ios.jpg)
+![Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
 
 ## Basic Usage
 ```javascript
