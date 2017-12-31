@@ -19,9 +19,8 @@ export default class App extends Component {
   }
 
   handleError = (data) => {
-    const httpFailure = Turbolinks.Constants.ErrorCode.httpFailure
-    const networkFailure = Turbolinks.Constants.ErrorCode.networkFailure
-    const replace = Turbolinks.Constants.Action.replace
+    const { httpFailure, networkFailure }= Turbolinks.Constants.ErrorCode
+    const { replace } = Turbolinks.Constants.Action
     switch (data.code) {
       case httpFailure: {
         switch (data.statusCode) {
@@ -29,20 +28,20 @@ export default class App extends Component {
             this.turboLinks.visit({component: 'AuthenticationView', action: replace})
             break
           case 404:
-            var title = 'Page Not Found'
-            var message = 'There doesn’t seem to be anything here.'
+            let title = 'Page Not Found'
+            let message = 'There doesn’t seem to be anything here.'
             this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
             break
           default:
-            var title = 'Unknown Error'
-            var message = 'An unknown error occurred.'
+            let title = 'Unknown Error'
+            let message = 'An unknown error occurred.'
             this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         }
         break
       }
       case networkFailure: {
-        var title = 'Can’t Connect'
-        var message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.'
+        let title = 'Can’t Connect'
+        let message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.'
         this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         break
       }
