@@ -2,8 +2,10 @@
 A implementation of ![Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and ![Turbolinks Android (Coming soon)](https://github.com/turbolinks/turbolinks-android) for React Native.
 
 ## Getting started
-`$ npm install react-native-swift --save`
-`$ npm install react-native-turbolinks --save`
+```
+$ npm install react-native-swift --save
+$ npm install react-native-turbolinks --save
+```
 
 `$ react-native link`
 
