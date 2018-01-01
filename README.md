@@ -5,9 +5,9 @@ A implementation of ![Turbolinks for iOS](https://github.com/turbolinks/turbolin
 ```
 $ npm install react-native-swift --save
 $ npm install react-native-turbolinks --save
-```
 
-`$ react-native link`
+$ react-native link
+```
 
 ### Installation iOS
 
