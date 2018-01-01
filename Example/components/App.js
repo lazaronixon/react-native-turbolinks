@@ -28,20 +28,20 @@ export default class App extends Component {
             this.turboLinks.visit({component: 'AuthenticationView', action: replace})
             break
           case 404:
-            let title = 'Page Not Found'
-            let message = 'There doesn’t seem to be anything here.'
+            var title = 'Page Not Found'
+            var message = 'There doesn’t seem to be anything here.'
             this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
             break
           default:
-            let title = 'Unknown Error'
-            let message = 'An unknown error occurred.'
+            var title = 'Unknown Error'
+            var message = 'An unknown error occurred.'
             this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         }
         break
       }
       case networkFailure: {
-        let title = 'Can’t Connect'
-        let message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.'
+        var title = 'Can’t Connect'
+        var message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.'
         this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         break
       }

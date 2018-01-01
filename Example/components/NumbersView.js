@@ -3,7 +3,7 @@ import { FlatList, View, Text, StyleSheet }from 'react-native'
 
 export default class NumbersView extends Component {
 
-  dataSource = {
+  dataSource() {
     let data = []
     for (let i = 1; i <= 100; i++) data.push({key: 'Row ' + i})
     return data
@@ -12,7 +12,7 @@ export default class NumbersView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <FlatList data={this.dataSource}
+        <FlatList data={this.dataSource()}
                   renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
       </View>
     )
