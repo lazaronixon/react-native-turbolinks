@@ -47,4 +47,4 @@ if ! "$BUNDLE" check >/dev/null 2>&1; then
   "$BUNDLE" install >/dev/null 2>&1 || error "Error running \`bundle install\`"
 fi
 
-exec "$BUNDLE" exec rackup
+exec "$BUNDLE" exec rackup --host 0.0.0.0
