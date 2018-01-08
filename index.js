@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { requireNativeComponent, NativeModules } from 'react-native'
+import ReactNative, { requireNativeComponent, NativeModules, ViewPropTypes } from 'react-native'
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager || NativeModules.RNTurbolinksModule
 
@@ -24,7 +24,7 @@ export default class TurboLinks extends Component {
   }
 
   visit(route) {
-    RNTurbolinksManager.visit(route)
+    RNTurbolinksManager.visit(ReactNative.findNodeHandle(this), route)
   }
 
   replaceWith(route) {
@@ -58,6 +58,7 @@ TurboLinks.propTypes = {
   onError: PropTypes.func.isRequired,
   onMessage: PropTypes.func,
   userAgent: PropTypes.string,
+  ...ViewPropTypes
 }
 
 TurboLinks.defaultProps = {

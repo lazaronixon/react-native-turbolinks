@@ -1,11 +1,9 @@
 package com.reactlibrary;
 
 
-import android.view.View;
-
+import com.basecamp.turbolinks.TurbolinksView;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.basecamp.turbolinks.TurbolinksView;
 
 public class RNTurbolinksManager extends SimpleViewManager<TurbolinksView> {
 
@@ -18,5 +16,4 @@ public class RNTurbolinksManager extends SimpleViewManager<TurbolinksView> {
     protected TurbolinksView createViewInstance(ThemedReactContext reactContext) {
         return new TurbolinksView(reactContext);
     }
-
 }
