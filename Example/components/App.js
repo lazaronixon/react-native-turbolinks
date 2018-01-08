@@ -7,7 +7,7 @@ export default class App extends Component {
   componentDidMount() {
     PubSub.subscribe('retryEvent', this.handleRetry)
     PubSub.subscribe('authenticatedEvent', this.handleAuthenticated)
-    this.turboLinks.visit({url: 'http://localhost:9292'})
+    this.turboLinks.visit({url: 'http://115.0.11.24:9292'})
   }
 
   handleVisit = (data) => {

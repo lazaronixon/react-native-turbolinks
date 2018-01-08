@@ -1,19 +1,24 @@
 package com.reactlibrary;
 
 
-import com.basecamp.turbolinks.TurbolinksView;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
-public class RNTurbolinksManager extends SimpleViewManager<TurbolinksView> {
+import java.util.Map;
 
-    public static final String REACT_CLASS = "RNTurbolinks";
-
-    @Override
-    public String getName() { return REACT_CLASS; }
+public class RNTurbolinksManager extends SimpleViewManager<RNTurbolinksView> {
 
     @Override
-    protected TurbolinksView createViewInstance(ThemedReactContext reactContext) {
-        return new TurbolinksView(reactContext);
+    public String getName() { return "RNTurbolinks"; }
+
+    @Override
+    protected RNTurbolinksView createViewInstance(ThemedReactContext reactContext) {
+        return new RNTurbolinksView(reactContext);
+    }
+
+    @Override
+    public Map getExportedCustomDirectEventTypeConstants() {
+        return MapBuilder.of("topVisit", MapBuilder.of("registrationName", "onVisit"));
     }
 }
