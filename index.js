@@ -24,7 +24,7 @@ export default class TurboLinks extends Component {
   }
 
   visit(route) {
-    RNTurbolinksManager.visit(ReactNative.findNodeHandle(this), route)
+    RNTurbolinksManager.visit(this.reactTag(), route)
   }
 
   replaceWith(route) {
@@ -41,6 +41,10 @@ export default class TurboLinks extends Component {
 
   _onMessage = (event) => {
     if (this.props.onMessage) this.props.onMessage(event.nativeEvent.message)
+  }
+
+  reactTag() {
+    return ReactNative.findNodeHandle(this)
   }
 
   render() {
