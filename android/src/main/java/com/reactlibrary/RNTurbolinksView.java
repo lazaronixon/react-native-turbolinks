@@ -2,13 +2,11 @@ package com.reactlibrary;
 
 
 import android.content.Context;
-import android.util.Log;
+import android.util.AttributeSet;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
-import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
@@ -17,17 +15,13 @@ import java.net.URL;
 
 public class RNTurbolinksView extends TurbolinksView implements TurbolinksAdapter {
 
-    private TurbolinksSession session;
-
     public RNTurbolinksView(Context context) {
         super(context);
     }
 
-    public TurbolinksSession getSession() {
-        if (session != null) { return session; }
-        return TurbolinksSession.getDefault(this.getContext()).adapter(this).view(this);
+    public RNTurbolinksView(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
-
 
     @Override
     public void onPageFinished() {
@@ -71,7 +65,7 @@ public class RNTurbolinksView extends TurbolinksView implements TurbolinksAdapte
     }
 
     private void sendEvent(String eventName, WritableMap params) {
-        ReactContext reactContext = (ReactContext) getContext();
-        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), eventName, params);
+        CustomActivity customActivity = (CustomActivity) getContext();
+        customActivity.getReactContext().getJSModule(RCTEventEmitter.class).receiveEvent(getId(), eventName, params);
     }
 }

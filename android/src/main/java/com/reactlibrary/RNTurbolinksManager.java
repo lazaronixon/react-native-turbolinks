@@ -1,20 +1,22 @@
 package com.reactlibrary;
 
 
+import android.view.View;
+
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
 import java.util.Map;
 
-public class RNTurbolinksManager extends SimpleViewManager<RNTurbolinksView> {
+public class RNTurbolinksManager extends SimpleViewManager<View> {
 
     @Override
     public String getName() { return "RNTurbolinks"; }
 
     @Override
-    protected RNTurbolinksView createViewInstance(ThemedReactContext reactContext) {
-        return new RNTurbolinksView(reactContext);
+    protected View createViewInstance(ThemedReactContext reactContext) {
+        return new View(reactContext);
     }
 
     @Override
