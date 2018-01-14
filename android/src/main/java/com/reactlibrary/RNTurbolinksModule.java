@@ -15,8 +15,9 @@ import java.util.Map;
 public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     private static final String INTENT_URL = "intentUrl";
-    private static final String INTENT_REACT_TAG = "intentReactTag";
     private static final String INTENT_FROM = "intentFrom";
+    private static final String INTENT_ACTION = "intentAction";
+    private static final String INTENT_REACT_TAG = "intentReactTag";
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -32,14 +33,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void visit(final int reactTag, final ReadableMap routeParam) {
-        final Activity activity = getCurrentActivity();
-        final String url = routeParam.getString("url");
-        Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
-        intent.putExtra(INTENT_URL, url);
-        intent.putExtra(INTENT_REACT_TAG, reactTag);
-        intent.putExtra(INTENT_FROM, activity.getClass().getSimpleName());
-        activity.startActivity(intent);
+    public void visit(Integer reactTag, ReadableMap rp) {
+        String url = rp.getString("url");
+        String action = rp.hasKey("action") ? rp.getString("action") : "advance";
+        presentActivityForSession(reactTag, url, action);
     }
 
     @ReactMethod
@@ -62,4 +59,14 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         );
     }
 
+    private void presentActivityForSession(Integer reactTag, String url, String action) {
+        Activity activity = getCurrentActivity();
+        Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
+        intent.putExtra(INTENT_URL, url);
+        intent.putExtra(INTENT_FROM, activity.getClass().getSimpleName());
+        intent.putExtra(INTENT_ACTION, action);
+        intent.putExtra(INTENT_REACT_TAG, reactTag);
+        if (action.equals("replace")) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
+    }
 }
