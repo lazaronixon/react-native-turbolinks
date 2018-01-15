@@ -3,6 +3,7 @@ package com.reactlibrary;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.webkit.JavascriptInterface;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksView;
@@ -64,6 +65,13 @@ public class RNTurbolinksView extends TurbolinksView implements TurbolinksAdapte
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    @JavascriptInterface
+    public void postMessage(String message) {
+        WritableMap params = Arguments.createMap();
+        params.putString("message", message);
+        sendEvent("topMessage", params);
     }
 
     public void setUserAgent(String userAgent) {

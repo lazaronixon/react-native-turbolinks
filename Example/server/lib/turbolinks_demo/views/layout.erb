@@ -8,7 +8,8 @@
     <script>
       document.addEventListener("click", function(event) {
         if (event.target && event.target.matches("[data-behavior~=post-message]")) {
-          webkit.messageHandlers.turbolinksDemo.postMessage("Hello from JavaScript!");
+          if (window.webkit) { webkit.messageHandlers.turbolinksDemo.postMessage("Hello from JavaScript!"); };
+          if (window.RNTurbolinks) { RNTurbolinks.postMessage("Hello from JavaScript!"); };
           event.preventDefault();
         }
       });

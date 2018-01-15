@@ -1,6 +1,7 @@
 package com.reactlibrary;
 
 import android.os.Bundle;
+import android.webkit.JavascriptInterface;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactActivity;
@@ -36,6 +37,7 @@ public class CustomActivity extends ReactActivity {
         turbolinksView.setId(reactTag);
 
         TurbolinksSession.getDefault(this).getWebView().getSettings().setUserAgentString(userAgent);
+        TurbolinksSession.getDefault(this).addJavascriptInterface(turbolinksView, "RNTurbolinks");
         TurbolinksSession.getDefault(this).activity(this).adapter(turbolinksView).view(turbolinksView).visit(location);
     }
 

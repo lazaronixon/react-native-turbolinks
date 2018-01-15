@@ -24,6 +24,9 @@ public class RNTurbolinksManager extends SimpleViewManager<RNTurbolinksView> {
 
     @Override
     public Map getExportedCustomDirectEventTypeConstants() {
-        return MapBuilder.of("topVisit", MapBuilder.of("registrationName", "onVisit"));
+        return MapBuilder.of(
+                "topVisit", MapBuilder.of("registrationName", "onVisit"),
+                "topMessage", MapBuilder.of("registrationName", "onMessage")
+        );
     }
 }
