@@ -1,7 +1,6 @@
 package com.reactlibrary;
 
 import android.os.Bundle;
-import android.webkit.JavascriptInterface;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactActivity;
@@ -67,7 +66,7 @@ public class CustomActivity extends ReactActivity {
     }
 
     private void handleAnimation(Boolean isForward) {
-        if (fromActivity.equals("MainActivity")) {
+        if (fromActivity.equals("MainActivity") && isForward) {
             overridePendingTransition(R.anim.nothing, R.anim.nothing);
         } else if (action.equals("advance")) {
             if (isForward) {
