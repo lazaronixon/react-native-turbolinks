@@ -15,10 +15,12 @@ import java.net.URL;
 
 public class RNTurbolinksView extends TurbolinksView implements TurbolinksAdapter {
 
+    private String userAgent;
+
     public RNTurbolinksView(Context context) {
         super(context);
     }
-
+    
     public RNTurbolinksView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -62,6 +64,14 @@ public class RNTurbolinksView extends TurbolinksView implements TurbolinksAdapte
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
     }
 
     private void sendEvent(String eventName, WritableMap params) {

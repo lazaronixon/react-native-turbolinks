@@ -1,22 +1,25 @@
 package com.reactlibrary;
 
-
-import android.view.View;
-
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.annotations.ReactProp;
 
 import java.util.Map;
 
-public class RNTurbolinksManager extends SimpleViewManager<View> {
+public class RNTurbolinksManager extends SimpleViewManager<RNTurbolinksView> {
 
     @Override
     public String getName() { return "RNTurbolinks"; }
 
     @Override
-    protected View createViewInstance(ThemedReactContext reactContext) {
-        return new View(reactContext);
+    protected RNTurbolinksView createViewInstance(ThemedReactContext reactContext) {
+        return new RNTurbolinksView(reactContext);
+    }
+
+    @ReactProp(name = "userAgent")
+    public void setUserAgent(RNTurbolinksView view, String userAgent) {
+        view.setUserAgent(userAgent);
     }
 
     @Override

@@ -9,6 +9,9 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
+import com.facebook.react.uimanager.NativeViewHierarchyManager;
+import com.facebook.react.uimanager.UIBlock;
+import com.facebook.react.uimanager.UIManagerModule;
 
 import java.util.Map;
 
@@ -17,6 +20,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_URL = "intentUrl";
     private static final String INTENT_FROM = "intentFrom";
     private static final String INTENT_ACTION = "intentAction";
+    private static final String INTENT_USER_AGENT = "intentUserAgent";
     private static final String INTENT_REACT_TAG = "intentReactTag";
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
@@ -59,14 +63,24 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         );
     }
 
-    private void presentActivityForSession(Integer reactTag, String url, String action) {
-        Activity activity = getCurrentActivity();
-        Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
-        intent.putExtra(INTENT_URL, url);
-        intent.putExtra(INTENT_FROM, activity.getClass().getSimpleName());
-        intent.putExtra(INTENT_ACTION, action);
-        intent.putExtra(INTENT_REACT_TAG, reactTag);
-        if (action.equals("replace")) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(intent);
+    private void presentActivityForSession(final Integer reactTag, final String url, final String action) {
+        getNativeModule().addUIBlock(new UIBlock() {
+            public void execute(NativeViewHierarchyManager nvhm) {
+                RNTurbolinksView view = (RNTurbolinksView) nvhm.resolveView(reactTag);
+                Activity activity = getCurrentActivity();
+                Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
+                intent.putExtra(INTENT_URL, url);
+                intent.putExtra(INTENT_FROM, activity.getClass().getSimpleName());
+                intent.putExtra(INTENT_ACTION, action);
+                intent.putExtra(INTENT_USER_AGENT, view.getUserAgent());
+                intent.putExtra(INTENT_REACT_TAG, reactTag);
+                if (action.equals("replace")) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                activity.startActivity(intent);
+            }
+        });
+    }
+
+    private UIManagerModule getNativeModule() {
+        return getReactApplicationContext().getNativeModule(UIManagerModule.class);
     }
 }
