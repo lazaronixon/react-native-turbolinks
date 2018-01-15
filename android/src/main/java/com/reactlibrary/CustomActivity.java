@@ -55,9 +55,9 @@ public class CustomActivity extends ReactActivity {
     public void onBackPressed() {
         if (fromActivity.equals("MainActivity")) {
             moveTaskToBack(true);
-            return;
+        } else {
+            super.onBackPressed();
         }
-        super.onBackPressed();
     }
 
     public ReactContext getReactContext() {
@@ -65,7 +65,9 @@ public class CustomActivity extends ReactActivity {
     }
 
     private void handleAnimation(Boolean isForward) {
-        if (action.equals("advance")) {
+        if (fromActivity.equals("MainActivity")) {
+            overridePendingTransition(R.anim.nothing, R.anim.nothing);
+        } else if (action.equals("advance")) {
             if (isForward) {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             } else {
