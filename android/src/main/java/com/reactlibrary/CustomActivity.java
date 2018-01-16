@@ -36,7 +36,7 @@ public class CustomActivity extends ReactActivity {
         turbolinksView.setId(reactTag);
 
         TurbolinksSession.getDefault(this).getWebView().getSettings().setUserAgentString(userAgent);
-        TurbolinksSession.getDefault(this).addJavascriptInterface(turbolinksView, "RNTurbolinks");
+        TurbolinksSession.getDefault(this).addJavascriptInterface(turbolinksView, userAgent);
         TurbolinksSession.getDefault(this).activity(this).adapter(turbolinksView).view(turbolinksView).visit(location);
     }
 
