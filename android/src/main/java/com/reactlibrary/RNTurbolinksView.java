@@ -21,7 +21,7 @@ public class RNTurbolinksView extends TurbolinksView implements TurbolinksAdapte
     public RNTurbolinksView(Context context) {
         super(context);
     }
-    
+
     public RNTurbolinksView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

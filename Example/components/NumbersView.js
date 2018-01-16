@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, View, Text, StyleSheet }from 'react-native'
+import { FlatList, View, Text, StyleSheet, Platform }from 'react-native'
 
 export default class NumbersView extends Component {
 
@@ -22,7 +22,7 @@ export default class NumbersView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 64,
+    paddingTop: Platform.OS === 'ios' ? 64 : 0,
   },
   item: {
     padding: 10,

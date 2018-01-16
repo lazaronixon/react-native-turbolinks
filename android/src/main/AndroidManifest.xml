@@ -1,14 +1,10 @@
-
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.reactlibrary">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.reactlibrary">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application>
-        <activity
-            android:name=".CustomActivity"
-            android:label="@string/app_name">
-        </activity>
+        <activity android:name=".CustomActivity" android:label="@string/app_name"></activity>
+        <activity android:name=".NativeActivity" android:label="@string/app_name"></activity>
     </application>
 
 </manifest>
