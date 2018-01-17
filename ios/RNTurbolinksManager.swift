@@ -45,7 +45,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func reloadSession() -> Void {
         let sharedCookies = HTTPCookieStorage.shared.cookies!
         let cookieScript = getJSCookiesString(sharedCookies)
-        NSLog(cookieScript)
         session.webView.evaluateJavaScript(cookieScript)
         session.reload()
     }
