@@ -1,72 +1,53 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import ReactNative, { requireNativeComponent, NativeModules, ViewPropTypes } from 'react-native'
+import { NativeEventEmitter, NativeModules } from 'react-native'
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager || NativeModules.RNTurbolinksModule
+const RNTurbolinksManagerEmitter = new NativeEventEmitter(RNTurbolinksManager);
 
-export default class TurboLinks extends Component {
+class Turbolinks {
 
   static Constants = {
     ErrorCode: RNTurbolinksManager.ErrorCode,
     Action: RNTurbolinksManager.Action
   }
 
-  reloadVisitable() {
+  static reloadVisitable() {
     RNTurbolinksManager.reloadVisitable()
   }
 
-  reloadSession() {
+  static reloadSession() {
     RNTurbolinksManager.reloadSession()
   }
 
-  dismiss() {
+  static dismiss() {
     RNTurbolinksManager.dismiss()
   }
 
-  visit(route) {
-    RNTurbolinksManager.visit(this.reactTag(), route)
+  static visit(route) {
+    RNTurbolinksManager.visit(route)
   }
 
-  replaceWith(route) {
+  static replaceWith(route) {
     RNTurbolinksManager.replaceWith(route)
   }
 
-  _onVisit = (event) => {
-    if (this.props.onVisit) this.props.onVisit(event.nativeEvent.data)
+  static setUserAgent(userAgent) {
+    RNTurbolinksManager.setUserAgent(userAgent)
   }
 
-  _onError = (event) => {
-    if (this.props.onError) this.props.onError(event.nativeEvent.data)
+  static setMessageHandler(messageHandler) {
+    RNTurbolinksManager.setMessageHandler(messageHandler)
   }
 
-  _onMessage = (event) => {
-    if (this.props.onMessage) this.props.onMessage(event.nativeEvent.message)
+  static addListener(eventName, callback) {
+    RNTurbolinksManagerEmitter.addListener(eventName, callback)
   }
 
-  reactTag() {
-    return ReactNative.findNodeHandle(this)
+  static removeListener(eventName, callback) {
+    RNTurbolinksManagerEmitter.removeListener(eventName, callback)
   }
 
-  render() {
-    return <RNTurboLinks
-             {...this.props}
-             onVisit={this._onVisit}
-             onError={this._onError}
-             onMessage={this._onMessage}
-           />
-  }
 }
 
-TurboLinks.propTypes = {
-  onVisit: PropTypes.func.isRequired,
-  onError: PropTypes.func.isRequired,
-  onMessage: PropTypes.func,
-  userAgent: PropTypes.string,
-  ...ViewPropTypes
-}
-
-TurboLinks.defaultProps = {
-  userAgent: 'RNTurbolinks'
-}
-
-var RNTurboLinks = requireNativeComponent('RNTurbolinks', TurboLinks)
+module.exports = Turbolinks;

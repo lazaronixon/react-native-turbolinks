@@ -1,60 +1,58 @@
 import React, { Component } from 'react'
 import Turbolinks from 'react-native-turbolinks'
-import PubSub from 'pubsub-js'
 
 export default class App extends Component {
 
   componentDidMount() {
-    PubSub.subscribe('retryEvent', this.handleRetry)
-    PubSub.subscribe('authenticatedEvent', this.handleAuthenticated)
-    this.turboLinks.visit({url: 'http://192.168.1.2:9292'})
+    Turbolinks.addListener('turbolinksVisit', this.handleVisit)
+    Turbolinks.addListener('turbolinksError', this.handleError)
+    Turbolinks.addListener('turbolinksMessage', this.showMessage)
+    Turbolinks.setMessageHandler('turbolinksDemo')
+    Turbolinks.visit({url: 'http://localhost:9292'})
+  }
+
+  componentWillUnmount() {
+    Turbolinks.removeEventListener('turbolinksVisit', this.handleVisit);
+    Turbolinks.removeEventListener('turbolinksMessage', this.showMessage);
   }
 
   handleVisit = (data) => {
     if (data.path == '/numbers') {
-      this.turboLinks.visit({component: 'NumbersView', title: 'Numbers'})
+      Turbolinks.visit({component: 'NumbersView', title: 'Numbers'})
     } else {
-      this.turboLinks.visit({url: data.url, action: data.action})
+      Turbolinks.visit({url: data.url, action: data.action})
     }
   }
 
   handleError = (data) => {
-    const { httpFailure, networkFailure }= Turbolinks.Constants.ErrorCode
-    const { replace } = Turbolinks.Constants.Action
+    const httpFailure = Turbolinks.Constants.ErrorCode.httpFailure
+    const networkFailure = Turbolinks.Constants.ErrorCode.networkFailure
+    const replace = Turbolinks.Constants.Action.replace
     switch (data.code) {
       case httpFailure: {
         switch (data.statusCode) {
           case 401:
-            this.turboLinks.visit({component: 'AuthenticationView', action: replace})
+            Turbolinks.visit({component: 'AuthenticationView', action: replace})
             break
           case 404:
             var title = 'Page Not Found'
             var message = 'There doesn’t seem to be anything here.'
-            this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
+            Turbolinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
             break
           default:
             var title = 'Unknown Error'
             var message = 'An unknown error occurred.'
-            this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
+            Turbolinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         }
         break
       }
       case networkFailure: {
         var title = 'Can’t Connect'
         var message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.'
-        this.turboLinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
+        Turbolinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         break
       }
     }
-  }
-
-  handleRetry = () => {
-    this.turboLinks.reloadVisitable()
-  }
-
-  handleAuthenticated = () => {
-    this.turboLinks.reloadSession()
-    this.turboLinks.dismiss()
   }
 
   showMessage = (message) => {
@@ -62,13 +60,6 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <Turbolinks ref={(tl) => this.turboLinks = tl}
-                  userAgent='turbolinksDemo'
-                  onVisit={this.handleVisit}
-                  onError={this.handleError}
-                  onMessage={this.showMessage}
-                  style={{flex: 1}}/>
-    )
+    return null
   }
 }

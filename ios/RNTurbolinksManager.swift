@@ -2,14 +2,28 @@ import WebKit
 import Turbolinks
 
 @objc(RNTurbolinksManager)
-class RNTurbolinksManager: RCTViewManager {
+class RNTurbolinksManager: RCTEventEmitter {
     
-    fileprivate var turbolinks: RNTurbolinks!
-    
-    override func view() -> UIView {
-        turbolinks = RNTurbolinks()
-        return turbolinks
+    fileprivate var rootViewController: UIViewController {
+        return UIApplication.shared.delegate!.window!!.rootViewController!
     }
+    
+    fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
+        return WKWebViewConfiguration()
+    }()
+    
+    fileprivate lazy var session: Session = {
+        let session = Session(webViewConfiguration: webViewConfiguration)
+        session.delegate = self
+        return session
+    }()
+
+    fileprivate lazy var navigation: UINavigationController = {
+        let navigation = UINavigationController()
+        navigation.navigationBar.isTranslucent = true
+        rootViewController.view.addSubview(navigation.view)
+        return navigation
+    }()
     
     @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let route = RCTConvert.nsDictionary(routeParam)!
@@ -21,6 +35,23 @@ class RNTurbolinksManager: RCTViewManager {
         visitable.customView = rootView
         visitable.customTitle = title
         visitable.renderComponent()
+    }
+    
+    @objc func reloadVisitable() -> Void {
+        let visitable = session.topmostVisitable as! CustomViewController
+        visitable.reload()
+    }
+    
+    @objc func reloadSession() -> Void {
+        let sharedCookies = HTTPCookieStorage.shared.cookies!
+        let cookieScript = getJSCookiesString(sharedCookies)
+        NSLog(cookieScript)
+        session.webView.evaluateJavaScript(cookieScript)
+        session.reload()
+    }
+    
+    @objc func dismiss() -> Void {
+        navigation.dismiss(animated: true, completion: nil)
     }
     
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
@@ -38,43 +69,23 @@ class RNTurbolinksManager: RCTViewManager {
         }
     }
     
-    @objc func reloadVisitable() -> Void {
-        let visitable = session.topmostVisitable as! CustomViewController
-        visitable.reload()
+    @objc func setUserAgent(_ userAgent: String) -> Void {
+        webViewConfiguration.applicationNameForUserAgent = userAgent
     }
     
-    @objc func reloadSession() -> Void {
-        let sharedCookies = HTTPCookieStorage.shared.cookies!
-        let cookieScript = getJSCookiesString(sharedCookies)
-        session.webView.evaluateJavaScript(cookieScript)
-        session.reload()
+    @objc func setMessageHandler(_ messageHandler: String) -> Void {
+        webViewConfiguration.userContentController.removeScriptMessageHandler(forName: messageHandler)
+        webViewConfiguration.userContentController.add(self, name: messageHandler)
     }
     
-    @objc func dismiss() -> Void {
-        turbolinks.navigationController.dismiss(animated: true, completion: nil)
-    }
-    
-    fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
-        let configuration = WKWebViewConfiguration()
-        configuration.userContentController.add(self, name: turbolinks.userAgent)
-        configuration.applicationNameForUserAgent = turbolinks.userAgent
-        return configuration
-    }()
-    
-    fileprivate lazy var session: Session = {
-        let session = Session(webViewConfiguration: webViewConfiguration)
-        session.delegate = self
-        return session
-    }()
-    
-    fileprivate func presentVisitableForSession(_ session: Session, url: URL, title: String?, action: Action = .Advance) {
+    public func presentVisitableForSession(_ session: Session, url: URL, title: String?, action: Action = .Advance) {
         let visitable = CustomViewController(url: url)
         visitable.customTitle = title
         if action == .Advance {
-            turbolinks.navigationController.pushViewController(visitable, animated: true)
+            navigation.pushViewController(visitable, animated: true)
         } else if action == .Replace {
-            turbolinks.navigationController.popViewController(animated: false)
-            turbolinks.navigationController.pushViewController(visitable, animated: false)
+            navigation.popViewController(animated: false)
+            navigation.pushViewController(visitable, animated: false)
         }
         session.visit(visitable)
     }
@@ -84,9 +95,9 @@ class RNTurbolinksManager: RCTViewManager {
         viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         viewController.title = title
         if action == .Advance {
-            turbolinks.navigationController.pushViewController(viewController, animated: true)
+            navigation.pushViewController(viewController, animated: true)
         } else if action == .Replace {
-            turbolinks.navigationController.present(viewController, animated: true, completion: nil)
+            navigation.present(viewController, animated: true, completion: nil)
         }
     }
     
@@ -125,15 +136,19 @@ class RNTurbolinksManager: RCTViewManager {
             ]
         ]
     }
+    
+    override func supportedEvents() -> [String]! {
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError"]
+    }
 }
 
 extension RNTurbolinksManager: SessionDelegate {
     func session(_ session: Session, didProposeVisitToURL URL: URL, withAction action: Action) {
-        turbolinks.onVisit?(["data": ["url": URL.absoluteString, "path": URL.path, "action": action.rawValue]])
+        sendEvent(withName: "turbolinksVisit", body: ["url": URL.absoluteString, "path": URL.path, "action": action.rawValue])
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
-        turbolinks.onError?(["data": ["code": error.code, "statusCode": error.userInfo["statusCode"], "description": error.localizedDescription]])
+        sendEvent(withName: "turbolinksError", body: ["code": error.code, "statusCode": error.userInfo["statusCode"]])
     }
     
     func sessionDidStartRequest(_ session: Session) {
@@ -147,6 +162,6 @@ extension RNTurbolinksManager: SessionDelegate {
 
 extension RNTurbolinksManager: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if let message = message.body as? String { turbolinks.onMessage?(["message": message]) }
+        if let message = message.body as? String { sendEvent(withName: "turbolinksMessage", body: message) }
     }
 }

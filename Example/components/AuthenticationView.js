@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NavigatorIOS, WebView } from 'react-native'
+import Turbolinks from 'react-native-turbolinks'
 
 export default class AuthenticationView extends Component {
 
@@ -15,8 +16,13 @@ class MyScene extends Component {
 
   state = { url: 'http://localhost:9292/sign-in' }
 
+  handleAuthenticated = () => {
+    Turbolinks.reloadSession()
+    Turbolinks.dismiss()
+  }
+
   handleNavigationStateChange = (navState) => {
-    if (this.state.url != navState.url) { PubSub.publish('authenticatedEvent') }
+    if (this.state.url != navState.url) { this.handleAuthenticated() }
     this.setState({ url: navState.url })
   }
 

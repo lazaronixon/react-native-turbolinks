@@ -1,14 +1,11 @@
 #import <React/RCTBridgeModule.h>
-#import <React/RCTViewManager.h>
 
-@interface RCT_EXTERN_MODULE(RNTurbolinksManager, RCTViewManager)
+@interface RCT_EXTERN_MODULE(RNTurbolinksManager, NSObject)
 RCT_EXTERN_METHOD(reloadVisitable)
 RCT_EXTERN_METHOD(reloadSession)
 RCT_EXTERN_METHOD(dismiss)
 RCT_EXTERN_METHOD(visit:(NSDictionary *))
 RCT_EXTERN_METHOD(replaceWith:(NSDictionary *))
-RCT_EXPORT_VIEW_PROPERTY(userAgent, NSString)
-RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
-RCT_EXPORT_VIEW_PROPERTY(onVisit, RCTDirectEventBlock)
-RCT_EXPORT_VIEW_PROPERTY(onError, RCTDirectEventBlock)
+RCT_EXTERN_METHOD(setUserAgent:NSString)
+RCT_EXTERN_METHOD(setMessageHandler:NSString)
 @end

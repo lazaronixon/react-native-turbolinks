@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { FlatList, View, Button, Text, StyleSheet }from 'react-native'
-import PubSub from 'pubsub-js'
+import Turbolinks from 'react-native-turbolinks'
 
 export default class ErrorView extends Component {
 
   retry = () => {
-    PubSub.publish('retryEvent')
+    Turbolinks.reloadVisitable()
   }
 
   render() {
