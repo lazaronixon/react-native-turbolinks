@@ -21,6 +21,8 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
     private static final String INTENT_ACTION = "intentAction";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
+    private static final Integer HTTP_FAILURE = 0;
+    private static final Integer NETWORK_FAILURE = 1;
 
     private String location;
     private String fromActivity;
@@ -78,22 +80,26 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
 
     @Override
     public void onReceivedError(int errorCode) {
-
+        WritableMap params = Arguments.createMap();
+        params.putInt("code", NETWORK_FAILURE);
+        params.putInt("statusCode", 0);
+        getEventEmitter().emit("turbolinksError", params);
     }
 
     @Override
     public void pageInvalidated() {
-
     }
 
     @Override
     public void requestFailedWithStatusCode(int statusCode) {
-
+        WritableMap params = Arguments.createMap();
+        params.putInt("code", HTTP_FAILURE);
+        params.putInt("statusCode", statusCode);
+        getEventEmitter().emit("turbolinksError", params);
     }
 
     @Override
     public void visitCompleted() {
-
     }
 
     @Override

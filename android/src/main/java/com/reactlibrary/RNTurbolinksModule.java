@@ -38,6 +38,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void replaceWith(ReadableMap rp) {
+        String component = rp.getString("component");
+        ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
+        Bundle bundleProps = props != null ? Arguments.toBundle(props) : null;
+        presentNativeView(component, bundleProps, "replace");
     }
 
     @ReactMethod
@@ -92,8 +96,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_ACTION, action);
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
         intent.putExtra(INTENT_USER_AGENT, userAgent);
-        if (action.equals("replace")) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
+        if (action.equals("replace")) activity.finish();
     }
 
     private void presentNativeView(String component, Bundle props, String action) {
@@ -103,6 +107,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_PROPS, props);
         intent.putExtra(INTENT_ACTION, action);
         activity.startActivity(intent);
+        if (action.equals("replace")) activity.finish();
     }
 
 }
