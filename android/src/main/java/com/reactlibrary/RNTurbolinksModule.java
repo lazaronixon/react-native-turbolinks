@@ -92,11 +92,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Activity activity = getCurrentActivity();
         Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
         intent.putExtra(INTENT_URL, url);
-        intent.putExtra(INTENT_FROM, activity.getClass().getSimpleName());
+        intent.putExtra(INTENT_FROM, getCurrentActivityName());
         intent.putExtra(INTENT_ACTION, action);
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         activity.startActivity(intent);
+        if (getCurrentActivityName().equals("MainActivity")) activity.finish();
         if (action.equals("replace")) activity.finish();
     }
 
@@ -107,7 +108,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_PROPS, props);
         intent.putExtra(INTENT_ACTION, action);
         activity.startActivity(intent);
+        if (getCurrentActivityName().equals("MainActivity")) activity.finish();
         if (action.equals("replace")) activity.finish();
+    }
+
+    private String getCurrentActivityName() {
+        return getCurrentActivity().getClass().getSimpleName();
     }
 
 }
