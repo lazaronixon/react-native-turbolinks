@@ -12,20 +12,15 @@ public class NativeActivity extends ReactActivity implements DefaultHardwareBack
     private static final String INTENT_COMPONENT = "intentComponent";
     private static final String INTENT_PROPS = "intentProps";
 
-    private ReactRootView mReactRootView;
-    private ReactInstanceManager mReactInstanceManager;
-    private String component;
-    private Bundle props;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        component = getIntent().getStringExtra(INTENT_COMPONENT);
-        props = getIntent().getBundleExtra(INTENT_PROPS);
+        String component = getIntent().getStringExtra(INTENT_COMPONENT);
+        Bundle props = getIntent().getBundleExtra(INTENT_PROPS);
 
-        mReactRootView = new ReactRootView(this);
-        mReactInstanceManager = getReactInstanceManager();
+        ReactRootView mReactRootView = new ReactRootView(this);
+        ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
 
         mReactRootView.startReactApplication(mReactInstanceManager, component, props);
         setContentView(mReactRootView);

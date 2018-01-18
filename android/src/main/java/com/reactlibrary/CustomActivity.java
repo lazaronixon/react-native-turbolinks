@@ -1,6 +1,7 @@
 package com.reactlibrary;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
@@ -9,6 +10,7 @@ import com.basecamp.turbolinks.TurbolinksView;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
 import java.net.MalformedURLException;
@@ -95,7 +97,7 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
             params.putString("action", action);
             getEventEmitter().emit("turbolinksVisit", params);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
         }
     }
 
