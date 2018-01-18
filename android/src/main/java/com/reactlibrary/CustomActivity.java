@@ -1,43 +1,53 @@
 package com.reactlibrary;
 
 import android.os.Bundle;
+import android.webkit.JavascriptInterface;
 
+import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
+import com.basecamp.turbolinks.TurbolinksView;
 import com.facebook.react.ReactActivity;
-import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
-public class CustomActivity extends ReactActivity {
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
 
     private static final String INTENT_URL = "intentUrl";
     private static final String INTENT_FROM = "intentFrom";
     private static final String INTENT_ACTION = "intentAction";
+    private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
-    private static final String INTENT_REACT_TAG = "intentReactTag";
 
     private String location;
     private String fromActivity;
     private String action;
+    private String messageHandler;
     private String userAgent;
-    private Integer reactTag;
-    private RNTurbolinksView turbolinksView;
+    private TurbolinksView turbolinksView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         location = getIntent().getStringExtra(INTENT_URL);
         fromActivity = getIntent().getStringExtra(INTENT_FROM);
-        reactTag = getIntent().getIntExtra(INTENT_REACT_TAG, 0);
         action = getIntent().getStringExtra(INTENT_ACTION);
+        messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
         handleAnimation(true);
         setContentView(R.layout.activity_custom);
-        turbolinksView = (RNTurbolinksView) findViewById(R.id.turbolinks_view);
-        turbolinksView.setId(reactTag);
+        turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
-        TurbolinksSession.getDefault(this).getWebView().getSettings().setUserAgentString(userAgent);
-        TurbolinksSession.getDefault(this).addJavascriptInterface(turbolinksView, userAgent);
-        TurbolinksSession.getDefault(this).activity(this).adapter(turbolinksView).view(turbolinksView).visit(location);
+        if (messageHandler != null)
+            TurbolinksSession.getDefault(this).addJavascriptInterface(this, messageHandler);
+        if (userAgent != null)
+            TurbolinksSession.getDefault(this).getWebView().getSettings().setUserAgentString(userAgent);
+        TurbolinksSession.getDefault(this).activity(this).adapter(this).view(turbolinksView).visit(location);
     }
 
     @Override
@@ -46,7 +56,7 @@ public class CustomActivity extends ReactActivity {
         handleAnimation(false);
         TurbolinksSession.getDefault(this)
                 .activity(this)
-                .adapter(turbolinksView)
+                .adapter(this)
                 .restoreWithCachedSnapshot(true)
                 .view(turbolinksView)
                 .visit(location);
@@ -61,8 +71,48 @@ public class CustomActivity extends ReactActivity {
         }
     }
 
-    public ReactContext getReactContext() {
-        return getReactInstanceManager().getCurrentReactContext();
+    @Override
+    public void onPageFinished() {
+
+    }
+
+    @Override
+    public void onReceivedError(int errorCode) {
+
+    }
+
+    @Override
+    public void pageInvalidated() {
+
+    }
+
+    @Override
+    public void requestFailedWithStatusCode(int statusCode) {
+
+    }
+
+    @Override
+    public void visitCompleted() {
+
+    }
+
+    @Override
+    public void visitProposedToLocationWithAction(String location, String action) {
+        try {
+            WritableMap params = Arguments.createMap();
+            URL urlLocation = new URL(location);
+            params.putString("url", urlLocation.toString());
+            params.putString("path", urlLocation.getPath());
+            params.putString("action", action);
+            getEventEmitter().emit("turbolinksVisit", params);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @JavascriptInterface
+    public void postMessage(String message) {
+        getEventEmitter().emit("turbolinksMessage", message);
     }
 
     private void handleAnimation(Boolean isForward) {
@@ -78,4 +128,9 @@ public class CustomActivity extends ReactActivity {
             overridePendingTransition(R.anim.nothing, R.anim.nothing);
         }
     }
+
+    private RCTDeviceEventEmitter getEventEmitter() {
+        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
+    }
+
 }

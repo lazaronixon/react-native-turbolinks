@@ -8,12 +8,7 @@ export default class App extends Component {
     Turbolinks.addListener('turbolinksError', this.handleError)
     Turbolinks.addListener('turbolinksMessage', this.showMessage)
     Turbolinks.setMessageHandler('turbolinksDemo')
-    Turbolinks.visit({url: 'http://localhost:9292'})
-  }
-
-  componentWillUnmount() {
-    Turbolinks.removeEventListener('turbolinksVisit', this.handleVisit);
-    Turbolinks.removeEventListener('turbolinksMessage', this.showMessage);
+    Turbolinks.visit({url: 'http://192.168.1.2:9292'})
   }
 
   handleVisit = (data) => {

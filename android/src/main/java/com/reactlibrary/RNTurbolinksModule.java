@@ -11,9 +11,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
-import com.facebook.react.uimanager.NativeViewHierarchyManager;
-import com.facebook.react.uimanager.UIBlock;
-import com.facebook.react.uimanager.UIManagerModule;
 
 import java.util.Map;
 
@@ -24,8 +21,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_PROPS = "intentProps";
     private static final String INTENT_FROM = "intentFrom";
     private static final String INTENT_ACTION = "intentAction";
+    private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
-    private static final String INTENT_REACT_TAG = "intentReactTag";
+
+    private String messageHandler;
+    private String userAgent;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -37,21 +37,31 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void replaceWith(ReadableMap routeParam) {
+    public void replaceWith(ReadableMap rp) {
     }
 
     @ReactMethod
-    public void visit(Integer reactTag, ReadableMap rp) {
+    public void visit(ReadableMap rp) {
         String url = rp.hasKey("url") ? rp.getString("url") : null;
         String action = rp.hasKey("action") ? rp.getString("action") : "advance";
         if (url != null) {
-            presentActivityForSession(reactTag, url, action);
+            presentActivityForSession(url, action);
         } else {
             String component = rp.getString("component");
             ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
-            Bundle bundleProps =  props != null ? Arguments.toBundle(props) : null;
+            Bundle bundleProps = props != null ? Arguments.toBundle(props) : null;
             presentNativeView(component, bundleProps, action);
         }
+    }
+
+    @ReactMethod
+    public void setMessageHandler(String messageHandler) {
+        this.messageHandler = messageHandler;
+    }
+
+    @ReactMethod
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
     }
 
     @ReactMethod
@@ -74,21 +84,16 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         );
     }
 
-    private void presentActivityForSession(final Integer reactTag, final String url, final String action) {
-        getNativeModule().addUIBlock(new UIBlock() {
-            public void execute(NativeViewHierarchyManager nvhm) {
-                RNTurbolinksView view = (RNTurbolinksView) nvhm.resolveView(reactTag);
-                Activity activity = getCurrentActivity();
-                Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
-                intent.putExtra(INTENT_URL, url);
-                intent.putExtra(INTENT_FROM, activity.getClass().getSimpleName());
-                intent.putExtra(INTENT_ACTION, action);
-                intent.putExtra(INTENT_USER_AGENT, view.getUserAgent());
-                intent.putExtra(INTENT_REACT_TAG, reactTag);
-                if (action.equals("replace")) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                activity.startActivity(intent);
-            }
-        });
+    private void presentActivityForSession(String url, String action) {
+        Activity activity = getCurrentActivity();
+        Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
+        intent.putExtra(INTENT_URL, url);
+        intent.putExtra(INTENT_FROM, activity.getClass().getSimpleName());
+        intent.putExtra(INTENT_ACTION, action);
+        intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
+        intent.putExtra(INTENT_USER_AGENT, userAgent);
+        if (action.equals("replace")) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
     }
 
     private void presentNativeView(String component, Bundle props, String action) {
@@ -100,7 +105,4 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         activity.startActivity(intent);
     }
 
-    private UIManagerModule getNativeModule() {
-        return getReactApplicationContext().getNativeModule(UIManagerModule.class);
-    }
 }
