@@ -17,16 +17,12 @@ import java.net.URL;
 public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
 
     private static final String INTENT_URL = "intentUrl";
-    private static final String INTENT_FROM = "intentFrom";
-    private static final String INTENT_ACTION = "intentAction";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
     private static final Integer HTTP_FAILURE = 0;
     private static final Integer NETWORK_FAILURE = 1;
 
     private String location;
-    private String fromActivity;
-    private String action;
     private String messageHandler;
     private String userAgent;
     private TurbolinksView turbolinksView;
@@ -36,12 +32,9 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
         super.onCreate(savedInstanceState);
 
         location = getIntent().getStringExtra(INTENT_URL);
-        fromActivity = getIntent().getStringExtra(INTENT_FROM);
-        action = getIntent().getStringExtra(INTENT_ACTION);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        handleAnimation(true);
         setContentView(R.layout.activity_custom);
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
@@ -55,22 +48,12 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
     @Override
     protected void onRestart() {
         super.onRestart();
-        handleAnimation(false);
         TurbolinksSession.getDefault(this)
                 .activity(this)
                 .adapter(this)
                 .restoreWithCachedSnapshot(true)
                 .view(turbolinksView)
                 .visit(location);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (fromActivity.equals("MainActivity")) {
-            moveTaskToBack(true);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -119,20 +102,6 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
     @JavascriptInterface
     public void postMessage(String message) {
         getEventEmitter().emit("turbolinksMessage", message);
-    }
-
-    private void handleAnimation(Boolean isForward) {
-        if (fromActivity.equals("MainActivity") && isForward) {
-            overridePendingTransition(R.anim.nothing, R.anim.nothing);
-        } else if (action.equals("advance")) {
-            if (isForward) {
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else {
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-        } else if (action.equals("replace")) {
-            overridePendingTransition(R.anim.nothing, R.anim.nothing);
-        }
     }
 
     private RCTDeviceEventEmitter getEventEmitter() {
