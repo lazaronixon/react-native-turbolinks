@@ -20,7 +20,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_COMPONENT = "intentComponent";
     private static final String INTENT_PROPS = "intentProps";
     private static final String INTENT_FROM = "intentFrom";
-    private static final String INTENT_ACTION = "intentAction";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
 
@@ -93,7 +92,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
         intent.putExtra(INTENT_URL, url);
         intent.putExtra(INTENT_FROM, getCurrentActivityName());
-        intent.putExtra(INTENT_ACTION, action);
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         activity.startActivity(intent);
@@ -106,7 +104,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_COMPONENT, component);
         intent.putExtra(INTENT_PROPS, props);
-        intent.putExtra(INTENT_ACTION, action);
         activity.startActivity(intent);
         if (getCurrentActivityName().equals("MainActivity")) activity.finish();
         if (action.equals("replace")) activity.finish();
