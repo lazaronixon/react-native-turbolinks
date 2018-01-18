@@ -24,6 +24,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     private String messageHandler;
     private String userAgent;
+    private String prevLocation;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -56,6 +57,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setUserAgent(String userAgent) { this.userAgent = userAgent; }
 
+    @ReactMethod
+    public void reloadVisitable() {
+        presentActivityForSession(prevLocation, "replace");
+    }
 
     @ReactMethod
     public void reloadSession() {
@@ -82,6 +87,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         activity.startActivity(intent);
         if (getCurrentActivityName().equals("MainActivity")) activity.finish();
         if (action.equals("replace")) activity.finish();
+        this.prevLocation = url;
     }
 
     private void presentNativeView(String component, Bundle props, String action) {

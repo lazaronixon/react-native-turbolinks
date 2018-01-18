@@ -9,12 +9,11 @@ export default class ErrorView extends Component {
   }
 
   render() {
-    let retryButton = Platform.OS == 'ios' ? <Button onPress={this.retry} title="Retry" /> : null
     return (
       <View style={styles.container}>
         <Text style={styles.h1}>{this.props.title}</Text>
         <Text style={styles.p}>{this.props.message}</Text>
-        {retryButton}
+        <Button onPress={this.retry} title="Retry" />
       </View>
     )
   }
