@@ -35,14 +35,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void replaceWith(ReadableMap rp) {
-        String component = rp.getString("component");
-        ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
-        Bundle bundleProps = props != null ? Arguments.toBundle(props) : null;
-        presentNativeView(component, bundleProps, "replace");
-    }
-
-    @ReactMethod
     public void visit(ReadableMap rp) {
         String url = rp.hasKey("url") ? rp.getString("url") : null;
         String action = rp.hasKey("action") ? rp.getString("action") : "advance";
@@ -62,13 +54,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
-    }
+    public void setUserAgent(String userAgent) { this.userAgent = userAgent; }
 
-    @ReactMethod
-    public void reloadVisitable() {
-    }
 
     @ReactMethod
     public void reloadSession() {
