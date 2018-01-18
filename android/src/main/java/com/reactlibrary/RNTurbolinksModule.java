@@ -58,9 +58,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void setUserAgent(String userAgent) { this.userAgent = userAgent; }
 
     @ReactMethod
-    public void reloadVisitable() {
-        presentActivityForSession(prevLocation, "replace");
-    }
+    public void reloadVisitable() { presentActivityForSession(prevLocation, "replace"); }
 
     @ReactMethod
     public void reloadSession() {
