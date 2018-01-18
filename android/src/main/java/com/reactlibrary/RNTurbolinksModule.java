@@ -19,7 +19,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_URL = "intentUrl";
     private static final String INTENT_COMPONENT = "intentComponent";
     private static final String INTENT_PROPS = "intentProps";
-    private static final String INTENT_FROM = "intentFrom";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
 
@@ -91,7 +90,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Activity activity = getCurrentActivity();
         Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
         intent.putExtra(INTENT_URL, url);
-        intent.putExtra(INTENT_FROM, getCurrentActivityName());
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         activity.startActivity(intent);
