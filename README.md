@@ -38,7 +38,7 @@ export default class App extends Component {
   }
 
   handleVisit = (data) => {
-    this.turboLinks.visit({url: data.url, action: data.action})
+    Turbolinks.visit({url: data.url, action: data.action})
   }
 
   handleError = (data) => {
