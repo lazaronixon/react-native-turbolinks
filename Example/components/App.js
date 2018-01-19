@@ -9,7 +9,7 @@ export default class App extends Component {
     Turbolinks.addListener('turbolinksError', this.handleError)
     Turbolinks.addListener('turbolinksMessage', this.showMessage)
     Turbolinks.setMessageHandler('turbolinksDemo')
-    Turbolinks.visit({url: 'http://192.168.1.2:9292'})
+    Turbolinks.visit({url: 'http://192.168.100.162:9292'})
   }
 
   handleVisit = (data) => {
@@ -37,7 +37,7 @@ export default class App extends Component {
       case httpFailure: {
         switch (data.statusCode) {
           case 401:
-            Turbolinks.visit({component: 'AuthenticationView', handleBack: false, action: replace})
+            Turbolinks.visit({component: 'AuthenticationView', modal: true})
             break
           case 404:
             var title = 'Page Not Found'

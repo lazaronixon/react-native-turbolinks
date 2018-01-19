@@ -2,6 +2,7 @@ package com.reactlibrary;
 
 import android.os.Bundle;
 
+import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
@@ -11,15 +12,15 @@ public class NativeActivity extends ReactActivity implements DefaultHardwareBack
 
     private static final String INTENT_COMPONENT = "intentComponent";
     private static final String INTENT_PROPS = "intentProps";
-    private static final String INTENT_HANDLE_BACK = "intentHandleBack";
+    private static final String INTENT_MODAL = "intentModal";
 
-    private Boolean handleBack;
+    private Boolean modal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        handleBack = getIntent().getBooleanExtra(INTENT_HANDLE_BACK, true);
+        modal = getIntent().getBooleanExtra(INTENT_MODAL, false);
 
         String component = getIntent().getStringExtra(INTENT_COMPONENT);
         Bundle props = getIntent().getBundleExtra(INTENT_PROPS);
@@ -33,7 +34,7 @@ public class NativeActivity extends ReactActivity implements DefaultHardwareBack
 
     @Override
     public void onBackPressed() {
-        if (handleBack) super.onBackPressed();
+        if (!modal) super.onBackPressed();
     }
 
 }

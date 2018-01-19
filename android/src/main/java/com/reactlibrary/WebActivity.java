@@ -16,19 +16,17 @@ import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEm
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
+public class WebActivity extends ReactActivity implements TurbolinksAdapter {
 
     private static final String INTENT_URL = "intentUrl";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
-    private static final String INTENT_HANDLE_BACK = "intentHandleBack";
     private static final Integer HTTP_FAILURE = 0;
     private static final Integer NETWORK_FAILURE = 1;
 
     private String location;
     private String messageHandler;
     private String userAgent;
-    private Boolean handleBack;
     private TurbolinksView turbolinksView;
 
     @Override
@@ -38,7 +36,6 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
         location = getIntent().getStringExtra(INTENT_URL);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
-        handleBack = getIntent().getBooleanExtra(INTENT_HANDLE_BACK, true);
 
         setContentView(R.layout.activity_custom);
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
@@ -105,14 +102,13 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
     public void pageInvalidated() {
     }
 
-    @Override
-    public void onBackPressed() {
-        if (handleBack) super.onBackPressed();
-    }
-
     @JavascriptInterface
     public void postMessage(String message) {
         getEventEmitter().emit("turbolinksMessage", message);
+    }
+
+    public void reloadSession() {
+        TurbolinksSession.getDefault(this).getWebView().reload();
     }
 
     private RCTDeviceEventEmitter getEventEmitter() {

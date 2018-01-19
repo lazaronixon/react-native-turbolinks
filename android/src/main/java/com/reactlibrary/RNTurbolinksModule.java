@@ -27,7 +27,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_PROPS = "intentProps";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
-    private static final String INTENT_HANDLE_BACK = "intentHandleBack";
+    private static final String INTENT_MODAL = "intentModal";
 
     private String messageHandler;
     private String userAgent;
@@ -50,10 +50,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
             presentActivityForSession(url, action);
         } else {
             String component = rp.getString("component");
-            Boolean handleBack = rp.hasKey("handleBack") ? rp.getBoolean("handleBack") : true;
+            Boolean modal = rp.hasKey("modal") ? rp.getBoolean("modal") : false;
             ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
             Bundle bundleProps = props != null ? Arguments.toBundle(props) : null;
-            presentNativeView(component, handleBack, bundleProps, action);
+            presentNativeView(component, modal, bundleProps, action);
         }
     }
 
@@ -74,10 +74,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void reloadSession() {
+        ((WebActivity) getCurrentActivity()).reloadSession();
     }
 
     @ReactMethod
-    public void dismiss() {
+    public void dismiss() throws InterruptedException {
+        getCurrentActivity().finish();
     }
 
     @Override
@@ -94,7 +96,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
             URL prevUrl = prevLocation != null ? new URL(prevLocation) : new URL(url);
             URL nextUrl = new URL(url);
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
-                Intent intent = new Intent(getReactApplicationContext(), CustomActivity.class);
+                Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
                 intent.putExtra(INTENT_URL, url);
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
@@ -111,12 +113,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private void presentNativeView(String component, Boolean handleBack, Bundle props, String action) {
+    private void presentNativeView(String component, Boolean modal, Bundle props, String action) {
         Activity activity = getCurrentActivity();
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_COMPONENT, component);
         intent.putExtra(INTENT_PROPS, props);
-        intent.putExtra(INTENT_HANDLE_BACK, handleBack);
+        intent.putExtra(INTENT_MODAL, modal);
         activity.startActivity(intent);
         if (getCurrentActivityName().equals("MainActivity")) activity.finish();
         if (action.equals("replace")) activity.finish();
