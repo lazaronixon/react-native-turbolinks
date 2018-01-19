@@ -19,12 +19,14 @@ import java.net.URL;
 public class WebActivity extends ReactActivity implements TurbolinksAdapter {
 
     private static final String INTENT_URL = "intentUrl";
+    private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
     private static final Integer HTTP_FAILURE = 0;
     private static final Integer NETWORK_FAILURE = 1;
 
     private String location;
+    private Boolean initialVisit;
     private String messageHandler;
     private String userAgent;
     private TurbolinksView turbolinksView;
@@ -34,6 +36,7 @@ public class WebActivity extends ReactActivity implements TurbolinksAdapter {
         super.onCreate(savedInstanceState);
 
         location = getIntent().getStringExtra(INTENT_URL);
+        initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
@@ -100,6 +103,15 @@ public class WebActivity extends ReactActivity implements TurbolinksAdapter {
 
     @Override
     public void pageInvalidated() {
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (initialVisit) {
+            moveTaskToBack(true);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @JavascriptInterface

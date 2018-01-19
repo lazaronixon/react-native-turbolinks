@@ -11,15 +11,18 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 public class NativeActivity extends ReactActivity implements DefaultHardwareBackBtnHandler {
 
     private static final String INTENT_COMPONENT = "intentComponent";
+    private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
     private static final String INTENT_PROPS = "intentProps";
     private static final String INTENT_MODAL = "intentModal";
 
+    private Boolean initialVisit;
     private Boolean modal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         modal = getIntent().getBooleanExtra(INTENT_MODAL, false);
 
         String component = getIntent().getStringExtra(INTENT_COMPONENT);
@@ -34,7 +37,11 @@ public class NativeActivity extends ReactActivity implements DefaultHardwareBack
 
     @Override
     public void onBackPressed() {
-        if (!modal) super.onBackPressed();
+        if (initialVisit) {
+            moveTaskToBack(true);
+        } else {
+            if (!modal) super.onBackPressed();
+        }
     }
 
 }

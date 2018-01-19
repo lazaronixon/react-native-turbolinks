@@ -24,14 +24,17 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     private static final String INTENT_URL = "intentUrl";
     private static final String INTENT_COMPONENT = "intentComponent";
+    private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
     private static final String INTENT_PROPS = "intentProps";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
     private static final String INTENT_MODAL = "intentModal";
 
+
     private String messageHandler;
     private String userAgent;
     private String prevLocation;
+    private Boolean initialVisit = true;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -48,12 +51,14 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         String action = rp.hasKey("action") ? rp.getString("action") : "advance";
         if (url != null) {
             presentActivityForSession(url, action);
+            this.initialVisit = false;
         } else {
             String component = rp.getString("component");
             Boolean modal = rp.hasKey("modal") ? rp.getBoolean("modal") : false;
             ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
             Bundle bundleProps = props != null ? Arguments.toBundle(props) : null;
             presentNativeView(component, modal, bundleProps, action);
+            this.initialVisit = false;
         }
     }
 
@@ -100,8 +105,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_URL, url);
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
+                intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
                 activity.startActivity(intent);
-                if (getCurrentActivityName().equals("MainActivity")) activity.finish();
                 if (action.equals("replace")) activity.finish();
                 this.prevLocation = url;
             } else {
@@ -119,8 +124,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_COMPONENT, component);
         intent.putExtra(INTENT_PROPS, props);
         intent.putExtra(INTENT_MODAL, modal);
+        intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
         activity.startActivity(intent);
-        if (getCurrentActivityName().equals("MainActivity")) activity.finish();
         if (action.equals("replace")) activity.finish();
     }
 
