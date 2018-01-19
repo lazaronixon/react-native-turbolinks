@@ -15,6 +15,12 @@ Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode E
 
 ![Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
 
+### Installation Android
+Change the variables below on `/android/app/build.gradle`.
+- compileSdkVersion 25
+- buildToolsVersion "25.0.3"
+- minSdkVersion 19
+
 ### Warning
 This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the ![guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
 
