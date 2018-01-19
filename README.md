@@ -66,7 +66,7 @@ Visit a URL with Turbolinks, your params are url, custom title and action. If ac
 #### `visit({component:required, title, modal, passProps, action})`
 Visit a Component with Turbolinks, your params are component, title, modal, passProps that is a hash with props to next component and action. If action is 'advance'(default), so it will perform a animated push, if "replace" will perform a pop without animation on a overlaped view.
 
-#### `replaceWith({component:required, title, passProps}) (IOS ONLY)`
+#### `replaceWith({component:required, title, passProps}) (iOS ONLY)`
 Replace current visitable with a component, your params are component, title and passProps that is a hash with props to next component.
 
 #### `reloadVisitable()`
@@ -83,6 +83,9 @@ Adds an event handler. Supported events:
 - `onVisit`: Fires when you tap a Turbolinks-enabled link or call Turbolinks.visit(...). The argument to the event handler is an object with keys: `url, path, action`.
 - `onError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
 - `onMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
+
+#### `removeEventListener(eventName, handler)`
+Removes the listener for given event.
 
 ## Constants
 
