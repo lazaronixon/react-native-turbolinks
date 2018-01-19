@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { NavigatorIOS, Platform, WebView } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
+import Constants from './Constants';
 
 export default class AuthenticationView extends Component {
 
@@ -15,7 +16,7 @@ export default class AuthenticationView extends Component {
 
 class MyScene extends Component {
 
-  state = { url: 'http://192.168.100.162:9292/sign-in' }
+  state = { url: Constants.baseUrl + '/sign-in' }
 
   handleNavigationStateChange = (navState) => {
     if (this.state.url != navState.url) { Turbolinks.dismiss() }
