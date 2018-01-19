@@ -3,6 +3,8 @@ package com.reactlibrary;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceError;
+import android.webkit.WebViewClient;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -68,6 +70,8 @@ public class WebActivity extends ReactActivity implements TurbolinksAdapter {
         WritableMap params = Arguments.createMap();
         params.putInt("code", NETWORK_FAILURE);
         params.putInt("statusCode", 0);
+        params.putString("description", "Network Failure.");
+        WebViewClient wb = new WebViewClient();
         getEventEmitter().emit("turbolinksError", params);
     }
 
@@ -76,6 +80,7 @@ public class WebActivity extends ReactActivity implements TurbolinksAdapter {
         WritableMap params = Arguments.createMap();
         params.putInt("code", HTTP_FAILURE);
         params.putInt("statusCode", statusCode);
+        params.putString("description", "HTTP Failure. Code:" + statusCode);
         getEventEmitter().emit("turbolinksError", params);
     }
 
