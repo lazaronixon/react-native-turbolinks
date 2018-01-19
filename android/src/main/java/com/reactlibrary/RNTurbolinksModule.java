@@ -16,7 +16,6 @@ import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
@@ -28,6 +27,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_PROPS = "intentProps";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
+    private static final String INTENT_HANDLE_BACK = "intentHandleBack";
 
     private String messageHandler;
     private String userAgent;
@@ -50,9 +50,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
             presentActivityForSession(url, action);
         } else {
             String component = rp.getString("component");
+            Boolean handleBack = rp.hasKey("handleBack") ? rp.getBoolean("handleBack") : true;
             ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
             Bundle bundleProps = props != null ? Arguments.toBundle(props) : null;
-            presentNativeView(component, bundleProps, action);
+            presentNativeView(component, handleBack, bundleProps, action);
         }
     }
 
@@ -62,10 +63,14 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setUserAgent(String userAgent) { this.userAgent = userAgent; }
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
 
     @ReactMethod
-    public void reloadVisitable() { presentActivityForSession(prevLocation, "replace"); }
+    public void reloadVisitable() {
+        presentActivityForSession(prevLocation, "replace");
+    }
 
     @ReactMethod
     public void reloadSession() {
@@ -83,7 +88,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         );
     }
 
-    private void presentActivityForSession(String url, String action){
+    private void presentActivityForSession(String url, String action) {
         try {
             Activity activity = getCurrentActivity();
             URL prevUrl = prevLocation != null ? new URL(prevLocation) : new URL(url);
@@ -106,11 +111,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private void presentNativeView(String component, Bundle props, String action) {
+    private void presentNativeView(String component, Boolean handleBack, Bundle props, String action) {
         Activity activity = getCurrentActivity();
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_COMPONENT, component);
         intent.putExtra(INTENT_PROPS, props);
+        intent.putExtra(INTENT_HANDLE_BACK, handleBack);
         activity.startActivity(intent);
         if (getCurrentActivityName().equals("MainActivity")) activity.finish();
         if (action.equals("replace")) activity.finish();

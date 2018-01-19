@@ -21,12 +21,14 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
     private static final String INTENT_URL = "intentUrl";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
+    private static final String INTENT_HANDLE_BACK = "intentHandleBack";
     private static final Integer HTTP_FAILURE = 0;
     private static final Integer NETWORK_FAILURE = 1;
 
     private String location;
     private String messageHandler;
     private String userAgent;
+    private Boolean handleBack;
     private TurbolinksView turbolinksView;
 
     @Override
@@ -36,14 +38,17 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
         location = getIntent().getStringExtra(INTENT_URL);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
+        handleBack = getIntent().getBooleanExtra(INTENT_HANDLE_BACK, true);
 
         setContentView(R.layout.activity_custom);
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
-        if (messageHandler != null)
+        if (messageHandler != null) {
             TurbolinksSession.getDefault(this).addJavascriptInterface(this, messageHandler);
-        if (userAgent != null)
+        }
+        if (userAgent != null) {
             TurbolinksSession.getDefault(this).getWebView().getSettings().setUserAgentString(userAgent);
+        }
         TurbolinksSession.getDefault(this).activity(this).adapter(this).view(turbolinksView).visit(location);
     }
 
@@ -59,11 +64,6 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
     }
 
     @Override
-    public void onPageFinished() {
-
-    }
-
-    @Override
     public void onReceivedError(int errorCode) {
         WritableMap params = Arguments.createMap();
         params.putInt("code", NETWORK_FAILURE);
@@ -72,19 +72,11 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
     }
 
     @Override
-    public void pageInvalidated() {
-    }
-
-    @Override
     public void requestFailedWithStatusCode(int statusCode) {
         WritableMap params = Arguments.createMap();
         params.putInt("code", HTTP_FAILURE);
         params.putInt("statusCode", statusCode);
         getEventEmitter().emit("turbolinksError", params);
-    }
-
-    @Override
-    public void visitCompleted() {
     }
 
     @Override
@@ -99,6 +91,23 @@ public class CustomActivity extends ReactActivity implements TurbolinksAdapter {
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
         }
+    }
+
+    @Override
+    public void visitCompleted() {
+    }
+
+    @Override
+    public void onPageFinished() {
+    }
+
+    @Override
+    public void pageInvalidated() {
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (handleBack) super.onBackPressed();
     }
 
     @JavascriptInterface
