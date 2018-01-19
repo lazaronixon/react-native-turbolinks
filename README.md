@@ -34,7 +34,7 @@ export default class App extends Component {
   componentDidMount() {
     Turbolinks.addEventListener('turbolinksVisit', this.handleVisit)
     Turbolinks.addEventListener('turbolinksError', this.handleError)
-    Turbolinks.visit({url: 'http://localhost:9292'})
+    Turbolinks.visit({url: 'http://MYIP:9292'})
   }
 
   handleVisit = (data) => {
