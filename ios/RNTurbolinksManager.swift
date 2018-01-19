@@ -50,6 +50,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func dismiss() -> Void {
+        reloadSession()
         navigation.dismiss(animated: true, completion: nil)
     }
     
@@ -63,8 +64,9 @@ class RNTurbolinksManager: RCTEventEmitter {
             presentVisitableForSession(session, url: url, title: title, action: actionEnum)
         } else {
             let component = RCTConvert.nsString(route["component"])!
+            let modal = RCTConvert.bool(route["modal"])
             let props = RCTConvert.nsDictionary(route["passProps"])
-            presentNativeView(component, title: title, props: props, action: actionEnum)
+            presentNativeView(component, title: title, modal: modal, props: props, action: actionEnum)
         }
     }
     
@@ -89,14 +91,17 @@ class RNTurbolinksManager: RCTEventEmitter {
         session.visit(visitable)
     }
     
-    fileprivate func presentNativeView(_ component: String, title: String?, props: Dictionary<AnyHashable, Any>?, action: Action = .Advance) {
+    fileprivate func presentNativeView(_ component: String, title: String?, modal: Bool = false, props: Dictionary<AnyHashable, Any>?, action: Action = .Advance) {
         let viewController = UIViewController()
         viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
         viewController.title = title
-        if action == .Advance {
+        if modal {
+            navigation.present(viewController, animated: true, completion: nil)
+        } else if action == .Advance {
             navigation.pushViewController(viewController, animated: true)
         } else if action == .Replace {
-            navigation.present(viewController, animated: true, completion: nil)
+            navigation.popViewController(animated: false)
+            navigation.pushViewController(viewController, animated: false)
         }
     }
     
