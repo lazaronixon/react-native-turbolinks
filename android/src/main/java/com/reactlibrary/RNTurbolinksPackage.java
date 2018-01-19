@@ -14,7 +14,7 @@ public class RNTurbolinksPackage implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-      return Arrays.<NativeModule>asList(new RNTurbolinksModule(reactContext));
+        return Arrays.<NativeModule>asList(new RNTurbolinksModule(reactContext));
     }
 
     @Override
