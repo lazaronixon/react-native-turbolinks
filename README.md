@@ -1,5 +1,5 @@
 # React Native Turbolinks
-A implementation of ![Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and ![Turbolinks Android (Coming soon)](https://github.com/turbolinks/turbolinks-android) for React Native.
+A implementation of ![Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and ![Turbolinks Android](https://github.com/turbolinks/turbolinks-android) for React Native.
 
 ## Getting started
 ```
@@ -26,7 +26,9 @@ import Turbolinks from 'react-native-turbolinks'
 export default class App extends Component {
 
   componentDidMount() {
-    this.turboLinks.visit({url: 'http://localhost:9292'})
+    Turbolinks.addEventListener('turbolinksVisit', this.handleVisit)
+    Turbolinks.addEventListener('turbolinksError', this.handleError)
+    Turbolinks.visit({url: 'http://localhost:9292'})
   }
 
   handleVisit = (data) => {
@@ -38,12 +40,7 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <Turbolinks ref={(tl) => this.turboLinks = tl}
-                  onVisit={this.handleVisit}
-                  onError={this.handleError}
-                  style={{flex: 1}}/>
-    )
+    return null
   }
 }
 ```
@@ -51,33 +48,25 @@ export default class App extends Component {
 ## Running the Demo
 This repository includes a demo application to show off features of the framework. The demo bundles a simple HTTP server that serves a Turbolinks 5 web app on localhost at port 9292.
 
-To run the demo, clone this repository to your computer and change into its directory. Then, start the demo server by running `Example/demo-server` from the command line.
+To run the demo, clone this repository to your computer and change into its directory. Then, Open file `Example/components/App/Constants.js` and change `baseUrl` with your IP and start the demo server by running `Example/demo-server` from the command line.
 
-Once you’ve started the demo server, explore the demo application in the Simulator by running `react-native run-ios` on `Example` folder.
-
-## Properties
-
-#### `onVisit: Event {{url, path, action}} required`
-Function that is invoked when you tap a Turbolinks-enabled link or call this.turbolinks.visit(...).
-
-#### `onError: Event {{code, statusCode, description}} required`
-Function that is invoked when your visit’s network request fails.
-
-#### `onMessage: Event {message}`
-Function that is invoked when you send messages from JavaScript to your native application.
-
-#### `userAgent: String`
-You can check for this string on the server and use it to send specialized markup or assets to your application.
+Once you’ve started the demo server, explore the demo application in the Simulator by running `react-native run-ios` or `react-native run-android` on `Example` folder.
 
 ## Methods
+
+#### `setUserAgent(userAgent)`
+You can check for this string on the server and use it to send specialized markup or assets to your application.
+
+#### `setMessageHandler(messageHandler)`
+You can register a Message Handler to send messages from JavaScript to your application.
 
 #### `visit({url:required, title, action})`
 Visit a URL with Turbolinks, your params are url, custom title and action. If action is 'advance'(default), so it will perform a animated push, if "replace" will perform a pop without animation.
 
-#### `visit({component:required, title, passProps, action})`
-Visit a Component with Turbolinks, your params are component, title, passProps that is a hash with props to next component and action. If action is 'advance'(default), so it will perform a animated push, if "replace" will perform a pop without animation on a overlaped view.
+#### `visit({component:required, title, modal, passProps, action})`
+Visit a Component with Turbolinks, your params are component, title, modal, passProps that is a hash with props to next component and action. If action is 'advance'(default), so it will perform a animated push, if "replace" will perform a pop without animation on a overlaped view.
 
-#### `replaceWith({component:required, title, passProps})`
+#### `replaceWith({component:required, title, passProps}) (IOS ONLY)`
 Replace current visitable with a component, your params are component, title and passProps that is a hash with props to next component.
 
 #### `reloadVisitable()`
@@ -87,7 +76,13 @@ Reload current visitable. For example when a connection error view is launched a
 Reload current session and inject shared cookies on turbolinks before it.
 
 #### `dismiss()`
-Dismiss a overlaped view presented by visiting a component with replace action.
+Dismiss a overlaped view presented by visiting a component with modal option.
+
+#### `addEventListener(eventName, handler)`
+Adds an event handler. Supported events:
+- `onVisit`: Fires when you tap a Turbolinks-enabled link or call Turbolinks.visit(...). The argument to the event handler is an object with keys: `url, path, action`.
+- `onError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
+- `onMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
 
 ## Constants
 
