@@ -40,11 +40,11 @@ class Turbolinks {
     RNTurbolinksManager.setMessageHandler(messageHandler)
   }
 
-  static addListener(eventName, callback) {
+  static addEventListener(eventName, callback) {
     RNTurbolinksManagerEmitter.addListener(eventName, callback)
   }
 
-  static removeListener(eventName, callback) {
+  static removeEventListener(eventName, callback) {
     RNTurbolinksManagerEmitter.removeListener(eventName, callback)
   }
 

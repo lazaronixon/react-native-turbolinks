@@ -5,11 +5,17 @@ import Turbolinks from 'react-native-turbolinks'
 export default class App extends Component {
 
   componentDidMount() {
-    Turbolinks.addListener('turbolinksVisit', this.handleVisit)
-    Turbolinks.addListener('turbolinksError', this.handleError)
-    Turbolinks.addListener('turbolinksMessage', this.showMessage)
+    Turbolinks.addEventListener('turbolinksVisit', this.handleVisit)
+    Turbolinks.addEventListener('turbolinksError', this.handleError)
+    Turbolinks.addEventListener('turbolinksMessage', this.showMessage)
     Turbolinks.setMessageHandler('turbolinksDemo')
     Turbolinks.visit({url: 'http://192.168.100.162:9292'})
+  }
+
+  componentWillUnmount() {
+    Turbolinks.removeEventListener('turbolinksVisit', this.handleVisit)
+    Turbolinks.removeEventListener('turbolinksError', this.handleError)
+    Turbolinks.removeEventListener('turbolinksMessage', this.showMessage)
   }
 
   handleVisit = (data) => {
