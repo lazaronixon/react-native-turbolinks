@@ -17,7 +17,7 @@
     "turbolinks"
   ],
   "dependencies": {
-    "react": "16.0.0"
+    "react": "16.2.0"
   },
   "peerDependencies": {
     "react-native-swift": "^0.23.0"
