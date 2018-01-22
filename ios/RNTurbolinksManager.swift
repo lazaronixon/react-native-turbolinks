@@ -26,19 +26,15 @@ class RNTurbolinksManager: RCTEventEmitter {
     }()
     
     @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        let route = RCTConvert.nsDictionary(routeParam)!
-        let component = RCTConvert.nsString(route["component"])
-        let title = RCTConvert.nsString(route["title"])
-        let props = RCTConvert.nsDictionary(route["passProps"])
-        let rootView = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
-        let visitable = session.topmostVisitable as! CustomViewController
-        visitable.customView = rootView
-        visitable.customTitle = title
+        let visitable = session.topmostVisitable as! WebViewController
+        let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam)!)
+        visitable.route = tRoute
+        visitable.customView = RCTRootView(bridge: self.bridge, moduleName: tRoute.component, initialProperties: tRoute.passProps)
         visitable.renderComponent()
     }
     
     @objc func reloadVisitable() -> Void {
-        let visitable = session.topmostVisitable as! CustomViewController
+        let visitable = session.topmostVisitable as! WebViewController
         visitable.reload()
     }
     
@@ -55,18 +51,11 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        let route = RCTConvert.nsDictionary(routeParam)!
-        let title = RCTConvert.nsString(route["title"])
-        let action = RCTConvert.nsString(route["action"])
-        let actionEnum = Action.init(rawValue: action ?? "advance")!
-        if route["url"] != nil {
-            let url = RCTConvert.nsurl(route["url"])!
-            presentVisitableForSession(session, url: url, title: title, action: actionEnum)
+        let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam))
+        if tRoute.url != nil {
+            presentVisitableForSession(session, route: tRoute)
         } else {
-            let component = RCTConvert.nsString(route["component"])!
-            let modal = RCTConvert.bool(route["modal"])
-            let props = RCTConvert.nsDictionary(route["passProps"])
-            presentNativeView(component, title: title, modal: modal, props: props, action: actionEnum)
+            presentNativeView(tRoute)
         }
     }
     
@@ -79,27 +68,29 @@ class RNTurbolinksManager: RCTEventEmitter {
         webViewConfiguration.userContentController.add(self, name: messageHandler)
     }
     
-    public func presentVisitableForSession(_ session: Session, url: URL, title: String?, action: Action = .Advance) {
-        let visitable = CustomViewController(url: url)
-        visitable.customTitle = title
-        if action == .Advance {
+    public func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
+        let visitable = WebViewController(url: route.url!)
+        visitable.manager = self
+        visitable.route = route
+        if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
-        } else if action == .Replace {
+        } else if route.action == .Replace {
             navigation.popViewController(animated: false)
             navigation.pushViewController(visitable, animated: false)
         }
         session.visit(visitable)
     }
     
-    fileprivate func presentNativeView(_ component: String, title: String?, modal: Bool = false, props: Dictionary<AnyHashable, Any>?, action: Action = .Advance) {
-        let viewController = UIViewController()
-        viewController.view = RCTRootView(bridge: self.bridge, moduleName: component, initialProperties: props)
-        viewController.title = title
-        if modal {
+    fileprivate func presentNativeView(_ route: TurbolinksRoute) {
+        let viewController = NativeViewController()
+        viewController.manager = self
+        viewController.route = route
+        viewController.view = RCTRootView(bridge: self.bridge, moduleName: route.component, initialProperties: route.passProps)
+        if route.modal! {
             navigation.present(viewController, animated: true, completion: nil)
-        } else if action == .Advance {
+        } else if route.action == .Advance {
             navigation.pushViewController(viewController, animated: true)
-        } else if action == .Replace {
+        } else if route.action == .Replace {
             navigation.popViewController(animated: false)
             navigation.pushViewController(viewController, animated: false)
         }
@@ -117,6 +108,10 @@ class RNTurbolinksManager: RCTEventEmitter {
             result += "'; "
         }
         return result
+    }
+    
+    func handleRightButtonPress(URL: URL?, component: String?) {
+        sendEvent(withName: "turbolinksRightButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
     override static func requiresMainQueueSetup() -> Bool {
@@ -142,7 +137,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override func supportedEvents() -> [String]! {
-        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError"]
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksRightButtonPress"]
     }
 }
 

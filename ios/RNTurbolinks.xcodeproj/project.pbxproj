@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */; };
 		877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */; };
-		877053131FF27E910089741D /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877053121FF27E900089741D /* CustomViewController.swift */; };
+		877053131FF27E910089741D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877053121FF27E900089741D /* WebViewController.swift */; };
+		87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */; };
+		87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2DA2015946400FA5A46 /* NativeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,7 +31,9 @@
 		876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTurbolinksManager.swift; sourceTree = "<group>"; };
 		8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNTurbolinksManagerBridge.m; sourceTree = "<group>"; };
 		8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNTurbolinks-Bridging-Header.h"; sourceTree = "<group>"; };
-		877053121FF27E900089741D /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		877053121FF27E900089741D /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksRoute.swift; sourceTree = "<group>"; };
+		87B4C2DA2015946400FA5A46 /* NativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +58,9 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				877053121FF27E900089741D /* CustomViewController.swift */,
+				87B4C2DA2015946400FA5A46 /* NativeViewController.swift */,
+				87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */,
+				877053121FF27E900089741D /* WebViewController.swift */,
 				8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */,
 				8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */,
 				876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */,
@@ -119,9 +125,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */,
+				87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */,
 				877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */,
 				876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */,
-				877053131FF27E910089741D /* CustomViewController.swift in Sources */,
+				877053131FF27E910089741D /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
