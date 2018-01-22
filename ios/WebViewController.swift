@@ -28,6 +28,7 @@ class WebViewController: Turbolinks.VisitableViewController {
         super.visitableDidRender()
         renderTitle()
         renderRightButton()
+        renderLeftButton()
     }
     
     fileprivate func renderTitle() {
@@ -45,8 +46,23 @@ class WebViewController: Turbolinks.VisitableViewController {
         }
     }
     
+    fileprivate func renderLeftButton() {
+        if route.leftButtonIcon != nil {
+            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
+            navigationItem.leftBarButtonItem = button
+        }
+        if route.leftButtonTitle != nil {
+            let button = UIBarButtonItem(title: route.leftButtonTitle, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
+            navigationItem.leftBarButtonItem = button
+        }
+    }
+    
     @objc fileprivate func handleRightButtonPress() {
         manager.handleRightButtonPress(URL: visitableURL, component: nil)
+    }
+    
+    @objc fileprivate func handleLeftButtonPress() {
+        manager.handleLeftButtonPress(URL: nil, component: route.component)
     }
 }
 

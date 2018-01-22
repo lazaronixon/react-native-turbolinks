@@ -73,6 +73,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         let visitable = WebViewController(url: route.url!)
         visitable.manager = self
         visitable.route = route
+        visitable.navigationItem.leftItemsSupplementBackButton = true
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
         } else if route.action == .Replace {
@@ -87,6 +88,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         viewController.manager = self
         viewController.route = route
         viewController.view = RCTRootView(bridge: self.bridge, moduleName: route.component, initialProperties: route.passProps)
+        viewController.navigationItem.leftItemsSupplementBackButton = true
         if route.modal! {
             navigation.present(viewController, animated: true, completion: nil)
         } else if route.action == .Advance {
@@ -115,6 +117,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         sendEvent(withName: "turbolinksRightButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
+    func handleLeftButtonPress(URL: URL?, component: String?) {
+        sendEvent(withName: "turbolinksLeftButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
+    }
+    
     override static func requiresMainQueueSetup() -> Bool {
         return true;
     }
@@ -138,7 +144,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override func supportedEvents() -> [String]! {
-        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksRightButtonPress"]
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksRightButtonPress", "turbolinksLeftButtonPress"]
     }
 }
 
