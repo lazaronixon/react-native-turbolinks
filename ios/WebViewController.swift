@@ -11,6 +11,7 @@ class WebViewController: Turbolinks.VisitableViewController {
         customView!.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView!)
         installErrorViewConstraints()
+        visitableDidRender()
     }
     
     func installErrorViewConstraints() {

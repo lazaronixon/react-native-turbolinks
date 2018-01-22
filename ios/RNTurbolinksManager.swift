@@ -27,7 +27,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let visitable = session.topmostVisitable as! WebViewController
-        let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam)!)
+        let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam))
+        visitable.manager = self
         visitable.route = tRoute
         visitable.customView = RCTRootView(bridge: self.bridge, moduleName: tRoute.component, initialProperties: tRoute.passProps)
         visitable.renderComponent()
