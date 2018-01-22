@@ -40,6 +40,10 @@ class Turbolinks {
     RNTurbolinksManager.setMessageHandler(messageHandler)
   }
 
+  static setBackButtonTextHidden(visible) {
+    RNTurbolinksManager.setBackButtonTextHidden(visible)
+  }
+
   static addEventListener(eventName, callback) {
     RNTurbolinksManagerEmitter.addListener(eventName, callback)
   }

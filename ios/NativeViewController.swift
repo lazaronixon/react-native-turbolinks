@@ -5,8 +5,19 @@ class NativeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        renderTitle()
+        renderBackButtonTextVisibility()
         renderRightButton()
         renderLeftButton()
+    }
+    
+    fileprivate func renderTitle() {
+        if route.title != nil { title = route.title }
+    }
+    
+    fileprivate func renderBackButtonTextVisibility() {
+        let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        if manager.backButtonTextHidden { navigationItem.backBarButtonItem = button }
     }
     
     fileprivate func renderRightButton() {

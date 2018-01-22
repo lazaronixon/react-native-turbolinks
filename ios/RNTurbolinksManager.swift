@@ -4,6 +4,8 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
+    var backButtonTextHidden: Bool = false
+    
     fileprivate var rootViewController: UIViewController {
         return UIApplication.shared.delegate!.window!!.rootViewController!
     }
@@ -60,20 +62,27 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
+    @objc func setBackButtonTextHidden(_ backButtonTextHidden: Bool) -> Void {
+        let isHidden = RCTConvert.bool(backButtonTextHidden)
+        self.backButtonTextHidden = isHidden
+    }
+    
     @objc func setUserAgent(_ userAgent: String) -> Void {
-        webViewConfiguration.applicationNameForUserAgent = userAgent
+        let agent = RCTConvert.nsString(userAgent)
+        webViewConfiguration.applicationNameForUserAgent = agent
     }
     
     @objc func setMessageHandler(_ messageHandler: String) -> Void {
-        webViewConfiguration.userContentController.removeScriptMessageHandler(forName: messageHandler)
-        webViewConfiguration.userContentController.add(self, name: messageHandler)
+        let handler = RCTConvert.nsString(messageHandler)!
+        webViewConfiguration.userContentController.removeScriptMessageHandler(forName: handler)
+        webViewConfiguration.userContentController.add(self, name: handler)
     }
     
     public func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
         let visitable = WebViewController(url: route.url!)
         visitable.manager = self
         visitable.route = route
-        visitable.navigationItem.leftItemsSupplementBackButton = true
+        visitable.navigationItem.leftItemsSupplementBackButton = true        
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
         } else if route.action == .Replace {
