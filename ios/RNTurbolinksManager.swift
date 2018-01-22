@@ -35,7 +35,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func reloadVisitable() -> Void {
-        let visitable = session.topmostVisitable as! WebViewController
+        let visitable = navigation.visibleViewController as! WebViewController
         visitable.reload()
     }
     
