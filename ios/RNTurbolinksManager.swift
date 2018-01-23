@@ -31,9 +31,9 @@ class RNTurbolinksManager: RCTEventEmitter {
     }()
     
     @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        let visitable = navigation.visibleViewController as! WebViewController
         let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam))
         let view = RCTRootView(bridge: self.bridge, moduleName: tRoute.component, initialProperties: tRoute.passProps)
+        let visitable = navigation.visibleViewController as! WebViewController
         visitable.manager = self
         visitable.route = tRoute
         visitable.customView = view
@@ -98,8 +98,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
-        let viewController = NativeViewController()
         let view = RCTRootView(bridge: self.bridge, moduleName: route.component, initialProperties: route.passProps)
+        let viewController = NativeViewController()
         viewController.manager = self
         viewController.route = route
         viewController.view = view
