@@ -4,6 +4,7 @@ import { NativeEventEmitter, NativeModules } from 'react-native'
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager || NativeModules.RNTurbolinksModule
 const RNTurbolinksManagerEmitter = new NativeEventEmitter(RNTurbolinksManager);
+const processColor = require('processColor');
 
 class Turbolinks {
 
@@ -40,8 +41,10 @@ class Turbolinks {
     RNTurbolinksManager.setMessageHandler(messageHandler)
   }
 
-  static setBackButtonTextHidden(visible) {
-    RNTurbolinksManager.setBackButtonTextHidden(visible)
+  static setNavigationBarDesign(options) {
+    RNTurbolinksManager.setNavigationBarDesign(
+      {...options, barTintColor: processColor(options.barTintColor)}
+    )
   }
 
   static addEventListener(eventName, callback) {

@@ -6,7 +6,7 @@ RCT_EXTERN_METHOD(reloadSession)
 RCT_EXTERN_METHOD(dismiss)
 RCT_EXTERN_METHOD(visit:(NSDictionary *))
 RCT_EXTERN_METHOD(replaceWith:(NSDictionary *))
-RCT_EXTERN_METHOD(setBackButtonTextHidden:(nonnull BOOL))
 RCT_EXTERN_METHOD(setUserAgent:NSString)
 RCT_EXTERN_METHOD(setMessageHandler:NSString)
+RCT_EXTERN_METHOD(setNavigationBarDesign:(NSDictionary *))
 @end

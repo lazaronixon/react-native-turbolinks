@@ -27,14 +27,14 @@ class WebViewController: Turbolinks.VisitableViewController {
     override func visitableDidRender() {
         super.visitableDidRender()
         renderTitle()
-        renderBackButtonTextVisibility()
+        renderBackButton()
         renderRightButton()
         renderLeftButton()
     }
     
-    fileprivate func renderBackButtonTextVisibility() {
+    fileprivate func renderBackButton() {
         let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        if manager.backButtonTextHidden { navigationItem.backBarButtonItem = button }
+        if manager.backButtonTitleHidden { navigationItem.backBarButtonItem = button }
     }
     
     fileprivate func renderTitle() {

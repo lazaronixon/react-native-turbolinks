@@ -4,7 +4,7 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
-    var backButtonTextHidden: Bool = false
+    var backButtonTitleHidden: Bool = false
     
     fileprivate var rootViewController: UIViewController {
         return UIApplication.shared.delegate!.window!!.rootViewController!
@@ -62,9 +62,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    @objc func setBackButtonTextHidden(_ backButtonTextHidden: Bool) -> Void {
-        let isHidden = RCTConvert.bool(backButtonTextHidden)
-        self.backButtonTextHidden = isHidden
+    @objc func setNavigationBarDesign(_ designParam: Dictionary<AnyHashable, Any>) -> Void {
+        self.backButtonTitleHidden = RCTConvert.bool(designParam["backButtonTitleHidden"]) || false
+        let barTintColor = RCTConvert.uiColor(designParam["barTintColor"])
+        if barTintColor != nil { navigation.navigationBar.barTintColor = barTintColor }
     }
     
     @objc func setUserAgent(_ userAgent: String) -> Void {
