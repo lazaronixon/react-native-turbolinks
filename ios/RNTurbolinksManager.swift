@@ -6,6 +6,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     var backButtonTitleHidden: Bool = false
     var barTintColor: UIColor?
+    var tintColor: UIColor?
+    var titleTextColor: UIColor?
     
     fileprivate var rootViewController: UIViewController {
         return UIApplication.shared.delegate!.window!!.rootViewController!
@@ -67,6 +69,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func setNavigationBarDesign(_ designParam: Dictionary<AnyHashable, Any>) -> Void {
         self.backButtonTitleHidden = RCTConvert.bool(designParam["backButtonTitleHidden"]) || false
         self.barTintColor = RCTConvert.uiColor(designParam["barTintColor"])
+        self.tintColor = RCTConvert.uiColor(designParam["tintColor"])
+        self.titleTextColor = RCTConvert.uiColor(designParam["titleTextColor"])
     }
     
     @objc func setUserAgent(_ userAgent: String) -> Void {

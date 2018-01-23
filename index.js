@@ -42,9 +42,12 @@ class Turbolinks {
   }
 
   static setNavigationBarDesign(options) {
-    RNTurbolinksManager.setNavigationBarDesign(
-      {...options, barTintColor: processColor(options.barTintColor)}
-    )
+    RNTurbolinksManager.setNavigationBarDesign({
+      ...options,
+      barTintColor: processColor(options.barTintColor),
+      tintColor: processColor(options.tintColor),
+      titleTextColor: processColor(options.titleTextColor)
+    })
   }
 
   static addEventListener(eventName, callback) {

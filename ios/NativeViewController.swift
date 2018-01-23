@@ -13,7 +13,10 @@ class NativeViewController: UIViewController {
     }
     
     fileprivate func paintNavBar() {
-        if manager.barTintColor != nil { navigationController?.navigationBar.barTintColor = manager.barTintColor }
+        let navBar = navigationController?.navigationBar
+        if manager.barTintColor != nil { navBar?.barTintColor = manager.barTintColor }
+        if manager.tintColor != nil { navBar?.tintColor = manager.tintColor }
+        if manager.titleTextColor != nil { navBar?.titleTextAttributes = [.foregroundColor: manager.titleTextColor!] }
     }
     
     fileprivate func renderTitle() {
