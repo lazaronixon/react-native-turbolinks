@@ -6,7 +6,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     var manager : RNTurbolinksManager!
     var route: TurbolinksRoute!
     var customView: UIView?
-    
+
     func renderComponent() {
         customView!.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView!)
@@ -26,10 +26,16 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     override func visitableDidRender() {
         super.visitableDidRender()
+        navigationItem.leftItemsSupplementBackButton = true
+        paintNavBar()
         renderTitle()
         renderBackButton()
         renderRightButton()
         renderLeftButton()
+    }
+    
+    fileprivate func paintNavBar() {
+        if manager.barTintColor != nil { navigationController?.navigationBar.barTintColor = manager.barTintColor }
     }
     
     fileprivate func renderBackButton() {

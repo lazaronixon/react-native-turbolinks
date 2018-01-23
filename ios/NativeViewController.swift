@@ -5,10 +5,15 @@ class NativeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        paintNavBar()
         renderTitle()
         renderBackButton()
         renderRightButton()
         renderLeftButton()
+    }
+    
+    fileprivate func paintNavBar() {
+        if manager.barTintColor != nil { navigationController?.navigationBar.barTintColor = manager.barTintColor }
     }
     
     fileprivate func renderTitle() {

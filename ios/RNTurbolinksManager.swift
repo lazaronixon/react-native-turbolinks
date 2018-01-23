@@ -5,6 +5,7 @@ import Turbolinks
 class RNTurbolinksManager: RCTEventEmitter {
     
     var backButtonTitleHidden: Bool = false
+    var barTintColor: UIColor?
     
     fileprivate var rootViewController: UIViewController {
         return UIApplication.shared.delegate!.window!!.rootViewController!
@@ -30,9 +31,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let visitable = navigation.visibleViewController as! WebViewController
         let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam))
+        let view = RCTRootView(bridge: self.bridge, moduleName: tRoute.component, initialProperties: tRoute.passProps)
         visitable.manager = self
         visitable.route = tRoute
-        visitable.customView = RCTRootView(bridge: self.bridge, moduleName: tRoute.component, initialProperties: tRoute.passProps)
+        visitable.customView = view
         visitable.renderComponent()
     }
     
@@ -64,8 +66,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func setNavigationBarDesign(_ designParam: Dictionary<AnyHashable, Any>) -> Void {
         self.backButtonTitleHidden = RCTConvert.bool(designParam["backButtonTitleHidden"]) || false
-        let barTintColor = RCTConvert.uiColor(designParam["barTintColor"])
-        if barTintColor != nil { navigation.navigationBar.barTintColor = barTintColor }
+        self.barTintColor = RCTConvert.uiColor(designParam["barTintColor"])
     }
     
     @objc func setUserAgent(_ userAgent: String) -> Void {
@@ -82,8 +83,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     public func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
         let visitable = WebViewController(url: route.url!)
         visitable.manager = self
-        visitable.route = route
-        visitable.navigationItem.leftItemsSupplementBackButton = true        
+        visitable.route = route        
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
         } else if route.action == .Replace {
@@ -95,10 +95,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
         let viewController = NativeViewController()
+        let view = RCTRootView(bridge: self.bridge, moduleName: route.component, initialProperties: route.passProps)
         viewController.manager = self
         viewController.route = route
-        viewController.view = RCTRootView(bridge: self.bridge, moduleName: route.component, initialProperties: route.passProps)
-        viewController.navigationItem.leftItemsSupplementBackButton = true
+        viewController.view = view
         if route.modal! {
             navigation.present(viewController, animated: true, completion: nil)
         } else if route.action == .Advance {
