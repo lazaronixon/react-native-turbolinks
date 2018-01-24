@@ -50,6 +50,10 @@ class Turbolinks {
     })
   }
 
+  static setBackgroundColor(backgroundColor) {
+    RNTurbolinksManager.setBackgroundColor(processColor(backgroundColor))
+  }
+
   static addEventListener(eventName, callback) {
     RNTurbolinksManagerEmitter.addListener(eventName, callback)
   }

@@ -11,15 +11,17 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route
-        self.renderBackButton()
-        self.renderRightButton()
-        self.renderLeftButton()
+        renderBackButton()
+        renderRightButton()
+        renderLeftButton()
+        renderBackgroundColor()
     }
 
     func renderComponent() {
-        self.customView = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
+        customView = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         customView!.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView!)
+        renderBackgroundColor()
         installErrorViewConstraints()
     }
     
@@ -39,7 +41,13 @@ class WebViewController: Turbolinks.VisitableViewController {
     }
     
     fileprivate func renderTitle() {
-        if route.title != nil { self.title = route.title }
+        if route.title != nil { title = route.title }
+    }
+    
+    fileprivate func renderBackgroundColor() {
+        let backgroundColor = manager.backgroundColor
+        if backgroundColor != nil { view.backgroundColor = backgroundColor }
+        if backgroundColor != nil && customView != nil { customView!.backgroundColor = backgroundColor }
     }
     
     fileprivate func renderBackButton() {

@@ -8,6 +8,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var barTintColor: UIColor?
     var tintColor: UIColor?
     var titleTextColor: UIColor?
+    var backgroundColor: UIColor?
     
     fileprivate var rootViewController: UIViewController {
         return UIApplication.shared.delegate!.window!!.rootViewController!
@@ -66,6 +67,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
+    @objc func setBackgroundColor(_ backgroundColor: UIColor) {
+        self.backgroundColor = backgroundColor
+    }
+    
     @objc func setNavigationBarDesign(_ designParam: Dictionary<AnyHashable, Any>) -> Void {
         self.backButtonTitleHidden = RCTConvert.bool(designParam["backButtonTitleHidden"]) || false
         self.barTintColor = RCTConvert.uiColor(designParam["barTintColor"])
@@ -85,7 +90,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     public func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
-        let visitable = WebViewController(manager: self, route: route)      
+        let visitable = WebViewController(manager: self, route: route)        
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
         } else if route.action == .Replace {
