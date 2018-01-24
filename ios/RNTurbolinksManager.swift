@@ -5,6 +5,7 @@ import Turbolinks
 class RNTurbolinksManager: RCTEventEmitter {
     
     var backButtonTitleHidden: Bool = false
+    var navigationBarHidden: Bool = false
     var barTintColor: UIColor?
     var tintColor: UIColor?
     var titleTextColor: UIColor?
@@ -30,6 +31,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         if barTintColor != nil { nav.navigationBar.barTintColor = barTintColor }
         if tintColor != nil { nav.navigationBar.tintColor = tintColor }
         if titleTextColor != nil { nav.navigationBar.titleTextAttributes = [.foregroundColor: titleTextColor!] }
+        nav.isNavigationBarHidden = navigationBarHidden
         rootViewController.view.addSubview(nav.view)
         return nav
     }()
@@ -58,6 +60,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         navigation.dismiss(animated: true, completion: nil)
     }
     
+    @objc func back() -> Void {
+        navigation.popViewController(animated: true)
+    }
+    
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam))
         if tRoute.url != nil {
@@ -73,6 +79,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func setNavigationBarDesign(_ designParam: Dictionary<AnyHashable, Any>) -> Void {
         self.backButtonTitleHidden = RCTConvert.bool(designParam["backButtonTitleHidden"]) || false
+        self.navigationBarHidden = RCTConvert.bool(designParam["hidden"]) || false
         self.barTintColor = RCTConvert.uiColor(designParam["barTintColor"])
         self.tintColor = RCTConvert.uiColor(designParam["tintColor"])
         self.titleTextColor = RCTConvert.uiColor(designParam["titleTextColor"])
