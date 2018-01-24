@@ -24,19 +24,19 @@ class RNTurbolinksManager: RCTEventEmitter {
     }()
 
     fileprivate lazy var navigation: UINavigationController = {
-        let navigation = UINavigationController()
-        navigation.navigationBar.isTranslucent = true
-        rootViewController.view.addSubview(navigation.view)
-        return navigation
+        let nav = UINavigationController()
+        nav.navigationBar.isTranslucent = true
+        if barTintColor != nil { nav.navigationBar.barTintColor = barTintColor }
+        if tintColor != nil { nav.navigationBar.tintColor = tintColor }
+        if titleTextColor != nil { nav.navigationBar.titleTextAttributes = [.foregroundColor: titleTextColor!] }
+        rootViewController.view.addSubview(nav.view)
+        return nav
     }()
     
     @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
         let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam))
-        let view = RCTRootView(bridge: self.bridge, moduleName: tRoute.component, initialProperties: tRoute.passProps)
         let visitable = navigation.visibleViewController as! WebViewController
-        visitable.manager = self
         visitable.route = tRoute
-        visitable.customView = view
         visitable.renderComponent()
     }
     
@@ -85,9 +85,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     public func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
-        let visitable = WebViewController(url: route.url!)
-        visitable.manager = self
-        visitable.route = route        
+        let visitable = WebViewController(manager: self, route: route)      
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
         } else if route.action == .Replace {
@@ -98,11 +96,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
-        let view = RCTRootView(bridge: self.bridge, moduleName: route.component, initialProperties: route.passProps)
-        let viewController = NativeViewController()
-        viewController.manager = self
-        viewController.route = route
-        viewController.view = view
+        let viewController = NativeViewController(manager: self, route: route)
         if route.modal! {
             navigation.present(viewController, animated: true, completion: nil)
         } else if route.action == .Advance {

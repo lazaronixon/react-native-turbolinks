@@ -3,24 +3,16 @@ class NativeViewController: UIViewController {
     var manager : RNTurbolinksManager!
     var route: TurbolinksRoute!
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        paintNavBar()
-        renderTitle()
-        renderBackButton()
-        renderRightButton()
-        renderLeftButton()
-    }
-    
-    fileprivate func paintNavBar() {
-        let navBar = navigationController?.navigationBar
-        if manager.barTintColor != nil { navBar?.barTintColor = manager.barTintColor }
-        if manager.tintColor != nil { navBar?.tintColor = manager.tintColor }
-        if manager.titleTextColor != nil { navBar?.titleTextAttributes = [.foregroundColor: manager.titleTextColor!] }
-    }
-    
-    fileprivate func renderTitle() {
-        if route.title != nil { title = route.title }
+    convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
+        self.init()
+        self.manager = manager
+        self.route = route
+        self.renderBackButton()
+        self.renderRightButton()
+        self.renderLeftButton()
+        self.navigationItem.leftItemsSupplementBackButton = true
+        self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
+        if route.title != nil { self.title = route.title }
     }
     
     fileprivate func renderBackButton() {

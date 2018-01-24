@@ -6,12 +6,21 @@ class WebViewController: Turbolinks.VisitableViewController {
     var manager : RNTurbolinksManager!
     var route: TurbolinksRoute!
     var customView: UIView?
+    
+    convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
+        self.init(url: route.url!)
+        self.manager = manager
+        self.route = route
+        self.renderBackButton()
+        self.renderRightButton()
+        self.renderLeftButton()
+    }
 
     func renderComponent() {
+        self.customView = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         customView!.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView!)
         installErrorViewConstraints()
-        visitableDidRender()
     }
     
     func installErrorViewConstraints() {
@@ -26,28 +35,12 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     override func visitableDidRender() {
         super.visitableDidRender()
-        navigationItem.leftItemsSupplementBackButton = true
-        paintNavBar()
-        renderTitle()
-        renderBackButton()
-        renderRightButton()
-        renderLeftButton()
-    }
-    
-    fileprivate func paintNavBar() {
-        let navBar = navigationController?.navigationBar
-        if manager.barTintColor != nil { navBar?.barTintColor = manager.barTintColor }
-        if manager.tintColor != nil { navBar?.tintColor = manager.tintColor }
-        if manager.titleTextColor != nil { navBar?.titleTextAttributes = [.foregroundColor: manager.titleTextColor!] }
+        if route.title != nil { title = route.title }
     }
     
     fileprivate func renderBackButton() {
         let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         if manager.backButtonTitleHidden { navigationItem.backBarButtonItem = button }
-    }
-    
-    fileprivate func renderTitle() {
-        if route.title != nil { title = route.title }
     }
     
     fileprivate func renderRightButton() {
