@@ -7,11 +7,16 @@ class NativeViewController: UIViewController {
         self.init()
         self.manager = manager
         self.route = route
+        self.renderTitle()
         self.renderBackButton()
         self.renderRightButton()
         self.renderLeftButton()
         self.navigationItem.leftItemsSupplementBackButton = true
         self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
+        
+    }
+    
+    fileprivate func renderTitle() {
         if route.title != nil { self.title = route.title }
     }
     

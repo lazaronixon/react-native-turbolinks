@@ -35,7 +35,11 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     override func visitableDidRender() {
         super.visitableDidRender()
-        if route.title != nil { title = route.title }
+        renderTitle()
+    }
+    
+    fileprivate func renderTitle() {
+        if route.title != nil { self.title = route.title }
     }
     
     fileprivate func renderBackButton() {
