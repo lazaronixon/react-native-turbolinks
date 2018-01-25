@@ -4,8 +4,8 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
-    var backButtonTitleHidden: Bool = false
-    var navigationBarHidden: Bool = false
+    var backButtonTitleHidden: Bool?
+    var navigationBarHidden: Bool?
     var barTintColor: UIColor?
     var tintColor: UIColor?
     var titleTextColor: UIColor?
@@ -31,7 +31,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         if barTintColor != nil { nav.navigationBar.barTintColor = barTintColor }
         if tintColor != nil { nav.navigationBar.tintColor = tintColor }
         if titleTextColor != nil { nav.navigationBar.titleTextAttributes = [.foregroundColor: titleTextColor!] }
-        nav.isNavigationBarHidden = navigationBarHidden
+        if navigationBarHidden != nil { nav.isNavigationBarHidden = navigationBarHidden! }
         rootViewController.view.addSubview(nav.view)
         return nav
     }()

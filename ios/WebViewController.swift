@@ -52,7 +52,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     fileprivate func renderBackButton() {
         let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        if manager.backButtonTitleHidden { navigationItem.backBarButtonItem = button }
+        if manager.backButtonTitleHidden == true { navigationItem.backBarButtonItem = button }
     }
     
     fileprivate func renderRightButton() {
