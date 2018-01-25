@@ -19,7 +19,7 @@ class NativeViewController: UIViewController {
     
     fileprivate func renderTitle() {
         if route.title != nil { self.title = route.title }
-        navigationItem.titleView = TurbolinksTitleView(title: navigationItem.title!, subtitle: route.subtitle, manager: manager)
+        navigationItem.titleView = TurbolinksTitleView(self)
     }
     
     fileprivate func renderBackgroundColor() {
@@ -52,6 +52,10 @@ class NativeViewController: UIViewController {
             let button = UIBarButtonItem(title: route.leftButtonTitle, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
             navigationItem.leftBarButtonItem = button
         }
+    }
+    
+    func handleTitlePress() {
+        manager.handleTitlePress(URL: nil, component: route.component)
     }
     
     @objc fileprivate func handleRightButtonPress() {

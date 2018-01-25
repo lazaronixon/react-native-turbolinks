@@ -134,6 +134,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         return result
     }
     
+    func handleTitlePress(URL: URL?, component: String?) {
+        sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
+    }
+    
     func handleRightButtonPress(URL: URL?, component: String?) {
         sendEvent(withName: "turbolinksRightButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
@@ -165,7 +169,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override func supportedEvents() -> [String]! {
-        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksRightButtonPress", "turbolinksLeftButtonPress"]
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksRightButtonPress", "turbolinksLeftButtonPress", "turbolinksTitlePress"]
     }
 }
 

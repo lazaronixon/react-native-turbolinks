@@ -3,7 +3,7 @@ import UIKit
 
 class WebViewController: Turbolinks.VisitableViewController {
     
-    var manager : RNTurbolinksManager!
+    var manager: RNTurbolinksManager!
     var route: TurbolinksRoute!
     var customView: UIView?
     
@@ -40,9 +40,9 @@ class WebViewController: Turbolinks.VisitableViewController {
         renderTitle()
     }
     
-    fileprivate func renderTitle() {
+    internal func renderTitle() {
         if route.title != nil { navigationItem.title = route.title }
-        navigationItem.titleView = TurbolinksTitleView(title: navigationItem.title!, subtitle: route.subtitle, manager: manager)
+        navigationItem.titleView = TurbolinksTitleView(self)
     }
     
     fileprivate func renderBackgroundColor() {
@@ -78,6 +78,10 @@ class WebViewController: Turbolinks.VisitableViewController {
         }
     }
     
+    func handleTitlePress() {
+        manager.handleTitlePress(URL: visitableURL, component: nil)
+    }
+    
     @objc fileprivate func handleRightButtonPress() {
         manager.handleRightButtonPress(URL: visitableURL, component: nil)
     }
@@ -86,4 +90,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         manager.handleLeftButtonPress(URL: nil, component: route.component)
     }
 }
+
+
 
