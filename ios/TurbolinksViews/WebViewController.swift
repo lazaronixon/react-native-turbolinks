@@ -21,8 +21,8 @@ class WebViewController: Turbolinks.VisitableViewController {
         customView = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         customView!.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView!)
-        renderBackgroundColor()
         installErrorViewConstraints()
+        renderBackgroundColor()
     }
     
     func installErrorViewConstraints() {
