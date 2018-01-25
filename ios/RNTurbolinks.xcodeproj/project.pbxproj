@@ -12,6 +12,7 @@
 		877053131FF27E910089741D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877053121FF27E900089741D /* WebViewController.swift */; };
 		87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */; };
 		87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2DA2015946400FA5A46 /* NativeViewController.swift */; };
+		87BFAD8020195D4E0063FCDF /* TurbolinksTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BFAD7F20195D4E0063FCDF /* TurbolinksTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,7 @@
 		877053121FF27E900089741D /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksRoute.swift; sourceTree = "<group>"; };
 		87B4C2DA2015946400FA5A46 /* NativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeViewController.swift; sourceTree = "<group>"; };
+		87BFAD7F20195D4E0063FCDF /* TurbolinksTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				87BFAD7F20195D4E0063FCDF /* TurbolinksTitleView.swift */,
 				87B4C2DA2015946400FA5A46 /* NativeViewController.swift */,
 				87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */,
 				877053121FF27E900089741D /* WebViewController.swift */,
@@ -129,6 +132,7 @@
 				87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */,
 				877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */,
 				876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */,
+				87BFAD8020195D4E0063FCDF /* TurbolinksTitleView.swift in Sources */,
 				877053131FF27E910089741D /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

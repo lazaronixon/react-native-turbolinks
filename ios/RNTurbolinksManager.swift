@@ -9,6 +9,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var barTintColor: UIColor?
     var tintColor: UIColor?
     var titleTextColor: UIColor?
+    var subTitleTextColor: UIColor?
     var backgroundColor: UIColor?
     
     fileprivate var rootViewController: UIViewController {
@@ -30,7 +31,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         nav.navigationBar.isTranslucent = true
         if barTintColor != nil { nav.navigationBar.barTintColor = barTintColor }
         if tintColor != nil { nav.navigationBar.tintColor = tintColor }
-        if titleTextColor != nil { nav.navigationBar.titleTextAttributes = [.foregroundColor: titleTextColor!] }
         if navigationBarHidden != nil { nav.isNavigationBarHidden = navigationBarHidden! }
         rootViewController.view.addSubview(nav.view)
         return nav
@@ -83,6 +83,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         self.barTintColor = RCTConvert.uiColor(designParam["barTintColor"])
         self.tintColor = RCTConvert.uiColor(designParam["tintColor"])
         self.titleTextColor = RCTConvert.uiColor(designParam["titleTextColor"])
+        self.subTitleTextColor = RCTConvert.uiColor(designParam["subTitleTextColor"])
     }
     
     @objc func setUserAgent(_ userAgent: String) -> Void {

@@ -2,6 +2,7 @@ import Turbolinks
 
 class TurbolinksRoute {
     var title:String?
+    var subtitle:String?
     var action:Action?
     var rightButtonIcon:UIImage?
     var rightButtonTitle:String?
@@ -15,6 +16,7 @@ class TurbolinksRoute {
     init(route: Dictionary<AnyHashable, Any>) {
         let action = RCTConvert.nsString(route["action"])
         self.title = RCTConvert.nsString(route["title"])
+        self.subtitle = RCTConvert.nsString(route["subtitle"])
         self.action = Action.init(rawValue: action ?? "advance")!
         self.rightButtonTitle = RCTConvert.nsString(route["rightButtonTitle"])
         self.rightButtonIcon = RCTConvert.uiImage(route["rightButtonIcon"])

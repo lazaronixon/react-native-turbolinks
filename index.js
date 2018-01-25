@@ -50,7 +50,8 @@ class Turbolinks {
       ...options,
       barTintColor: processColor(options.barTintColor),
       tintColor: processColor(options.tintColor),
-      titleTextColor: processColor(options.titleTextColor)
+      titleTextColor: processColor(options.titleTextColor),
+      subTitleTextColor: processColor(options.subTitleTextColor)
     })
   }
 

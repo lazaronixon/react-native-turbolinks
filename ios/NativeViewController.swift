@@ -19,6 +19,7 @@ class NativeViewController: UIViewController {
     
     fileprivate func renderTitle() {
         if route.title != nil { self.title = route.title }
+        navigationItem.titleView = TurbolinksTitleView(title: navigationItem.title!, subtitle: route.subtitle, manager: manager)
     }
     
     fileprivate func renderBackgroundColor() {

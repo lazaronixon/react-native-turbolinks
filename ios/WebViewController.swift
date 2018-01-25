@@ -41,7 +41,8 @@ class WebViewController: Turbolinks.VisitableViewController {
     }
     
     fileprivate func renderTitle() {
-        if route.title != nil { title = route.title }
+        if route.title != nil { navigationItem.title = route.title }
+        navigationItem.titleView = TurbolinksTitleView(title: navigationItem.title!, subtitle: route.subtitle, manager: manager)
     }
     
     fileprivate func renderBackgroundColor() {
