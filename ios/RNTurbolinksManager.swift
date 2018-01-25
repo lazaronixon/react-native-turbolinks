@@ -97,7 +97,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         webViewConfiguration.userContentController.add(self, name: handler)
     }
     
-    public func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
+    fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
         let visitable = WebViewController(manager: self, route: route)        
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
