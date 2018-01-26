@@ -1,8 +1,7 @@
-package com.reactlibrary;
+package com.reactlibrary.activities;
 
 import android.os.Bundle;
 
-import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;

@@ -1,9 +1,8 @@
-package com.reactlibrary;
+package com.reactlibrary.activities;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebResourceError;
 import android.webkit.WebViewClient;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
@@ -14,6 +13,7 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
+import com.reactlibrary.R;
 
 import java.net.MalformedURLException;
 import java.net.URL;

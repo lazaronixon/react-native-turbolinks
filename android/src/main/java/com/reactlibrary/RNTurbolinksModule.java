@@ -4,16 +4,17 @@ package com.reactlibrary;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
+import com.reactlibrary.activities.NativeActivity;
+import com.reactlibrary.activities.WebActivity;
+import com.reactlibrary.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,10 +31,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_USER_AGENT = "intentUserAgent";
     private static final String INTENT_MODAL = "intentModal";
 
+    private static final String ACTION_ADVANCE = "advance";
+    private static final String ACTION_REPLACE = "replace";
 
+    private TurbolinksRoute prevRoute;
     private String messageHandler;
     private String userAgent;
-    private String prevLocation;
     private Boolean initialVisit = true;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
@@ -46,18 +49,13 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void visit(ReadableMap rp) {
-        String url = rp.hasKey("url") ? rp.getString("url") : null;
-        String action = rp.hasKey("action") ? rp.getString("action") : "advance";
-        if (url != null) {
-            presentActivityForSession(url, action);
+    public void visit(ReadableMap route) {
+        TurbolinksRoute tRoute = new TurbolinksRoute(route);
+        if (tRoute.getUrl() != null) {
+            presentActivityForSession(tRoute);
             this.initialVisit = false;
         } else {
-            String component = rp.getString("component");
-            Boolean modal = rp.hasKey("modal") ? rp.getBoolean("modal") : false;
-            ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
-            Bundle bundleProps = props != null ? Arguments.toBundle(props) : null;
-            presentNativeView(component, modal, bundleProps, action);
+            presentNativeView(tRoute);
             this.initialVisit = false;
         }
     }
@@ -74,7 +72,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void reloadVisitable() {
-        presentActivityForSession(prevLocation, "replace");
+        prevRoute.setAction(ACTION_REPLACE);
+        presentActivityForSession(prevRoute);
     }
 
     @ReactMethod
@@ -83,9 +82,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void dismiss() throws InterruptedException {
-        getCurrentActivity().finish();
-    }
+    public void dismiss() { getCurrentActivity().finish(); }
 
     @Override
     public Map getConstants() {
@@ -95,22 +92,22 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         );
     }
 
-    private void presentActivityForSession(String url, String action) {
+    private void presentActivityForSession(TurbolinksRoute route) {
         try {
             Activity activity = getCurrentActivity();
-            URL prevUrl = prevLocation != null ? new URL(prevLocation) : new URL(url);
-            URL nextUrl = new URL(url);
+            URL prevUrl = prevRoute != null ? new URL(prevRoute.getUrl()) : new URL(route.getUrl());
+            URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
-                intent.putExtra(INTENT_URL, url);
+                intent.putExtra(INTENT_URL, route.getUrl());
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
                 activity.startActivity(intent);
-                if (action.equals("replace")) activity.finish();
-                this.prevLocation = url;
+                if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
+                this.prevRoute = route;
             } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(route.getUrl()));
                 activity.startActivity(intent);
             }
         } catch (MalformedURLException e) {
@@ -118,19 +115,15 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private void presentNativeView(String component, Boolean modal, Bundle props, String action) {
+    private void presentNativeView(TurbolinksRoute route) {
         Activity activity = getCurrentActivity();
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
-        intent.putExtra(INTENT_COMPONENT, component);
-        intent.putExtra(INTENT_PROPS, props);
-        intent.putExtra(INTENT_MODAL, modal);
+        intent.putExtra(INTENT_COMPONENT, route.getComponent());
+        intent.putExtra(INTENT_PROPS, route.getPassProps());
+        intent.putExtra(INTENT_MODAL, route.getModal());
         intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
         activity.startActivity(intent);
-        if (action.equals("replace")) activity.finish();
-    }
-
-    private String getCurrentActivityName() {
-        return getCurrentActivity().getClass().getSimpleName();
+        if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
     }
 
 }
