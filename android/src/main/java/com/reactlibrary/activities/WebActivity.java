@@ -8,17 +8,17 @@ import android.webkit.WebViewClient;
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
-import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
+import com.reactlibrary.react.ReactAppCompatActivity;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class WebActivity extends ReactActivity implements TurbolinksAdapter {
+public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter {
 
     private static final String INTENT_URL = "intentUrl";
     private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";

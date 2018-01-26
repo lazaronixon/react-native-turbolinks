@@ -2,11 +2,11 @@ package com.reactlibrary.activities;
 
 import android.os.Bundle;
 
-import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
+import com.reactlibrary.react.ReactAppCompatActivity;
 
-public class NativeActivity extends ReactActivity {
+public class NativeActivity extends ReactAppCompatActivity {
 
     private static final String INTENT_COMPONENT = "intentComponent";
     private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
