@@ -1,8 +1,10 @@
 package com.reactlibrary.activities;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
@@ -42,8 +44,10 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        setContentView(R.layout.activity_custom);
+        setContentView(R.layout.activity_web);
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
+
+        renderToolBar();
 
         if (messageHandler != null) {
             TurbolinksSession.getDefault(this).addJavascriptInterface(this, messageHandler);
@@ -100,6 +104,8 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
 
     @Override
     public void visitCompleted() {
+        WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        getSupportActionBar().setTitle(webView.getTitle());
     }
 
     @Override
@@ -119,6 +125,12 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         }
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     @JavascriptInterface
     public void postMessage(String message) {
         getEventEmitter().emit("turbolinksMessage", message);
@@ -130,6 +142,14 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
 
     private RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
+    }
+
+    private void renderToolBar() {
+        Toolbar turbolinksToolbar = (Toolbar) findViewById(R.id.turbolinks_toolbar);
+        setSupportActionBar(turbolinksToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
+        getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
+        getSupportActionBar().setTitle(null);
     }
 
 }
