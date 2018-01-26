@@ -5,9 +5,8 @@ import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
-import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 
-public class NativeActivity extends ReactActivity implements DefaultHardwareBackBtnHandler {
+public class NativeActivity extends ReactActivity {
 
     private static final String INTENT_COMPONENT = "intentComponent";
     private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
