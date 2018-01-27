@@ -4,14 +4,14 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/turbolinks_toolbar"
+        android:id="@+id/native_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
-    <com.basecamp.turbolinks.TurbolinksView
-        android:id="@+id/turbolinks_view"
+    <com.facebook.react.ReactRootView
+        android:id="@+id/native_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

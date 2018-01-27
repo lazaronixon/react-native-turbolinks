@@ -30,6 +30,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
     private static final String INTENT_MODAL = "intentModal";
+    private static final String INTENT_TITLE = "intentTitle";
+    private static final String INTENT_SUBTITLE = "intentSubTitle";
 
     private static final String ACTION_ADVANCE = "advance";
     private static final String ACTION_REPLACE = "replace";
@@ -100,6 +102,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
                 intent.putExtra(INTENT_URL, route.getUrl());
+                intent.putExtra(INTENT_TITLE, route.getTitle());
+                intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
@@ -121,6 +125,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_COMPONENT, route.getComponent());
         intent.putExtra(INTENT_PROPS, route.getPassProps());
         intent.putExtra(INTENT_MODAL, route.getModal());
+        intent.putExtra(INTENT_TITLE, route.getTitle());
+        intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
         intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
         activity.startActivity(intent);
         if (route.getAction().equals(ACTION_REPLACE)) activity.finish();

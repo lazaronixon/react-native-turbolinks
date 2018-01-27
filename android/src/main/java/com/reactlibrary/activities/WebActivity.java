@@ -16,38 +16,39 @@ import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter {
 
-    private static final String INTENT_URL = "intentUrl";
+
     private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
     private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     private static final String INTENT_USER_AGENT = "intentUserAgent";
     private static final Integer HTTP_FAILURE = 0;
     private static final Integer NETWORK_FAILURE = 1;
 
-    private String location;
-    private Boolean initialVisit;
+    private TurbolinksRoute route;
     private String messageHandler;
     private String userAgent;
+    private Boolean initialVisit;
     private TurbolinksView turbolinksView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        location = getIntent().getStringExtra(INTENT_URL);
+        route = new TurbolinksRoute(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
         setContentView(R.layout.activity_web);
-        turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
-
         renderToolBar();
+
+        turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
         if (messageHandler != null) {
             TurbolinksSession.getDefault(this).addJavascriptInterface(this, messageHandler);
@@ -55,7 +56,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         if (userAgent != null) {
             TurbolinksSession.getDefault(this).getWebView().getSettings().setUserAgentString(userAgent);
         }
-        TurbolinksSession.getDefault(this).activity(this).adapter(this).view(turbolinksView).visit(location);
+        TurbolinksSession.getDefault(this).activity(this).adapter(this).view(turbolinksView).visit(route.getUrl());
     }
 
     @Override
@@ -66,7 +67,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
                 .adapter(this)
                 .restoreWithCachedSnapshot(true)
                 .view(turbolinksView)
-                .visit(location);
+                .visit(route.getUrl());
     }
 
     @Override
@@ -103,10 +104,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     }
 
     @Override
-    public void visitCompleted() {
-        WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        getSupportActionBar().setTitle(webView.getTitle());
-    }
+    public void visitCompleted() { renderTitle(); }
 
     @Override
     public void onPageFinished() {
@@ -150,6 +148,16 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
         getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
         getSupportActionBar().setTitle(null);
+    }
+
+    private void renderTitle() {
+        WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        if (route.getTitle() == null) {
+            getSupportActionBar().setTitle(webView.getTitle());
+        } else {
+            getSupportActionBar().setTitle(route.getTitle());
+        }
+        getSupportActionBar().setSubtitle(route.getSubtitle());
     }
 
 }
