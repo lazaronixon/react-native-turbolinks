@@ -18,21 +18,23 @@ import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.ToolBarDesign;
 import com.reactlibrary.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
+import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
+import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
+
 public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter {
 
-
-    private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
-    private static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
-    private static final String INTENT_USER_AGENT = "intentUserAgent";
     private static final Integer HTTP_FAILURE = 0;
     private static final Integer NETWORK_FAILURE = 1;
 
     private TurbolinksRoute route;
+    private ToolBarDesign toolBarDesign;
     private String messageHandler;
     private String userAgent;
     private Boolean initialVisit;
@@ -43,6 +45,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         super.onCreate(savedInstanceState);
 
         route = new TurbolinksRoute(getIntent());
+        toolBarDesign = new ToolBarDesign(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
@@ -183,6 +186,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
         getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
         getSupportActionBar().setTitle(null);
+        if (toolBarDesign.getHidden()) { getSupportActionBar().hide(); }
     }
 
     private void renderTitle() {

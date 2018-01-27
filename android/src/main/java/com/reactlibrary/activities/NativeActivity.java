@@ -12,19 +12,22 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.ToolBarDesign;
 import com.reactlibrary.util.TurbolinksRoute;
+
+import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 
 public class NativeActivity extends ReactAppCompatActivity {
 
-    private static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
-
     private TurbolinksRoute route;
+    private ToolBarDesign toolBarDesign;
     private Boolean initialVisit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         route = new TurbolinksRoute(getIntent());
+        toolBarDesign = new ToolBarDesign(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
 
         setContentView(R.layout.activity_native);
@@ -85,6 +88,7 @@ public class NativeActivity extends ReactAppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
+        if (toolBarDesign.getHidden()) { getSupportActionBar().hide(); }
     }
 
     private void renderRightButton(Menu menu) {
