@@ -32,6 +32,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private static final String INTENT_MODAL = "intentModal";
     private static final String INTENT_TITLE = "intentTitle";
     private static final String INTENT_SUBTITLE = "intentSubTitle";
+    private static final String INTENT_LEFT_BUTTON_TITLE = "intentLeftButtonTitle";
+    private static final String INTENT_RIGHT_BUTTON_TITLE = "intentRightButtonTitle";
 
     private static final String ACTION_ADVANCE = "advance";
     private static final String ACTION_REPLACE = "replace";
@@ -133,6 +135,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_MODAL, route.getModal());
         intent.putExtra(INTENT_TITLE, route.getTitle());
         intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
+        intent.putExtra(INTENT_LEFT_BUTTON_TITLE, route.getLeftButtonTitle());
+        intent.putExtra(INTENT_RIGHT_BUTTON_TITLE, route.getRightButtonTitle());
     }
 
 }

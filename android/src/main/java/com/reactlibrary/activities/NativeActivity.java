@@ -2,9 +2,14 @@ package com.reactlibrary.activities;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksRoute;
@@ -42,6 +47,37 @@ public class NativeActivity extends ReactAppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
+        renderRightButton(menu);
+        renderLeftButton(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        WritableMap params = Arguments.createMap();
+        params.putString("component", route.getComponent());
+        params.putString("url", null);
+        params.putString("path", null);
+        if (item.getItemId() == R.id.action_left) {
+            getEventEmitter().emit("turbolinksLeftButtonPress", params);
+            return true;
+        }
+        if (item.getItemId() == R.id.action_right) {
+            getEventEmitter().emit("turbolinksRightButtonPress", params);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void renderReactRootView() {
+        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.native_view);
+        ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
+        mReactRootView.startReactApplication(mReactInstanceManager, route.getComponent(), route.getPassProps());
+    }
+
     private void renderToolBar() {
         Toolbar turbolinksToolbar = (Toolbar) findViewById(R.id.native_toolbar);
         setSupportActionBar(turbolinksToolbar);
@@ -51,10 +87,24 @@ public class NativeActivity extends ReactAppCompatActivity {
         getSupportActionBar().setSubtitle(route.getSubtitle());
     }
 
-    private void renderReactRootView() {
-        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.native_view);
-        ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
-        mReactRootView.startReactApplication(mReactInstanceManager, route.getComponent(), route.getPassProps());
+    private void renderRightButton(Menu menu) {
+        if (route.getRightButtonTitle() != null) {
+            MenuItem menuItem =  menu.findItem(R.id.action_right);
+            menuItem.setTitle(route.getRightButtonTitle());
+            menuItem.setVisible(true);
+        }
+    }
+
+    private void renderLeftButton(Menu menu) {
+        if (route.getLeftButtonTitle() != null) {
+            MenuItem menuItem = menu.findItem(R.id.action_left);
+            menuItem.setTitle(route.getLeftButtonTitle());
+            menuItem.setVisible(true);
+        }
+    }
+
+    private DeviceEventManagerModule.RCTDeviceEventEmitter getEventEmitter() {
+        return getReactInstanceManager().getCurrentReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
     }
 
 }

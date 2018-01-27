@@ -13,7 +13,9 @@ public class TurbolinksRoute {
     private static final String INTENT_PROPS = "intentProps";
     private static final String INTENT_MODAL = "intentModal";
     private static final String INTENT_TITLE = "intentTitle";
-    private static final String INTENT_SUBTITLE = "intentSubTitle";
+    private static final String INTENT_SUBTITLE = "intentSubtitle";
+    private static final String INTENT_LEFT_BUTTON_TITLE = "intentLeftButtonTitle";
+    private static final String INTENT_RIGHT_BUTTON_TITLE = "intentRightButtonTitle";
 
     private String url;
     private String component;
@@ -22,6 +24,8 @@ public class TurbolinksRoute {
     private Bundle passProps;
     private String title;
     private String subtitle;
+    private String leftButtonTitle;
+    private String rightButtonTitle;
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
@@ -32,6 +36,8 @@ public class TurbolinksRoute {
         this.passProps = props != null ? Arguments.toBundle(props) : null;
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
+        this.leftButtonTitle = rp.hasKey("leftButtonTitle") ? rp.getString("leftButtonTitle") : null;
+        this.rightButtonTitle = rp.hasKey("rightButtonTitle") ? rp.getString("rightButtonTitle") : null;
     }
 
     public TurbolinksRoute(Intent intent) {
@@ -41,6 +47,8 @@ public class TurbolinksRoute {
         this.title = intent.getStringExtra(INTENT_TITLE);
         this.subtitle = intent.getStringExtra(INTENT_SUBTITLE);
         this.modal = intent.getBooleanExtra(INTENT_MODAL, false);
+        this.leftButtonTitle = intent.getStringExtra(INTENT_LEFT_BUTTON_TITLE);
+        this.rightButtonTitle = intent.getStringExtra(INTENT_RIGHT_BUTTON_TITLE);
     }
 
     public String getUrl() {
@@ -73,4 +81,11 @@ public class TurbolinksRoute {
 
     public String getSubtitle() { return subtitle; }
 
+    public String getLeftButtonTitle() {
+        return leftButtonTitle;
+    }
+
+    public String getRightButtonTitle() {
+        return rightButtonTitle;
+    }
 }

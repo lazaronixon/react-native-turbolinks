@@ -3,6 +3,8 @@ package com.reactlibrary.activities;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -104,7 +106,9 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     }
 
     @Override
-    public void visitCompleted() { renderTitle(); }
+    public void visitCompleted() {
+        renderTitle();
+    }
 
     @Override
     public void onPageFinished() {
@@ -127,6 +131,37 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
+        renderRightButton(menu);
+        renderLeftButton(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        try {
+            WebView webView = TurbolinksSession.getDefault(this).getWebView();
+            WritableMap params = Arguments.createMap();
+            URL urlLocation = new URL(webView.getUrl());
+            params.putString("url", urlLocation.toString());
+            params.putString("path", urlLocation.getPath());
+            if (item.getItemId() == R.id.action_left) {
+                getEventEmitter().emit("turbolinksLeftButtonPress", params);
+                return true;
+            }
+            if (item.getItemId() == R.id.action_right) {
+                getEventEmitter().emit("turbolinksRightButtonPress", params);
+                return true;
+            }
+        } catch (MalformedURLException e) {
+            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+        } finally {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @JavascriptInterface
@@ -152,12 +187,28 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
 
     private void renderTitle() {
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        getSupportActionBar().setSubtitle(route.getSubtitle());
         if (route.getTitle() == null) {
             getSupportActionBar().setTitle(webView.getTitle());
         } else {
             getSupportActionBar().setTitle(route.getTitle());
         }
-        getSupportActionBar().setSubtitle(route.getSubtitle());
+    }
+
+    private void renderRightButton(Menu menu) {
+        if (route.getRightButtonTitle() != null) {
+            MenuItem menuItem =  menu.findItem(R.id.action_right);
+            menuItem.setTitle(route.getRightButtonTitle());
+            menuItem.setVisible(true);
+        }
+    }
+
+    private void renderLeftButton(Menu menu) {
+        if (route.getLeftButtonTitle() != null) {
+            MenuItem menuItem = menu.findItem(R.id.action_left);
+            menuItem.setTitle(route.getLeftButtonTitle());
+            menuItem.setVisible(true);
+        }
     }
 
 }
