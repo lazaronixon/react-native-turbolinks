@@ -29,7 +29,7 @@ class NativeViewController: UIViewController {
     
     fileprivate func renderBackButton() {
         let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        if manager.backButtonTitleHidden == true { navigationItem.backBarButtonItem = button }
+        navigationItem.backBarButtonItem = button
     }
     
     fileprivate func renderRightButton() {

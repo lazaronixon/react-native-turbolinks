@@ -11,10 +11,11 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route
-        renderBackButton()
-        renderRightButton()
-        renderLeftButton()
-        renderBackgroundColor()
+        self.renderBackButton()
+        self.renderRightButton()
+        self.renderLeftButton()
+        self.renderBackgroundColor()
+        self.navigationItem.leftItemsSupplementBackButton = true
     }
 
     func renderComponent() {
@@ -53,7 +54,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     fileprivate func renderBackButton() {
         let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        if manager.backButtonTitleHidden == true { navigationItem.backBarButtonItem = button }
+        navigationItem.backBarButtonItem = button
     }
     
     fileprivate func renderRightButton() {
