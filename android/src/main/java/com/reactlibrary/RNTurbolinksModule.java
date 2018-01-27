@@ -101,12 +101,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
-                intent.putExtra(INTENT_URL, route.getUrl());
-                intent.putExtra(INTENT_TITLE, route.getTitle());
-                intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
+                loadIntentRoute(intent, route);
                 activity.startActivity(intent);
                 if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
                 this.prevRoute = route;
@@ -122,14 +120,19 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private void presentNativeView(TurbolinksRoute route) {
         Activity activity = getCurrentActivity();
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
+        intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
+        loadIntentRoute(intent, route);
+        activity.startActivity(intent);
+        if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
+    }
+
+    private void loadIntentRoute(Intent intent, TurbolinksRoute route) {
+        intent.putExtra(INTENT_URL, route.getUrl());
         intent.putExtra(INTENT_COMPONENT, route.getComponent());
         intent.putExtra(INTENT_PROPS, route.getPassProps());
         intent.putExtra(INTENT_MODAL, route.getModal());
         intent.putExtra(INTENT_TITLE, route.getTitle());
         intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
-        intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
-        activity.startActivity(intent);
-        if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
     }
 
 }
