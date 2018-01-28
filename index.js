@@ -45,8 +45,8 @@ class Turbolinks {
     RNTurbolinksManager.setMessageHandler(messageHandler)
   }
 
-  static setNavigationBarDesign(options) {
-    RNTurbolinksManager.setNavigationBarDesign({
+  static setNavigationBarStyle(options) {
+    RNTurbolinksManager.setNavigationBarStyle({
       ...options,
       barTintColor: processColor(options.barTintColor),
       tintColor: processColor(options.tintColor),

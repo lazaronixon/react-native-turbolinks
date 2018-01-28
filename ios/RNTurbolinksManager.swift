@@ -4,15 +4,17 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
-    var navigationBarHidden: Bool?
-    var barTintColor: UIColor?
-    var tintColor: UIColor?
     var titleTextColor: UIColor?
     var subTitleTextColor: UIColor?
     var backgroundColor: UIColor?
     
-    fileprivate var rootViewController: UIViewController {
-        return UIApplication.shared.delegate!.window!!.rootViewController!
+    fileprivate var navigation: UINavigationController
+    
+    override init() {
+        let rootViewController = UIApplication.shared.delegate!.window!!.rootViewController!
+        self.navigation = UINavigationController()
+        self.navigation.navigationBar.isTranslucent = true
+        rootViewController.view.addSubview(navigation.view)
     }
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
@@ -23,16 +25,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         let session = Session(webViewConfiguration: webViewConfiguration)
         session.delegate = self
         return session
-    }()
-
-    fileprivate lazy var navigation: UINavigationController = {
-        let nav = UINavigationController()
-        nav.navigationBar.isTranslucent = true
-        if barTintColor != nil { nav.navigationBar.barTintColor = barTintColor }
-        if tintColor != nil { nav.navigationBar.tintColor = tintColor }
-        if navigationBarHidden != nil { nav.isNavigationBarHidden = navigationBarHidden! }        
-        rootViewController.view.addSubview(nav.view)
-        return nav
     }()
     
     @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
@@ -76,12 +68,17 @@ class RNTurbolinksManager: RCTEventEmitter {
         self.backgroundColor = backgroundColor
     }
     
-    @objc func setNavigationBarDesign(_ designParam: Dictionary<AnyHashable, Any>) -> Void {
-        self.navigationBarHidden = RCTConvert.bool(designParam["hidden"]) || false
-        self.barTintColor = RCTConvert.uiColor(designParam["barTintColor"])
-        self.tintColor = RCTConvert.uiColor(designParam["tintColor"])
-        self.titleTextColor = RCTConvert.uiColor(designParam["titleTextColor"])
-        self.subTitleTextColor = RCTConvert.uiColor(designParam["subTitleTextColor"])
+    @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
+        self.titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
+        self.subTitleTextColor = RCTConvert.uiColor(style["subTitleTextColor"])
+        let barTintColor = RCTConvert.uiColor(style["barTintColor"])
+        let tintColor = RCTConvert.uiColor(style["tintColor"])
+        if barTintColor != nil { self.navigation.navigationBar.barTintColor = barTintColor }
+        if tintColor != nil { self.navigation.navigationBar.tintColor = tintColor }
+    }
+    
+    @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) -> Void {
+        self.navigation.isNavigationBarHidden  = RCTConvert.bool(navigationBarHidden) || false
     }
     
     @objc func setUserAgent(_ userAgent: String) -> Void {
