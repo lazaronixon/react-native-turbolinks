@@ -8,14 +8,13 @@ class RNTurbolinksManager: RCTEventEmitter {
     var subTitleTextColor: UIColor?
     var backgroundColor: UIColor?
     
-    fileprivate var navigation: UINavigationController
-    
-    override init() {
+    fileprivate lazy var navigation: UINavigationController = {
         let rootViewController = UIApplication.shared.delegate!.window!!.rootViewController!
-        self.navigation = UINavigationController()
-        self.navigation.navigationBar.isTranslucent = true
+        let navigation = UINavigationController()
+        navigation.navigationBar.isTranslucent = true
         rootViewController.view.addSubview(navigation.view)
-    }
+        return navigation
+    }()
     
     fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
         return WKWebViewConfiguration()
@@ -78,16 +77,14 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) -> Void {
-        self.navigation.isNavigationBarHidden  = RCTConvert.bool(navigationBarHidden) || false
+        self.navigation.isNavigationBarHidden  = navigationBarHidden
     }
     
     @objc func setUserAgent(_ userAgent: String) -> Void {
-        let agent = RCTConvert.nsString(userAgent)
-        webViewConfiguration.applicationNameForUserAgent = agent
+        webViewConfiguration.applicationNameForUserAgent = userAgent
     }
     
-    @objc func setMessageHandler(_ messageHandler: String) -> Void {
-        let handler = RCTConvert.nsString(messageHandler)!
+    @objc func setMessageHandler(_ handler: String) -> Void {
         webViewConfiguration.userContentController.removeScriptMessageHandler(forName: handler)
         webViewConfiguration.userContentController.add(self, name: handler)
     }
