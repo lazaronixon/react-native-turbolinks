@@ -11,10 +11,10 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route
+        self.renderLoadingStyle()
         self.renderBackButton()
         self.renderRightButton()
         self.renderLeftButton()
-        self.renderBackgroundColor()
         self.navigationItem.leftItemsSupplementBackButton = true
     }
 
@@ -23,7 +23,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         customView!.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView!)
         installErrorViewConstraints()
-        renderBackgroundColor()
     }
     
     func installErrorViewConstraints() {
@@ -44,12 +43,6 @@ class WebViewController: Turbolinks.VisitableViewController {
     fileprivate func renderTitle() {
         if route.title != nil { navigationItem.title = route.title }
         navigationItem.titleView = TurbolinksTitleView(self)
-    }
-    
-    fileprivate func renderBackgroundColor() {
-        let backgroundColor = manager.backgroundColor
-        if backgroundColor != nil { view.backgroundColor = backgroundColor }
-        if backgroundColor != nil && customView != nil { customView!.backgroundColor = backgroundColor }
     }
     
     fileprivate func renderBackButton() {
@@ -77,6 +70,11 @@ class WebViewController: Turbolinks.VisitableViewController {
             let button = UIBarButtonItem(title: route.leftButtonTitle, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
             navigationItem.leftBarButtonItem = button
         }
+    }
+    
+    fileprivate func renderLoadingStyle() {
+        self.visitableView.activityIndicatorView.backgroundColor = self.manager.loadingBackgroundColor ?? .white
+        self.visitableView.activityIndicatorView.color = self.manager.loadingColor ?? .gray
     }
     
     func handleTitlePress() {

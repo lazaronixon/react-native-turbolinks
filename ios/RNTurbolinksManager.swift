@@ -6,7 +6,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     var titleTextColor: UIColor?
     var subTitleTextColor: UIColor?
-    var backgroundColor: UIColor?
+    var loadingBackgroundColor: UIColor?
+    var loadingColor: UIColor?
     
     fileprivate lazy var navigation: UINavigationController = {
         let rootViewController = UIApplication.shared.delegate!.window!!.rootViewController!
@@ -27,7 +28,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }()
     
     @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam))
+        let tRoute = TurbolinksRoute(route: routeParam)
         let visitable = navigation.visibleViewController as! WebViewController
         visitable.route = tRoute
         visitable.renderComponent()
@@ -55,7 +56,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        let tRoute = TurbolinksRoute(route: RCTConvert.nsDictionary(routeParam))
+        let tRoute = TurbolinksRoute(route: routeParam)
         if tRoute.url != nil {
             presentVisitableForSession(session, route: tRoute)
         } else {
@@ -63,8 +64,9 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    @objc func setBackgroundColor(_ backgroundColor: UIColor) {
-        self.backgroundColor = backgroundColor
+    @objc func setLoadingStyle(_ style: Dictionary<AnyHashable, Any>) {
+        self.loadingColor = RCTConvert.uiColor(style["color"])
+        self.loadingBackgroundColor = RCTConvert.uiColor(style["backgroundColor"])
     }
     
     @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {

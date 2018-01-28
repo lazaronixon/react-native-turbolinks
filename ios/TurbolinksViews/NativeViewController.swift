@@ -12,20 +12,13 @@ class NativeViewController: UIViewController {
         self.renderBackButton()
         self.renderRightButton()
         self.renderLeftButton()
-        self.renderBackgroundColor()
         self.navigationItem.leftItemsSupplementBackButton = true
-        
     }
     
     fileprivate func renderTitle() {
         if route.title != nil { self.title = route.title }
         navigationItem.titleView = TurbolinksTitleView(self)
-    }
-    
-    fileprivate func renderBackgroundColor() {
-        let backgroundColor = manager.backgroundColor
-        if backgroundColor != nil { view.backgroundColor = backgroundColor }
-    }
+    }    
     
     fileprivate func renderBackButton() {
         let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

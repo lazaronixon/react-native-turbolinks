@@ -10,6 +10,6 @@ RCT_EXTERN_METHOD(replaceWith:(NSDictionary *))
 RCT_EXTERN_METHOD(setUserAgent:NSString)
 RCT_EXTERN_METHOD(setMessageHandler:NSString)
 RCT_EXTERN_METHOD(setNavigationBarStyle:(NSDictionary *))
+RCT_EXTERN_METHOD(setLoadingStyle:(NSDictionary *))
 RCT_EXTERN_METHOD(setNavigationBarHidden:(nonnull BOOL))
-RCT_EXTERN_METHOD(setBackgroundColor:(UIColor *))
 @end
