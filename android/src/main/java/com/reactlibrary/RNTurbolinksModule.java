@@ -14,7 +14,6 @@ import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
 import com.reactlibrary.activities.NativeActivity;
 import com.reactlibrary.activities.WebActivity;
-import com.reactlibrary.util.ToolBarDesign;
 import com.reactlibrary.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
@@ -22,11 +21,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.reactlibrary.util.ToolBarDesign.INTENT_BAR_TINT_COLOR;
-import static com.reactlibrary.util.ToolBarDesign.INTENT_SUBTITLE_TEXT_COLOR;
-import static com.reactlibrary.util.ToolBarDesign.INTENT_TINT_COLOR;
-import static com.reactlibrary.util.ToolBarDesign.INTENT_TITLE_TEXT_COLOR;
-import static com.reactlibrary.util.ToolBarDesign.INTENT_TOOL_BAR_HIDDEN;
 import static com.reactlibrary.util.TurbolinksRoute.ACTION_REPLACE;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_COMPONENT;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_LEFT_BUTTON_TITLE;
@@ -39,19 +33,19 @@ import static com.reactlibrary.util.TurbolinksRoute.INTENT_URL;
 
 public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
+    public static final String INTENT_NAVIGATION_BAR_HIDDEN = "intentNavigationBarHidden";
     public static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     public static final String INTENT_USER_AGENT = "intentUserAgent";
     public static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
 
     private TurbolinksRoute prevRoute;
-    private ToolBarDesign toolBarDesign;
     private String messageHandler;
     private String userAgent;
+    private Boolean navigationBarHidden = false;
     private Boolean initialVisit = true;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
-        this.toolBarDesign = new ToolBarDesign();
     }
 
     @Override
@@ -70,11 +64,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setNavigationBarDesign(ReadableMap design) {
-        toolBarDesign = new ToolBarDesign(design);
-    }
-
-    @ReactMethod
     public void setMessageHandler(String messageHandler) {
         this.messageHandler = messageHandler;
     }
@@ -82,6 +71,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setUserAgent(String userAgent) {
         this.userAgent = userAgent;
+    }
+
+    @ReactMethod
+    public void setNavigationBarHidden(Boolean navigationBarHidden) {
+        this.navigationBarHidden = navigationBarHidden;
     }
 
     @ReactMethod
@@ -96,7 +90,14 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void dismiss() { getCurrentActivity().finish(); }
+    public void dismiss() {
+        getCurrentActivity().finish();
+    }
+
+    @ReactMethod
+    public void back() {
+        getCurrentActivity().onBackPressed();
+    }
 
     @Override
     public Map getConstants() {
@@ -116,8 +117,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
+                intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 loadIntentRoute(intent, route);
-                loadIntentToolBarDesign(intent, toolBarDesign);
                 activity.startActivity(intent);
                 if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
                 this.prevRoute = route;
@@ -136,8 +137,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Activity activity = getCurrentActivity();
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
+        intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         loadIntentRoute(intent, route);
-        loadIntentToolBarDesign(intent, toolBarDesign);
         activity.startActivity(intent);
         if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
         this.initialVisit = false;
@@ -152,14 +153,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
         intent.putExtra(INTENT_LEFT_BUTTON_TITLE, route.getLeftButtonTitle());
         intent.putExtra(INTENT_RIGHT_BUTTON_TITLE, route.getRightButtonTitle());
-    }
-
-    private void loadIntentToolBarDesign(Intent intent, ToolBarDesign design) {
-        intent.putExtra(INTENT_TOOL_BAR_HIDDEN, design.getHidden());
-        intent.putExtra(INTENT_BAR_TINT_COLOR, design.getBarTintColor());
-        intent.putExtra(INTENT_TINT_COLOR, design.getTintColor());
-        intent.putExtra(INTENT_TITLE_TEXT_COLOR, design.getTitleTextColor());
-        intent.putExtra(INTENT_SUBTITLE_TEXT_COLOR, design.getSubTitleTextColor());
     }
 
 }

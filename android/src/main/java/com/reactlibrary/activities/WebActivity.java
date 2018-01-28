@@ -18,7 +18,6 @@ import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
-import com.reactlibrary.util.ToolBarDesign;
 import com.reactlibrary.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
@@ -26,6 +25,7 @@ import java.net.URL;
 
 import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
+import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 
 public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter {
@@ -34,10 +34,10 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     private static final Integer NETWORK_FAILURE = 1;
 
     private TurbolinksRoute route;
-    private ToolBarDesign toolBarDesign;
     private String messageHandler;
     private String userAgent;
     private Boolean initialVisit;
+    private Boolean navigationBarHidden;
     private TurbolinksView turbolinksView;
 
     @Override
@@ -45,8 +45,8 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         super.onCreate(savedInstanceState);
 
         route = new TurbolinksRoute(getIntent());
-        toolBarDesign = new ToolBarDesign(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
+        navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
@@ -160,9 +160,9 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
                 getEventEmitter().emit("turbolinksRightButtonPress", params);
                 return true;
             }
+            return super.onOptionsItemSelected(item);
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
-        } finally {
             return super.onOptionsItemSelected(item);
         }
     }
@@ -186,22 +186,19 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
         getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
         getSupportActionBar().setTitle(null);
-        if (toolBarDesign.getHidden()) { getSupportActionBar().hide(); }
+        if (navigationBarHidden) getSupportActionBar().hide();
     }
 
     private void renderTitle() {
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
         getSupportActionBar().setSubtitle(route.getSubtitle());
-        if (route.getTitle() == null) {
-            getSupportActionBar().setTitle(webView.getTitle());
-        } else {
-            getSupportActionBar().setTitle(route.getTitle());
-        }
+        String title = route.getTitle() != null ? route.getTitle() : webView.getTitle();
+        getSupportActionBar().setTitle(title);
     }
 
     private void renderRightButton(Menu menu) {
         if (route.getRightButtonTitle() != null) {
-            MenuItem menuItem =  menu.findItem(R.id.action_right);
+            MenuItem menuItem = menu.findItem(R.id.action_right);
             menuItem.setTitle(route.getRightButtonTitle());
             menuItem.setVisible(true);
         }

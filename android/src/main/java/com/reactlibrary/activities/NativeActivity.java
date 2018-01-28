@@ -12,23 +12,23 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
-import com.reactlibrary.util.ToolBarDesign;
 import com.reactlibrary.util.TurbolinksRoute;
 
 import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
+import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 
 public class NativeActivity extends ReactAppCompatActivity {
 
     private TurbolinksRoute route;
-    private ToolBarDesign toolBarDesign;
+    private Boolean navigationBarHidden;
     private Boolean initialVisit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         route = new TurbolinksRoute(getIntent());
-        toolBarDesign = new ToolBarDesign(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
+        navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
 
         setContentView(R.layout.activity_native);
         renderToolBar();
@@ -88,12 +88,12 @@ public class NativeActivity extends ReactAppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
-        if (toolBarDesign.getHidden()) { getSupportActionBar().hide(); }
+        if (navigationBarHidden) getSupportActionBar().hide();
     }
 
     private void renderRightButton(Menu menu) {
         if (route.getRightButtonTitle() != null) {
-            MenuItem menuItem =  menu.findItem(R.id.action_right);
+            MenuItem menuItem = menu.findItem(R.id.action_right);
             menuItem.setTitle(route.getRightButtonTitle());
             menuItem.setVisible(true);
         }

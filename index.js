@@ -55,6 +55,10 @@ class Turbolinks {
     })
   }
 
+  static setNavigationBarHidden(isHidden) {
+    RNTurbolinksManager.setNavigationBarHidden(isHidden)
+  }
+
   static setBackgroundColor(backgroundColor) {
     RNTurbolinksManager.setBackgroundColor(processColor(backgroundColor))
   }
