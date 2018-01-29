@@ -62,6 +62,8 @@ public class NativeActivity extends ReactAppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         WritableMap params = Arguments.createMap();
         params.putString("component", route.getComponent());
+        params.putString("url", null);
+        params.putString("path", null);
         if (item.getItemId() == R.id.action_left) {
             getEventEmitter().emit("turbolinksLeftButtonPress", params);
             return true;
@@ -111,6 +113,8 @@ public class NativeActivity extends ReactAppCompatActivity {
             public void onClick(View v) {
                 WritableMap params = Arguments.createMap();
                 params.putString("component", route.getComponent());
+                params.putString("url", null);
+                params.putString("path", null);
                 getEventEmitter().emit("turbolinksTitlePress", params);
             }
         });

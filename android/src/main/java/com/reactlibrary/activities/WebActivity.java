@@ -80,6 +80,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     public void onReceivedError(int errorCode) {
         WritableMap params = Arguments.createMap();
         params.putInt("code", NETWORK_FAILURE);
+        params.putInt("statusCode", 0);
         params.putString("description", "Network Failure.");
         WebViewClient wb = new WebViewClient();
         getEventEmitter().emit("turbolinksError", params);
@@ -99,6 +100,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         try {
             WritableMap params = Arguments.createMap();
             URL urlLocation = new URL(location);
+            params.putString("component", null);
             params.putString("url", urlLocation.toString());
             params.putString("path", urlLocation.getPath());
             params.putString("action", action);
@@ -150,6 +152,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
             WebView webView = TurbolinksSession.getDefault(this).getWebView();
             WritableMap params = Arguments.createMap();
             URL urlLocation = new URL(webView.getUrl());
+            params.putString("component", null);
             params.putString("url", urlLocation.toString());
             params.putString("path", urlLocation.getPath());
             if (item.getItemId() == R.id.action_left) {
@@ -220,6 +223,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
                 try {
                     WritableMap params = Arguments.createMap();
                     URL urlLocation = new URL(webView.getUrl());
+                    params.putString("component", null);
                     params.putString("url", urlLocation.toString());
                     params.putString("path", urlLocation.getPath());
                     getEventEmitter().emit("turbolinksTitlePress", params);
