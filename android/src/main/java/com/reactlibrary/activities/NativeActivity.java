@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
@@ -29,7 +30,6 @@ public class NativeActivity extends ReactAppCompatActivity {
         route = new TurbolinksRoute(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
-
         setContentView(R.layout.activity_native);
         renderToolBar();
         renderReactRootView();
@@ -62,8 +62,6 @@ public class NativeActivity extends ReactAppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         WritableMap params = Arguments.createMap();
         params.putString("component", route.getComponent());
-        params.putString("url", null);
-        params.putString("path", null);
         if (item.getItemId() == R.id.action_left) {
             getEventEmitter().emit("turbolinksLeftButtonPress", params);
             return true;
@@ -88,6 +86,7 @@ public class NativeActivity extends ReactAppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
+        handleTitlePress(turbolinksToolbar);
         if (navigationBarHidden) getSupportActionBar().hide();
     }
 
@@ -105,6 +104,16 @@ public class NativeActivity extends ReactAppCompatActivity {
             menuItem.setTitle(route.getLeftButtonTitle());
             menuItem.setVisible(true);
         }
+    }
+
+    private void handleTitlePress(Toolbar toolbar) {
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                WritableMap params = Arguments.createMap();
+                params.putString("component", route.getComponent());
+                getEventEmitter().emit("turbolinksTitlePress", params);
+            }
+        });
     }
 
     private DeviceEventManagerModule.RCTDeviceEventEmitter getEventEmitter() {

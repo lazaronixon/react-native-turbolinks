@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -79,7 +80,6 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     public void onReceivedError(int errorCode) {
         WritableMap params = Arguments.createMap();
         params.putInt("code", NETWORK_FAILURE);
-        params.putInt("statusCode", 0);
         params.putString("description", "Network Failure.");
         WebViewClient wb = new WebViewClient();
         getEventEmitter().emit("turbolinksError", params);
@@ -186,14 +186,15 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
         getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
         getSupportActionBar().setTitle(null);
+        handleTitlePress(turbolinksToolbar);
         if (navigationBarHidden) getSupportActionBar().hide();
     }
 
     private void renderTitle() {
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        getSupportActionBar().setSubtitle(route.getSubtitle());
         String title = route.getTitle() != null ? route.getTitle() : webView.getTitle();
         getSupportActionBar().setTitle(title);
+        getSupportActionBar().setSubtitle(route.getSubtitle());
     }
 
     private void renderRightButton(Menu menu) {
@@ -212,4 +213,20 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         }
     }
 
+    private void handleTitlePress(Toolbar toolbar) {
+        final WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    WritableMap params = Arguments.createMap();
+                    URL urlLocation = new URL(webView.getUrl());
+                    params.putString("url", urlLocation.toString());
+                    params.putString("path", urlLocation.getPath());
+                    getEventEmitter().emit("turbolinksTitlePress", params);
+                } catch (MalformedURLException e) {
+                    Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+                }
+            }
+        });
+    }
 }
