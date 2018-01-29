@@ -64,6 +64,13 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void replaceWith(ReadableMap route) {
+        TurbolinksRoute tRoute = new TurbolinksRoute(route);
+        tRoute.setAction(ACTION_REPLACE);
+        presentNativeView(tRoute);
+    }
+
+    @ReactMethod
     public void setMessageHandler(String messageHandler) {
         this.messageHandler = messageHandler;
     }
@@ -97,6 +104,14 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void back() {
         getCurrentActivity().onBackPressed();
+    }
+
+    @ReactMethod
+    public void setNavigationBarStyle(ReadableMap style) {
+    }
+
+    @ReactMethod
+    public void setLoadingStyle(ReadableMap style) {
     }
 
     @Override

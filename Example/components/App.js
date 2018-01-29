@@ -27,15 +27,6 @@ export default class App extends Component {
     }
   }
 
-  replaceWith(passProps) {
-    const replace = Turbolinks.Constants.Action.replace
-    if (Platform.OS == 'ios') {
-      Turbolinks.replaceWith({component: 'ErrorView', passProps: passProps})
-    } else {
-      Turbolinks.visit({component: 'ErrorView', action: replace, passProps: passProps})
-    }
-  }
-
   handleError = (data) => {
     const httpFailure = Turbolinks.Constants.ErrorCode.httpFailure
     const networkFailure = Turbolinks.Constants.ErrorCode.networkFailure
@@ -49,19 +40,19 @@ export default class App extends Component {
           case 404:
             var title = 'Page Not Found'
             var message = 'There doesn’t seem to be anything here.'
-            this.replaceWith({title: title, message: message})
+            Turbolinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
             break
           default:
             var title = 'Unknown Error'
             var message = 'An unknown error occurred.'
-            this.replaceWith({title: title, message: message})
+            Turbolinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         }
         break
       }
       case networkFailure: {
         var title = 'Can’t Connect'
         var message = 'TurbolinksDemo can’t connect to the server.\nDid you remember to start it?\nSee README.md for more instructions.'
-        this.replaceWith({title: title, message: message})
+        Turbolinks.replaceWith({component: 'ErrorView', passProps: {title: title, message: message}})
         break
       }
     }
