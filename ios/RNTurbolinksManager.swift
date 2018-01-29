@@ -41,7 +41,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func reloadSession() -> Void {
         let sharedCookies = HTTPCookieStorage.shared.cookies!
-        let cookieScript = getJSCookiesString(sharedCookies)
+        let cookieScript = TurbolinksUtil.getJSCookiesString(sharedCookies)
         session.webView.evaluateJavaScript(cookieScript)
         session.reload()
     }
@@ -112,21 +112,7 @@ class RNTurbolinksManager: RCTEventEmitter {
             navigation.popViewController(animated: false)
             navigation.pushViewController(viewController, animated: false)
         }
-    }
-    
-    fileprivate func getJSCookiesString(_ cookies: [HTTPCookie]) -> String {
-        var result = ""
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss zzz"
-        for cookie in cookies {
-            result += "document.cookie='\(cookie.name)=\(cookie.value); domain=\(cookie.domain); path=\(cookie.path); "
-            if let date = cookie.expiresDate { result += "expires=\(dateFormatter.string(from: date)); " }
-            if (cookie.isSecure) { result += "secure; " }
-            result += "'; "
-        }
-        return result
-    }
+    }    
     
     func handleTitlePress(URL: URL?, component: String?) {
         sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])

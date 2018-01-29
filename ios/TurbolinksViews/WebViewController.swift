@@ -15,7 +15,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.renderBackButton()
         self.renderRightButton()
         self.renderLeftButton()
-        self.navigationItem.leftItemsSupplementBackButton = true
     }
 
     func renderComponent() {
@@ -48,6 +47,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     fileprivate func renderBackButton() {
         let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = button
+        navigationItem.leftItemsSupplementBackButton = true
     }
     
     fileprivate func renderRightButton() {
