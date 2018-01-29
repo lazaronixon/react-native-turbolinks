@@ -15,12 +15,16 @@ import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 
+import java.util.ArrayList;
+
 import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
+import static com.reactlibrary.util.TurbolinksRoute.INTENT_ACTIONS;
 
 public class NativeActivity extends ReactAppCompatActivity {
 
     private TurbolinksRoute route;
+    private ArrayList<Bundle> actions;
     private Boolean navigationBarHidden;
     private Boolean initialVisit;
 
@@ -30,6 +34,7 @@ public class NativeActivity extends ReactAppCompatActivity {
         route = new TurbolinksRoute(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
+        actions = getIntent().getParcelableArrayListExtra(INTENT_ACTIONS);
         setContentView(R.layout.activity_native);
         renderToolBar();
         renderReactRootView();
@@ -53,25 +58,25 @@ public class NativeActivity extends ReactAppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
-        renderRightButton(menu);
-        renderLeftButton(menu);
+        for (int i = 0; i < actions.size(); i++) {
+            Bundle bundle = actions.get(i);
+            String title = bundle.getString("title");
+            String icon = bundle.getString("icon");
+            Boolean asButton = bundle.getBoolean("asButton");
+            MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, title);
+            if (asButton) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         WritableMap params = Arguments.createMap();
-        params.putString("component", route.getComponent());
         params.putString("url", null);
         params.putString("path", null);
-        if (item.getItemId() == R.id.action_left) {
-            getEventEmitter().emit("turbolinksLeftButtonPress", params);
-            return true;
-        }
-        if (item.getItemId() == R.id.action_right) {
-            getEventEmitter().emit("turbolinksRightButtonPress", params);
-            return true;
-        }
+        params.putString("component", route.getComponent());
+        params.putInt("position", item.getOrder());
+        getEventEmitter().emit("turbolinksActionSelected", params);
         return super.onOptionsItemSelected(item);
     }
 
@@ -90,22 +95,6 @@ public class NativeActivity extends ReactAppCompatActivity {
         getSupportActionBar().setSubtitle(route.getSubtitle());
         handleTitlePress(turbolinksToolbar);
         if (navigationBarHidden || route.getModal()) getSupportActionBar().hide();
-    }
-
-    private void renderRightButton(Menu menu) {
-        if (route.getRightButtonTitle() != null) {
-            MenuItem menuItem = menu.findItem(R.id.action_right);
-            menuItem.setTitle(route.getRightButtonTitle());
-            menuItem.setVisible(true);
-        }
-    }
-
-    private void renderLeftButton(Menu menu) {
-        if (route.getLeftButtonTitle() != null) {
-            MenuItem menuItem = menu.findItem(R.id.action_left);
-            menuItem.setTitle(route.getLeftButtonTitle());
-            menuItem.setVisible(true);
-        }
     }
 
     private void handleTitlePress(Toolbar toolbar) {

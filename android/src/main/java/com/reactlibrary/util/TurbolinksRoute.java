@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+
+import java.util.ArrayList;
 
 public class TurbolinksRoute {
 
@@ -14,8 +17,7 @@ public class TurbolinksRoute {
     public static final String INTENT_MODAL = "intentModal";
     public static final String INTENT_TITLE = "intentTitle";
     public static final String INTENT_SUBTITLE = "intentSubtitle";
-    public static final String INTENT_LEFT_BUTTON_TITLE = "intentLeftButtonTitle";
-    public static final String INTENT_RIGHT_BUTTON_TITLE = "intentRightButtonTitle";
+    public static final String INTENT_ACTIONS = "intentActions";
 
     public static final String ACTION_ADVANCE = "advance";
     public static final String ACTION_REPLACE = "replace";
@@ -27,14 +29,14 @@ public class TurbolinksRoute {
     private Bundle passProps;
     private String title;
     private String subtitle;
-    private String leftButtonTitle;
-    private String rightButtonTitle;
+    private ArrayList actions;
 
     public TurbolinksRoute() {
     }
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
+        ReadableArray actions = rp.hasKey("actions") ? rp.getArray("actions") : null;
         this.url = rp.hasKey("url") ? rp.getString("url") : null;
         this.component = rp.hasKey("component") ? rp.getString("component") : null;
         this.action = rp.hasKey("action") ? rp.getString("action") : ACTION_ADVANCE;
@@ -42,8 +44,7 @@ public class TurbolinksRoute {
         this.passProps = props != null ? Arguments.toBundle(props) : null;
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
-        this.leftButtonTitle = rp.hasKey("leftButtonTitle") ? rp.getString("leftButtonTitle") : null;
-        this.rightButtonTitle = rp.hasKey("rightButtonTitle") ? rp.getString("rightButtonTitle") : null;
+        this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
     }
 
     public TurbolinksRoute(Intent intent) {
@@ -53,8 +54,6 @@ public class TurbolinksRoute {
         this.title = intent.getStringExtra(INTENT_TITLE);
         this.subtitle = intent.getStringExtra(INTENT_SUBTITLE);
         this.modal = intent.getBooleanExtra(INTENT_MODAL, false);
-        this.leftButtonTitle = intent.getStringExtra(INTENT_LEFT_BUTTON_TITLE);
-        this.rightButtonTitle = intent.getStringExtra(INTENT_RIGHT_BUTTON_TITLE);
     }
 
     public String getUrl() {
@@ -87,11 +86,5 @@ public class TurbolinksRoute {
 
     public String getSubtitle() { return subtitle; }
 
-    public String getLeftButtonTitle() {
-        return leftButtonTitle;
-    }
-
-    public String getRightButtonTitle() {
-        return rightButtonTitle;
-    }
+    public ArrayList getActions() { return actions; }
 }

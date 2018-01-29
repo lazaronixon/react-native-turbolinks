@@ -22,11 +22,10 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.reactlibrary.util.TurbolinksRoute.ACTION_REPLACE;
+import static com.reactlibrary.util.TurbolinksRoute.INTENT_ACTIONS;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_COMPONENT;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_LEFT_BUTTON_TITLE;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_MODAL;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_PROPS;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_RIGHT_BUTTON_TITLE;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_SUBTITLE;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_TITLE;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_URL;
@@ -166,8 +165,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_MODAL, route.getModal());
         intent.putExtra(INTENT_TITLE, route.getTitle());
         intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
-        intent.putExtra(INTENT_LEFT_BUTTON_TITLE, route.getLeftButtonTitle());
-        intent.putExtra(INTENT_RIGHT_BUTTON_TITLE, route.getRightButtonTitle());
+        intent.putExtra(INTENT_ACTIONS, route.getActions());
     }
 
 }
