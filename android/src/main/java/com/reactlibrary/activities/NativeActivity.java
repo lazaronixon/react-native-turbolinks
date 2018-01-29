@@ -1,5 +1,7 @@
 package com.reactlibrary.activities;
 
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,9 +26,9 @@ import static com.reactlibrary.util.TurbolinksRoute.INTENT_ACTIONS;
 public class NativeActivity extends ReactAppCompatActivity {
 
     private TurbolinksRoute route;
-    private ArrayList<Bundle> actions;
     private Boolean navigationBarHidden;
     private Boolean initialVisit;
+    private ArrayList<Bundle> actions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +57,16 @@ public class NativeActivity extends ReactAppCompatActivity {
         return true;
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (actions == null) return true;
         getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
         for (int i = 0; i < actions.size(); i++) {
             Bundle bundle = actions.get(i);
             String title = bundle.getString("title");
-            String icon = bundle.getString("icon");
-            Boolean asButton = bundle.getBoolean("asButton");
+            Bundle icon = bundle.getBundle("icon");
+            Boolean asButton = bundle.getBoolean("button");
             MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, title);
+            renderActionIcon(menuItem, icon);
             if (asButton) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return true;
@@ -107,6 +110,13 @@ public class NativeActivity extends ReactAppCompatActivity {
                 getEventEmitter().emit("turbolinksTitlePress", params);
             }
         });
+    }
+
+    private void renderActionIcon(MenuItem menuItem, Bundle icon) {
+        if (icon == null)  return;
+        Uri uri = Uri.parse(icon.getString("uri"));
+        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
+        menuItem.setIcon(drawableIcon);
     }
 
     private DeviceEventManagerModule.RCTDeviceEventEmitter getEventEmitter() {

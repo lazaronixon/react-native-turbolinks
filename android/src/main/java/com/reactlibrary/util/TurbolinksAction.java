@@ -1,9 +1,34 @@
 package com.reactlibrary.util;
 
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TurbolinksAction implements Parcelable {
+
+    private String title;
+    private Bundle icon;
+    private Boolean button = false;
+
+
+    protected TurbolinksAction(Parcel in) {
+        title = in.readString();
+        icon = in.readBundle();
+        byte tmpButton = in.readByte();
+        button = tmpButton == 0 ? null : tmpButton == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeBundle(icon);
+        dest.writeByte((byte) (button == null ? 0 : button ? 1 : 2));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public static final Creator<TurbolinksAction> CREATOR = new Creator<TurbolinksAction>() {
         @Override
@@ -16,38 +41,16 @@ public class TurbolinksAction implements Parcelable {
             return new TurbolinksAction[size];
         }
     };
-    private String title;
-    private String icon;
-    private Boolean asButton = false;
-
-    protected TurbolinksAction(Parcel in) {
-        title = in.readString();
-        icon = in.readString();
-        byte tmpAsButton = in.readByte();
-        asButton = tmpAsButton == 0 ? null : tmpAsButton == 1;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(icon);
-        dest.writeByte((byte) (asButton == null ? 0 : asButton ? 1 : 2));
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
     public String getTitle() {
         return title;
     }
 
-    public String getIcon() {
+    public Bundle getIcon() {
         return icon;
     }
 
-    public Boolean getAsButton() {
-        return asButton;
+    public Boolean getButton() {
+        return button;
     }
 }
