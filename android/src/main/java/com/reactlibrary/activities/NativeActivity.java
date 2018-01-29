@@ -89,7 +89,7 @@ public class NativeActivity extends ReactAppCompatActivity {
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
         handleTitlePress(turbolinksToolbar);
-        if (navigationBarHidden) getSupportActionBar().hide();
+        if (navigationBarHidden || route.getModal()) getSupportActionBar().hide();
     }
 
     private void renderRightButton(Menu menu) {
