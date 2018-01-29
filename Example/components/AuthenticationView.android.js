@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ToolbarAndroid, Platform, WebView, View } from 'react-native'
+import { ToolbarAndroid, WebView, View } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
 import Constants from './Constants';
 

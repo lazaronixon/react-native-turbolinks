@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavigatorIOS, Platform, WebView } from 'react-native'
+import { NavigatorIOS, WebView } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
 import Constants from './Constants';
 
