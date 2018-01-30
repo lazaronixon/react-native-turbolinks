@@ -15,6 +15,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.TurbolinksAction;
 import com.reactlibrary.util.TurbolinksRoute;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class NativeActivity extends ReactAppCompatActivity {
     private TurbolinksRoute route;
     private Boolean navigationBarHidden;
     private Boolean initialVisit;
-    private ArrayList<Bundle> actions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,6 @@ public class NativeActivity extends ReactAppCompatActivity {
         route = new TurbolinksRoute(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
-        actions = getIntent().getParcelableArrayListExtra(INTENT_ACTIONS);
         setContentView(R.layout.activity_native);
         renderToolBar();
         renderReactRootView();
@@ -57,17 +56,16 @@ public class NativeActivity extends ReactAppCompatActivity {
         return true;
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (actions == null) return true;
+        if (route.getActions() == null) return true;
         getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
-        for (int i = 0; i < actions.size(); i++) {
-            Bundle bundle = actions.get(i);
-            String title = bundle.getString("title");
-            Bundle icon = bundle.getBundle("icon");
-            Boolean asButton = bundle.getBoolean("button");
-            MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, title);
-            renderActionIcon(menuItem, icon);
-            if (asButton) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        for (int i = 0; i < route.getActions().size(); i++) {
+            Bundle bundle = route.getActions().get(i);
+            TurbolinksAction action = new TurbolinksAction(bundle);
+            MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, action.getTitle());
+            renderActionIcon(menuItem, action.getIcon());
+            if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return true;
     }

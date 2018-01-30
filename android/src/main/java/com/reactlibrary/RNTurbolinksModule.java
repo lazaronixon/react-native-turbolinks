@@ -165,7 +165,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_MODAL, route.getModal());
         intent.putExtra(INTENT_TITLE, route.getTitle());
         intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
-        intent.putExtra(INTENT_ACTIONS, route.getActions());
+        intent.putParcelableArrayListExtra(INTENT_ACTIONS, route.getActions());
     }
 
 }

@@ -21,17 +21,16 @@ import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.TurbolinksAction;
 import com.reactlibrary.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_ACTIONS;
 
 public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter {
 
@@ -44,7 +43,6 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     private Boolean initialVisit;
     private Boolean navigationBarHidden;
     private TurbolinksView turbolinksView;
-    private ArrayList<Bundle> actions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,6 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
-        actions = getIntent().getParcelableArrayListExtra(INTENT_ACTIONS);
 
         setContentView(R.layout.activity_web);
         renderToolBar();
@@ -146,16 +143,14 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (actions == null) return true;
+        if (route.getActions() == null) return true;
         getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
-        for (int i = 0; i < actions.size(); i++) {
-            Bundle bundle = actions.get(i);
-            String title = bundle.getString("title");
-            Bundle icon = bundle.getBundle("icon");
-            Boolean asButton = bundle.getBoolean("button");
-            MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, title);
-            renderActionIcon(menuItem, icon);
-            if (asButton) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        for (int i = 0; i < route.getActions().size(); i++) {
+            Bundle bundle = route.getActions().get(i);
+            TurbolinksAction action = new TurbolinksAction(bundle);
+            MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, action.getTitle());
+            renderActionIcon(menuItem, action.getIcon());
+            if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return true;
     }

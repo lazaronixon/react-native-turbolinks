@@ -29,10 +29,7 @@ public class TurbolinksRoute {
     private Bundle passProps;
     private String title;
     private String subtitle;
-    private ArrayList actions;
-
-    public TurbolinksRoute() {
-    }
+    private ArrayList<Bundle> actions;
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
@@ -50,10 +47,11 @@ public class TurbolinksRoute {
     public TurbolinksRoute(Intent intent) {
         this.url = intent.getStringExtra(INTENT_URL);
         this.component = intent.getStringExtra(INTENT_COMPONENT);
+        this.modal = intent.getBooleanExtra(INTENT_MODAL, false);
         this.passProps = intent.getBundleExtra(INTENT_PROPS);
         this.title = intent.getStringExtra(INTENT_TITLE);
         this.subtitle = intent.getStringExtra(INTENT_SUBTITLE);
-        this.modal = intent.getBooleanExtra(INTENT_MODAL, false);
+        this.actions = intent.getParcelableArrayListExtra(INTENT_ACTIONS);
     }
 
     public String getUrl() {
@@ -86,5 +84,5 @@ public class TurbolinksRoute {
 
     public String getSubtitle() { return subtitle; }
 
-    public ArrayList getActions() { return actions; }
+    public ArrayList<Bundle> getActions() { return actions; }
 }

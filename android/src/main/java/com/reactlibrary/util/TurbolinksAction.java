@@ -10,6 +10,11 @@ public class TurbolinksAction implements Parcelable {
     private Bundle icon;
     private Boolean button = false;
 
+    public TurbolinksAction(Bundle bundle) {
+        this.title = bundle.getString("title");
+        this.icon = bundle.getBundle("icon");
+        this.button = bundle.getBoolean("button");
+    }
 
     protected TurbolinksAction(Parcel in) {
         title = in.readString();
