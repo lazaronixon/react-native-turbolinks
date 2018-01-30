@@ -71,13 +71,14 @@ public class NativeActivity extends ReactAppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) return super.onOptionsItemSelected(item);
         WritableMap params = Arguments.createMap();
         params.putString("url", null);
         params.putString("path", null);
         params.putString("component", route.getComponent());
         params.putInt("position", item.getOrder());
         getEventEmitter().emit("turbolinksActionSelected", params);
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private void renderReactRootView() {

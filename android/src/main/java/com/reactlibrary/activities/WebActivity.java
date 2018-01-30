@@ -160,6 +160,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
+            if (item.getItemId() == android.R.id.home) return super.onOptionsItemSelected(item);
             WebView webView = TurbolinksSession.getDefault(this).getWebView();
             WritableMap params = Arguments.createMap();
             URL urlLocation = new URL(webView.getUrl());
