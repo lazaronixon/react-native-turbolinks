@@ -1,8 +1,10 @@
 package com.reactlibrary.activities;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -149,7 +151,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
             Bundle bundle = route.getActions().get(i);
             TurbolinksAction action = new TurbolinksAction(bundle);
             MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, action.getTitle());
-            renderActionIcon(menuItem, action.getIcon());
+            renderActionIcon(menu, menuItem, action.getIcon());
             if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return true;
@@ -221,8 +223,10 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         });
     }
 
-    private void renderActionIcon(MenuItem menuItem, Bundle icon) {
-        if (icon == null)  return;
+    @SuppressLint("RestrictedApi")
+    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
+        if (icon == null) return;
+        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
         Uri uri = Uri.parse(icon.getString("uri"));
         Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
         menuItem.setIcon(drawableIcon);

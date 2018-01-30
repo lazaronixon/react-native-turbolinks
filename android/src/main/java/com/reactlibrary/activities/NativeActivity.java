@@ -1,8 +1,10 @@
 package com.reactlibrary.activities;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,11 +20,8 @@ import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksAction;
 import com.reactlibrary.util.TurbolinksRoute;
 
-import java.util.ArrayList;
-
 import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_ACTIONS;
 
 public class NativeActivity extends ReactAppCompatActivity {
 
@@ -64,7 +63,7 @@ public class NativeActivity extends ReactAppCompatActivity {
             Bundle bundle = route.getActions().get(i);
             TurbolinksAction action = new TurbolinksAction(bundle);
             MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, action.getTitle());
-            renderActionIcon(menuItem, action.getIcon());
+            renderActionIcon(menu, menuItem, action.getIcon());
             if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return true;
@@ -110,8 +109,10 @@ public class NativeActivity extends ReactAppCompatActivity {
         });
     }
 
-    private void renderActionIcon(MenuItem menuItem, Bundle icon) {
-        if (icon == null)  return;
+    @SuppressLint("RestrictedApi")
+    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
+        if (icon == null) return;
+        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
         Uri uri = Uri.parse(icon.getString("uri"));
         Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
         menuItem.setIcon(drawableIcon);
