@@ -6,17 +6,21 @@ import android.os.Parcelable;
 
 public class TurbolinksAction implements Parcelable {
 
+    private int id;
     private String title;
     private Bundle icon;
     private Boolean button = false;
 
     public TurbolinksAction(Bundle bundle) {
+        this.id = (int) bundle.getDouble("id");
         this.title = bundle.getString("title");
         this.icon = bundle.getBundle("icon");
         this.button = bundle.getBoolean("button");
     }
 
+
     protected TurbolinksAction(Parcel in) {
+        id = in.readInt();
         title = in.readString();
         icon = in.readBundle();
         byte tmpButton = in.readByte();
@@ -25,6 +29,7 @@ public class TurbolinksAction implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(title);
         dest.writeBundle(icon);
         dest.writeByte((byte) (button == null ? 0 : button ? 1 : 2));
@@ -46,6 +51,10 @@ public class TurbolinksAction implements Parcelable {
             return new TurbolinksAction[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
 
     public String getTitle() {
         return title;

@@ -57,12 +57,10 @@ public class NativeActivity extends ReactAppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (route.getActions() == null) return true;
         getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
-        for (int i = 0; i < route.getActions().size(); i++) {
-            Bundle bundle = route.getActions().get(i);
+        for (Bundle bundle : route.getActions()) {
             TurbolinksAction action = new TurbolinksAction(bundle);
-            MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, action.getTitle());
+            MenuItem menuItem = menu.add(Menu.NONE, action.getId(), Menu.NONE, action.getTitle());
             renderActionIcon(menu, menuItem, action.getIcon());
             if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
@@ -72,12 +70,7 @@ public class NativeActivity extends ReactAppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) return super.onOptionsItemSelected(item);
-        WritableMap params = Arguments.createMap();
-        params.putString("url", null);
-        params.putString("path", null);
-        params.putString("component", route.getComponent());
-        params.putInt("position", item.getOrder());
-        getEventEmitter().emit("turbolinksActionSelected", params);
+        getEventEmitter().emit("turbolinksActionPress", item.getItemId());
         return true;
     }
 

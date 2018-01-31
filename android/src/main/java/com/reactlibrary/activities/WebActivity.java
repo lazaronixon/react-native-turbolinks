@@ -145,12 +145,10 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (route.getActions() == null) return true;
         getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
-        for (int i = 0; i < route.getActions().size(); i++) {
-            Bundle bundle = route.getActions().get(i);
+        for (Bundle bundle : route.getActions()) {
             TurbolinksAction action = new TurbolinksAction(bundle);
-            MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, i, action.getTitle());
+            MenuItem menuItem = menu.add(Menu.NONE, action.getId(), Menu.NONE, action.getTitle());
             renderActionIcon(menu, menuItem, action.getIcon());
             if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
@@ -159,21 +157,9 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        try {
-            if (item.getItemId() == android.R.id.home) return super.onOptionsItemSelected(item);
-            WebView webView = TurbolinksSession.getDefault(this).getWebView();
-            WritableMap params = Arguments.createMap();
-            URL urlLocation = new URL(webView.getUrl());
-            params.putString("component", null);
-            params.putString("url", urlLocation.toString());
-            params.putString("path", urlLocation.getPath());
-            params.putInt("position", item.getOrder());
-            getEventEmitter().emit("turbolinksActionSelected", params);
-            return true;
-        } catch (MalformedURLException e) {
-            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
-            return super.onOptionsItemSelected(item);
-        }
+        if (item.getItemId() == android.R.id.home) return super.onOptionsItemSelected(item);
+        getEventEmitter().emit("turbolinksActionPress", item.getItemId());
+        return true;
     }
 
     @JavascriptInterface
