@@ -12,9 +12,7 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.manager = manager
         self.route = route
         self.renderLoadingStyle()
-        self.renderBackButton()
-        self.renderRightButton()
-        self.renderLeftButton()
+        self.renderActions()
     }
 
     func renderComponent() {
@@ -44,34 +42,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         navigationItem.titleView = TurbolinksTitleView(self)
     }
     
-    fileprivate func renderBackButton() {
-        let button = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = button
-        navigationItem.leftItemsSupplementBackButton = true
-    }
-    
-    fileprivate func renderRightButton() {
-        if route.rightButtonIcon != nil {
-            let button = UIBarButtonItem(image: route.rightButtonIcon, style: .plain, target: self, action: #selector(self.handleRightButtonPress))
-            navigationItem.rightBarButtonItem = button
-        }
-        if route.rightButtonTitle != nil {
-            let button = UIBarButtonItem(title: route.rightButtonTitle, style: .plain, target: self, action: #selector(self.handleRightButtonPress))
-            navigationItem.rightBarButtonItem = button
-        }
-    }
-    
-    fileprivate func renderLeftButton() {
-        if route.leftButtonIcon != nil {
-            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
-            navigationItem.leftBarButtonItem = button
-        }
-        if route.leftButtonTitle != nil {
-            let button = UIBarButtonItem(title: route.leftButtonTitle, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
-            navigationItem.leftBarButtonItem = button
-        }
-    }
-    
     fileprivate func renderLoadingStyle() {
         self.visitableView.activityIndicatorView.backgroundColor = self.manager.loadingBackgroundColor ?? .white
         self.visitableView.activityIndicatorView.color = self.manager.loadingColor ?? .gray
@@ -81,14 +51,18 @@ class WebViewController: Turbolinks.VisitableViewController {
         manager.handleTitlePress(URL: visitableURL, component: nil)
     }
     
-    @objc fileprivate func handleRightButtonPress() {
-        manager.handleRightButtonPress(URL: visitableURL, component: nil)
+    func renderActions() {
+        if route.action != nil {
+            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.showActions))
+            navigationItem.rightBarButtonItem = button
+        }
     }
     
-    @objc fileprivate func handleLeftButtonPress() {
-        manager.handleLeftButtonPress(URL: nil, component: route.component)
+    @objc func showActions(sender: UIBarButtonItem) {
+        let actionsView = ActionsViewController(manager: manager, route: route, barButtonItem: sender)
+        present(actionsView,animated: true)
     }
+    
 }
-
 
 

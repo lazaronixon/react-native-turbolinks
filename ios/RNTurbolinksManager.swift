@@ -118,12 +118,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
-    func handleRightButtonPress(URL: URL?, component: String?) {
-        sendEvent(withName: "turbolinksRightButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
-    }
-    
-    func handleLeftButtonPress(URL: URL?, component: String?) {
-        sendEvent(withName: "turbolinksLeftButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
+    func handleActionPress(actionId: Int) {
+        sendEvent(withName: "turbolinksActionPress", body: actionId)
     }
     
     override static func requiresMainQueueSetup() -> Bool {
@@ -149,7 +145,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override func supportedEvents() -> [String]! {
-        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksRightButtonPress", "turbolinksLeftButtonPress", "turbolinksTitlePress"]
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksTitlePress", "turbolinksActionPress"]
     }
 }
 
