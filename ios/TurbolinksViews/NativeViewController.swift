@@ -13,6 +13,10 @@ class NativeViewController: UIViewController {
         self.renderBackButton()
     }
     
+    func handleTitlePress() {
+        manager.handleTitlePress(URL: nil, component: route.component)
+    }
+    
     fileprivate func renderTitle() {
         if route.title != nil { self.title = route.title }
         navigationItem.titleView = TurbolinksTitleView(self)
@@ -23,10 +27,6 @@ class NativeViewController: UIViewController {
             let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.presentActions))
             navigationItem.rightBarButtonItem = button
         }
-    }
-    
-    func handleTitlePress() {
-        manager.handleTitlePress(URL: nil, component: route.component)
     }
     
     fileprivate func renderBackButton() {

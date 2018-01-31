@@ -33,6 +33,10 @@ class WebViewController: Turbolinks.VisitableViewController {
         reloadVisitable()
     }
     
+    func handleTitlePress() {
+        manager.handleTitlePress(URL: visitableURL, component: nil)
+    }
+    
     override func visitableDidRender() {
         super.visitableDidRender()
         renderTitle()
@@ -46,10 +50,6 @@ class WebViewController: Turbolinks.VisitableViewController {
     fileprivate func renderLoadingStyle() {
         self.visitableView.activityIndicatorView.backgroundColor = self.manager.loadingBackgroundColor ?? .white
         self.visitableView.activityIndicatorView.color = self.manager.loadingColor ?? .gray
-    }
-    
-    func handleTitlePress() {
-        manager.handleTitlePress(URL: visitableURL, component: nil)
     }
     
     fileprivate func renderActions() {
