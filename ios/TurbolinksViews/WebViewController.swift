@@ -13,6 +13,7 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.route = route
         self.renderLoadingStyle()
         self.renderActions()
+        self.renderBackButton()
     }
 
     func renderComponent() {
@@ -51,14 +52,19 @@ class WebViewController: Turbolinks.VisitableViewController {
         manager.handleTitlePress(URL: visitableURL, component: nil)
     }
     
-    func renderActions() {
+    fileprivate func renderActions() {
         if route.action != nil {
-            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.showActions))
+            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.presentActions))
             navigationItem.rightBarButtonItem = button
         }
     }
     
-    @objc func showActions(sender: UIBarButtonItem) {
+    fileprivate func renderBackButton() {
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButton
+    }
+    
+    @objc func presentActions(sender: UIBarButtonItem) {
         let actionsView = ActionsViewController(manager: manager, route: route, barButtonItem: sender)
         present(actionsView,animated: true)
     }

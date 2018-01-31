@@ -9,6 +9,8 @@ class NativeViewController: UIViewController {
         self.manager = manager
         self.route = route
         self.renderTitle()
+        self.renderActions()
+        self.renderBackButton()
     }
     
     fileprivate func renderTitle() {
@@ -16,8 +18,25 @@ class NativeViewController: UIViewController {
         navigationItem.titleView = TurbolinksTitleView(self)
     }
     
+    fileprivate func renderActions() {
+        if route.action != nil {
+            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.presentActions))
+            navigationItem.rightBarButtonItem = button
+        }
+    }
+    
     func handleTitlePress() {
         manager.handleTitlePress(URL: nil, component: route.component)
+    }
+    
+    fileprivate func renderBackButton() {
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButton
+    }
+    
+    @objc func presentActions(sender: UIBarButtonItem) {
+        let actionsView = ActionsViewController(manager: manager, route: route, barButtonItem: sender)
+        present(actionsView,animated: true)
     }
     
 }
