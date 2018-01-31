@@ -29,7 +29,7 @@ public class TurbolinksRoute {
     private Bundle passProps;
     private String title;
     private String subtitle;
-    private ArrayList<Bundle> actions =  new ArrayList();
+    private ArrayList<Bundle> actions;
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
