@@ -75,7 +75,7 @@ Visit a URL with Turbolinks.
 - `subtitle:` A subtitle for visitable view.
 - `leftButtonIcon`: A left button icon. (iOS Only)
 - `actions:` A Array of action objects to mount a menu.
-  - `actionObject:`
+  - `action:`
     - `id:` A integer identifier for the action. (Required)
     - `title:` A title for the action.
     - `icon:` A icon for the action.
