@@ -21,6 +21,7 @@ Change the variables below on `/android/app/build.gradle`:
 - buildToolsVersion "24.0.3"
 - minSdkVersion 19
 - targetSdkVersion 24
+- compile "com.android.support:appcompat-v7:24.0.3"
 
 ### Warning
 This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the ![guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
@@ -67,14 +68,38 @@ You can check for this string on the server and use it to send specialized marku
 #### `setMessageHandler(messageHandler)`
 You can register a Message Handler to send messages from JavaScript to your application.
 
-#### `visit({url:required, title, action})`
-Visit a URL with Turbolinks, your params are url, custom title and action. If action is 'advance'(default), so it will perform a animated push, if "replace" will perform a pop without animation.
+#### `visit(route)`
+Visit a URL with Turbolinks.
+- `url:` Url to visit. (Required)
+- `title:` The default value is the title of the Web page.
+- `subtitle:` A subtitle for visitable view.
+- `leftButtonIcon`: A left button icon. (iOS Only)
+- `actions:` A Array of action objects to mount a menu.
+  - `actionObject:`
+    - `id:` A integer identifier for the action. (Required)
+    - `title:` A title for the action.
+    - `icon:` A icon for the action.
+    - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
+- `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
 
-#### `visit({component:required, title, modal, passProps, action})`
-Visit a Component with Turbolinks, your params are component, title, modal, passProps that is a hash with props to next component and action. If action is 'advance'(default), so it will perform a animated push, if "replace" will perform a pop without animation on a overlaped view.
+#### `visit(route)`
+Visit a Component with Turbolinks.
+- `component:` Component to visit. (Required)
+- `modal:` A boolean to show a view without navbar and backbutton. (Default false)
+- `passProps`: Passes this in as props to the rendered component.
+- `title:` The default value is the title of the Web page.
+- `subtitle:` A subtitle for visitable view.
+- `leftButtonIcon`: A left button icon. (iOS Only)
+- `actions:` A Array of action objects to mount a menu.
+  - `action:`
+    - `id:` A integer identifier for the action. (Required)
+    - `title:` A title for the action.
+    - `icon:` A icon for the action.
+    - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
+- `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
 
-#### `replaceWith({component:required, title, passProps}) (iOS ONLY)`
-Replace current visitable with a component, your params are component, title and passProps that is a hash with props to next component.
+#### `replaceWith(route)`
+Replace current visitable with a component. With the same route param like to visit a component.
 
 #### `reloadVisitable()`
 Reload current visitable. For example when a connection error view is launched and you want to retry.
@@ -85,11 +110,26 @@ Reload current session and inject shared cookies on turbolinks before it.
 #### `dismiss()`
 Dismiss a overlaped view presented by visiting a component with modal option.
 
+#### `back()`
+Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
+
+#### `setNavigationBarStyle({titleTextColor, subTitleTextColor, barTintColor, tintColor})`(iOS Only)
+Set style for navigation bar on iOS. For android set your style on `android/app/src/main/res/values/styles.xml`.
+
+#### `setLoadingStyle({color, backgroundColor})` (iOS Only)
+Set style for Activity Indicator View. For android set your style on `android/app/src/main/res/values/styles.xml`.
+
+#### `setNavigationBarHidden(boolean)`
+Hidden navigation bar. For example if you want to use a web navbar. (Default false)
+
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:
-- `onVisit`: Fires when you tap a Turbolinks-enabled link or call Turbolinks.visit(...). The argument to the event handler is an object with keys: `url, path, action`.
-- `onError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
-- `onMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
+- `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link or call Turbolinks.visit(...). The argument to the event handler is an object with keys: `url, path, action`.
+- `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
+- `turbolinksMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
+- `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
+- `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
+- `turbolinksLeftButtonPress:` Fire when left button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
 
 #### `removeEventListener(eventName, handler)`
 Removes the listener for given event.
