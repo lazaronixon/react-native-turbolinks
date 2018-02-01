@@ -20,6 +20,7 @@ class ActionsViewController: UITableViewController {
         self.popoverPresentationController?.barButtonItem = barButtonItem
         self.popoverPresentationController?.delegate = self
         self.popoverPresentationController?.backgroundColor = self.view.backgroundColor;
+        self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
     }
     
     override func viewDidLoad() {
@@ -45,9 +46,7 @@ class ActionsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let action = TurbolinksAction(route.actions![indexPath.row])
-        dismiss(animated: true, completion: {
-            self.manager.handleActionPress(actionId: action.id)
-        })
+        dismiss(animated: true, completion: { self.manager.handleActionPress(actionId: action.id) })
     }
 }
 

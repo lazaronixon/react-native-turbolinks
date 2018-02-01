@@ -9,6 +9,7 @@ class TurbolinksRoute {
     var modal:Bool?
     var passProps:Dictionary<AnyHashable, Any>?
     var actions:Array<Dictionary<AnyHashable, Any>>?
+    var leftButtonIcon:UIImage?
     
     init(route: Dictionary<AnyHashable, Any>) {
         let action = RCTConvert.nsString(route["action"])
@@ -20,6 +21,7 @@ class TurbolinksRoute {
         self.modal = RCTConvert.bool(route["modal"]) || false
         self.passProps = RCTConvert.nsDictionary(route["passProps"])
         self.actions = RCTConvert.nsDictionaryArray(route["actions"])
+        self.leftButtonIcon = RCTConvert.uiImage(route["leftButtonIcon"])
     }
     
 }

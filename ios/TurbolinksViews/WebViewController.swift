@@ -14,6 +14,7 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.renderLoadingStyle()
         self.renderActions()
         self.renderBackButton()
+        self.renderLeftButton()
     }
 
     func renderComponent() {
@@ -53,20 +54,32 @@ class WebViewController: Turbolinks.VisitableViewController {
     }
     
     fileprivate func renderActions() {
-        if route.action != nil {
-            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.presentActions))
-            navigationItem.rightBarButtonItem = button
-        }
+        let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.presentActions))
+        navigationItem.rightBarButtonItem = button
     }
     
     fileprivate func renderBackButton() {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButton
+        navigationItem.leftItemsSupplementBackButton = true
+    }
+    
+    fileprivate func renderLeftButton() {
+        if route.leftButtonIcon != nil {
+            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
+            navigationItem.leftBarButtonItem = button
+        }
     }
     
     @objc func presentActions(sender: UIBarButtonItem) {
-        let actionsView = ActionsViewController(manager: manager, route: route, barButtonItem: sender)
-        present(actionsView,animated: true)
+        if route.actions != nil {
+            let actionsView = ActionsViewController(manager: manager, route: route, barButtonItem: sender)
+            present(actionsView,animated: true)
+        }
+    }
+    
+    @objc fileprivate func handleLeftButtonPress() {
+        manager.handleLeftButtonPress(URL: visitableURL, component: nil)
     }
     
 }
