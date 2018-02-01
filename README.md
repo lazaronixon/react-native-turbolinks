@@ -1,6 +1,8 @@
 # React Native Turbolinks
 A implementation of ![Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and ![Turbolinks Android](https://github.com/turbolinks/turbolinks-android) for React Native.
 
+![React Native Turbolinks](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/intro-turbolinks.gif)
+
 ## Getting started
 ```
 $ npm install react-native-swift --save
