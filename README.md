@@ -113,7 +113,7 @@ Dismiss a overlaped view presented by visiting a component with modal option.
 #### `back()`
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
-#### `setNavigationBarStyle({titleTextColor, subTitleTextColor, barTintColor, tintColor})`(iOS Only)
+#### `setNavigationBarStyle({titleTextColor, subtitleTextColor, barTintColor, tintColor})`(iOS Only)
 Set style for navigation bar on iOS. For android set your style on `android/app/src/main/res/values/styles.xml`.
 
 #### `setLoadingStyle({color, backgroundColor})` (iOS Only)

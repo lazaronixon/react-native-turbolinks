@@ -14,13 +14,13 @@ class TurbolinksTitleView : UIStackView {
         if let turbolinksView = viewController as? WebViewController {
             self.subtitle = turbolinksView.route.subtitle
             self.textColor = turbolinksView.manager.titleTextColor ?? UIColor.black
-            self.subtitleTextColor = turbolinksView.manager.subTitleTextColor ?? UIColor.gray
+            self.subtitleTextColor = turbolinksView.manager.subtitleTextColor ?? UIColor.gray
         }
         
         if let turbolinksView = viewController as? NativeViewController {
             self.subtitle = turbolinksView.route.subtitle
             self.textColor = turbolinksView.manager.titleTextColor ?? UIColor.black
-            self.subtitleTextColor = turbolinksView.manager.subTitleTextColor ?? UIColor.gray
+            self.subtitleTextColor = turbolinksView.manager.subtitleTextColor ?? UIColor.gray
         }
         
         let gestureOne = UITapGestureRecognizer(target: self, action: #selector(self.handleTitlePress))

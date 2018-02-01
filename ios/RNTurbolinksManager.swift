@@ -5,7 +5,7 @@ import Turbolinks
 class RNTurbolinksManager: RCTEventEmitter {
     
     var titleTextColor: UIColor?
-    var subTitleTextColor: UIColor?
+    var subtitleTextColor: UIColor?
     var loadingBackgroundColor: UIColor?
     var loadingColor: UIColor?
     
@@ -71,7 +71,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
         self.titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
-        self.subTitleTextColor = RCTConvert.uiColor(style["subTitleTextColor"])
+        self.subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
         let barTintColor = RCTConvert.uiColor(style["barTintColor"])
         let tintColor = RCTConvert.uiColor(style["tintColor"])
         if barTintColor != nil { self.navigation.navigationBar.barTintColor = barTintColor }
