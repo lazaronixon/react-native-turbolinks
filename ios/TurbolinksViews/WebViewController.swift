@@ -49,24 +49,26 @@ class WebViewController: Turbolinks.VisitableViewController {
     }
     
     fileprivate func renderLoadingStyle() {
-        self.visitableView.activityIndicatorView.backgroundColor = self.manager.loadingBackgroundColor ?? .white
-        self.visitableView.activityIndicatorView.color = self.manager.loadingColor ?? .gray
+        visitableView.activityIndicatorView.backgroundColor = manager.loadingBackgroundColor ?? .white
+        visitableView.activityIndicatorView.color = manager.loadingColor ?? .gray
     }
     
     fileprivate func renderActions() {
-        let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.presentActions))
-        navigationItem.rightBarButtonItem = button
+        if route.actions != nil {
+            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(presentActions))
+            navigationItem.rightBarButtonItem = button
+        }
     }
     
     fileprivate func renderBackButton() {
-        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        let backButton = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButton
         navigationItem.leftItemsSupplementBackButton = true
     }
     
     fileprivate func renderLeftButton() {
         if route.leftButtonIcon != nil {
-            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
+            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(handleLeftButtonPress))
             navigationItem.leftBarButtonItem = button
         }
     }

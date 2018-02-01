@@ -25,20 +25,20 @@ class NativeViewController: UIViewController {
     
     fileprivate func renderActions() {
         if route.actions != nil {
-            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(self.presentActions))
+            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(presentActions))
             navigationItem.rightBarButtonItem = button
         }
     }
     
     fileprivate func renderBackButton() {
-        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        let backButton = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButton
         navigationItem.leftItemsSupplementBackButton = true
     }
     
     fileprivate func renderLeftButton() {
         if route.leftButtonIcon != nil {
-            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(self.handleLeftButtonPress))
+            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(handleLeftButtonPress))
             navigationItem.leftBarButtonItem = button
         }
     }
