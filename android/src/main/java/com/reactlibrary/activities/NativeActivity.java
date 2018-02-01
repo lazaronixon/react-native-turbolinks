@@ -57,6 +57,7 @@ public class NativeActivity extends ReactAppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (route.getActions() == null) return true;
         getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
         for (Bundle bundle : route.getActions()) {
             TurbolinksAction action = new TurbolinksAction(bundle);

@@ -25,6 +25,7 @@ import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksAction;
 import com.reactlibrary.util.TurbolinksRoute;
+import com.reactlibrary.util.TurbolinksUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -67,6 +68,8 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         if (userAgent != null) {
             TurbolinksSession.getDefault(this).getWebView().getSettings().setUserAgentString(userAgent);
         }
+
+        TurbolinksUtil.initFileChooser(TurbolinksSession.getDefault(this).getWebView(), this, getApplicationContext());
         TurbolinksSession.getDefault(this).activity(this).adapter(this).view(turbolinksView).visit(route.getUrl());
     }
 
@@ -145,6 +148,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (route.getActions() == null) return true;
         getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
         for (Bundle bundle : route.getActions()) {
             TurbolinksAction action = new TurbolinksAction(bundle);
