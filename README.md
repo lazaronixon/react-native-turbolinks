@@ -150,4 +150,4 @@ Removes the listener for given event.
 
 ## Resources
 
-![RailsConf 2016 - Turbolinks 5: I Can’t Believe It’s Not Native! by Sam Stephenson](https://www.youtube.com/watch?v=SWEts0rlezA)
+- ![RailsConf 2016 - Turbolinks 5: I Can’t Believe It’s Not Native! by Sam Stephenson](https://www.youtube.com/watch?v=SWEts0rlezA)
