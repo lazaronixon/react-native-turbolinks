@@ -55,7 +55,10 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     fileprivate func renderActions() {
         if route.actions != nil {
-            let button = UIBarButtonItem.init(title: "Menu", style: .plain, target: self, action: #selector(presentActions))
+            let button = UIBarButtonItem.init(title: "\u{22EF}", style: .plain, target: self, action: #selector(presentActions))
+            let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
+            button.setTitleTextAttributes(font, for: .normal)
+            button.setTitleTextAttributes(font, for: .selected)
             navigationItem.rightBarButtonItem = button
         }
     }
