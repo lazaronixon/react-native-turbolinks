@@ -147,3 +147,7 @@ Removes the listener for given event.
 `Turbolinks.Constants.Action.replace: 'replace'`
 
 `Turbolinks.Constants.Action.restore: 'restore'`
+
+## Resources
+
+![RailsConf 2016 - Turbolinks 5: I Can’t Believe It’s Not Native! by Sam Stephenson](https://www.youtube.com/watch?v=SWEts0rlezA)
