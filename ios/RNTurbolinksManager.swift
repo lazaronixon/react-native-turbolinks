@@ -41,7 +41,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func reloadSession() -> Void {
         let sharedCookies = HTTPCookieStorage.shared.cookies!
-        let cookieScript = TurbolinksUtil.getJSCookiesString(sharedCookies)
+        let cookieScript = TurbolinksHelper.getJSCookiesString(sharedCookies)
         session.webView.evaluateJavaScript(cookieScript)
         session.reload()
     }
@@ -149,7 +149,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override func supportedEvents() -> [String]! {
-        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksTitlePress", "turbolinksActionPress", "turbolinksLeftButtonPress"]
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksTitlePress", "turbolinksActionPress", "turbolinksLeftButtonPress", "turbolinksVisitCompleted"]
     }
 }
 
@@ -168,7 +168,17 @@ extension RNTurbolinksManager: SessionDelegate {
     
     func sessionDidFinishRequest(_ session: Session) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        handleVisitCompleted()
     }
+    
+    fileprivate func handleVisitCompleted() {
+        let javaScriptString = "document.documentElement.outerHTML"
+        session.webView.evaluateJavaScript(javaScriptString, completionHandler: { (document, error) in
+            let url = self.session.webView.url!
+            self.sendEvent(withName: "turbolinksVisitCompleted", body: ["url": url.absoluteString, "path": url.path, "source": document as? String])
+        })
+    }
+    
 }
 
 extension RNTurbolinksManager: WKScriptMessageHandler {
