@@ -126,6 +126,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         sendEvent(withName: "turbolinksLeftButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
+    func handleVisitCompleted(url: URL!, source: String?) {
+        sendEvent(withName: "turbolinksVisitCompleted", body: ["url": url.absoluteString, "path": url.path, "source": source])
+    }
+    
     override static func requiresMainQueueSetup() -> Bool {
         return true;
     }
@@ -168,17 +172,7 @@ extension RNTurbolinksManager: SessionDelegate {
     
     func sessionDidFinishRequest(_ session: Session) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        handleVisitCompleted()
     }
-    
-    fileprivate func handleVisitCompleted() {
-        let javaScriptString = "document.documentElement.outerHTML"
-        session.webView.evaluateJavaScript(javaScriptString, completionHandler: { (document, error) in
-            let url = self.session.webView.url!
-            self.sendEvent(withName: "turbolinksVisitCompleted", body: ["url": url.absoluteString, "path": url.path, "source": document as? String])
-        })
-    }
-    
 }
 
 extension RNTurbolinksManager: WKScriptMessageHandler {

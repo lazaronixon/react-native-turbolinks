@@ -41,6 +41,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     override func visitableDidRender() {
         super.visitableDidRender()
         renderTitle()
+        handleVisitCompleted()
     }
     
     fileprivate func renderTitle() {
@@ -74,6 +75,13 @@ class WebViewController: Turbolinks.VisitableViewController {
             let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(handleLeftButtonPress))
             navigationItem.leftBarButtonItem = button
         }
+    }
+    
+    fileprivate func handleVisitCompleted() {
+        let javaScriptString = "document.documentElement.outerHTML"
+        visitableView.webView!.evaluateJavaScript(javaScriptString, completionHandler: { (document, error) in
+            self.manager.handleVisitCompleted(url: self.visitableURL, source: document as? String)
+        })
     }
     
     @objc func presentActions(sender: UIBarButtonItem) {
