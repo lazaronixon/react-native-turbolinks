@@ -99,6 +99,13 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
+    @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>) {
+        if let visitable = navigation.visibleViewController as? WebViewController {
+            visitable.route.actions = actions
+            visitable.renderActions()
+        }
+    }
+    
     fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
         let visitable = WebViewController(manager: self, route: route)        
         if route.action == .Advance {

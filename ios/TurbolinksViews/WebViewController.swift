@@ -49,16 +49,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         visitableView.activityIndicatorView.color = manager.loadingColor ?? .gray
     }
     
-    fileprivate func renderActions() {
-        if route.actions != nil {
-            let button = UIBarButtonItem.init(title: "\u{22EF}", style: .plain, target: self, action: #selector(presentActions))
-            let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
-            button.setTitleTextAttributes(font, for: .normal)
-            button.setTitleTextAttributes(font, for: .selected)
-            navigationItem.rightBarButtonItem = button
-        }
-    }
-    
     fileprivate func renderBackButton() {
         let backButton = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButton
@@ -82,6 +72,16 @@ class WebViewController: Turbolinks.VisitableViewController {
     func renderTitle() {
         if route.title != nil { navigationItem.title = route.title }
         navigationItem.titleView = TurbolinksTitleView(self)
+    }
+    
+    func renderActions() {
+        if route.actions != nil {
+            let button = UIBarButtonItem.init(title: "\u{22EF}", style: .plain, target: self, action: #selector(presentActions))
+            let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
+            button.setTitleTextAttributes(font, for: .normal)
+            button.setTitleTextAttributes(font, for: .selected)
+            navigationItem.rightBarButtonItem = button
+        }
     }
     
     @objc func presentActions(sender: UIBarButtonItem) {
