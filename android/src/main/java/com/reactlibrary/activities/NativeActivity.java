@@ -14,7 +14,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksAction;
@@ -23,7 +23,7 @@ import com.reactlibrary.util.TurbolinksRoute;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 
-public class NativeActivity extends ReactAppCompatActivity {
+public class NativeActivity extends ReactAppCompatActivity implements GenericActivity {
 
     private TurbolinksRoute route;
     private Boolean navigationBarHidden;
@@ -37,6 +37,7 @@ public class NativeActivity extends ReactAppCompatActivity {
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         setContentView(R.layout.activity_native);
         renderToolBar();
+        renderTitle();
         renderReactRootView();
     }
 
@@ -75,21 +76,41 @@ public class NativeActivity extends ReactAppCompatActivity {
         return true;
     }
 
-    private void renderReactRootView() {
-        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.native_view);
-        ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
-        mReactRootView.startReactApplication(mReactInstanceManager, route.getComponent(), route.getPassProps());
-    }
-
-    private void renderToolBar() {
+    @Override
+    public void renderToolBar() {
         Toolbar turbolinksToolbar = (Toolbar) findViewById(R.id.native_toolbar);
         setSupportActionBar(turbolinksToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
         getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
+        if (navigationBarHidden || route.getModal()) getSupportActionBar().hide();
+        handleTitlePress(turbolinksToolbar);
+    }
+
+    @Override
+    public void renderTitle() {
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
-        handleTitlePress(turbolinksToolbar);
-        if (navigationBarHidden || route.getModal()) getSupportActionBar().hide();
+    }
+
+    @Override
+    @SuppressLint("RestrictedApi")
+    public void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
+        if (icon == null) return;
+        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        Uri uri = Uri.parse(icon.getString("uri"));
+        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
+        menuItem.setIcon(drawableIcon);
+    }
+
+    @Override
+    public RCTDeviceEventEmitter getEventEmitter() {
+        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
+    }
+
+    private void renderReactRootView() {
+        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.native_view);
+        ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
+        mReactRootView.startReactApplication(mReactInstanceManager, route.getComponent(), route.getPassProps());
     }
 
     private void handleTitlePress(Toolbar toolbar) {
@@ -102,19 +123,6 @@ public class NativeActivity extends ReactAppCompatActivity {
                 getEventEmitter().emit("turbolinksTitlePress", params);
             }
         });
-    }
-
-    @SuppressLint("RestrictedApi")
-    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon == null) return;
-        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        Uri uri = Uri.parse(icon.getString("uri"));
-        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
-        menuItem.setIcon(drawableIcon);
-    }
-
-    private DeviceEventManagerModule.RCTDeviceEventEmitter getEventEmitter() {
-        return getReactInstanceManager().getCurrentReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
     }
 
 }

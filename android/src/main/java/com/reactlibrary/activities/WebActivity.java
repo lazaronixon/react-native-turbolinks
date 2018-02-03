@@ -35,7 +35,7 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 
-public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter {
+public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter, GenericActivity {
 
     private static final Integer HTTP_FAILURE = 0;
     private static final Integer NETWORK_FAILURE = 1;
@@ -166,20 +166,8 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         return true;
     }
 
-    @JavascriptInterface
-    public void postMessage(String message) {
-        getEventEmitter().emit("turbolinksMessage", message);
-    }
-
-    public void reloadSession() {
-        TurbolinksSession.getDefault(this).getWebView().reload();
-    }
-
-    private RCTDeviceEventEmitter getEventEmitter() {
-        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
-    }
-
-    private void renderToolBar() {
+    @Override
+    public void renderToolBar() {
         Toolbar turbolinksToolbar = (Toolbar) findViewById(R.id.turbolinks_toolbar);
         setSupportActionBar(turbolinksToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
@@ -189,11 +177,36 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         if (navigationBarHidden) getSupportActionBar().hide();
     }
 
-    private void renderTitle() {
+    @Override
+    public void renderTitle() {
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
         String title = route.getTitle() != null ? route.getTitle() : webView.getTitle();
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(route.getSubtitle());
+    }
+
+    @Override
+    @SuppressLint("RestrictedApi")
+    public void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
+        if (icon == null) return;
+        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        Uri uri = Uri.parse(icon.getString("uri"));
+        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
+        menuItem.setIcon(drawableIcon);
+    }
+
+    @Override
+    public RCTDeviceEventEmitter getEventEmitter() {
+        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
+    }
+
+    @JavascriptInterface
+    public void postMessage(String message) {
+        getEventEmitter().emit("turbolinksMessage", message);
+    }
+
+    public void reloadSession() {
+        TurbolinksSession.getDefault(this).getWebView().reload();
     }
 
     private void handleTitlePress(Toolbar toolbar) {
@@ -214,12 +227,4 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         });
     }
 
-    @SuppressLint("RestrictedApi")
-    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon == null) return;
-        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        Uri uri = Uri.parse(icon.getString("uri"));
-        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
-        menuItem.setIcon(drawableIcon);
-    }
 }
