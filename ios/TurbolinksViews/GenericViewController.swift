@@ -6,6 +6,7 @@ protocol GenricViewController {
     var selectorPresentActions: Selector { get }
     var navigationItem: UINavigationItem { get }
     
+    init(manager: RNTurbolinksManager, route: TurbolinksRoute)
     func renderTitle()
     func renderActions()
     func renderBackButton()

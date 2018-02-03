@@ -9,7 +9,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
     var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
-    convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
+    convenience required init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route

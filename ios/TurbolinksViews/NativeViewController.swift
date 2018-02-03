@@ -5,7 +5,7 @@ class NativeViewController: UIViewController {
     var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
     var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
-    convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
+    convenience required init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
         self.init()
         self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         self.manager = manager
