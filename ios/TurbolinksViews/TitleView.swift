@@ -1,27 +1,18 @@
 class TurbolinksTitleView : UIStackView {
     
-    fileprivate var viewController: UIViewController?
+    fileprivate var viewController: GenricViewController!
     fileprivate var title: String?
     fileprivate var subtitle: String?
     fileprivate var textColor: UIColor?
     fileprivate var subtitleTextColor: UIColor?
     
-    convenience init(_ viewController: UIViewController) {
+    convenience init(_ viewController: GenricViewController) {
         self.init()
         self.viewController = viewController
         self.title = viewController.navigationItem.title
-        
-        if let turbolinksView = viewController as? WebViewController {
-            self.subtitle = turbolinksView.route.subtitle
-            self.textColor = turbolinksView.manager.titleTextColor ?? UIColor.black
-            self.subtitleTextColor = turbolinksView.manager.subtitleTextColor ?? UIColor.gray
-        }
-        
-        if let turbolinksView = viewController as? NativeViewController {
-            self.subtitle = turbolinksView.route.subtitle
-            self.textColor = turbolinksView.manager.titleTextColor ?? UIColor.black
-            self.subtitleTextColor = turbolinksView.manager.subtitleTextColor ?? UIColor.gray
-        }
+        self.subtitle = viewController.route.subtitle
+        self.textColor = viewController.manager.titleTextColor ?? UIColor.black
+        self.subtitleTextColor = viewController.manager.subtitleTextColor ?? UIColor.gray
         
         let gestureOne = UITapGestureRecognizer(target: self, action: #selector(self.handleTitlePress))
         let one = UILabel()
@@ -55,13 +46,6 @@ class TurbolinksTitleView : UIStackView {
     }
     
     @objc fileprivate func handleTitlePress() {
-        if let turbolinksView = viewController as? WebViewController {
-            turbolinksView.handleTitlePress()
-        }
-        if let turbolinksView = viewController as? NativeViewController {
-            turbolinksView.handleTitlePress()
-        }
+        viewController.handleTitlePress()
     }
-    
-    
 }

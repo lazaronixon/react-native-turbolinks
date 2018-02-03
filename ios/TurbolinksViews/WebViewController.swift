@@ -6,11 +6,15 @@ class WebViewController: Turbolinks.VisitableViewController {
     var manager: RNTurbolinksManager!
     var route: TurbolinksRoute!
     var customView: UIView?
+    var selectorHandleLeftButtonPress: Selector!
+    var selectorPresentActions: Selector!
     
     convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route
+        self.selectorHandleLeftButtonPress = #selector(handleLeftButtonPress)
+        self.selectorPresentActions = #selector(presentActionsGeneric)
         self.renderLoadingStyle()
         self.renderActions()
         self.renderBackButton()
@@ -24,42 +28,19 @@ class WebViewController: Turbolinks.VisitableViewController {
         installErrorViewConstraints()
     }
     
-    func installErrorViewConstraints() {
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: [ "view": customView! ]))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": customView! ]))
-    }
-    
     func reload() {
         customView?.removeFromSuperview()
         reloadVisitable()
     }
     
-    func handleTitlePress() {
-        manager.handleTitlePress(URL: visitableURL, component: nil)
-    }
-    
-    override func visitableDidRender() {
-        super.visitableDidRender()
-        renderTitle()
-        handleVisitCompleted()
+    fileprivate func installErrorViewConstraints() {
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: [ "view": customView! ]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": customView! ]))
     }
     
     fileprivate func renderLoadingStyle() {
         visitableView.activityIndicatorView.backgroundColor = manager.loadingBackgroundColor ?? .white
         visitableView.activityIndicatorView.color = manager.loadingColor ?? .gray
-    }
-    
-    fileprivate func renderBackButton() {
-        let backButton = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backButton
-        navigationItem.leftItemsSupplementBackButton = true
-    }
-    
-    fileprivate func renderLeftButton() {
-        if route.leftButtonIcon != nil {
-            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(handleLeftButtonPress))
-            navigationItem.leftBarButtonItem = button
-        }
     }
     
     fileprivate func handleVisitCompleted() {
@@ -69,32 +50,23 @@ class WebViewController: Turbolinks.VisitableViewController {
         })
     }
     
-    func renderTitle() {
-        if route.title != nil { navigationItem.title = route.title }
-        navigationItem.titleView = TurbolinksTitleView(self)
+    override func visitableDidRender() {
+        super.visitableDidRender()
+        renderTitle()
+        handleVisitCompleted()
     }
     
-    func renderActions() {
-        if route.actions != nil {
-            let button = UIBarButtonItem.init(title: "\u{22EF}", style: .plain, target: self, action: #selector(presentActions))
-            let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
-            button.setTitleTextAttributes(font, for: .normal)
-            button.setTitleTextAttributes(font, for: .selected)
-            navigationItem.rightBarButtonItem = button
-        }
-    }
+}
+
+extension WebViewController: GenricViewController {
     
-    @objc func presentActions(sender: UIBarButtonItem) {
-        if route.actions != nil {
-            let actionsView = ActionsViewController(manager: manager, route: route, barButtonItem: sender)
-            present(actionsView,animated: true)
-        }
-    }
-    
-    @objc fileprivate func handleLeftButtonPress() {
+    @objc func handleLeftButtonPress() {
         manager.handleLeftButtonPress(URL: visitableURL, component: nil)
     }
     
+    @objc func presentActionsGeneric(_ sender: UIBarButtonItem) {
+        self.presentActions(sender)
+    }
 }
 
 

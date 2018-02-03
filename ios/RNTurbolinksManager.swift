@@ -28,15 +28,16 @@ class RNTurbolinksManager: RCTEventEmitter {
     }()
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
-        let tRoute = TurbolinksRoute(route: route)
-        let visitable = navigation.visibleViewController as! WebViewController
-        visitable.route = tRoute
-        visitable.renderComponent()
+        if let visitable = navigation.visibleViewController as? WebViewController {
+            let tRoute = TurbolinksRoute(route: route)
+            visitable.route = tRoute
+            visitable.renderComponent()
+        }
     }
     
     @objc func reloadVisitable() -> Void {
-        let visitable = navigation.visibleViewController as! WebViewController
-        visitable.reload()
+        let visitable = navigation.visibleViewController as? WebViewController
+        visitable?.reload()
     }
     
     @objc func reloadSession() -> Void {
@@ -92,18 +93,16 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func renderTitle(_ route: Dictionary<AnyHashable, Any>) {
-        if let visitable = navigation.visibleViewController as? WebViewController {
-            visitable.route.title = RCTConvert.nsString(route["title"])
-            visitable.route.subtitle = RCTConvert.nsString(route["subtitle"])
-            visitable.renderTitle()
-        }
+        let visitable = navigation.visibleViewController as! GenricViewController
+        visitable.route.title = RCTConvert.nsString(route["title"])
+        visitable.route.subtitle = RCTConvert.nsString(route["subtitle"])
+        visitable.renderTitle()
     }
     
     @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>) {
-        if let visitable = navigation.visibleViewController as? WebViewController {
-            visitable.route.actions = actions
-            visitable.renderActions()
-        }
+        let visitable = navigation.visibleViewController as! GenricViewController
+        visitable.route.actions = actions
+        visitable.renderActions()
     }
     
     fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
@@ -127,7 +126,7 @@ class RNTurbolinksManager: RCTEventEmitter {
             navigation.popViewController(animated: false)
             navigation.pushViewController(viewController, animated: false)
         }
-    }    
+    }
     
     func handleTitlePress(URL: URL?, component: String?) {
         sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
