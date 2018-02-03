@@ -67,6 +67,10 @@ class Turbolinks {
     })
   }
 
+  static renderTitle(route) {
+    RNTurbolinksManager.renderTitle(route)
+  }
+
   static addEventListener(eventName, callback) {
     RNTurbolinksManagerEmitter.addListener(eventName, callback)
   }

@@ -28,7 +28,7 @@ class TurbolinksTitleView : UIStackView {
         one.text = title
         one.textColor = textColor
         one.font = UIFont.boldSystemFont(ofSize: 17)
-        one.sizeToFit()
+        one.textAlignment = .center
         one.isUserInteractionEnabled = true
         one.addGestureRecognizer(gestureOne)
         addArrangedSubview(one)
@@ -39,7 +39,6 @@ class TurbolinksTitleView : UIStackView {
         two.textColor = subtitleTextColor
         two.font = UIFont.systemFont(ofSize: 12)
         two.textAlignment = .center
-        two.sizeToFit()
         two.isUserInteractionEnabled = true
         two.addGestureRecognizer(gestureTwo)
         addArrangedSubview(two)

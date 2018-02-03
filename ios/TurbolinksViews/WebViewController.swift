@@ -44,11 +44,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         handleVisitCompleted()
     }
     
-    fileprivate func renderTitle() {
-        if route.title != nil { navigationItem.title = route.title }
-        navigationItem.titleView = TurbolinksTitleView(self)
-    }
-    
     fileprivate func renderLoadingStyle() {
         visitableView.activityIndicatorView.backgroundColor = manager.loadingBackgroundColor ?? .white
         visitableView.activityIndicatorView.color = manager.loadingColor ?? .gray
@@ -82,6 +77,11 @@ class WebViewController: Turbolinks.VisitableViewController {
         visitableView.webView!.evaluateJavaScript(javaScriptString, completionHandler: { (document, error) in
             self.manager.handleVisitCompleted(url: self.visitableURL, source: document as? String)
         })
+    }
+    
+    func renderTitle() {
+        if route.title != nil { navigationItem.title = route.title }
+        navigationItem.titleView = TurbolinksTitleView(self)
     }
     
     @objc func presentActions(sender: UIBarButtonItem) {

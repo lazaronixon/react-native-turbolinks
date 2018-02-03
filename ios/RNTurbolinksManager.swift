@@ -27,8 +27,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         return session
     }()
     
-    @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        let tRoute = TurbolinksRoute(route: routeParam)
+    @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
+        let tRoute = TurbolinksRoute(route: route)
         let visitable = navigation.visibleViewController as! WebViewController
         visitable.route = tRoute
         visitable.renderComponent()
@@ -89,6 +89,14 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func setMessageHandler(_ handler: String) -> Void {
         webViewConfiguration.userContentController.removeScriptMessageHandler(forName: handler)
         webViewConfiguration.userContentController.add(self, name: handler)
+    }
+    
+    @objc func renderTitle(_ route: Dictionary<AnyHashable, Any>) {
+        if let visitable = navigation.visibleViewController as? WebViewController {
+            visitable.route.title = RCTConvert.nsString(route["title"])
+            visitable.route.subtitle = RCTConvert.nsString(route["subtitle"])
+            visitable.renderTitle()
+        }
     }
     
     fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
