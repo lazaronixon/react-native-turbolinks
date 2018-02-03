@@ -2,16 +2,14 @@ class NativeViewController: UIViewController {
     
     var manager: RNTurbolinksManager!    
     var route: TurbolinksRoute!
-    var selectorHandleLeftButtonPress: Selector!
-    var selectorPresentActions: Selector!
+    var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
+    var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
     convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
         self.init()
         self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         self.manager = manager
         self.route = route
-        self.selectorHandleLeftButtonPress = #selector(handleLeftButtonPress)
-        self.selectorPresentActions = #selector(presentActionsGeneric)
         self.renderTitle()
         self.renderActions()
         self.renderBackButton()
@@ -20,7 +18,7 @@ class NativeViewController: UIViewController {
     
 }
 
-extension NativeViewController: GenricViewController{
+extension NativeViewController: GenricViewController {
     
     @objc func handleLeftButtonPress() {
         manager.handleLeftButtonPress(URL: nil, component: self.route.component)

@@ -2,8 +2,8 @@ protocol GenricViewController {
     
     var manager: RNTurbolinksManager! { get set }
     var route: TurbolinksRoute! { get set }
-    var selectorHandleLeftButtonPress: Selector! { get }
-    var selectorPresentActions: Selector! { get }
+    var selectorHandleLeftButtonPress: Selector { get }
+    var selectorPresentActions: Selector { get }
     var navigationItem: UINavigationItem { get }
     
     func renderTitle()

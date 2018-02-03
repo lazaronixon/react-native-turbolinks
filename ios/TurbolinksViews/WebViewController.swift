@@ -6,15 +6,13 @@ class WebViewController: Turbolinks.VisitableViewController {
     var manager: RNTurbolinksManager!
     var route: TurbolinksRoute!
     var customView: UIView?
-    var selectorHandleLeftButtonPress: Selector!
-    var selectorPresentActions: Selector!
+    var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
+    var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
     convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route
-        self.selectorHandleLeftButtonPress = #selector(handleLeftButtonPress)
-        self.selectorPresentActions = #selector(presentActionsGeneric)
         self.renderLoadingStyle()
         self.renderActions()
         self.renderBackButton()
