@@ -18,7 +18,7 @@ public class TurbolinksUtil {
         webView.setWebChromeClient(new WebChromeClient() {
 
             boolean mUploadingFile;
-            ValueCallback<Uri>  mUploadMessage;
+            ValueCallback<Uri> mUploadMessage;
             ValueCallback<Uri[]> uploadMessage;
             public static final int REQUEST_SELECT_FILE = 100;
             private final static int FILECHOOSER_RESULTCODE = 1;
@@ -57,6 +57,4 @@ public class TurbolinksUtil {
             }
         });
     }
-
-
 }

@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -34,6 +35,7 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
 public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter, GenericActivity {
 
@@ -121,6 +123,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     @Override
     public void visitCompleted() {
         renderTitle();
+        handleVisitCompleted();
     }
 
     @Override
@@ -220,6 +223,25 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
                     params.putString("url", urlLocation.toString());
                     params.putString("path", urlLocation.getPath());
                     getEventEmitter().emit("turbolinksTitlePress", params);
+                } catch (MalformedURLException e) {
+                    Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+                }
+            }
+        });
+    }
+
+    private void handleVisitCompleted() {
+        String javaScript = "document.documentElement.outerHTML";
+        final WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        webView.evaluateJavascript(javaScript, new ValueCallback<String>() {
+            public void onReceiveValue(String source) {
+                try {
+                    WritableMap params = Arguments.createMap();
+                    URL urlLocation = new URL(webView.getUrl());
+                    params.putString("url", urlLocation.toString());
+                    params.putString("path", urlLocation.getPath());
+                    params.putString("source", unescapeJava(source));
+                    getEventEmitter().emit("turbolinksVisitCompleted", params);
                 } catch (MalformedURLException e) {
                     Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
                 }
