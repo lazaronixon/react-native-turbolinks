@@ -1,16 +1,27 @@
 package com.reactlibrary.activities;
 
-import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
+import com.reactlibrary.util.TurbolinksRoute;
 
 public interface GenericActivity {
 
     void renderTitle();
-    void renderToolBar();
-    void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon);
-    DeviceEventManagerModule.RCTDeviceEventEmitter getEventEmitter();
+    void renderToolBar(Toolbar toolbar);
+    void onBackPressed();
+    void handleTitlePress(Toolbar toolbar);
+    void setSupportActionBar(Toolbar toolbar);
+    boolean onOptionsItemSelected(MenuItem item);
+    boolean superOnOptionsItemSelected(MenuItem item);
+    Boolean getInitialVisit();
+    Boolean getNavigationBarHidden();
+    RCTDeviceEventEmitter getEventEmitter();
+    TurbolinksRoute getRoute();
+    MenuInflater getMenuInflater();
+    ActionBar getSupportActionBar();
 }
