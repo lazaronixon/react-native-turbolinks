@@ -27,21 +27,22 @@ class RNTurbolinksManager: RCTEventEmitter {
         return session
     }()
     
-    @objc func replaceWith(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        let tRoute = TurbolinksRoute(route: routeParam)
-        let visitable = navigation.visibleViewController as! WebViewController
-        visitable.route = tRoute
-        visitable.renderComponent()
+    @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
+        if let visitable = navigation.visibleViewController as? WebViewController {
+            let tRoute = TurbolinksRoute(route: route)
+            visitable.route = tRoute
+            visitable.renderComponent()
+        }
     }
     
     @objc func reloadVisitable() -> Void {
-        let visitable = navigation.visibleViewController as! WebViewController
-        visitable.reload()
+        let visitable = navigation.visibleViewController as? WebViewController
+        visitable?.reload()
     }
     
     @objc func reloadSession() -> Void {
         let sharedCookies = HTTPCookieStorage.shared.cookies!
-        let cookieScript = TurbolinksUtil.getJSCookiesString(sharedCookies)
+        let cookieScript = TurbolinksHelper.getJSCookiesString(sharedCookies)
         session.webView.evaluateJavaScript(cookieScript)
         session.reload()
     }
@@ -91,6 +92,19 @@ class RNTurbolinksManager: RCTEventEmitter {
         webViewConfiguration.userContentController.add(self, name: handler)
     }
     
+    @objc func renderTitle(_ title: String,_ subtitle: String) {
+        let visitable = navigation.visibleViewController as! GenricViewController
+        visitable.route.title = title
+        visitable.route.subtitle = subtitle
+        visitable.renderTitle()
+    }
+    
+    @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>) {
+        let visitable = navigation.visibleViewController as! GenricViewController
+        visitable.route.actions = actions
+        visitable.renderActions()
+    }
+    
     fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
         let visitable = WebViewController(manager: self, route: route)        
         if route.action == .Advance {
@@ -112,7 +126,7 @@ class RNTurbolinksManager: RCTEventEmitter {
             navigation.popViewController(animated: false)
             navigation.pushViewController(viewController, animated: false)
         }
-    }    
+    }
     
     func handleTitlePress(URL: URL?, component: String?) {
         sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
@@ -124,6 +138,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     func handleLeftButtonPress(URL: URL?, component: String?) {
         sendEvent(withName: "turbolinksLeftButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
+    }
+    
+    func handleVisitCompleted(url: URL!, source: String?) {
+        sendEvent(withName: "turbolinksVisitCompleted", body: ["url": url.absoluteString, "path": url.path, "source": source])
     }
     
     override static func requiresMainQueueSetup() -> Bool {
@@ -149,7 +167,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override func supportedEvents() -> [String]! {
-        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksTitlePress", "turbolinksActionPress", "turbolinksLeftButtonPress"]
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksTitlePress", "turbolinksActionPress", "turbolinksLeftButtonPress", "turbolinksVisitCompleted"]
     }
 }
 

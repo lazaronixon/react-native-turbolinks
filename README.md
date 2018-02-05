@@ -97,7 +97,7 @@ Visit a Component with Turbolinks.
     - `id:` A integer identifier for the action. (Required)
     - `title:` A title for the action.
     - `icon:` A icon for the action.
-    - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
+    - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
 
 #### `replaceWith(route)`
@@ -124,6 +124,17 @@ Set style for Activity Indicator View. For android set your style on `android/ap
 #### `setNavigationBarHidden(boolean)`
 Hidden navigation bar. For example if you want to use a web navbar. (Default false)
 
+#### `renderTitle(title, subtitle)`
+Change title of current view. For example if you want to get title from page source.
+
+#### `renderActions(actions)`
+Change actions of current view. For example if you want to mount a menu looking for data-attributes on page source.
+- `action:`
+  - `id:` A integer identifier for the action. (Required)
+  - `title:` A title for the action.
+  - `icon:` A icon for the action.
+  - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).
+
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:
 - `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link or call Turbolinks.visit(...). The argument to the event handler is an object with keys: `url, path, action`.
@@ -132,6 +143,7 @@ Adds an event handler. Supported events:
 - `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
 - `turbolinksLeftButtonPress:` Fire when left button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
+- `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path, source`.
 
 #### `removeEventListener(eventName, handler)`
 Removes the listener for given event.

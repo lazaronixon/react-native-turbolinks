@@ -12,4 +12,6 @@ RCT_EXTERN_METHOD(setMessageHandler:NSString)
 RCT_EXTERN_METHOD(setNavigationBarStyle:(NSDictionary *))
 RCT_EXTERN_METHOD(setLoadingStyle:(NSDictionary *))
 RCT_EXTERN_METHOD(setNavigationBarHidden:(nonnull BOOL))
+RCT_EXTERN_METHOD(renderTitle:(NSString *) subtitle:(NSString *))
+RCT_EXTERN_METHOD(renderActions:(NSArray *))
 @end

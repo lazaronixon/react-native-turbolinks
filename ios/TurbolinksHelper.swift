@@ -1,4 +1,4 @@
-class TurbolinksUtil {
+class TurbolinksHelper {
     
     static func getJSCookiesString(_ cookies: [HTTPCookie]) -> String {
         var result = ""

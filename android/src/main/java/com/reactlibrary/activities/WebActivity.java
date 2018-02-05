@@ -1,16 +1,13 @@
 package com.reactlibrary.activities;
 
-import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -23,7 +20,6 @@ import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
-import com.reactlibrary.util.TurbolinksAction;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksUtil;
 
@@ -34,12 +30,14 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
-public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter {
+public class WebActivity extends ReactAppCompatActivity implements TurbolinksAdapter, GenericActivity {
 
     private static final Integer HTTP_FAILURE = 0;
     private static final Integer NETWORK_FAILURE = 1;
 
+    private HelperActivity helperAct;
     private TurbolinksRoute route;
     private String messageHandler;
     private String userAgent;
@@ -50,15 +48,16 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_web);
 
+        helperAct = new HelperActivity(this);
         route = new TurbolinksRoute(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        setContentView(R.layout.activity_web);
-        renderToolBar();
+        renderToolBar((Toolbar) findViewById(R.id.turbolinks_toolbar));
 
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
@@ -121,6 +120,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     @Override
     public void visitCompleted() {
         renderTitle();
+        handleVisitCompleted();
     }
 
     @Override
@@ -142,28 +142,35 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+        return helperAct.onSupportNavigateUp();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (route.getActions() == null) return true;
-        getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
-        for (Bundle bundle : route.getActions()) {
-            TurbolinksAction action = new TurbolinksAction(bundle);
-            MenuItem menuItem = menu.add(Menu.NONE, action.getId(), Menu.NONE, action.getTitle());
-            renderActionIcon(menu, menuItem, action.getIcon());
-            if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        }
-        return true;
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return helperAct.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) return super.onOptionsItemSelected(item);
-        getEventEmitter().emit("turbolinksActionPress", item.getItemId());
-        return true;
+        return helperAct.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean superOnOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void renderToolBar(Toolbar toolbar) {
+        helperAct.renderToolBar(toolbar);
+    }
+
+    @Override
+    public void renderTitle() {
+        WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        String title = route.getTitle() != null ? route.getTitle() : webView.getTitle();
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setSubtitle(route.getSubtitle());
     }
 
     @JavascriptInterface
@@ -175,28 +182,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         TurbolinksSession.getDefault(this).getWebView().reload();
     }
 
-    private RCTDeviceEventEmitter getEventEmitter() {
-        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
-    }
-
-    private void renderToolBar() {
-        Toolbar turbolinksToolbar = (Toolbar) findViewById(R.id.turbolinks_toolbar);
-        setSupportActionBar(turbolinksToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
-        getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
-        getSupportActionBar().setTitle(null);
-        handleTitlePress(turbolinksToolbar);
-        if (navigationBarHidden) getSupportActionBar().hide();
-    }
-
-    private void renderTitle() {
-        WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        String title = route.getTitle() != null ? route.getTitle() : webView.getTitle();
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setSubtitle(route.getSubtitle());
-    }
-
-    private void handleTitlePress(Toolbar toolbar) {
+    public void handleTitlePress(Toolbar toolbar) {
         final WebView webView = TurbolinksSession.getDefault(this).getWebView();
         toolbar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -214,12 +200,43 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         });
     }
 
-    @SuppressLint("RestrictedApi")
-    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon == null) return;
-        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        Uri uri = Uri.parse(icon.getString("uri"));
-        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
-        menuItem.setIcon(drawableIcon);
+    private void handleVisitCompleted() {
+        String javaScript = "document.documentElement.outerHTML";
+        final WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        webView.evaluateJavascript(javaScript, new ValueCallback<String>() {
+            public void onReceiveValue(String source) {
+                try {
+                    WritableMap params = Arguments.createMap();
+                    URL urlLocation = new URL(webView.getUrl());
+                    params.putString("url", urlLocation.toString());
+                    params.putString("path", urlLocation.getPath());
+                    params.putString("source", unescapeJava(source));
+                    getEventEmitter().emit("turbolinksVisitCompleted", params);
+                } catch (MalformedURLException e) {
+                    Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+                }
+            }
+        });
     }
+
+    @Override
+    public RCTDeviceEventEmitter getEventEmitter() {
+        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
+    }
+
+    @Override
+    public TurbolinksRoute getRoute() {
+        return route;
+    }
+
+    @Override
+    public Boolean getInitialVisit() {
+        return initialVisit;
+    }
+
+    @Override
+    public Boolean getNavigationBarHidden() {
+        return navigationBarHidden;
+    }
+
 }

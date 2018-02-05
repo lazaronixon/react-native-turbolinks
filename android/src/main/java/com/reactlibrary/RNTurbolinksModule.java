@@ -4,14 +4,18 @@ package com.reactlibrary;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
+import com.reactlibrary.activities.GenericActivity;
 import com.reactlibrary.activities.NativeActivity;
 import com.reactlibrary.activities.WebActivity;
 import com.reactlibrary.util.TurbolinksRoute;
@@ -21,6 +25,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.facebook.react.bridge.UiThreadUtil.runOnUiThread;
 import static com.reactlibrary.util.TurbolinksRoute.ACTION_REPLACE;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_ACTIONS;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_COMPONENT;
@@ -111,6 +116,29 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setLoadingStyle(ReadableMap style) {
+    }
+
+    @ReactMethod
+    public void renderTitle(final String title, final String subtitle) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                GenericActivity activity = (GenericActivity) getCurrentActivity();
+                activity.getRoute().setTitle(title);
+                activity.getRoute().setSubtitle(subtitle);
+                activity.renderTitle();
+            }
+        });
+    }
+
+    @ReactMethod
+    public void renderActions(final ReadableArray actions) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                GenericActivity activity = (GenericActivity) getCurrentActivity();
+                activity.getRoute().setActions(Arguments.toList(actions));
+                ActivityCompat.invalidateOptionsMenu((Activity) activity);
+            }
+        });
     }
 
     @Override

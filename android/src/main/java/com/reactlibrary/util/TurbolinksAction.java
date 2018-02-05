@@ -6,6 +6,17 @@ import android.os.Parcelable;
 
 public class TurbolinksAction implements Parcelable {
 
+    public static final Creator<TurbolinksAction> CREATOR = new Creator<TurbolinksAction>() {
+        @Override
+        public TurbolinksAction createFromParcel(Parcel in) {
+            return new TurbolinksAction(in);
+        }
+
+        @Override
+        public TurbolinksAction[] newArray(int size) {
+            return new TurbolinksAction[size];
+        }
+    };
     private int id;
     private String title;
     private Bundle icon;
@@ -17,7 +28,6 @@ public class TurbolinksAction implements Parcelable {
         this.icon = bundle.getBundle("icon");
         this.button = bundle.getBoolean("button");
     }
-
 
     protected TurbolinksAction(Parcel in) {
         id = in.readInt();
@@ -39,18 +49,6 @@ public class TurbolinksAction implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<TurbolinksAction> CREATOR = new Creator<TurbolinksAction>() {
-        @Override
-        public TurbolinksAction createFromParcel(Parcel in) {
-            return new TurbolinksAction(in);
-        }
-
-        @Override
-        public TurbolinksAction[] newArray(int size) {
-            return new TurbolinksAction[size];
-        }
-    };
 
     public int getId() {
         return id;

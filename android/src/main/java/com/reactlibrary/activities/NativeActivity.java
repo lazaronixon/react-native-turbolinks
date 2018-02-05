@@ -1,10 +1,6 @@
 package com.reactlibrary.activities;
 
-import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,17 +10,17 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
-import com.reactlibrary.util.TurbolinksAction;
 import com.reactlibrary.util.TurbolinksRoute;
 
 import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 
-public class NativeActivity extends ReactAppCompatActivity {
+public class NativeActivity extends ReactAppCompatActivity implements GenericActivity {
 
+    private HelperActivity helperAct;
     private TurbolinksRoute route;
     private Boolean navigationBarHidden;
     private Boolean initialVisit;
@@ -32,11 +28,13 @@ public class NativeActivity extends ReactAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_native);
+        helperAct = new HelperActivity(this);
         route = new TurbolinksRoute(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
-        setContentView(R.layout.activity_native);
-        renderToolBar();
+        renderToolBar((Toolbar) findViewById(R.id.native_toolbar));
+        renderTitle();
         renderReactRootView();
     }
 
@@ -51,48 +49,37 @@ public class NativeActivity extends ReactAppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+        return helperAct.onSupportNavigateUp();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (route.getActions() == null) return true;
-        getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
-        for (Bundle bundle : route.getActions()) {
-            TurbolinksAction action = new TurbolinksAction(bundle);
-            MenuItem menuItem = menu.add(Menu.NONE, action.getId(), Menu.NONE, action.getTitle());
-            renderActionIcon(menu, menuItem, action.getIcon());
-            if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        }
-        return true;
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return helperAct.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) return super.onOptionsItemSelected(item);
-        getEventEmitter().emit("turbolinksActionPress", item.getItemId());
-        return true;
+        return helperAct.onOptionsItemSelected(item);
     }
 
-    private void renderReactRootView() {
-        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.native_view);
-        ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
-        mReactRootView.startReactApplication(mReactInstanceManager, route.getComponent(), route.getPassProps());
+    @Override
+    public boolean superOnOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
-    private void renderToolBar() {
-        Toolbar turbolinksToolbar = (Toolbar) findViewById(R.id.native_toolbar);
-        setSupportActionBar(turbolinksToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!initialVisit);
-        getSupportActionBar().setDisplayShowHomeEnabled(!initialVisit);
+    @Override
+    public void renderToolBar(Toolbar toolbar) {
+        helperAct.renderToolBar(toolbar);
+    }
+
+    @Override
+    public void renderTitle() {
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
-        handleTitlePress(turbolinksToolbar);
-        if (navigationBarHidden || route.getModal()) getSupportActionBar().hide();
     }
 
-    private void handleTitlePress(Toolbar toolbar) {
+    @Override
+    public void handleTitlePress(Toolbar toolbar) {
         toolbar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 WritableMap params = Arguments.createMap();
@@ -104,17 +91,30 @@ public class NativeActivity extends ReactAppCompatActivity {
         });
     }
 
-    @SuppressLint("RestrictedApi")
-    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon == null) return;
-        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        Uri uri = Uri.parse(icon.getString("uri"));
-        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
-        menuItem.setIcon(drawableIcon);
+    private void renderReactRootView() {
+        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.native_view);
+        ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
+        mReactRootView.startReactApplication(mReactInstanceManager, route.getComponent(), route.getPassProps());
     }
 
-    private DeviceEventManagerModule.RCTDeviceEventEmitter getEventEmitter() {
-        return getReactInstanceManager().getCurrentReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
+    @Override
+    public RCTDeviceEventEmitter getEventEmitter() {
+        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
+    }
+
+    @Override
+    public TurbolinksRoute getRoute() {
+        return route;
+    }
+
+    @Override
+    public Boolean getInitialVisit() {
+        return initialVisit;
+    }
+
+    @Override
+    public Boolean getNavigationBarHidden() {
+        return navigationBarHidden;
     }
 
 }

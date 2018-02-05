@@ -66,6 +66,14 @@ class Turbolinks {
     })
   }
 
+  static renderTitle(title, subtitle) {
+    RNTurbolinksManager.renderTitle(title, subtitle)
+  }
+
+  static renderActions(actions) {
+    RNTurbolinksManager.renderActions(actions)
+  }
+
   static addEventListener(eventName, callback) {
     RNTurbolinksManagerEmitter.addListener(eventName, callback)
   }

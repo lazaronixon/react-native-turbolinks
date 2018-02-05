@@ -1,9 +1,11 @@
 class NativeViewController: UIViewController {
     
-    var manager : RNTurbolinksManager!
+    var manager: RNTurbolinksManager!    
     var route: TurbolinksRoute!
+    var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
+    var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
-    convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
+    convenience required init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
         self.init()
         self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         self.manager = manager
@@ -14,47 +16,19 @@ class NativeViewController: UIViewController {
         self.renderLeftButton()
     }
     
+}
+
+extension NativeViewController: GenricViewController {
+    
     func handleTitlePress() {
         manager.handleTitlePress(URL: nil, component: route.component)
     }
     
-    fileprivate func renderTitle() {
-        if route.title != nil { self.title = route.title }
-        navigationItem.titleView = TurbolinksTitleView(self)
+    @objc func handleLeftButtonPress() {
+        manager.handleLeftButtonPress(URL: nil, component: self.route.component)
     }
     
-    fileprivate func renderActions() {
-        if route.actions != nil {
-            let button = UIBarButtonItem.init(title: "\u{22EF}", style: .plain, target: self, action: #selector(presentActions))
-            let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
-            button.setTitleTextAttributes(font, for: .normal)
-            button.setTitleTextAttributes(font, for: .selected)
-            navigationItem.rightBarButtonItem = button
-        }
+    @objc func presentActionsGeneric(_ sender: UIBarButtonItem) {
+        self.presentActions(sender)
     }
-    
-    fileprivate func renderBackButton() {
-        let backButton = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backButton
-        navigationItem.leftItemsSupplementBackButton = true
-    }
-    
-    fileprivate func renderLeftButton() {
-        if route.leftButtonIcon != nil {
-            let button = UIBarButtonItem(image: route.leftButtonIcon, style: .plain, target: self, action: #selector(handleLeftButtonPress))
-            navigationItem.leftBarButtonItem = button
-        }
-    }
-    
-    @objc func presentActions(sender: UIBarButtonItem) {
-        if route.actions != nil {
-            let actionsView = ActionsViewController(manager: manager, route: route, barButtonItem: sender)
-            present(actionsView,animated: true)
-        }
-    }
-    
-    @objc fileprivate func handleLeftButtonPress() {
-        manager.handleLeftButtonPress(URL: nil, component: route.component)
-    }
-    
 }
