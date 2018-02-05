@@ -17,11 +17,11 @@ public class TurbolinksUtil {
     public static void initFileChooser(WebView webView, final Activity act, final Context context) {
         webView.setWebChromeClient(new WebChromeClient() {
 
+            public static final int REQUEST_SELECT_FILE = 100;
+            private final static int FILECHOOSER_RESULTCODE = 1;
             boolean mUploadingFile;
             ValueCallback<Uri> mUploadMessage;
             ValueCallback<Uri[]> uploadMessage;
-            public static final int REQUEST_SELECT_FILE = 100;
-            private final static int FILECHOOSER_RESULTCODE = 1;
 
             //For Android 4.1+
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {

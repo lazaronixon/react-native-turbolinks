@@ -14,12 +14,20 @@ public interface GenericActivity {
     void renderToolBar(Toolbar toolbar);
     void onBackPressed();
     void handleTitlePress(Toolbar toolbar);
-    void setSupportActionBar(Toolbar toolbar);
+
     boolean superOnOptionsItemSelected(MenuItem item);
+
     Boolean getInitialVisit();
+
     Boolean getNavigationBarHidden();
+
     RCTDeviceEventEmitter getEventEmitter();
+
     TurbolinksRoute getRoute();
+
     MenuInflater getMenuInflater();
+
     ActionBar getSupportActionBar();
+
+    void setSupportActionBar(Toolbar toolbar);
 }

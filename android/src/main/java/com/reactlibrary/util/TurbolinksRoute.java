@@ -70,10 +70,6 @@ public class TurbolinksRoute {
         this.action = action;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getSubtitle() {
         return subtitle;
     }
@@ -92,6 +88,10 @@ public class TurbolinksRoute {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public ArrayList<Bundle> getActions() {
