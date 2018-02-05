@@ -20,6 +20,10 @@ class NativeViewController: UIViewController {
 
 extension NativeViewController: GenricViewController {
     
+    func handleTitlePress() {
+        manager.handleTitlePress(URL: nil, component: route.component)
+    }
+    
     @objc func handleLeftButtonPress() {
         manager.handleLeftButtonPress(URL: nil, component: self.route.component)
     }

@@ -58,6 +58,10 @@ class WebViewController: Turbolinks.VisitableViewController {
 
 extension WebViewController: GenricViewController {
     
+    func handleTitlePress() {
+        manager.handleTitlePress(URL: visitableURL, component: route.component)
+    }
+    
     @objc func handleLeftButtonPress() {
         manager.handleLeftButtonPress(URL: visitableURL, component: nil)
     }

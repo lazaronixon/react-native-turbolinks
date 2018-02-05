@@ -43,11 +43,7 @@ extension GenricViewController where Self: UIViewController {
             button.setTitleTextAttributes(font, for: .selected)
             navigationItem.rightBarButtonItem = button
         }
-    }
-    
-    func handleTitlePress() {
-        manager.handleTitlePress(URL: nil, component: route.component)
-    }
+    }    
     
     func presentActions(_ sender: UIBarButtonItem) {
         if route.actions != nil {
