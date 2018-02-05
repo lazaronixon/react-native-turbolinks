@@ -92,10 +92,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         webViewConfiguration.userContentController.add(self, name: handler)
     }
     
-    @objc func renderTitle(_ route: Dictionary<AnyHashable, Any>) {
+    @objc func renderTitle(_ title: String,_ subtitle: String) {
         let visitable = navigation.visibleViewController as! GenricViewController
-        visitable.route.title = RCTConvert.nsString(route["title"])
-        visitable.route.subtitle = RCTConvert.nsString(route["subtitle"])
+        visitable.route.title = title
+        visitable.route.subtitle = subtitle
         visitable.renderTitle()
     }
     
