@@ -53,8 +53,8 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return helperAct.onCreateOptionsMenu(menu);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return helperAct.onPrepareOptionsMenu(menu);
     }
 
     @Override

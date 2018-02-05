@@ -146,8 +146,8 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return helperAct.onCreateOptionsMenu(menu);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return helperAct.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     }
 
     @Override
-    public boolean superOnOptionsItemSelected(MenuItem item)  {
+    public boolean superOnOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
 

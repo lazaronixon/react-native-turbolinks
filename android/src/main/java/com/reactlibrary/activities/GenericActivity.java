@@ -4,7 +4,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.util.TurbolinksRoute;
@@ -16,7 +15,6 @@ public interface GenericActivity {
     void onBackPressed();
     void handleTitlePress(Toolbar toolbar);
     void setSupportActionBar(Toolbar toolbar);
-    boolean onOptionsItemSelected(MenuItem item);
     boolean superOnOptionsItemSelected(MenuItem item);
     Boolean getInitialVisit();
     Boolean getNavigationBarHidden();

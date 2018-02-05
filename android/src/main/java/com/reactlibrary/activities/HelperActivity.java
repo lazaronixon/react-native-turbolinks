@@ -8,12 +8,11 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.WritableMap;
 import com.reactlibrary.R;
 import com.reactlibrary.util.TurbolinksAction;
+
+import java.util.ArrayList;
 
 public class HelperActivity {
 
@@ -28,14 +27,17 @@ public class HelperActivity {
         return true;
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (act.getRoute().getActions() == null) return true;
+    public boolean onPrepareOptionsMenu(Menu menu) {
         act.getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
-        for (Bundle bundle : act.getRoute().getActions()) {
-            TurbolinksAction action = new TurbolinksAction(bundle);
-            MenuItem menuItem = menu.add(Menu.NONE, action.getId(), Menu.NONE, action.getTitle());
-            renderActionIcon(menu, menuItem, action.getIcon());
-            if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.clear();
+        ArrayList<Bundle> actions = act.getRoute().getActions();
+        if (actions != null) {
+            for (int i = 0; i <  actions.size(); i++) {
+                TurbolinksAction action = new TurbolinksAction(actions.get(i));
+                MenuItem menuItem = menu.add(Menu.NONE, action.getId(), i, action.getTitle());
+                renderActionIcon(menu, menuItem, action.getIcon());
+                if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            }
         }
         return true;
     }
@@ -63,6 +65,4 @@ public class HelperActivity {
         Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
         menuItem.setIcon(drawableIcon);
     }
-
-
 }
