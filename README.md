@@ -23,7 +23,7 @@ Change the variables below on ![/android/app/build.gradle](https://github.com/la
 - buildToolsVersion "27.0.3"
 - minSdkVersion 19
 - targetSdkVersion 27
-- compile "com.android.support:appcompat-v7:27.0.3"
+- compile "com.android.support:appcompat-v7:27.0.2"
 
 Add google repository on ![/android/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/build.gradle):
 ```
