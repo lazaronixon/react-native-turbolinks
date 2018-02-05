@@ -18,12 +18,20 @@ Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode E
 ![Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
 
 ### Installation Android
-Change the variables below on `/android/app/build.gradle`:
-- compileSdkVersion 24
-- buildToolsVersion "24.0.3"
+Change the variables below on ![/android/app/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/build.gradle):
+- compileSdkVersion 27
+- buildToolsVersion "27.0.3"
 - minSdkVersion 19
-- targetSdkVersion 24
-- compile "com.android.support:appcompat-v7:24.0.3"
+- targetSdkVersion 27
+- compile "com.android.support:appcompat-v7:27.0.3"
+
+Add google repository on ![/android/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/build.gradle):
+```
+maven {
+    url 'https://maven.google.com/'
+    name 'Google'
+}
+```
 
 ### Warning
 This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the ![guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
