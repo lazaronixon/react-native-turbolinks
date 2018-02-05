@@ -22,7 +22,6 @@ public class TurbolinksAction implements Parcelable {
     private Bundle icon;
     private Boolean button = false;
 
-
     public TurbolinksAction(Bundle bundle) {
         this.id = (int) bundle.getDouble("id");
         this.title = bundle.getString("title");

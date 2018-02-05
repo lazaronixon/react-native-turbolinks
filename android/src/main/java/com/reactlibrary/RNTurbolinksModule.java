@@ -119,12 +119,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void renderTitle(final ReadableMap route) {
+    public void renderTitle(final String title, final String subtitle) {
         runOnUiThread(new Runnable() {
             public void run() {
                 GenericActivity activity = (GenericActivity) getCurrentActivity();
-                activity.getRoute().setTitle(route.hasKey("title") ? route.getString("title") : null);
-                activity.getRoute().setSubtitle(route.hasKey("subtitle") ? route.getString("subtitle") : null);
+                activity.getRoute().setTitle(title);
+                activity.getRoute().setSubtitle(subtitle);
                 activity.renderTitle();
             }
         });

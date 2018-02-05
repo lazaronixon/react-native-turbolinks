@@ -67,8 +67,8 @@ class Turbolinks {
     })
   }
 
-  static renderTitle(route) {
-    RNTurbolinksManager.renderTitle(route)
+  static renderTitle(title, subtitle) {
+    RNTurbolinksManager.renderTitle(title, subtitle)
   }
 
   static renderActions(actions) {
