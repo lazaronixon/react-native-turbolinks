@@ -66,6 +66,10 @@ class Turbolinks {
     })
   }
 
+  static setTabBar(options) {
+    RNTurbolinksManager.setTabBar(options)
+  }
+
   static renderTitle(title, subtitle) {
     RNTurbolinksManager.renderTitle(title, subtitle)
   }

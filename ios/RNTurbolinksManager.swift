@@ -105,6 +105,11 @@ class RNTurbolinksManager: RCTEventEmitter {
         visitable.renderActions()
     }
     
+    @objc func setTabBar(_ tabBar: Dictionary<AnyHashable, Any>) {
+        //let tTabBar = TurbolinksTabBar(tabBar)
+        
+    }
+    
     fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
         let visitable = WebViewController(manager: self, route: route)        
         if route.action == .Advance {

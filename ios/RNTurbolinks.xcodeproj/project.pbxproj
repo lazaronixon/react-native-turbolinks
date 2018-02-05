@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		87201D1B2025707100BDC864 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87201D1A2025707100BDC864 /* GenericViewController.swift */; };
+		87201D53202912AB00BDC864 /* TurbolinksTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87201D52202912AB00BDC864 /* TurbolinksTabBar.swift */; };
+		87201D552029137800BDC864 /* TurbolinksTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87201D542029137800BDC864 /* TurbolinksTabBarItem.swift */; };
 		872FD3FC2021CE360063E5CE /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872FD3FB2021CE360063E5CE /* ActionsViewController.swift */; };
 		872FD3FE2021E1B80063E5CE /* TurbolinksAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872FD3FD2021E1B80063E5CE /* TurbolinksAction.swift */; };
 		876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */; };
@@ -34,6 +36,8 @@
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNTurbolinks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTurbolinks.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		87201D1A2025707100BDC864 /* GenericViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
+		87201D52202912AB00BDC864 /* TurbolinksTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksTabBar.swift; sourceTree = "<group>"; };
+		87201D542029137800BDC864 /* TurbolinksTabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksTabBarItem.swift; sourceTree = "<group>"; };
 		872FD3FB2021CE360063E5CE /* ActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
 		872FD3FD2021E1B80063E5CE /* TurbolinksAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksAction.swift; sourceTree = "<group>"; };
 		876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTurbolinksManager.swift; sourceTree = "<group>"; };
@@ -95,6 +99,8 @@
 			children = (
 				87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */,
 				872FD3FD2021E1B80063E5CE /* TurbolinksAction.swift */,
+				87201D52202912AB00BDC864 /* TurbolinksTabBar.swift */,
+				87201D542029137800BDC864 /* TurbolinksTabBarItem.swift */,
 			);
 			name = TurbolinksModels;
 			path = TurbolinksUtils;
@@ -157,6 +163,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87201D53202912AB00BDC864 /* TurbolinksTabBar.swift in Sources */,
+				87201D552029137800BDC864 /* TurbolinksTabBarItem.swift in Sources */,
 				87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */,
 				87F5553E201E9C1200FCC40C /* TurbolinksHelper.swift in Sources */,
 				87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */,

@@ -1,15 +1,15 @@
 import Turbolinks
 
 class TurbolinksRoute {
-    var title:String?
-    var subtitle:String?
-    var action:Action?
-    var url:URL?
-    var component:String?
-    var modal:Bool?
-    var passProps:Dictionary<AnyHashable, Any>?
-    var actions:Array<Dictionary<AnyHashable, Any>>?
-    var leftButtonIcon:UIImage?
+    var title: String?
+    var subtitle: String?
+    var action: Action?
+    var url: URL?
+    var component: String?
+    var modal: Bool?
+    var passProps: Dictionary<AnyHashable, Any>?
+    var actions: Array<Dictionary<AnyHashable, Any>>?
+    var leftButtonIcon: UIImage?
     
     init(route: Dictionary<AnyHashable, Any>) {
         let action = RCTConvert.nsString(route["action"])
