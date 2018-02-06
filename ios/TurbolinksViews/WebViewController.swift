@@ -49,7 +49,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     }
     
     override func visitableDidRender() {
-        super.visitableDidRender()
+        self.navigationItem.title = visitableView.webView?.title
         renderTitle()
         handleVisitCompleted()
     }
