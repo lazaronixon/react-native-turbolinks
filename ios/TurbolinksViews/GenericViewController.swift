@@ -20,6 +20,7 @@ extension GenricViewController where Self: UIViewController {
     func renderTitle() {
         if route.title != nil { self.title = route.title }
         navigationItem.titleView = TurbolinksTitleView(self)
+        tabBarItem.title = route.tabTitle
     }
     
     func renderBackButton() {

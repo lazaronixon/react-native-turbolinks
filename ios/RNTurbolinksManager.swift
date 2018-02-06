@@ -8,23 +8,26 @@ class RNTurbolinksManager: RCTEventEmitter {
     var subtitleTextColor: UIColor?
     var loadingBackgroundColor: UIColor?
     var loadingColor: UIColor?
+    var messageHandler: String?
+    var userAgent: String?
+    var processPool = WKProcessPool()
     
-    fileprivate lazy var navigation: UINavigationController = {
+    var navigation: NavigationController {
+        get { return tabBarController.selectedViewController as! NavigationController }
+    }
+    
+    var session: Session {
+        get { return navigation.session }
+    }
+    
+    fileprivate lazy var tabBarController: UITabBarController = {
         let rootViewController = UIApplication.shared.delegate!.window!!.rootViewController!
-        let navigation = UINavigationController()
-        navigation.navigationBar.isTranslucent = true
-        rootViewController.view.addSubview(navigation.view)
-        return navigation
-    }()
-    
-    fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
-        return WKWebViewConfiguration()
-    }()
-    
-    fileprivate lazy var session: Session = {
-        let session = Session(webViewConfiguration: webViewConfiguration)
-        session.delegate = self
-        return session
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [NavigationController(self, nil)]
+        tabBarController.selectedIndex = 0
+        tabBarController.tabBar.isHidden = true
+        rootViewController.view.addSubview(tabBarController.view)
+        return tabBarController
     }()
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
@@ -56,13 +59,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         navigation.popViewController(animated: true)
     }
     
-    @objc func visit(_ routeParam: Dictionary<AnyHashable, Any>) -> Void {
-        let tRoute = TurbolinksRoute(route: routeParam)
-        if tRoute.url != nil {
-            presentVisitableForSession(session, route: tRoute)
-        } else {
-            presentNativeView(tRoute)
-        }
+    @objc func visit(_ route: Dictionary<AnyHashable, Any>) -> Void {
+        visitWithSession(session, TurbolinksRoute(route: route))
     }
     
     @objc func setLoadingStyle(_ style: Dictionary<AnyHashable, Any>) {
@@ -80,16 +78,15 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) -> Void {
-        self.navigation.isNavigationBarHidden  = navigationBarHidden
+        navigation.isNavigationBarHidden  = navigationBarHidden
     }
     
     @objc func setUserAgent(_ userAgent: String) -> Void {
-        webViewConfiguration.applicationNameForUserAgent = userAgent
+        self.userAgent = userAgent
     }
     
     @objc func setMessageHandler(_ handler: String) -> Void {
-        webViewConfiguration.userContentController.removeScriptMessageHandler(forName: handler)
-        webViewConfiguration.userContentController.add(self, name: handler)
+        self.messageHandler = handler
     }
     
     @objc func renderTitle(_ title: String,_ subtitle: String) {
@@ -105,9 +102,25 @@ class RNTurbolinksManager: RCTEventEmitter {
         visitable.renderActions()
     }
     
-    @objc func setTabBar(_ tabBar: Dictionary<AnyHashable, Any>) {
-        //let tTabBar = TurbolinksTabBar(tabBar)
-        
+    @objc func setTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
+        tabBarController.viewControllers = nil
+        let routes = RCTConvert.nsDictionaryArray(tabBarParam["routes"])!
+        for (index, route) in routes.enumerated() {
+            let navItem = NavigationController(self, route)
+            tabBarController.viewControllers!.append(navItem)
+            tabBarController.selectedIndex = index
+            visitWithSession(navItem.session, navItem.route)
+        }
+        tabBarController.selectedIndex = RCTConvert.nsInteger(tabBarParam["selectedIndex"])
+        tabBarController.tabBar.isHidden = false
+    }
+    
+    fileprivate func visitWithSession(_ session: Session, _ route: TurbolinksRoute) {
+        if route.url != nil {
+            presentVisitableForSession(session, route: route)
+        } else {
+            presentNativeView(route)
+        }
     }
     
     fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
