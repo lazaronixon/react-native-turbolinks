@@ -23,9 +23,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate lazy var tabBarController: UITabBarController = {
         let rootViewController = UIApplication.shared.delegate!.window!!.rootViewController!
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [NavigationController(self, nil)]
-        tabBarController.selectedIndex = 0
         tabBarController.tabBar.isHidden = true
+        tabBarController.viewControllers = [NavigationController(self, nil)]
         rootViewController.view.addSubview(tabBarController.view)
         return tabBarController
     }()
@@ -60,7 +59,12 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) -> Void {
-        visitWithSession(session, TurbolinksRoute(route: route))
+        let tRoute = TurbolinksRoute(route: route)
+        if tRoute.url != nil {
+            presentVisitableForSession(session, route: tRoute)
+        } else {
+            presentNativeView(tRoute)
+        }
     }
     
     @objc func setLoadingStyle(_ style: Dictionary<AnyHashable, Any>) {
@@ -106,21 +110,13 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.viewControllers = nil
         let routes = RCTConvert.nsDictionaryArray(tabBarParam["routes"])!
         for (index, route) in routes.enumerated() {
-            let navItem = NavigationController(self, route)
-            tabBarController.viewControllers!.append(navItem)
+            let viewController = NavigationController(self, route)
+            tabBarController.viewControllers!.append(viewController)
             tabBarController.selectedIndex = index
-            visitWithSession(navItem.session, navItem.route)
+            visit(route)
         }
         tabBarController.selectedIndex = RCTConvert.nsInteger(tabBarParam["selectedIndex"])
         tabBarController.tabBar.isHidden = false
-    }
-    
-    fileprivate func visitWithSession(_ session: Session, _ route: TurbolinksRoute) {
-        if route.url != nil {
-            presentVisitableForSession(session, route: route)
-        } else {
-            presentNativeView(route)
-        }
     }
     
     fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
