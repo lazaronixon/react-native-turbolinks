@@ -28,7 +28,6 @@ public class HelperActivity {
     }
 
     public boolean onPrepareOptionsMenu(Menu menu) {
-        act.getMenuInflater().inflate(R.menu.turbolinks_menu, menu);
         menu.clear();
         ArrayList<Bundle> actions = act.getRoute().getActions();
         if (actions != null) {
