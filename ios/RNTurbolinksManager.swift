@@ -81,6 +81,13 @@ class RNTurbolinksManager: RCTEventEmitter {
         if tintColor != nil { self.navigation.navigationBar.tintColor = tintColor }
     }
     
+    @objc func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
+        let barTintColor = RCTConvert.uiColor(style["barTintColor"])
+        let tintColor = RCTConvert.uiColor(style["tintColor"])
+        if barTintColor != nil { self.tabBarController.tabBar.barTintColor = barTintColor }
+        if tintColor != nil { self.tabBarController.tabBar.tintColor = tintColor }
+    }
+    
     @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) -> Void {
         navigation.isNavigationBarHidden  = navigationBarHidden
     }

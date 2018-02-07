@@ -70,6 +70,14 @@ class Turbolinks {
     RNTurbolinksManager.setTabBar(options)
   }
 
+  static setTabBarStyle(options) {
+    RNTurbolinksManager.setTabBarStyle({
+      ...options,
+      barTintColor: processColor(options.barTintColor),
+      tintColor: processColor(options.tintColor)
+    })
+  }
+
   static renderTitle(title, subtitle) {
     RNTurbolinksManager.renderTitle(title, subtitle)
   }
