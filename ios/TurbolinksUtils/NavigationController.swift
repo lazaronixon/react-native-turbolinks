@@ -4,7 +4,6 @@ import Turbolinks
 class NavigationController: UINavigationController {
     
     var session: Session!
-    var route: TurbolinksRoute!
     
     required convenience init(_ manager: RNTurbolinksManager,_ routeParam: Dictionary<AnyHashable, Any>?) {
         self.init()
@@ -15,12 +14,12 @@ class NavigationController: UINavigationController {
         if (manager.userAgent != nil) { webViewConfiguration.applicationNameForUserAgent = manager.userAgent }
         
         self.session = Session(webViewConfiguration: webViewConfiguration)
-        session.delegate = manager
+        self.session.delegate = manager
         
         if (routeParam != nil) {
-            self.route = TurbolinksRoute(route: routeParam!)
+            let route = TurbolinksRoute(route: routeParam!)
             self.tabBarItem = UITabBarItem(title: route.tabTitle , image: route.tabIcon, selectedImage: route.tabIcon)
-        }    
+        }
     }
     
 }

@@ -12,11 +12,11 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var processPool = WKProcessPool()
     
-    var navigation: NavigationController {
+    fileprivate var navigation: NavigationController {
         get { return tabBarController.selectedViewController as! NavigationController }
     }
     
-    var session: Session {
+    fileprivate var session: Session {
         get { return navigation.session }
     }
     
