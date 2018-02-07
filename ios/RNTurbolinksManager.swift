@@ -116,8 +116,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func setTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
         let selectedIndex = RCTConvert.nsInteger(tabBarParam["selectedIndex"])
         let routes = RCTConvert.nsDictionaryArray(tabBarParam["routes"])!
-        tabBarController.tabBar.isHidden = false
         tabBarController.viewControllers = nil
+        tabBarController.tabBar.isHidden = false
         for (index, route) in routes.enumerated() {
             tabBarController.viewControllers!.append(NavigationController(self, route))
             tabBarController.selectedIndex = index
