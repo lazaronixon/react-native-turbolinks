@@ -48,8 +48,18 @@ class WebViewController: Turbolinks.VisitableViewController {
         })
     }
     
+    fileprivate func fixScrollWebView() {
+        let navBarHeight =  navigationController!.navigationBar.frame.size.height
+        visitableView.contentInset = UIEdgeInsetsMake(navBarHeight + 20, 0, 0, 0)
+    }
+    
+    fileprivate func setWebViewTitle() {
+        navigationItem.title = visitableView.webView?.title
+    }
+    
     override func visitableDidRender() {
-        self.navigationItem.title = visitableView.webView?.title
+        fixScrollWebView()
+        setWebViewTitle()
         renderTitle()
         handleVisitCompleted()
     }
