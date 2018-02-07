@@ -114,15 +114,16 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func setTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
-        tabBarController.viewControllers = nil
+        let selectedIndex = RCTConvert.nsInteger(tabBarParam["selectedIndex"])
         let routes = RCTConvert.nsDictionaryArray(tabBarParam["routes"])!
+        tabBarController.tabBar.isHidden = false
+        tabBarController.viewControllers = nil
         for (index, route) in routes.enumerated() {
             tabBarController.viewControllers!.append(NavigationController(self, route))
             tabBarController.selectedIndex = index
             visit(route)
         }
-        tabBarController.selectedIndex = RCTConvert.nsInteger(tabBarParam["selectedIndex"])
-        tabBarController.tabBar.isHidden = false
+        tabBarController.selectedIndex = selectedIndex
     }
     
     fileprivate func presentVisitableForSession(_ session: Session,_ route: TurbolinksRoute) {
