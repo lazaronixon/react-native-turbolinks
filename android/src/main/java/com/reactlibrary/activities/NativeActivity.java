@@ -33,7 +33,7 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
         route = new TurbolinksRoute(getIntent());
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
-        renderToolBar((Toolbar) findViewById(R.id.native_toolbar));
+        renderToolBar((Toolbar) findViewById(R.id.toolbar));
         renderTitle();
         renderReactRootView();
     }
@@ -92,7 +92,7 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     private void renderReactRootView() {
-        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.native_view);
+        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.react_root_view);
         ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
         mReactRootView.startReactApplication(mReactInstanceManager, route.getComponent(), route.getPassProps());
     }

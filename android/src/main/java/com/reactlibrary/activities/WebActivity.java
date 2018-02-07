@@ -57,7 +57,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        renderToolBar((Toolbar) findViewById(R.id.turbolinks_toolbar));
+        renderToolBar((Toolbar) findViewById(R.id.toolbar));
 
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
