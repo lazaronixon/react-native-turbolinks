@@ -8,6 +8,5 @@ class TurbolinksAction {
         self.id = RCTConvert.nsInteger(action["id"])
         self.title = RCTConvert.nsString(action["title"])
         self.icon = RCTConvert.uiImage(action["icon"])
-    }
-    
+    }    
 }

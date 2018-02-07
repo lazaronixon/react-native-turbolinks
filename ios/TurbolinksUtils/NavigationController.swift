@@ -5,7 +5,7 @@ class NavigationController: UINavigationController {
     
     var session: Session!
     
-    required convenience init(_ manager: RNTurbolinksManager,_ routeParam: Dictionary<AnyHashable, Any>?) {
+    required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>?) {
         self.init()
         
         let webViewConfiguration = WKWebViewConfiguration()
@@ -16,10 +16,9 @@ class NavigationController: UINavigationController {
         self.session = Session(webViewConfiguration: webViewConfiguration)
         self.session.delegate = manager
         
-        if (routeParam != nil) {
-            let route = TurbolinksRoute(route: routeParam!)
-            self.tabBarItem = UITabBarItem(title: route.tabTitle , image: route.tabIcon, selectedImage: route.tabIcon)
+        if (route != nil) {
+            let tRoute = TurbolinksRoute(route!)
+            self.tabBarItem = UITabBarItem(title: tRoute.tabTitle , image: tRoute.tabIcon, selectedImage: tRoute.tabIcon)
         }
     }
-    
 }

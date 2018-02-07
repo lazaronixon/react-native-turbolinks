@@ -8,7 +8,7 @@ class ActionsViewController: UITableViewController {
     fileprivate var manager: RNTurbolinksManager!
     fileprivate var route: TurbolinksRoute!
     
-    convenience init(manager: RNTurbolinksManager, route: TurbolinksRoute, barButtonItem: UIBarButtonItem) {
+    convenience init(_ manager: RNTurbolinksManager,_ route: TurbolinksRoute,_ barButtonItem: UIBarButtonItem) {
         self.init()
         self.manager = manager
         self.route = route
@@ -46,7 +46,7 @@ class ActionsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let action = TurbolinksAction(route.actions![indexPath.row])
-        dismiss(animated: true, completion: { self.manager.handleActionPress(actionId: action.id) })
+        dismiss(animated: true, completion: { self.manager.handleActionPress(action.id) })
     }
 }
 

@@ -12,6 +12,5 @@ class TurbolinksHelper {
             result += "'; "
         }
         return result
-    }
-    
+    }    
 }

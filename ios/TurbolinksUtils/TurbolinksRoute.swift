@@ -13,7 +13,7 @@ class TurbolinksRoute {
     var tabTitle: String?
     var tabIcon: UIImage?
     
-    init(route: Dictionary<AnyHashable, Any>) {
+    init(_ route: Dictionary<AnyHashable, Any>) {
         let action = RCTConvert.nsString(route["action"])
         self.title = RCTConvert.nsString(route["title"])
         self.subtitle = RCTConvert.nsString(route["subtitle"])
@@ -26,6 +26,5 @@ class TurbolinksRoute {
         self.leftButtonIcon = RCTConvert.uiImage(route["leftButtonIcon"])
         self.tabTitle = RCTConvert.nsString(route["tabTitle"])
         self.tabIcon = RCTConvert.uiImage(route["tabIcon"])
-    }
-    
+    }    
 }

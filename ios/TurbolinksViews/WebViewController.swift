@@ -9,7 +9,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
     var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
-    convenience required init(manager: RNTurbolinksManager, route: TurbolinksRoute) {
+    convenience required init(_ manager: RNTurbolinksManager,_ route: TurbolinksRoute) {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route
@@ -44,7 +44,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     fileprivate func handleVisitCompleted() {
         let javaScriptString = "document.documentElement.outerHTML"
         visitableView.webView!.evaluateJavaScript(javaScriptString, completionHandler: { (document, error) in
-            self.manager.handleVisitCompleted(url: self.visitableURL, source: document as? String)
+            self.manager.handleVisitCompleted(self.visitableURL, document as? String)
         })
     }
     
@@ -69,11 +69,11 @@ class WebViewController: Turbolinks.VisitableViewController {
 extension WebViewController: GenricViewController {
     
     func handleTitlePress() {
-        manager.handleTitlePress(URL: visitableURL, component: route.component)
+        manager.handleTitlePress(visitableURL, route.component)
     }
     
     @objc func handleLeftButtonPress() {
-        manager.handleLeftButtonPress(URL: visitableURL, component: nil)
+        manager.handleLeftButtonPress(visitableURL, nil)
     }
     
     @objc func presentActionsGeneric(_ sender: UIBarButtonItem) {

@@ -6,7 +6,7 @@ protocol GenricViewController {
     var selectorPresentActions: Selector { get }
     var navigationItem: UINavigationItem { get }
     
-    init(manager: RNTurbolinksManager, route: TurbolinksRoute)
+    init(_ manager: RNTurbolinksManager,_ route: TurbolinksRoute)
     func renderTitle()
     func renderActions()
     func renderBackButton()
@@ -47,9 +47,8 @@ extension GenricViewController where Self: UIViewController {
     
     func presentActions(_ sender: UIBarButtonItem) {
         if route.actions != nil {
-            let actionsView = ActionsViewController(manager: manager, route: route, barButtonItem: sender)
+            let actionsView = ActionsViewController(manager, route, sender)
             present(actionsView,animated: true)
         }
     }
-
 }

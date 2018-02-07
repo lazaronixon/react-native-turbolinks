@@ -31,7 +31,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
         if let visitable = navigation.visibleViewController as? WebViewController {
-            let tRoute = TurbolinksRoute(route: route)
+            let tRoute = TurbolinksRoute(route)
             visitable.route = tRoute
             visitable.renderComponent()
         }
@@ -59,9 +59,9 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) -> Void {
-        let tRoute = TurbolinksRoute(route: route)
+        let tRoute = TurbolinksRoute(route)
         if tRoute.url != nil {
-            presentVisitableForSession(session, route: tRoute)
+            presentVisitableForSession(session, tRoute)
         } else {
             presentNativeView(tRoute)
         }
@@ -126,8 +126,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.tabBar.isHidden = false
     }
     
-    fileprivate func presentVisitableForSession(_ session: Session, route: TurbolinksRoute) {
-        let visitable = WebViewController(manager: self, route: route)        
+    fileprivate func presentVisitableForSession(_ session: Session,_ route: TurbolinksRoute) {
+        let visitable = WebViewController(self, route)
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
         } else if route.action == .Replace {
@@ -138,7 +138,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
-        let viewController = NativeViewController(manager: self, route: route)
+        let viewController = NativeViewController(self, route)
         if route.modal! {
             navigation.present(viewController, animated: true, completion: nil)
         } else if route.action == .Advance {
@@ -149,19 +149,19 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    func handleTitlePress(URL: URL?, component: String?) {
+    func handleTitlePress(_ URL: URL?,_ component: String?) {
         sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
-    func handleActionPress(actionId: Int) {
+    func handleActionPress(_ actionId: Int) {
         sendEvent(withName: "turbolinksActionPress", body: actionId)
     }
     
-    func handleLeftButtonPress(URL: URL?, component: String?) {
+    func handleLeftButtonPress(_ URL: URL?,_ component: String?) {
         sendEvent(withName: "turbolinksLeftButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
-    func handleVisitCompleted(url: URL!, source: String?) {
+    func handleVisitCompleted(_ url: URL!,_ source: String?) {
         sendEvent(withName: "turbolinksVisitCompleted", body: ["url": url.absoluteString, "path": url.path, "source": source])
     }
     
