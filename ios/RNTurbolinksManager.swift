@@ -117,8 +117,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.viewControllers = nil
         let routes = RCTConvert.nsDictionaryArray(tabBarParam["routes"])!
         for (index, route) in routes.enumerated() {
-            let viewController = NavigationController(self, route)
-            tabBarController.viewControllers!.append(viewController)
+            tabBarController.viewControllers!.append(NavigationController(self, route))
             tabBarController.selectedIndex = index
             visit(route)
         }
