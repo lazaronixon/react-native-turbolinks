@@ -136,7 +136,7 @@ public class ReactActivityDelegate {
 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (getReactNativeHost().hasInstance() && getReactNativeHost().getUseDeveloperSupport()) {
-            if (keyCode == KeyEvent.KEYCODE_MENU) {
+            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
                 getReactNativeHost().getReactInstanceManager().showDevOptionsDialog();
                 return true;
             }
