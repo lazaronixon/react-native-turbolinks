@@ -19,6 +19,7 @@ import com.reactlibrary.activities.GenericActivity;
 import com.reactlibrary.activities.NativeActivity;
 import com.reactlibrary.activities.WebActivity;
 import com.reactlibrary.util.TurbolinksRoute;
+import com.reactlibrary.util.TurbolinksTabBar;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,6 +35,8 @@ import static com.reactlibrary.util.TurbolinksRoute.INTENT_PROPS;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_SUBTITLE;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_TITLE;
 import static com.reactlibrary.util.TurbolinksRoute.INTENT_URL;
+import static com.reactlibrary.util.TurbolinksTabBar.INTENT_ROUTES;
+import static com.reactlibrary.util.TurbolinksTabBar.INTENT_SELECTED_INDEX;
 
 public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
@@ -43,6 +46,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
 
     private TurbolinksRoute prevRoute;
+    private TurbolinksTabBar tabBar;
     private String messageHandler;
     private String userAgent;
     private Boolean navigationBarHidden = false;
@@ -87,6 +91,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setNavigationBarHidden(Boolean navigationBarHidden) {
         this.navigationBarHidden = navigationBarHidden;
+    }
+
+    @ReactMethod
+    public void setTabBar(ReadableMap tabBar) {
+        this.tabBar = new TurbolinksTabBar(tabBar);
     }
 
     @ReactMethod

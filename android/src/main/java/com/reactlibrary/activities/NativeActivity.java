@@ -1,6 +1,7 @@
 package com.reactlibrary.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +37,7 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
         renderTitle();
         renderReactRootView();
+        renderBottomNav((BottomNavigationView) findViewById(R.id.navigation));
     }
 
     @Override
@@ -70,6 +72,11 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     @Override
     public void renderToolBar(Toolbar toolbar) {
         helperAct.renderToolBar(toolbar);
+    }
+
+    @Override
+    public void renderBottomNav(BottomNavigationView bottomNav) {
+        helperAct.renderBottomNav(bottomNav);
     }
 
     @Override

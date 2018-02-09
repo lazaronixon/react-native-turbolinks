@@ -1,6 +1,7 @@
 package com.reactlibrary.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -58,6 +59,7 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
+        renderBottomNav((BottomNavigationView) findViewById(R.id.navigation));
 
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
@@ -163,6 +165,11 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     @Override
     public void renderToolBar(Toolbar toolbar) {
         helperAct.renderToolBar(toolbar);
+    }
+
+    @Override
+    public void renderBottomNav(BottomNavigationView bottomNav) {
+        helperAct.renderBottomNav(bottomNav);
     }
 
     @Override

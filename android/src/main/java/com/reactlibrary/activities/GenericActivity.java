@@ -1,5 +1,6 @@
 package com.reactlibrary.activities;
 
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ public interface GenericActivity {
 
     void renderTitle();
     void renderToolBar(Toolbar toolbar);
+    void renderBottomNav(BottomNavigationView bottomNav);
     void onBackPressed();
     void handleTitlePress(Toolbar toolbar);
 

@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.reactlibrary.R;
+import android.support.design.widget.BottomNavigationView;
 import com.reactlibrary.util.TurbolinksAction;
 
 import java.util.ArrayList;
@@ -54,6 +54,13 @@ public class HelperActivity {
         act.getSupportActionBar().setTitle(null);
         if (act.getNavigationBarHidden() || act.getRoute().getModal()) act.getSupportActionBar().hide();
         act.handleTitlePress(toolbar);
+    }
+
+    public void renderBottomNav(BottomNavigationView bottomNav) {
+        Menu menu = bottomNav.getMenu();
+        menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "teste");
+        menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "teste1");
+        menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "teste2");
     }
 
     @SuppressLint("RestrictedApi")
