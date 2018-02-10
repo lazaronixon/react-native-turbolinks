@@ -10,7 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.support.design.widget.BottomNavigationView;
+
+import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactRootView;
 import com.reactlibrary.util.TurbolinksAction;
+import com.reactlibrary.util.TurbolinksRoute;
 
 import java.util.ArrayList;
 

@@ -10,12 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.basecamp.turbolinks.TurbolinksView;
+import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksRoute;
+import com.reactlibrary.util.TurbolinksPagerAdapter;
 
 import java.util.ArrayList;
 
@@ -43,6 +47,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
 
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
         renderTitle();
+        renderViewPager((ViewPager) findViewById(R.id.viewpager));
         renderBottomNav((BottomNavigationView) findViewById(R.id.navigation));
     }
 
@@ -128,6 +133,21 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         return new TurbolinksRoute(routes.get(selectedIndex));
     }
 
+    private void renderViewPager(ViewPager viewPager) {
+        TurbolinksPagerAdapter adapter = new TurbolinksPagerAdapter(getApplicationContext() ,routes);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View view = adapter.getItem(i);
+            TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
+            if (view instanceof ReactRootView) {
+                visitComponent((ReactRootView) view, route);
+            }
+            if (view instanceof TurbolinksView) {
+
+            }
+        }
+        viewPager.setAdapter(adapter);
+    }
+
     private void renderTabIcon(Menu menu, MenuItem menuItem, Bundle icon) {
         if (icon == null) return;
         Uri uri = Uri.parse(icon.getString("uri"));
@@ -140,9 +160,14 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     public boolean onNavigationItemSelected(MenuItem item) {
                         ViewPager viewPager = findViewById(R.id.viewpager);
-                        viewPager.setCurrentItem(item.getItemId());
+                        viewPager.setCurrentItem(item.getItemId(), false);
                         return true;
                     }
                 });
+    }
+
+    private void visitComponent(ReactRootView view, TurbolinksRoute route) {
+        ReactInstanceManager manager = getReactInstanceManager();
+        view.startReactApplication(manager, route.getComponent(), route.getPassProps());
     }
 }
