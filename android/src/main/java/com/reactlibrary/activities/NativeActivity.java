@@ -35,9 +35,12 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
+
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
         renderTitle();
-        renderReactRootView();
+
+        ReactRootView rootView = findViewById(R.id.react_root_view);
+        helperAct.visitComponent(rootView, getReactInstanceManager(), route);
     }
 
     @Override
@@ -91,12 +94,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
                 getEventEmitter().emit("turbolinksTitlePress", params);
             }
         });
-    }
-
-    private void renderReactRootView() {
-        ReactRootView mReactRootView = (ReactRootView) findViewById(R.id.react_root_view);
-        ReactInstanceManager mReactInstanceManager = getReactInstanceManager();
-        mReactRootView.startReactApplication(mReactInstanceManager, route.getComponent(), route.getPassProps());
     }
 
     @Override

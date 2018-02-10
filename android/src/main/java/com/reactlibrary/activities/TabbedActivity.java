@@ -23,7 +23,9 @@ import com.reactlibrary.util.TurbolinksPagerAdapter;
 
 import java.util.ArrayList;
 
+import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
+import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 import static com.reactlibrary.util.TurbolinksTabBar.INTENT_ROUTES;
 import static com.reactlibrary.util.TurbolinksTabBar.INTENT_SELECTED_INDEX;
 
@@ -32,6 +34,8 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
 
     private HelperActivity helperAct;
     private ArrayList<Bundle> routes;
+    private String messageHandler;
+    private String userAgent;
     private Boolean navigationBarHidden;
     private Integer selectedIndex;
 
@@ -44,6 +48,8 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         routes = getIntent().getParcelableArrayListExtra(INTENT_ROUTES);
         selectedIndex = getIntent().getIntExtra(INTENT_SELECTED_INDEX, 0);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
+        messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
+        userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
         renderTitle();
@@ -139,7 +145,8 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
             View view = adapter.getItem(i);
             TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
             if (view instanceof ReactRootView) {
-                visitComponent((ReactRootView) view, route);
+                ReactRootView rootView = (ReactRootView) view;
+                helperAct.visitComponent(rootView, getReactInstanceManager(), route);
             }
             if (view instanceof TurbolinksView) {
 
@@ -164,10 +171,5 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
                         return true;
                     }
                 });
-    }
-
-    private void visitComponent(ReactRootView view, TurbolinksRoute route) {
-        ReactInstanceManager manager = getReactInstanceManager();
-        view.startReactApplication(manager, route.getComponent(), route.getPassProps());
     }
 }

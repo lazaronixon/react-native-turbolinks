@@ -60,6 +60,10 @@ public class HelperActivity {
         act.handleTitlePress(toolbar);
     }
 
+    public void visitComponent(ReactRootView view, ReactInstanceManager manager, TurbolinksRoute route) {
+        view.startReactApplication(manager, route.getComponent(), route.getPassProps());
+    }
+
     @SuppressLint("RestrictedApi")
     private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
         if (icon == null) return;
