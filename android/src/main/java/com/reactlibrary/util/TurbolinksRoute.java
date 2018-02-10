@@ -23,10 +23,13 @@ public class TurbolinksRoute implements Parcelable {
     private String title;
     private String subtitle;
     private ArrayList<Bundle> actions;
+    private String tabTitle;
+    private Bundle tabIcon;
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
         ReadableArray actions = rp.hasKey("actions") ? rp.getArray("actions") : null;
+        ReadableMap tabIcon = rp.hasKey("tabIcon") ? rp.getMap("tabIcon") : null;
         this.url = rp.hasKey("url") ? rp.getString("url") : null;
         this.component = rp.hasKey("component") ? rp.getString("component") : null;
         this.action = rp.hasKey("action") ? rp.getString("action") : ACTION_ADVANCE;
@@ -35,6 +38,21 @@ public class TurbolinksRoute implements Parcelable {
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
+        this.tabTitle = rp.hasKey("tabTitle") ? rp.getString("tabTitle") : null;
+        this.tabIcon = rp.hasKey("tabIcon") ? Arguments.toBundle(tabIcon) : null;
+    }
+
+    public TurbolinksRoute(Bundle bundle) {
+        this.url = bundle.getString("url");
+        this.component = bundle.getString("component");
+        this.action = bundle.getString("action");
+        this.modal = bundle.getBoolean("modal");
+        this.passProps = bundle.getBundle("passProps");
+        this.title = bundle.getString("title");
+        this.subtitle = bundle.getString("subtitle");
+        this.actions = bundle.getParcelableArrayList("actions");
+        this.tabTitle = bundle.getString("tabTitle");
+        this.tabIcon = bundle.getBundle("tabIcon");
     }
 
     protected TurbolinksRoute(Parcel in) {
@@ -123,5 +141,13 @@ public class TurbolinksRoute implements Parcelable {
 
     public void setActions(ArrayList<Bundle> actions) {
         this.actions = actions;
+    }
+
+    public String getTabTitle() {
+        return tabTitle;
+    }
+
+    public Bundle getTabIcon() {
+        return tabIcon;
     }
 }

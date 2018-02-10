@@ -22,7 +22,6 @@ public class TurbolinksTabBar {
         this.routes = rp.hasKey("routes") ? Arguments.toList(routes) : null;
     }
 
-
     public int getSelectedIndex() {
         return selectedIndex;
     }
