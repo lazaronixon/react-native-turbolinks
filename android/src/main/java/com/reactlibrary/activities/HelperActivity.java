@@ -56,13 +56,6 @@ public class HelperActivity {
         act.handleTitlePress(toolbar);
     }
 
-    public void renderBottomNav(BottomNavigationView bottomNav) {
-        Menu menu = bottomNav.getMenu();
-        menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "teste");
-        menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "teste1");
-        menu.add(Menu.NONE, Menu.NONE, Menu.NONE, "teste2");
-    }
-
     @SuppressLint("RestrictedApi")
     private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
         if (icon == null) return;

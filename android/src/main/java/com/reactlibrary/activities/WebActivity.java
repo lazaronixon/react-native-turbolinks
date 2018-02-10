@@ -30,6 +30,7 @@ import java.net.URL;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
+import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
@@ -52,14 +53,13 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
         setContentView(R.layout.activity_web);
 
         helperAct = new HelperActivity(this);
-        route = new TurbolinksRoute(getIntent());
+        route = getIntent().getParcelableExtra(INTENT_ROUTE);
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
-        renderBottomNav((BottomNavigationView) findViewById(R.id.navigation));
 
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
@@ -165,11 +165,6 @@ public class WebActivity extends ReactAppCompatActivity implements TurbolinksAda
     @Override
     public void renderToolBar(Toolbar toolbar) {
         helperAct.renderToolBar(toolbar);
-    }
-
-    @Override
-    public void renderBottomNav(BottomNavigationView bottomNav) {
-        helperAct.renderBottomNav(bottomNav);
     }
 
     @Override

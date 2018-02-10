@@ -28,15 +28,6 @@ import java.util.Objects;
 
 import static com.facebook.react.bridge.UiThreadUtil.runOnUiThread;
 import static com.reactlibrary.util.TurbolinksRoute.ACTION_REPLACE;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_ACTIONS;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_COMPONENT;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_MODAL;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_PROPS;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_SUBTITLE;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_TITLE;
-import static com.reactlibrary.util.TurbolinksRoute.INTENT_URL;
-import static com.reactlibrary.util.TurbolinksTabBar.INTENT_ROUTES;
-import static com.reactlibrary.util.TurbolinksTabBar.INTENT_SELECTED_INDEX;
 
 public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
@@ -44,6 +35,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     public static final String INTENT_USER_AGENT = "intentUserAgent";
     public static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
+    public static final String INTENT_ROUTE = "intentRoute";
 
     private TurbolinksRoute prevRoute;
     private TurbolinksTabBar tabBar;
@@ -64,7 +56,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void visit(ReadableMap route) {
         TurbolinksRoute tRoute = new TurbolinksRoute(route);
-        if (tRoute.getUrl() != null) {
+        if (initialVisit && tabBar != null) {
+            presentTabbedView();
+        } else if (tRoute.getUrl() != null) {
             presentActivityForSession(tRoute);
         } else {
             presentNativeView(tRoute);
@@ -169,7 +163,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
-                loadIntentRoute(intent, route);
+                intent.putExtra(INTENT_ROUTE, route);
                 activity.startActivity(intent);
                 if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
                 this.prevRoute = route;
@@ -189,20 +183,21 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
-        loadIntentRoute(intent, route);
+        intent.putExtra(INTENT_ROUTE, route);
         activity.startActivity(intent);
         if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
         this.initialVisit = false;
     }
 
-    private void loadIntentRoute(Intent intent, TurbolinksRoute route) {
-        intent.putExtra(INTENT_URL, route.getUrl());
-        intent.putExtra(INTENT_COMPONENT, route.getComponent());
-        intent.putExtra(INTENT_PROPS, route.getPassProps());
-        intent.putExtra(INTENT_MODAL, route.getModal());
-        intent.putExtra(INTENT_TITLE, route.getTitle());
-        intent.putExtra(INTENT_SUBTITLE, route.getSubtitle());
-        intent.putParcelableArrayListExtra(INTENT_ACTIONS, route.getActions());
+    private void presentTabbedView() {
+        /*
+        Activity activity = getCurrentActivity();
+        Intent intent = new Intent(getReactApplicationContext(), TabbedActivity.class);
+        intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
+        intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
+        intent.putExtra(INTENT_SELECTED_INDEX, tabBar.getSelectedIndex());
+        intent.putParcelableArrayListExtra(INTENT_ROUTES, tabBar.getRoutes());
+        */
     }
 
 }

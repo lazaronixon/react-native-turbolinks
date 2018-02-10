@@ -13,7 +13,6 @@ public interface GenericActivity {
 
     void renderTitle();
     void renderToolBar(Toolbar toolbar);
-    void renderBottomNav(BottomNavigationView bottomNav);
     void onBackPressed();
     void handleTitlePress(Toolbar toolbar);
 

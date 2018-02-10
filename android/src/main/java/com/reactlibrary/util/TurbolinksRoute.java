@@ -1,7 +1,8 @@
 package com.reactlibrary.util;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
@@ -9,15 +10,7 @@ import com.facebook.react.bridge.ReadableMap;
 
 import java.util.ArrayList;
 
-public class TurbolinksRoute {
-
-    public static final String INTENT_URL = "intentUrl";
-    public static final String INTENT_COMPONENT = "intentComponent";
-    public static final String INTENT_PROPS = "intentProps";
-    public static final String INTENT_MODAL = "intentModal";
-    public static final String INTENT_TITLE = "intentTitle";
-    public static final String INTENT_SUBTITLE = "intentSubtitle";
-    public static final String INTENT_ACTIONS = "intentActions";
+public class TurbolinksRoute implements Parcelable {
 
     public static final String ACTION_ADVANCE = "advance";
     public static final String ACTION_REPLACE = "replace";
@@ -25,7 +18,7 @@ public class TurbolinksRoute {
     private String url;
     private String component;
     private String action;
-    private Boolean modal;
+    private boolean modal;
     private Bundle passProps;
     private String title;
     private String subtitle;
@@ -44,15 +37,45 @@ public class TurbolinksRoute {
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
     }
 
-    public TurbolinksRoute(Intent intent) {
-        this.url = intent.getStringExtra(INTENT_URL);
-        this.component = intent.getStringExtra(INTENT_COMPONENT);
-        this.modal = intent.getBooleanExtra(INTENT_MODAL, false);
-        this.passProps = intent.getBundleExtra(INTENT_PROPS);
-        this.title = intent.getStringExtra(INTENT_TITLE);
-        this.subtitle = intent.getStringExtra(INTENT_SUBTITLE);
-        this.actions = intent.getParcelableArrayListExtra(INTENT_ACTIONS);
+    protected TurbolinksRoute(Parcel in) {
+        url = in.readString();
+        component = in.readString();
+        action = in.readString();
+        modal = in.readByte() != 0;
+        passProps = in.readBundle();
+        title = in.readString();
+        subtitle = in.readString();
+        actions = in.createTypedArrayList(Bundle.CREATOR);
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(url);
+        dest.writeString(component);
+        dest.writeString(action);
+        dest.writeByte((byte) (modal ? 1 : 0));
+        dest.writeBundle(passProps);
+        dest.writeString(title);
+        dest.writeString(subtitle);
+        dest.writeTypedList(actions);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<TurbolinksRoute> CREATOR = new Creator<TurbolinksRoute>() {
+        @Override
+        public TurbolinksRoute createFromParcel(Parcel in) {
+            return new TurbolinksRoute(in);
+        }
+
+        @Override
+        public TurbolinksRoute[] newArray(int size) {
+            return new TurbolinksRoute[size];
+        }
+    };
 
     public String getUrl() {
         return url;
@@ -78,7 +101,7 @@ public class TurbolinksRoute {
         this.subtitle = subtitle;
     }
 
-    public Boolean getModal() {
+    public boolean getModal() {
         return modal;
     }
 
