@@ -126,10 +126,10 @@ Dismiss a overlaped view presented by visiting a component with modal option.
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
 #### `setNavigationBarStyle({titleTextColor, subtitleTextColor, barTintColor, tintColor})`(iOS Only)
-Set style for navigation bar on iOS. For android set your style on `android/app/src/main/res/values/styles.xml`.
+Set style for navigation bar on iOS. For android set your style on ![android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `setLoadingStyle({color, backgroundColor})` (iOS Only)
-Set style for Activity Indicator View. For android set your style on `android/app/src/main/res/values/styles.xml`.
+Set style for Activity Indicator View. For android set your style on ![android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `setNavigationBarHidden(boolean)`
 Hidden navigation bar. For example if you want to use a web navbar. (Default false)
@@ -140,7 +140,7 @@ A tab bar appears at the bottom of an app screen and provides the ability to qui
 - `routes:` A Array of route objects to mount TabBar. Use `tabTitle` and `tabIcon` here.
 
 #### `setTabBarStyle({barTintColor, tintColor})` (iOS Only)
-Set style for TabBar. For android set your style on `android/app/src/main/res/values/styles.xml`.
+Set style for TabBar. For android set your style on ![android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `renderTitle(title, subtitle)`
 Change title of current view. For example if you want to get title from page source.
