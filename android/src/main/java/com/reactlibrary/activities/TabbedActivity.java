@@ -137,7 +137,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
 
     @Override
     public TurbolinksView getTurbolinksView() {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         TurbolinksPagerAdapter adapter = (TurbolinksPagerAdapter) viewPager.getAdapter();
         return (TurbolinksView) adapter.getItem(viewPager.getCurrentItem());
     }

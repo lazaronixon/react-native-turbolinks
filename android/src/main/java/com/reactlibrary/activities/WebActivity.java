@@ -42,7 +42,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
 
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
 
-        turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
+        turbolinksView = findViewById(R.id.turbolinks_view);
         visitTurbolinksView(turbolinksView, route.getUrl());
     }
 
