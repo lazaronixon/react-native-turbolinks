@@ -159,24 +159,24 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private void presentActivityForSession(TurbolinksRoute route) {
         try {
             Activity activity = getCurrentActivity();
+            Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
             URL prevUrl = prevRoute != null ? new URL(prevRoute.getUrl()) : new URL(route.getUrl());
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
-                intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
+                intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initialVisit);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_ROUTE, route);
                 activity.startActivity(intent);
-                if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
+                if (isActionReplace) activity.finish();
                 this.prevRoute = route;
-                this.initialVisit = false;
             } else {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(route.getUrl()));
                 activity.startActivity(intent);
-                this.initialVisit = false;
             }
+            this.initialVisit = false;
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
         }
@@ -184,12 +184,13 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     private void presentNativeView(TurbolinksRoute route) {
         Activity activity = getCurrentActivity();
+        Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
-        intent.putExtra(INTENT_INITIAL_VISIT, initialVisit);
+        intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initialVisit);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
         activity.startActivity(intent);
-        if (route.getAction().equals(ACTION_REPLACE)) activity.finish();
+        if (isActionReplace) activity.finish();
         this.initialVisit = false;
     }
 
@@ -203,6 +204,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putParcelableArrayListExtra(INTENT_ROUTES, tabBar.getRoutes());
         activity.startActivity(intent);
         this.initialVisit = false;
+    }
+
+    private Boolean getCurrInitVisit() {
+        return getCurrentActivity().getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
     }
 
 }
