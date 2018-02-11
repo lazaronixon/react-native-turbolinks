@@ -81,19 +81,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
         return helperNativeAct.onOptionsItemSelected(item);
     }
 
-    private void renderBottomNav(BottomNavigationView bottomNav) {
-        Menu menu = bottomNav.getMenu();
-        setupNavigation(bottomNav);
-        bottomNav.setSelectedItemId(selectedIndex);
-        if (routes != null) {
-            for (int i = 0; i < routes.size(); i++) {
-                TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
-                MenuItem menuItem = menu.add(Menu.NONE, i, i, route.getTabTitle());
-                renderTabIcon(menu, menuItem, route.getTabIcon());
-            }
-        }
-    }
-
     @Override
     public void renderTitle() {
         helperNativeAct.renderTitle();
@@ -143,44 +130,9 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
         super.onBackPressed();
     }
 
+    @Override
     public void visitComponent(ReactRootView view, ReactInstanceManager manager, TurbolinksRoute route) {
         helperNativeAct.visitComponent(view, manager, route);
-    }
-
-    private void renderViewPager(ViewPager viewPager) {
-        TurbolinksPagerAdapter adapter = new TurbolinksPagerAdapter(getApplicationContext(), routes);
-        for (int i = 0; i < adapter.getCount(); i++) {
-            View view = adapter.getItem(i);
-            TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
-            if (view instanceof ReactRootView) {
-                ReactRootView rootView = (ReactRootView) view;
-                visitComponent(rootView, getReactInstanceManager(), route);
-            }
-            if (view instanceof TurbolinksView) {
-                TurbolinksView turbolinksView = (TurbolinksView) view;
-                visitTurbolinksView(turbolinksView, route.getUrl());
-                TurbolinksSession.resetDefault();
-            }
-        }
-        viewPager.setAdapter(adapter);
-    }
-
-    private void renderTabIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon == null) return;
-        Uri uri = Uri.parse(icon.getString("uri"));
-        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
-        menuItem.setIcon(drawableIcon);
-    }
-
-    private void setupNavigation(BottomNavigationView bottomNav) {
-        bottomNav.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    public boolean onNavigationItemSelected(MenuItem item) {
-                        ViewPager viewPager = findViewById(R.id.viewpager);
-                        viewPager.setCurrentItem(item.getItemId(), false);
-                        return true;
-                    }
-                });
     }
 
     @Override
@@ -247,6 +199,55 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     @Override
     public RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
+    }
+
+    private void renderBottomNav(BottomNavigationView bottomNav) {
+        Menu menu = bottomNav.getMenu();
+        setupNavigation(bottomNav);
+        bottomNav.setSelectedItemId(selectedIndex);
+        if (routes != null) {
+            for (int i = 0; i < routes.size(); i++) {
+                TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
+                MenuItem menuItem = menu.add(Menu.NONE, i, i, route.getTabTitle());
+                renderTabIcon(menu, menuItem, route.getTabIcon());
+            }
+        }
+    }
+
+    private void renderViewPager(ViewPager viewPager) {
+        TurbolinksPagerAdapter adapter = new TurbolinksPagerAdapter(getApplicationContext(), routes);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View view = adapter.getItem(i);
+            TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
+            if (view instanceof ReactRootView) {
+                ReactRootView rootView = (ReactRootView) view;
+                visitComponent(rootView, getReactInstanceManager(), route);
+            }
+            if (view instanceof TurbolinksView) {
+                TurbolinksView turbolinksView = (TurbolinksView) view;
+                visitTurbolinksView(turbolinksView, route.getUrl());
+                TurbolinksSession.resetDefault();
+            }
+        }
+        viewPager.setAdapter(adapter);
+    }
+
+    private void renderTabIcon(Menu menu, MenuItem menuItem, Bundle icon) {
+        if (icon == null) return;
+        Uri uri = Uri.parse(icon.getString("uri"));
+        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
+        menuItem.setIcon(drawableIcon);
+    }
+
+    private void setupNavigation(BottomNavigationView bottomNav) {
+        bottomNav.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    public boolean onNavigationItemSelected(MenuItem item) {
+                        ViewPager viewPager = findViewById(R.id.viewpager);
+                        viewPager.setCurrentItem(item.getItemId(), false);
+                        return true;
+                    }
+                });
     }
 
 }

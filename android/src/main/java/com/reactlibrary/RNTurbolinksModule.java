@@ -89,8 +89,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setTabBar(ReadableMap tabBar) {
-        TurbolinksTabBar tTabBar = new TurbolinksTabBar(tabBar);
-        presentTabbedView(tTabBar);
+        presentTabbedView(new TurbolinksTabBar(tabBar));
     }
 
     @ReactMethod
@@ -121,6 +120,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setLoadingStyle(ReadableMap style) {
     }
+
+    @ReactMethod
+    public void setTabBarStyle(ReadableMap style) {
+    }
+
 
     @ReactMethod
     public void renderTitle(final String title, final String subtitle) {

@@ -3,7 +3,6 @@ package com.reactlibrary.activities;
 import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
@@ -28,8 +27,6 @@ public interface GenericActivity {
     RCTDeviceEventEmitter getEventEmitter();
 
     TurbolinksRoute getRoute();
-
-    MenuInflater getMenuInflater();
 
     ActionBar getSupportActionBar();
 
