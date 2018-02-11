@@ -1,16 +1,12 @@
 package com.reactlibrary.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
-import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
@@ -20,9 +16,9 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
 
-public class NativeActivity extends ReactAppCompatActivity implements GenericActivity {
+public class NativeActivity extends ReactAppCompatActivity implements GenericNativeActivity {
 
-    private HelperActivity helperAct;
+    private HelperNativeActivity helperAct;
     private TurbolinksRoute route;
     private Boolean navigationBarHidden;
     private Boolean initialVisit;
@@ -31,7 +27,8 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native);
-        helperAct = new HelperActivity(this);
+
+        helperAct = new HelperNativeActivity(this);
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
@@ -40,16 +37,12 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
         renderTitle();
 
         ReactRootView rootView = findViewById(R.id.react_root_view);
-        helperAct.visitComponent(rootView, getReactInstanceManager(), route);
+        visitComponent(rootView, getReactInstanceManager(), route);
     }
 
     @Override
     public void onBackPressed() {
-        if (initialVisit) {
-            moveTaskToBack(true);
-        } else {
-            if (!route.getModal()) super.onBackPressed();
-        }
+        helperAct.onBackPressed();
     }
 
     @Override
@@ -68,32 +61,33 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public boolean superOnOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void renderToolBar(Toolbar toolbar) {
         helperAct.renderToolBar(toolbar);
     }
 
     @Override
     public void renderTitle() {
-        getSupportActionBar().setTitle(route.getTitle());
-        getSupportActionBar().setSubtitle(route.getSubtitle());
+        helperAct.renderTitle();
     }
 
     @Override
     public void handleTitlePress(Toolbar toolbar) {
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                WritableMap params = Arguments.createMap();
-                params.putString("component", route.getComponent());
-                params.putString("url", null);
-                params.putString("path", null);
-                getEventEmitter().emit("turbolinksTitlePress", params);
-            }
-        });
+        helperAct.handleTitlePress(toolbar);
+    }
+
+    @Override
+    public void onSuperBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean superOnOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void visitComponent(ReactRootView view, ReactInstanceManager manager, TurbolinksRoute route) {
+        helperAct.visitComponent(view, manager, route);
     }
 
     @Override
@@ -115,5 +109,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     public Boolean getNavigationBarHidden() {
         return navigationBarHidden;
     }
+
 
 }

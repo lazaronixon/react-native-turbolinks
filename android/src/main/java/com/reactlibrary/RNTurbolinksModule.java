@@ -140,7 +140,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
             public void run() {
                 GenericActivity activity = (GenericActivity) getCurrentActivity();
                 activity.getRoute().setActions(Arguments.toList(actions));
-                ActivityCompat.invalidateOptionsMenu((Activity) activity);
+                ((Activity) activity).invalidateOptionsMenu();
             }
         });
     }
@@ -193,6 +193,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private void presentTabbedView(TurbolinksTabBar tabBar) {
         Activity activity = getCurrentActivity();
         Intent intent = new Intent(getReactApplicationContext(), TabbedActivity.class);
+        intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
+        intent.putExtra(INTENT_USER_AGENT, userAgent);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_SELECTED_INDEX, tabBar.getSelectedIndex());
         intent.putParcelableArrayListExtra(INTENT_ROUTES, tabBar.getRoutes());
