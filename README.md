@@ -134,6 +134,14 @@ Set style for Activity Indicator View. For android set your style on `android/ap
 #### `setNavigationBarHidden(boolean)`
 Hidden navigation bar. For example if you want to use a web navbar. (Default false)
 
+#### `setTabBar({selectedIndex, routes})`
+A tab bar appears at the bottom of an app screen and provides the ability to quickly switch between different sections of an app.
+- `selectedIndex:` Index for initial selected view. (Default 0).
+- `routes:` A Array of route objects to mount TabBar. Use `tabTitle` and `tabIcon` here.
+
+#### `setTabBarStyle({barTintColor, tintColor})` (iOS Only)
+Set style for TabBar. For android set your style on `android/app/src/main/res/values/styles.xml`.
+
 #### `renderTitle(title, subtitle)`
 Change title of current view. For example if you want to get title from page source.
 
