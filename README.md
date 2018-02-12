@@ -178,6 +178,12 @@ Removes the listener for given event.
 
 `Turbolinks.Constants.Action.restore: 'restore'`
 
+## TODO
+
+- [ ] Third library to provide native dialogs. Using ![MZFormSheetPresentationController
+](https://github.com/m1entus/MZFormSheetPresentationController) and ![Dialogs] (https://developer.android.com/guide/topics/ui/dialogs.html).
+- [ ] [Segmented Controls](https://developer.apple.com/ios/human-interface-guidelines/controls/segmented-controls/)
+
 ## Resources
 
 - [RailsConf 2016 - Turbolinks 5: I Can’t Believe It’s Not Native! by Sam Stephenson](https://www.youtube.com/watch?v=SWEts0rlezA)
