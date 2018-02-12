@@ -182,7 +182,7 @@ Removes the listener for given event.
 
 - [ ] Third library to provide native dialogs. Using ![MZFormSheetPresentationController
 ](https://github.com/m1entus/MZFormSheetPresentationController) and ![Dialogs](https://developer.android.com/guide/topics/ui/dialogs.html).
-- [ ] [Segmented Controls](https://developer.apple.com/ios/human-interface-guidelines/controls/segmented-controls/)
+- [ ] ![Segmented Controls](https://developer.apple.com/ios/human-interface-guidelines/controls/segmented-controls/)
 
 ## Resources
 
