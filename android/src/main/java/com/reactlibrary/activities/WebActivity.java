@@ -1,5 +1,6 @@
 package com.reactlibrary.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -43,6 +44,8 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
 
         turbolinksView = findViewById(R.id.turbolinks_view);
+
+        setupFileChooser();
         visitTurbolinksView(turbolinksView, route.getUrl());
     }
 
@@ -50,6 +53,11 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     protected void onRestart() {
         super.onRestart();
         helperAct.onRestart();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        helperAct.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -129,6 +137,11 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     @Override
     public void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
         helperAct.visitTurbolinksView(turbolinksView, url);
+    }
+
+    @Override
+    public void setupFileChooser() {
+        helperAct.setupFileChooser();
     }
 
     @Override

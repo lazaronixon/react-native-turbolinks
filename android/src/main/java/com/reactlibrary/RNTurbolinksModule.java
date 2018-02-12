@@ -141,9 +141,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void renderActions(final ReadableArray actions) {
         runOnUiThread(new Runnable() {
             public void run() {
-                GenericActivity activity = (GenericActivity) getCurrentActivity();
-                activity.getRoute().setActions(Arguments.toList(actions));
-                ((Activity) activity).invalidateOptionsMenu();
+                GenericActivity act = (GenericActivity) getCurrentActivity();
+                Activity activity = (Activity) act;
+                act.getRoute().setActions(Arguments.toList(actions));
+                activity.invalidateOptionsMenu();
             }
         });
     }

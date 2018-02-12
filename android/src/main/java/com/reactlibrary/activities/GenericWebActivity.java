@@ -17,4 +17,6 @@ public interface GenericWebActivity extends GenericActivity, TurbolinksAdapter {
 
     void postMessage(String message);
 
+    void setupFileChooser();
+
 }

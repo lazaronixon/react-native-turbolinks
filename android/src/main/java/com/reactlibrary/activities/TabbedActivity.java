@@ -19,9 +19,9 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
-import com.reactlibrary.util.TurbolinksViewPager;
 import com.reactlibrary.util.TurbolinksPagerAdapter;
 import com.reactlibrary.util.TurbolinksRoute;
+import com.reactlibrary.util.TurbolinksViewPager;
 
 import java.util.ArrayList;
 
@@ -166,6 +166,10 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     @Override
     public void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
         helperWebAct.visitTurbolinksView(turbolinksView, url);
+    }
+
+    @Override
+    public void setupFileChooser() {
     }
 
     @Override

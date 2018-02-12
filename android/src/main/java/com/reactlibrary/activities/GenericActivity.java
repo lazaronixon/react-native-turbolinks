@@ -1,6 +1,7 @@
 package com.reactlibrary.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -38,4 +39,9 @@ public interface GenericActivity {
 
     void onSuperBackPressed();
 
+    void startActivity(Intent intent);
+
+    void startActivityForResult(Intent intent, int requestCode);
+
+    void finish();
 }
