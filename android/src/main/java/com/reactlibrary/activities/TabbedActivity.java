@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +19,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.TurbolinksViewPager;
 import com.reactlibrary.util.TurbolinksPagerAdapter;
 import com.reactlibrary.util.TurbolinksRoute;
 
@@ -57,7 +57,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
 
         renderToolBar((Toolbar) findViewById(R.id.toolbar));
         renderTitle();
-        renderViewPager((ViewPager) findViewById(R.id.viewpager));
+        renderViewPager((TurbolinksViewPager) findViewById(R.id.viewpager));
         renderBottomNav((BottomNavigationView) findViewById(R.id.navigation));
     }
 
@@ -137,7 +137,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
 
     @Override
     public TurbolinksView getTurbolinksView() {
-        ViewPager viewPager = findViewById(R.id.viewpager);
+        TurbolinksViewPager viewPager = findViewById(R.id.viewpager);
         TurbolinksPagerAdapter adapter = (TurbolinksPagerAdapter) viewPager.getAdapter();
         return (TurbolinksView) adapter.getItem(viewPager.getCurrentItem());
     }
@@ -214,7 +214,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
         }
     }
 
-    private void renderViewPager(ViewPager viewPager) {
+    private void renderViewPager(TurbolinksViewPager viewPager) {
         TurbolinksPagerAdapter adapter = new TurbolinksPagerAdapter(getApplicationContext(), routes);
         for (int i = 0; i < adapter.getCount(); i++) {
             View view = adapter.getItem(i);
@@ -243,7 +243,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
         bottomNav.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     public boolean onNavigationItemSelected(MenuItem item) {
-                        ViewPager viewPager = findViewById(R.id.viewpager);
+                        TurbolinksViewPager viewPager = findViewById(R.id.viewpager);
                         viewPager.setCurrentItem(item.getItemId(), false);
                         return true;
                     }
