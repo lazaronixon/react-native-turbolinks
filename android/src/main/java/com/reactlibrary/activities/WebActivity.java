@@ -1,6 +1,5 @@
 package com.reactlibrary.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -45,7 +44,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
 
         turbolinksView = findViewById(R.id.turbolinks_view);
 
-        helperAct.setupFileChooser();
         helperAct.visitTurbolinksView(turbolinksView, route.getUrl());
     }
 
@@ -53,11 +51,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     protected void onRestart() {
         super.onRestart();
         helperAct.onRestart();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        helperAct.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
