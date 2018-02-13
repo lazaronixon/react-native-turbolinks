@@ -13,10 +13,4 @@ public interface GenericWebActivity extends GenericActivity, TurbolinksAdapter {
 
     void reloadSession();
 
-    void visitTurbolinksView(TurbolinksView turbolinksView, String url);
-
-    void postMessage(String message);
-
-    void setupFileChooser();
-
 }

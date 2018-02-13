@@ -41,12 +41,12 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        renderToolBar((Toolbar) findViewById(R.id.toolbar));
+        helperAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
 
         turbolinksView = findViewById(R.id.turbolinks_view);
 
-        setupFileChooser();
-        visitTurbolinksView(turbolinksView, route.getUrl());
+        helperAct.setupFileChooser();
+        helperAct.visitTurbolinksView(turbolinksView, route.getUrl());
     }
 
     @Override
@@ -109,11 +109,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     }
 
     @Override
-    public void renderToolBar(Toolbar toolbar) {
-        helperAct.renderToolBar(toolbar);
-    }
-
-    @Override
     public void renderTitle() {
         helperAct.renderTitle();
     }
@@ -124,24 +119,8 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     }
 
     @Override
-    @JavascriptInterface
-    public void postMessage(String message) {
-        helperAct.postMessage(message);
-    }
-
-    @Override
     public void reloadSession() {
         helperAct.reloadSession();
-    }
-
-    @Override
-    public void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
-        helperAct.visitTurbolinksView(turbolinksView, url);
-    }
-
-    @Override
-    public void setupFileChooser() {
-        helperAct.setupFileChooser();
     }
 
     @Override
@@ -191,5 +170,10 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     @Override
     public String getUserAgent() {
         return userAgent;
+    }
+
+    @JavascriptInterface
+    public void postMessage(String message) {
+        helperAct.postMessage(message);
     }
 }

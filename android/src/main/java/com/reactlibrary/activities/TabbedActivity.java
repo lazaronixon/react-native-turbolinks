@@ -12,7 +12,6 @@ import android.webkit.JavascriptInterface;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -55,8 +54,8 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        renderToolBar((Toolbar) findViewById(R.id.toolbar));
-        renderTitle();
+        helperNativeAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
+        helperNativeAct.renderTitle();
         renderViewPager((TurbolinksViewPager) findViewById(R.id.viewpager));
         renderBottomNav((BottomNavigationView) findViewById(R.id.navigation));
     }
@@ -84,11 +83,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     @Override
     public void renderTitle() {
         helperNativeAct.renderTitle();
-    }
-
-    @Override
-    public void renderToolBar(Toolbar toolbar) {
-        helperNativeAct.renderToolBar(toolbar);
     }
 
     @Override
@@ -131,11 +125,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public void visitComponent(ReactRootView view, ReactInstanceManager manager, TurbolinksRoute route) {
-        helperNativeAct.visitComponent(view, manager, route);
-    }
-
-    @Override
     public TurbolinksView getTurbolinksView() {
         TurbolinksViewPager viewPager = findViewById(R.id.viewpager);
         TurbolinksPagerAdapter adapter = (TurbolinksPagerAdapter) viewPager.getAdapter();
@@ -153,23 +142,8 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    @JavascriptInterface
-    public void postMessage(String message) {
-        helperWebAct.postMessage(message);
-    }
-
-    @Override
     public void reloadSession() {
         helperWebAct.reloadSession();
-    }
-
-    @Override
-    public void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
-        helperWebAct.visitTurbolinksView(turbolinksView, url);
-    }
-
-    @Override
-    public void setupFileChooser() {
     }
 
     @Override
@@ -205,6 +179,11 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
     }
 
+    @JavascriptInterface
+    public void postMessage(String message) {
+        helperWebAct.postMessage(message);
+    }
+
     private void renderBottomNav(BottomNavigationView bottomNav) {
         Menu menu = bottomNav.getMenu();
         setupNavigation(bottomNav);
@@ -225,11 +204,11 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
             TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
             if (view instanceof ReactRootView) {
                 ReactRootView rootView = (ReactRootView) view;
-                visitComponent(rootView, getReactInstanceManager(), route);
+                helperNativeAct.visitComponent(rootView, getReactInstanceManager(), route);
             }
             if (view instanceof TurbolinksView) {
                 TurbolinksView turbolinksView = (TurbolinksView) view;
-                visitTurbolinksView(turbolinksView, route.getUrl());
+                helperWebAct.visitTurbolinksView(turbolinksView, route.getUrl());
                 TurbolinksSession.resetDefault();
             }
         }

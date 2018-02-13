@@ -5,7 +5,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
@@ -33,11 +32,11 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericNat
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
 
-        renderToolBar((Toolbar) findViewById(R.id.toolbar));
-        renderTitle();
+        helperAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
+        helperAct.renderTitle();
 
         ReactRootView rootView = findViewById(R.id.react_root_view);
-        visitComponent(rootView, getReactInstanceManager(), route);
+        helperAct.visitComponent(rootView, getReactInstanceManager(), route);
     }
 
     @Override
@@ -61,11 +60,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public void renderToolBar(Toolbar toolbar) {
-        helperAct.renderToolBar(toolbar);
-    }
-
-    @Override
     public void renderTitle() {
         helperAct.renderTitle();
     }
@@ -83,11 +77,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericNat
     @Override
     public boolean superOnOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void visitComponent(ReactRootView view, ReactInstanceManager manager, TurbolinksRoute route) {
-        helperAct.visitComponent(view, manager, route);
     }
 
     @Override

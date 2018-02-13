@@ -15,8 +15,6 @@ public interface GenericActivity {
 
     void onBackPressed();
 
-    void renderToolBar(Toolbar toolbar);
-
     void handleTitlePress(Toolbar toolbar);
 
     boolean superOnOptionsItemSelected(MenuItem item);
