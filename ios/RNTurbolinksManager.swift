@@ -21,11 +21,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate lazy var tabBarController: UITabBarController = {
-        let rootViewController = UIApplication.shared.delegate!.window!!.rootViewController!
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
         tabBarController.viewControllers = [NavigationController(self, nil)]
-        rootViewController.present(tabBarController, animated: false, completion: nil)
+        UIApplication.topViewController().present(tabBarController, animated: false, completion: nil)
         return tabBarController
     }()
     
@@ -213,5 +212,19 @@ extension RNTurbolinksManager: SessionDelegate {
 extension RNTurbolinksManager: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let message = message.body as? String { sendEvent(withName: "turbolinksMessage", body: message) }
+    }
+}
+
+extension UIApplication {
+    
+    fileprivate class var rootViewController : UIViewController {
+        get { return UIApplication.shared.keyWindow!.rootViewController! }
+    }
+    
+    class func topViewController(base: UIViewController! = rootViewController) -> UIViewController {
+        if let presented = base.presentedViewController {
+            return topViewController(base: presented)
+        }
+        return base
     }
 }
