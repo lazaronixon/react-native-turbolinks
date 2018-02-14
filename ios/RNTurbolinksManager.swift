@@ -25,7 +25,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
         tabBarController.viewControllers = [NavigationController(self, nil)]
-        rootViewController.view.addSubview(tabBarController.view)
+        rootViewController.present(tabBarController, animated: false, completion: nil)
         return tabBarController
     }()
     
