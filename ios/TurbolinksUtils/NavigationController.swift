@@ -26,10 +26,9 @@ class NavigationController: UINavigationController {
 
 extension NavigationController: WKUIDelegate {
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
-        let bundle = Bundle(identifier: "com.apple.UIKit")!
         let confirm = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let cancel = bundle.localizedString(forKey: "Cancel", value: nil, table: nil)
-        let ok = bundle.localizedString(forKey: "OK", value: nil, table: nil)
+        let cancel = TurbolinksHelper.getUIKitLocalizedString("Cancel")
+        let ok = TurbolinksHelper.getUIKitLocalizedString("OK")
         
         confirm.addAction(UIAlertAction(title: cancel, style: .cancel) { (action) in
             completionHandler(false)
