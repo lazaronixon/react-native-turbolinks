@@ -23,7 +23,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate lazy var tabBarController: UITabBarController = {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
-        tabBarController.viewControllers = [NavigationController(self, nil)]
+        tabBarController.viewControllers = [NavigationController(self)]
         UIApplication.topViewController().present(tabBarController, animated: false, completion: nil)
         return tabBarController
     }()

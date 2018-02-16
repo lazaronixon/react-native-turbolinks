@@ -5,7 +5,7 @@ class NavigationController: UINavigationController {
     
     var session: Session!
     
-    required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>?) {
+    required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>? = nil) {
         self.init()
         
         let webViewConfiguration = WKWebViewConfiguration()
