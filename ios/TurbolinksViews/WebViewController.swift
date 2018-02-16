@@ -5,7 +5,7 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     var manager: RNTurbolinksManager!
     var route: TurbolinksRoute!
-    var customView: UIView?
+    var customView: UIView!
     var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
     var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
@@ -21,19 +21,19 @@ class WebViewController: Turbolinks.VisitableViewController {
 
     func renderComponent() {
         customView = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
-        customView!.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(customView!)
+        customView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(customView)
         installErrorViewConstraints()
     }
     
     func reload() {
-        customView?.removeFromSuperview()
+        customView.removeFromSuperview()
         reloadVisitable()
     }
     
     fileprivate func installErrorViewConstraints() {
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: [ "view": customView! ]))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": customView! ]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: [ "view": customView ]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": customView ]))
     }
     
     fileprivate func renderLoadingStyle() {
