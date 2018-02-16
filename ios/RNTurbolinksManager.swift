@@ -30,15 +30,15 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
         if let visitable = navigation.visibleViewController as? WebViewController {
-            let tRoute = TurbolinksRoute(route)
-            visitable.route = tRoute
+            visitable.route = TurbolinksRoute(route)
             visitable.renderComponent()
         }
     }
     
     @objc func reloadVisitable() -> Void {
-        let visitable = navigation.visibleViewController as? WebViewController
-        visitable?.reload()
+        if let visitable = navigation.visibleViewController as? WebViewController {
+            visitable.reload()
+        }
     }
     
     @objc func reloadSession() -> Void {
