@@ -39,8 +39,10 @@
 		87578E921FF9962C00BA9CDC /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */; };
 		87578E931FF9962C00BA9CDC /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */; };
 		87578E941FF9962C00BA9CDC /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */; };
-		97E4DD4B8D0542DA93FB95C1 /* libRNTurbolinks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C35F63786E443E92A05D85 /* libRNTurbolinks.a */; };
+		87E0E3611FEC731600012CEF /* Turbolinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0E3601FEC731600012CEF /* Turbolinks.framework */; };
+		87E0E3621FEC731600012CEF /* Turbolinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0E3601FEC731600012CEF /* Turbolinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		B768E9C174254125B329480D /* libRNTurbolinks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8E907A206E408ABF70AF32 /* libRNTurbolinks.a */; };
 		FDB70C87EB6A4245AA448C18 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */; };
 /* End PBXBuildFile section */
 
@@ -255,27 +257,6 @@
 			remoteGlobalIDString = 3DBE0D0D1F3B181C0099AA32;
 			remoteInfo = "fishhook-tvOS";
 		};
-		8726712620365E0A00820B01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5F6364AD487C43D782E46154 /* RNTurbolinks.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNTurbolinks;
-		};
-		877363C120360F0600953999 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EBF21BDC1FC498900052F4D5;
-			remoteInfo = jsinspector;
-		};
-		877363C320360F0600953999 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
-			remoteInfo = "jsinspector-tvOS";
-		};
 		87BF82B21FE7409E00855075 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -318,6 +299,13 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		87ED9D751FF9998800B81841 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 699FE866F83F45AABD5E8608 /* RNTurbolinks.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNTurbolinks;
+		};
 		ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -326,6 +314,20 @@
 			remoteInfo = RCTBlob;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		87E0E3591FEC71AE00012CEF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				87E0E3621FEC731600012CEF /* Turbolinks.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -350,11 +352,12 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Example-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Example-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Example-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C8E907A206E408ABF70AF32 /* libRNTurbolinks.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTurbolinks.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		5F6364AD487C43D782E46154 /* RNTurbolinks.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTurbolinks.xcodeproj; path = "../node_modules/react-native-turbolinks/ios/RNTurbolinks.xcodeproj"; sourceTree = "<group>"; };
-		68C35F63786E443E92A05D85 /* libRNTurbolinks.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTurbolinks.a; sourceTree = "<group>"; };
+		699FE866F83F45AABD5E8608 /* RNTurbolinks.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTurbolinks.xcodeproj; path = "../node_modules/react-native-turbolinks/ios/RNTurbolinks.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		87E0E3601FEC731600012CEF /* Turbolinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Turbolinks.framework; path = ../../ios/Turbolinks.framework; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -374,6 +377,7 @@
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				87E0E3611FEC731600012CEF /* Turbolinks.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -384,7 +388,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				97E4DD4B8D0542DA93FB95C1 /* libRNTurbolinks.a in Frameworks */,
+				B768E9C174254125B329480D /* libRNTurbolinks.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,8 +521,6 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
-				877363C220360F0600953999 /* libjsinspector.a */,
-				877363C420360F0600953999 /* libjsinspector-tvOS.a */,
 				87BF82B31FE7409E00855075 /* libthird-party.a */,
 				87BF82B51FE7409E00855075 /* libthird-party.a */,
 				87BF82B71FE7409E00855075 /* libdouble-conversion.a */,
@@ -562,7 +564,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				5F6364AD487C43D782E46154 /* RNTurbolinks.xcodeproj */,
+				699FE866F83F45AABD5E8608 /* RNTurbolinks.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -579,6 +581,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				87E0E3601FEC731600012CEF /* Turbolinks.framework */,
 				13B07FAE1A68108700A75B9A /* Example */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ExampleTests */,
@@ -606,7 +609,7 @@
 			isa = PBXGroup;
 			children = (
 				13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */,
-				68C35F63786E443E92A05D85 /* libRNTurbolinks.a */,
+				4C8E907A206E408ABF70AF32 /* libRNTurbolinks.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -624,6 +627,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		87ED9D721FF9998800B81841 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87ED9D761FF9998800B81841 /* libRNTurbolinks.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		ADBDB9201DFEBF0600ED6528 /* Products */ = {
@@ -664,6 +675,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				87E0E3591FEC71AE00012CEF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -798,8 +810,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 872670FE20365E0900820B01 /* Products */;
-					ProjectRef = 5F6364AD487C43D782E46154 /* RNTurbolinks.xcodeproj */;
+					ProductGroup = 87ED9D721FF9998800B81841 /* Products */;
+					ProjectRef = 699FE866F83F45AABD5E8608 /* RNTurbolinks.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1009,27 +1021,6 @@
 			remoteRef = 871703381FE611F000BD9B9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8726712720365E0A00820B01 /* libRNTurbolinks.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNTurbolinks.a;
-			remoteRef = 8726712620365E0A00820B01 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		877363C220360F0600953999 /* libjsinspector.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libjsinspector.a;
-			remoteRef = 877363C120360F0600953999 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		877363C420360F0600953999 /* libjsinspector-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libjsinspector-tvOS.a";
-			remoteRef = 877363C320360F0600953999 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		87BF82B31FE7409E00855075 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1070,6 +1061,13 @@
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
 			remoteRef = 87BF82BC1FE7409E00855075 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		87ED9D761FF9998800B81841 /* libRNTurbolinks.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNTurbolinks.a;
+			remoteRef = 87ED9D751FF9998800B81841 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */ = {
@@ -1271,6 +1269,7 @@
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1305,6 +1304,7 @@
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;

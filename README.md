@@ -12,7 +12,10 @@ $ react-native link
 ```
 
 ### Installation iOS
-No steps required.
+
+Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode Embedded Binaries and then check `"Copy items if need"` when it is prompted.
+
+[Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
 
 ### Installation Android
 Change the variables below on ![/android/app/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/build.gradle):
