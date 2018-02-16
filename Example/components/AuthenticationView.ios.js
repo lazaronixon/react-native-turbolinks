@@ -15,9 +15,14 @@ export default class AuthenticationView extends Component {
 class MyScene extends Component {
 
   state = { url: Constants.baseUrl + '/sign-in' }
+  
+  handleAuthenticated = () => {                
+    Turbolinks.dismiss()
+    Turbolinks.reloadSession()
+  }  
 
   handleNavigationStateChange = (navState) => {
-    if (this.state.url != navState.url) { Turbolinks.dismiss() }
+    if (this.state.url != navState.url) { this.handleAuthenticated() }
     this.setState({ url: navState.url })
   }
 
