@@ -20,16 +20,28 @@ class RNTurbolinksManager: RCTEventEmitter {
         get { return navigation.session }
     }
     
+    fileprivate func getViewControllerByIndex(_ index: Int) -> UIViewController {
+        let navController = tabBarController.viewControllers![index] as! NavigationController
+        return navController.visibleViewController!
+    }
+    
     fileprivate lazy var tabBarController: UITabBarController = {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
-        tabBarController.viewControllers = [NavigationController(self)]
+        tabBarController.viewControllers = [NavigationController(self, 0)]
         UIApplication.topViewController().present(tabBarController, animated: false, completion: nil)
         return tabBarController
     }()
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
         if let visitable = navigation.visibleViewController as? WebViewController {
+            visitable.route = TurbolinksRoute(route)
+            visitable.renderComponent()
+        }
+    }
+    
+    @objc func replaceTabWith(_ tabIndex: Int,_ route: Dictionary<AnyHashable, Any>) -> Void {
+        if let visitable = getViewControllerByIndex(tabIndex) as? WebViewController {
             visitable.route = TurbolinksRoute(route)
             visitable.renderComponent()
         }
@@ -117,7 +129,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.viewControllers = nil
         tabBarController.tabBar.isHidden = false
         for (index, route) in routes.enumerated() {
-            tabBarController.viewControllers!.append(NavigationController(self, route))
+            let navController = NavigationController(self, route, index)
+            tabBarController.viewControllers!.append(navController)
             tabBarController.selectedIndex = index
             visit(route)
         }
@@ -196,7 +209,8 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
-        sendEvent(withName: "turbolinksError", body: ["code": error.code, "statusCode": error.userInfo["statusCode"], "description": error.localizedDescription])
+        let indexedSession = session as! IndexedSession
+        sendEvent(withName: "turbolinksError", body: ["code": error.code, "statusCode": error.userInfo["statusCode"] ?? 0, "description": error.localizedDescription, "tabIndex": indexedSession.index])
     }
     
     func sessionDidStartRequest(_ session: Session) {

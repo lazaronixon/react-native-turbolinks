@@ -3,25 +3,29 @@ import Turbolinks
 
 class NavigationController: UINavigationController {
     
-    var session: Session!
+    var session: IndexedSession!    
     
-    required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>? = nil) {
+    required convenience init(_ manager: RNTurbolinksManager,_ tabIndex: Int) {
         self.init()
-        
+        self.session = IndexedSession(NavigationController.setupWebViewConfiguration(manager), tabIndex)
+        self.session.delegate = manager
+        self.session.webView.uiDelegate = self
+    }
+    
+    required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {
+        self.init(manager, tabIndex)
+        let tRoute = TurbolinksRoute(route)
+        self.tabBarItem = UITabBarItem(title: tRoute.tabTitle , image: tRoute.tabIcon, selectedImage: tRoute.tabIcon)
+    }
+    
+    fileprivate static func setupWebViewConfiguration(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
         let webViewConfiguration = WKWebViewConfiguration()
         webViewConfiguration.processPool = manager.processPool
         if (manager.messageHandler != nil) { webViewConfiguration.userContentController.add(manager, name: manager.messageHandler!) }
         if (manager.userAgent != nil) { webViewConfiguration.applicationNameForUserAgent = manager.userAgent }
-        
-        self.session = Session(webViewConfiguration: webViewConfiguration)
-        self.session.delegate = manager
-        self.session.webView.uiDelegate = self
-        
-        if (route != nil) {
-            let tRoute = TurbolinksRoute(route!)
-            self.tabBarItem = UITabBarItem(title: tRoute.tabTitle , image: tRoute.tabIcon, selectedImage: tRoute.tabIcon)
-        }
+        return webViewConfiguration
     }
+    
 }
 
 extension NavigationController: WKUIDelegate {
