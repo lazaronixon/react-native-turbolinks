@@ -159,7 +159,7 @@ Change actions of current view. For example if you want to mount a menu looking 
 
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:
-- `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link or call Turbolinks.visit(...). The argument to the event handler is an object with keys: `url, path, action`.
+- `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link. The argument to the event handler is an object with keys: `url, path, action`.
 - `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description, tabIndex`.
 - `turbolinksMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
 - `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
