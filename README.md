@@ -113,7 +113,7 @@ Visit a Component with Turbolinks.
 #### `replaceWith(route)`
 Replace current visitable with a component. With the same route param like to visit a component.
 
-#### `replaceTabWith(tabIndex ,route)`
+#### `replaceTabWith(route, tabIndex)`
 Replace visitable inside tab with a component. With the same route param like to visit a component. It should be used inside `turbolinksError` using tabIndex from event to replace the correct visitable.
 
 #### `reloadVisitable()`
@@ -148,6 +148,9 @@ Set style for TabBar. For android set your style on ![android/app/src/main/res/v
 #### `renderTitle(title, subtitle)`
 Change title of current view. For example if you want to get title from page source.
 
+#### `renderTabTitle(title, subtitle, tabIndex)`
+Change title of view inside tab. For example if you want to get title from page source. It should be used inside `turbolinksVisitCompleted` using tabIndex from event.
+
 #### `renderActions(actions)`
 Change actions of current view. For example if you want to mount a menu looking for data-attributes on page source.
 - `action:`
@@ -155,6 +158,14 @@ Change actions of current view. For example if you want to mount a menu looking 
   - `title:` A title for the action.
   - `icon:` A icon for the action.
   - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).
+
+#### `renderTabActions(actions, tabIndex)`
+Change actions of view inside tab. For example if you want to mount a menu looking for data-attributes on page source.
+- `action:`
+  - `id:` A integer identifier for the action. (Required)
+  - `title:` A title for the action.
+  - `icon:` A icon for the action.
+  - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).  
 
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:
@@ -164,7 +175,7 @@ Adds an event handler. Supported events:
 - `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
 - `turbolinksLeftButtonPress:` Fire when left button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
-- `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path, source`.
+- `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path, source, tabIndex`.
 
 #### `removeEventListener(eventName, handler)`
 Removes the listener for given event.

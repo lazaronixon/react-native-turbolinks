@@ -34,23 +34,18 @@ class RNTurbolinksManager: RCTEventEmitter {
     }()
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
-        if let visitable = navigation.visibleViewController as? WebViewController {
-            visitable.route = TurbolinksRoute(route)
-            visitable.renderComponent()
-        }
+        let visitable = navigation.visibleViewController as! WebViewController
+        replaceHelper(visitable, route)
     }
     
-    @objc func replaceTabWith(_ tabIndex: Int,_ route: Dictionary<AnyHashable, Any>) -> Void {
-        if let visitable = getViewControllerByIndex(tabIndex) as? WebViewController {
-            visitable.route = TurbolinksRoute(route)
-            visitable.renderComponent()
-        }
+    @objc func replaceTabWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) -> Void {
+        let visitable = getViewControllerByIndex(tabIndex) as! WebViewController
+        replaceHelper(visitable, route)
     }
     
     @objc func reloadVisitable() -> Void {
-        if let visitable = navigation.visibleViewController as? WebViewController {
-            visitable.reload()
-        }
+        let visitable = navigation.visibleViewController as! WebViewController
+        visitable.reload()
     }
     
     @objc func reloadSession() -> Void {
@@ -112,15 +107,22 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func renderTitle(_ title: String,_ subtitle: String) {
         let visitable = navigation.visibleViewController as! GenricViewController
-        visitable.route.title = title
-        visitable.route.subtitle = subtitle
-        visitable.renderTitle()
+        renderTitleHelper(visitable, title, subtitle)
+    }
+    
+    @objc func renderTabTitle(_ title: String,_ subtitle: String,_ tabIndex: Int) {
+        let visitable = getViewControllerByIndex(tabIndex) as! GenricViewController
+        renderTitleHelper(visitable, title, subtitle)
     }
     
     @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>) {
         let visitable = navigation.visibleViewController as! GenricViewController
-        visitable.route.actions = actions
-        visitable.renderActions()
+        renderActionsHelper(visitable, actions)
+    }
+    
+    @objc func renderTabActions(_ actions: Array<Dictionary<AnyHashable, Any>>,_ tabIndex: Int) {
+        let visitable = getViewControllerByIndex(tabIndex) as! GenricViewController
+        renderActionsHelper(visitable, actions)
     }
     
     @objc func setTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
@@ -160,6 +162,22 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
+    fileprivate func replaceHelper(_ visitable: WebViewController,_ route: Dictionary<AnyHashable, Any>) {
+        visitable.route = TurbolinksRoute(route)
+        visitable.renderComponent()
+    }
+    
+    fileprivate func renderTitleHelper(_ visitable: GenricViewController,_ title: String,_ subtitle: String) {
+        visitable.route.title = title
+        visitable.route.subtitle = subtitle
+        visitable.renderTitle()
+    }
+    
+    fileprivate func renderActionsHelper(_ visitable:GenricViewController,_ actions: Array<Dictionary<AnyHashable, Any>>) {
+        visitable.route.actions = actions
+        visitable.renderActions()
+    }
+    
     func handleTitlePress(_ URL: URL?,_ component: String?) {
         sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
@@ -172,8 +190,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         sendEvent(withName: "turbolinksLeftButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
-    func handleVisitCompleted(_ url: URL!,_ source: String?) {
-        sendEvent(withName: "turbolinksVisitCompleted", body: ["url": url.absoluteString, "path": url.path, "source": source])
+    func handleVisitCompleted(_ url: URL,_ source: String,_ tabIndex: Int) {
+        sendEvent(withName: "turbolinksVisitCompleted", body: ["url": url.absoluteString, "path": url.path, "source": source, "tabIndex": tabIndex])
     }
     
     override static func requiresMainQueueSetup() -> Bool {
