@@ -113,6 +113,9 @@ Visit a Component with Turbolinks.
 #### `replaceWith(route)`
 Replace current visitable with a component. With the same route param like to visit a component.
 
+#### `replaceTabWith(tabIndex ,route)`
+Replace visitable inside tab with a component. With the same route param like to visit a component. It should be used inside `turbolinksError` using tabIndex from event to replace the correct visitable.
+
 #### `reloadVisitable()`
 Reload current visitable. For example when a connection error view is launched and you want to retry.
 
@@ -156,7 +159,7 @@ Change actions of current view. For example if you want to mount a menu looking 
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:
 - `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link or call Turbolinks.visit(...). The argument to the event handler is an object with keys: `url, path, action`.
-- `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
+- `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description, tabIndex`.
 - `turbolinksMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
 - `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
