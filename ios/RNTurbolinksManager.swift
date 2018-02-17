@@ -25,6 +25,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         return navController.visibleViewController!
     }
     
+    fileprivate func getViewController() -> UIViewController {
+        return navigation.visibleViewController!
+    }
+    
     fileprivate lazy var tabBarController: UITabBarController = {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
@@ -33,18 +37,15 @@ class RNTurbolinksManager: RCTEventEmitter {
         return tabBarController
     }()
     
-    @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) -> Void {
-        let visitable = navigation.visibleViewController as! WebViewController
-        replaceHelper(visitable, route)
-    }
-    
-    @objc func replaceTabWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) -> Void {
-        let visitable = getViewControllerByIndex(tabIndex) as! WebViewController
-        replaceHelper(visitable, route)
+    @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) -> Void {
+        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : getViewController()
+        let visitable = view as! WebViewController
+        visitable.route = TurbolinksRoute(route)
+        visitable.renderComponent()
     }
     
     @objc func reloadVisitable() -> Void {
-        let visitable = navigation.visibleViewController as! WebViewController
+        let visitable = getViewController() as! WebViewController
         visitable.reload()
     }
     
@@ -105,24 +106,19 @@ class RNTurbolinksManager: RCTEventEmitter {
         self.messageHandler = handler
     }
     
-    @objc func renderTitle(_ title: String,_ subtitle: String) {
-        let visitable = navigation.visibleViewController as! GenricViewController
-        renderTitleHelper(visitable, title, subtitle)
+    @objc func renderTitle(_ title: String,_ subtitle: String,_ tabIndex: Int) {
+        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : getViewController()
+        let visitable = view as! GenricViewController
+        visitable.route.title = title
+        visitable.route.subtitle = subtitle
+        visitable.renderTitle()
     }
     
-    @objc func renderTabTitle(_ title: String,_ subtitle: String,_ tabIndex: Int) {
-        let visitable = getViewControllerByIndex(tabIndex) as! GenricViewController
-        renderTitleHelper(visitable, title, subtitle)
-    }
-    
-    @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>) {
-        let visitable = navigation.visibleViewController as! GenricViewController
-        renderActionsHelper(visitable, actions)
-    }
-    
-    @objc func renderTabActions(_ actions: Array<Dictionary<AnyHashable, Any>>,_ tabIndex: Int) {
-        let visitable = getViewControllerByIndex(tabIndex) as! GenricViewController
-        renderActionsHelper(visitable, actions)
+    @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>,_ tabIndex: Int) {
+        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : getViewController()
+        let visitable = view as! GenricViewController
+        visitable.route.actions = actions
+        visitable.renderActions()
     }
     
     @objc func setTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
@@ -160,22 +156,6 @@ class RNTurbolinksManager: RCTEventEmitter {
             navigation.popViewController(animated: false)
             navigation.pushViewController(viewController, animated: false)
         }
-    }
-    
-    fileprivate func replaceHelper(_ visitable: WebViewController,_ route: Dictionary<AnyHashable, Any>) {
-        visitable.route = TurbolinksRoute(route)
-        visitable.renderComponent()
-    }
-    
-    fileprivate func renderTitleHelper(_ visitable: GenricViewController,_ title: String,_ subtitle: String) {
-        visitable.route.title = title
-        visitable.route.subtitle = subtitle
-        visitable.renderTitle()
-    }
-    
-    fileprivate func renderActionsHelper(_ visitable:GenricViewController,_ actions: Array<Dictionary<AnyHashable, Any>>) {
-        visitable.route.actions = actions
-        visitable.renderActions()
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {

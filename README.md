@@ -111,10 +111,8 @@ Visit a Component with Turbolinks.
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
 
 #### `replaceWith(route)`
+#### `replaceWith(route, tabIndex)`
 Replace current visitable with a component. With the same route param like to visit a component.
-
-#### `replaceTabWith(route, tabIndex)`
-Replace visitable inside tab with a component. With the same route param like to visit a component. It should be used inside `turbolinksError` using tabIndex from event to replace the correct visitable.
 
 #### `reloadVisitable()`
 Reload current visitable. For example when a connection error view is launched and you want to retry.
@@ -145,27 +143,19 @@ A tab bar appears at the bottom of an app screen and provides the ability to qui
 #### `setTabBarStyle({barTintColor, tintColor})` (iOS Only)
 Set style for TabBar. For android set your style on ![android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
+#### `renderTitle(title)`
 #### `renderTitle(title, subtitle)`
+#### `renderTitle(title, subtitle, tabIndex)`
 Change title of current view. For example if you want to get title from page source.
 
-#### `renderTabTitle(title, subtitle, tabIndex)`
-Change title of view inside tab. For example if you want to get title from page source. It should be used inside `turbolinksVisitCompleted` using tabIndex from event.
-
 #### `renderActions(actions)`
+#### `renderActions(actions, tabIndex)`
 Change actions of current view. For example if you want to mount a menu looking for data-attributes on page source.
 - `action:`
   - `id:` A integer identifier for the action. (Required)
   - `title:` A title for the action.
   - `icon:` A icon for the action.
   - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).
-
-#### `renderTabActions(actions, tabIndex)`
-Change actions of view inside tab. For example if you want to mount a menu looking for data-attributes on page source.
-- `action:`
-  - `id:` A integer identifier for the action. (Required)
-  - `title:` A title for the action.
-  - `icon:` A icon for the action.
-  - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).  
 
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:

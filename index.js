@@ -32,13 +32,9 @@ class Turbolinks {
     RNTurbolinksManager.visit(route)
   }
 
-  static replaceWith(route) {
-    RNTurbolinksManager.replaceWith(route)
+  static replaceWith(route, tabIndex = -1) {
+    RNTurbolinksManager.replaceWith(route, tabIndex)
   }
-  
-  static replaceTabWith(route, tabIndex) {
-    RNTurbolinksManager.replaceTabWith(route, tabIndex)
-  }  
 
   static setUserAgent(userAgent) {
     RNTurbolinksManager.setUserAgent(userAgent)
@@ -82,20 +78,12 @@ class Turbolinks {
     })
   }
 
-  static renderTitle(title, subtitle) {
-    RNTurbolinksManager.renderTitle(title, subtitle)
-  }
-  
-  static renderTabTitle(title, subtitle, tabIndex) {
-    RNTurbolinksManager.renderTabTitle(title, subtitle, tabIndex)
+  static renderTitle(title, subtitle = null, tabIndex = -1) {
+    RNTurbolinksManager.renderTitle(title, subtitle, tabIndex)
   }
 
-  static renderActions(actions) {
-    RNTurbolinksManager.renderActions(actions)
-  }
-  
-  static renderTabActions(actions, tabIndex) {
-    RNTurbolinksManager.renderTabActions(actions, tabIndex)
+  static renderActions(actions, tabIndex = -1) {
+    RNTurbolinksManager.renderActions(actions, tabIndex)
   }
 
   static addEventListener(eventName, callback) {
