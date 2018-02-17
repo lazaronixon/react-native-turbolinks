@@ -65,14 +65,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void replaceWith(ReadableMap route) {
-        TurbolinksRoute tRoute = new TurbolinksRoute(route);
-        tRoute.setAction(ACTION_REPLACE);
-        presentNativeView(tRoute);
-    }
-
-    @ReactMethod
-    public void replaceTabWith(Integer tabIndex, ReadableMap route) {
+    public void replaceWith(ReadableMap route, Integer tabIndex) {
         TurbolinksRoute tRoute = new TurbolinksRoute(route);
         tRoute.setAction(ACTION_REPLACE);
         presentNativeView(tRoute);
@@ -133,7 +126,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void renderTitle(final String title, final String subtitle) {
+    public void renderTitle(final String title, final String subtitle, Integer tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
                 GenericActivity activity = (GenericActivity) getCurrentActivity();
@@ -145,7 +138,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void renderActions(final ReadableArray actions) {
+    public void renderActions(final ReadableArray actions, Integer tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
                 GenericActivity act = (GenericActivity) getCurrentActivity();
