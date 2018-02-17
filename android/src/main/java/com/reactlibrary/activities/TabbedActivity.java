@@ -152,7 +152,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
 
     @Override
     public void onReceivedError(int errorCode) {
-        helperWebAct.onReceivedError(errorCode);
     }
 
     @Override
@@ -161,12 +160,10 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
 
     @Override
     public void requestFailedWithStatusCode(int statusCode) {
-        helperWebAct.requestFailedWithStatusCode(statusCode);
     }
 
     @Override
     public void visitCompleted() {
-        helperWebAct.visitCompleted();
     }
 
     @Override

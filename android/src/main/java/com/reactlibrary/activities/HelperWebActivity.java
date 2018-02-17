@@ -47,6 +47,7 @@ public class HelperWebActivity extends HelperActivity {
         params.putInt("code", NETWORK_FAILURE);
         params.putInt("statusCode", 0);
         params.putString("description", "Network Failure.");
+        params.putInt("tabIndex", 0);
         act.getEventEmitter().emit("turbolinksError", params);
     }
 
@@ -55,6 +56,7 @@ public class HelperWebActivity extends HelperActivity {
         params.putInt("code", HTTP_FAILURE);
         params.putInt("statusCode", statusCode);
         params.putString("description", "HTTP Failure. Code:" + statusCode);
+        params.putInt("tabIndex", 0);
         act.getEventEmitter().emit("turbolinksError", params);
     }
 
