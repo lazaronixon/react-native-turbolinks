@@ -35,6 +35,10 @@ class Turbolinks {
   static replaceWith(route) {
     RNTurbolinksManager.replaceWith(route)
   }
+  
+  static replaceTabWith(tabIndex, route) {
+    RNTurbolinksManager.replaceTabWith(tabIndex, route)
+  }  
 
   static setUserAgent(userAgent) {
     RNTurbolinksManager.setUserAgent(userAgent)
