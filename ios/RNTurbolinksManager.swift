@@ -12,28 +12,28 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var processPool = WKProcessPool()
     
+    fileprivate var application: UIApplication {
+        return UIApplication.shared
+    }
+    
+    fileprivate var rootViewController: UIViewController {
+        return application.keyWindow!.rootViewController!
+    }
+    
     fileprivate var navigation: NavigationController {
-        get { return tabBarController.selectedViewController as! NavigationController }
+        return tabBarController.selectedViewController as! NavigationController
     }
     
     fileprivate var session: Session {
-        get { return navigation.session }
-    }
-    
-    fileprivate func getViewControllerByIndex(_ index: Int) -> UIViewController {
-        let navController = tabBarController.viewControllers![index] as! NavigationController
-        return navController.visibleViewController!
-    }
-    
-    fileprivate func getViewController() -> UIViewController {
-        return navigation.visibleViewController!
+        return navigation.session
     }
     
     fileprivate lazy var tabBarController: UITabBarController = {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
         tabBarController.viewControllers = [NavigationController(self, 0)]
-        UIApplication.topViewController().present(tabBarController, animated: false, completion: nil)
+        rootViewController.addChildViewController(tabBarController)
+        rootViewController.view.addSubview(tabBarController.view)
         return tabBarController
     }()
     
@@ -157,6 +157,14 @@ class RNTurbolinksManager: RCTEventEmitter {
             navigation.pushViewController(viewController, animated: false)
         }
     }
+    fileprivate func getViewControllerByIndex(_ index: Int) -> UIViewController {
+        let navController = tabBarController.viewControllers![index] as! NavigationController
+        return navController.visibleViewController!
+    }
+    
+    fileprivate func getViewController() -> UIViewController {
+        return navigation.visibleViewController!
+    }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
         sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
@@ -179,7 +187,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override var methodQueue: DispatchQueue {
-        get { return DispatchQueue.main }
+        return DispatchQueue.main
     }
     
     override func constantsToExport() -> [AnyHashable: Any]! {
@@ -212,30 +220,16 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func sessionDidStartRequest(_ session: Session) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        application.isNetworkActivityIndicatorVisible = true
     }
     
     func sessionDidFinishRequest(_ session: Session) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        application.isNetworkActivityIndicatorVisible = false
     }
 }
 
 extension RNTurbolinksManager: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let message = message.body as? String { sendEvent(withName: "turbolinksMessage", body: message) }
-    }
-}
-
-extension UIApplication {
-    
-    fileprivate class var rootViewController : UIViewController {
-        get { return UIApplication.shared.keyWindow!.rootViewController! }
-    }
-    
-    class func topViewController(base: UIViewController! = rootViewController) -> UIViewController {
-        if let presented = base.presentedViewController {
-            return topViewController(base: presented)
-        }
-        return base
     }
 }
