@@ -28,6 +28,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         return navigation.session
     }
     
+    fileprivate var visibleViewController: UIViewController {
+        return navigation.visibleViewController!
+    }
+    
     fileprivate lazy var tabBarController: UITabBarController = {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
@@ -38,14 +42,14 @@ class RNTurbolinksManager: RCTEventEmitter {
     }()
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) -> Void {
-        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : getViewController()
+        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
         let visitable = view as! WebViewController
         visitable.route = TurbolinksRoute(route)
         visitable.renderComponent()
     }
     
     @objc func reloadVisitable() -> Void {
-        let visitable = getViewController() as! WebViewController
+        let visitable = visibleViewController as! WebViewController
         visitable.reload()
     }
     
@@ -107,7 +111,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func renderTitle(_ title: String,_ subtitle: String,_ tabIndex: Int) {
-        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : getViewController()
+        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
         let visitable = view as! GenricViewController
         visitable.route.title = title
         visitable.route.subtitle = subtitle
@@ -115,7 +119,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>,_ tabIndex: Int) {
-        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : getViewController()
+        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
         let visitable = view as! GenricViewController
         visitable.route.actions = actions
         visitable.renderActions()
@@ -160,10 +164,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func getViewControllerByIndex(_ index: Int) -> UIViewController {
         let navController = tabBarController.viewControllers![index] as! NavigationController
         return navController.visibleViewController!
-    }
-    
-    fileprivate func getViewController() -> UIViewController {
-        return navigation.visibleViewController!
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
