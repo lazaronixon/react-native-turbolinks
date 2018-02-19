@@ -3,11 +3,11 @@ import Turbolinks
 
 class NavigationController: UINavigationController {
     
-    var session: IndexedSession!    
+    var session: TurbolinksSession!
     
     required convenience init(_ manager: RNTurbolinksManager,_ tabIndex: Int) {
         self.init()
-        self.session = IndexedSession(NavigationController.setupWebViewConfiguration(manager), tabIndex)
+        self.session = TurbolinksSession(NavigationController.setupWebViewConfiguration(manager), tabIndex)
         self.session.delegate = manager
         self.session.webView.uiDelegate = self
     }

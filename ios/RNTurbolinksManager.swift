@@ -24,7 +24,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         return tabBarController.selectedViewController as! NavigationController
     }
     
-    fileprivate var session: Session {
+    fileprivate var session: TurbolinksSession {
         return navigation.session
     }
     
@@ -54,12 +54,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func reloadSession() -> Void {
-        if #available(iOS 11.0, *) {
-            let sharedCookies = HTTPCookieStorage.shared.cookies!
-            let httpCookieStore = session.webView.configuration.websiteDataStore.httpCookieStore
-            for cookie in sharedCookies { httpCookieStore.setCookie(cookie) }
-        }
-        self.session.reload()
+        session.injectSharedCookies()
+        session.reload()
     }
     
     @objc func dismiss() -> Void {
@@ -217,8 +213,8 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
-        let indexedSession = session as! IndexedSession
-        sendEvent(withName: "turbolinksError", body: ["code": error.code, "statusCode": error.userInfo["statusCode"] ?? 0, "description": error.localizedDescription, "tabIndex": indexedSession.index])
+        let session = session as! TurbolinksSession
+        sendEvent(withName: "turbolinksError", body: ["code": error.code, "statusCode": error.userInfo["statusCode"] ?? 0, "description": error.localizedDescription, "tabIndex": session.index])
     }
     
     func sessionDidStartRequest(_ session: Session) {
