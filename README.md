@@ -118,7 +118,7 @@ Replace current visitable with a component. With the same route param like to vi
 Reload current visitable. For example when a connection error view is launched and you want to retry.
 
 #### `reloadSession()`
-Reload current session and inject shared cookies on turbolinks before it.
+Reload current session and inject shared cookies on turbolinks before it. (iOS >= 11)
 
 #### `dismiss()`
 Dismiss a overlaped view presented by visiting a component with modal option.

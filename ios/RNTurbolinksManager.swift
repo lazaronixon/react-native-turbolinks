@@ -54,10 +54,12 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func reloadSession() -> Void {
-        let sharedCookies = HTTPCookieStorage.shared.cookies!
-        let cookieScript = TurbolinksHelper.getJSCookiesString(sharedCookies)
-        session.webView.evaluateJavaScript(cookieScript)
-        session.reload()
+        if #available(iOS 11.0, *) {
+            let sharedCookies = HTTPCookieStorage.shared.cookies!
+            let httpCookieStore = session.webView.configuration.websiteDataStore.httpCookieStore
+            for cookie in sharedCookies { httpCookieStore.setCookie(cookie) }
+        }
+        self.session.reload()
     }
     
     @objc func dismiss() -> Void {

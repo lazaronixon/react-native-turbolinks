@@ -43,7 +43,7 @@ module TurbolinksDemo
     end
 
     post '/sign-in' do
-      cookies[:signed_in] = true
+      response.set_cookie(:signed_in, value: true, expires: Time.now + 60)
       redirect to('/')
     end
 
