@@ -3,6 +3,7 @@ class TurbolinksHelper {
     static func getJSCookiesString(_ cookies: [HTTPCookie]) -> String {
         var result = ""
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss zzz"
         for cookie in cookies {
