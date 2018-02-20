@@ -65,8 +65,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) -> Void {
-        let tRoute = TurbolinksRoute(route)
         initHiddenTabBarIfNull()
+        let tRoute = TurbolinksRoute(route)
         if tRoute.url != nil {
             presentVisitableForSession(session, tRoute)
         } else {
@@ -122,7 +122,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         visitable.renderActions()
     }
     
-    @objc func setTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
+    @objc func visitTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
         let selectedIndex = RCTConvert.nsInteger(tabBarParam["selectedIndex"])
         let routes = RCTConvert.nsDictionaryArray(tabBarParam["routes"])!
         tabBarController = UITabBarController()

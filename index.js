@@ -70,8 +70,8 @@ class Turbolinks {
     })
   }
 
-  static setTabBar(options) {
-    RNTurbolinksManager.setTabBar(options)
+  static visitTabBar(options) {
+    RNTurbolinksManager.visitTabBar(options)
   }
 
   static setTabBarStyle(options) {
