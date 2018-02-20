@@ -130,7 +130,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         rootViewController.view.addSubview(tabBarController.view)
         for (index, route) in routes.enumerated() {
             let navController = NavigationController(self, route, index)
-            tabBarController.viewControllers!.append(navController)
+            tabBarController.viewControllers! += [navController]
             tabBarController.selectedIndex = index
             visit(route)
         }
@@ -151,7 +151,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
         let viewController = NativeViewController(self, route)
         if route.modal! {
-            navigation.present(viewController, animated: true, completion: nil)
+            navigation.present(viewController, animated: true)
         } else if route.action == .Advance {
             navigation.pushViewController(viewController, animated: true)
         } else if route.action == .Replace {

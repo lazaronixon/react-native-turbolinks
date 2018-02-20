@@ -43,6 +43,6 @@ extension NavigationController: WKUIDelegate {
             completionHandler(true)
         })
         
-        self.present(confirm, animated: true, completion: nil)
+        self.present(confirm, animated: true)
     }
 }
