@@ -10,6 +10,7 @@ class NavigationController: UINavigationController {
         self.session = TurbolinksSession(NavigationController.setupWebViewConfiguration(manager), tabIndex)
         self.session.delegate = manager
         self.session.webView.uiDelegate = self
+        self.session.injectSharedCookies()
     }
     
     required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {

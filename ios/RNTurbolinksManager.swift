@@ -4,6 +4,7 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
+    var tabBarController: UITabBarController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
     var loadingBackgroundColor: UIColor?
@@ -32,15 +33,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         return navigation.visibleViewController!
     }
     
-    fileprivate lazy var tabBarController: UITabBarController = {
-        let tabBarController = UITabBarController()
-        tabBarController.tabBar.isHidden = true
-        tabBarController.viewControllers = [NavigationController(self, 0)]
-        rootViewController.addChildViewController(tabBarController)
-        rootViewController.view.addSubview(tabBarController.view)
-        return tabBarController
-    }()
-    
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) -> Void {
         let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
         let visitable = view as! WebViewController
@@ -59,15 +51,21 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func dismiss() -> Void {
-        navigation.dismiss(animated: true, completion: nil)
+        navigation.dismiss(animated: true)
     }
     
     @objc func back() -> Void {
         navigation.popViewController(animated: true)
     }
     
+    @objc func reset() -> Void {
+        tabBarController.view.removeFromSuperview()
+        tabBarController = nil
+    }
+    
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) -> Void {
         let tRoute = TurbolinksRoute(route)
+        initHiddenTabBarIfNull()
         if tRoute.url != nil {
             presentVisitableForSession(session, tRoute)
         } else {
@@ -126,8 +124,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func setTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
         let selectedIndex = RCTConvert.nsInteger(tabBarParam["selectedIndex"])
         let routes = RCTConvert.nsDictionaryArray(tabBarParam["routes"])!
-        tabBarController.viewControllers = nil
-        tabBarController.tabBar.isHidden = false
+        tabBarController = UITabBarController()
+        tabBarController.setViewControllers([UIViewController()], animated: false)
+        tabBarController.setViewControllers(nil, animated: false)
+        rootViewController.view.addSubview(tabBarController.view)
         for (index, route) in routes.enumerated() {
             let navController = NavigationController(self, route, index)
             tabBarController.viewControllers!.append(navController)
@@ -159,9 +159,18 @@ class RNTurbolinksManager: RCTEventEmitter {
             navigation.pushViewController(viewController, animated: false)
         }
     }
+    
     fileprivate func getViewControllerByIndex(_ index: Int) -> UIViewController {
         let navController = tabBarController.viewControllers![index] as! NavigationController
         return navController.visibleViewController!
+    }
+    
+    fileprivate func initHiddenTabBarIfNull() {
+        if tabBarController != nil { return }
+        tabBarController = UITabBarController()
+        tabBarController.tabBar.isHidden = true
+        tabBarController.viewControllers = [NavigationController(self, 0)]
+        rootViewController.view.addSubview(tabBarController.view)
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
