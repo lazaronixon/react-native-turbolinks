@@ -27,10 +27,10 @@ class Turbolinks {
   static back() {
     RNTurbolinksManager.back()
   }
-  
-  static reset() {
-    RNTurbolinksManager.reset()
-  }  
+
+  static close() {
+    RNTurbolinksManager.close()
+  }
 
   static visit(route) {
     RNTurbolinksManager.visit(route)
