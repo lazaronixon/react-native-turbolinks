@@ -52,6 +52,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func dismiss() -> Void {
         navigation.dismiss(animated: true)
+        reloadSession()
     }
     
     @objc func back() -> Void {
