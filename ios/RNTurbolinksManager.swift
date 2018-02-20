@@ -59,6 +59,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func reset() -> Void {
+        tabBarController.removeFromParentViewController()
         tabBarController.view.removeFromSuperview()
         tabBarController = nil
     }
@@ -127,6 +128,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController = UITabBarController()
         tabBarController.setViewControllers([UIViewController()], animated: false)
         tabBarController.setViewControllers(nil, animated: false)
+        rootViewController.addChildViewController(tabBarController)
         rootViewController.view.addSubview(tabBarController.view)
         for (index, route) in routes.enumerated() {
             let navController = NavigationController(self, route, index)
@@ -170,6 +172,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
         tabBarController.viewControllers = [NavigationController(self, 0)]
+        rootViewController.addChildViewController(tabBarController)
         rootViewController.view.addSubview(tabBarController.view)
     }
     
