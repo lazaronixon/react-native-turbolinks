@@ -87,7 +87,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setTabBar(ReadableMap tabBar) {
+    public void visitTabBar(ReadableMap tabBar) {
         presentTabbedView(new TurbolinksTabBar(tabBar));
     }
 
