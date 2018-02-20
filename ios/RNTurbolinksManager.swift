@@ -67,7 +67,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         initHiddenTabBarIfNull()
         let tRoute = TurbolinksRoute(route)
         if tRoute.url != nil {
-            presentVisitableForSession(session, tRoute)
+            presentVisitableForSession(tRoute)
         } else {
             presentNativeView(tRoute)
         }
@@ -138,7 +138,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.selectedIndex = selectedIndex
     }
     
-    fileprivate func presentVisitableForSession(_ session: Session,_ route: TurbolinksRoute) {
+    fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
         let visitable = WebViewController(self, route)
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
