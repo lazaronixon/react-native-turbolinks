@@ -54,12 +54,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void visit(ReadableMap route, Boolean isInitial) {
+    public void visit(ReadableMap route, Boolean initial) {
         TurbolinksRoute tRoute = new TurbolinksRoute(route);
         if (tRoute.getUrl() != null) {
-            presentActivityForSession(tRoute, isInitial);
+            presentActivityForSession(tRoute, initial);
         } else {
-            presentNativeView(tRoute, isInitial);
+            presentNativeView(tRoute, initial);
         }
     }
 
@@ -156,17 +156,17 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         );
     }
 
-    private void presentActivityForSession(TurbolinksRoute route, Boolean isInitial) {
+    private void presentActivityForSession(TurbolinksRoute route, Boolean initial) {
         try {
             Activity activity = getCurrentActivity();
             Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-            URL prevUrl = isInitial ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
+            URL prevUrl = initial ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
-                intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : isInitial);
+                intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initial);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_ROUTE, route);
                 activity.startActivity(intent);
@@ -181,11 +181,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private void presentNativeView(TurbolinksRoute route, Boolean isInitial) {
+    private void presentNativeView(TurbolinksRoute route, Boolean initial) {
         Activity activity = getCurrentActivity();
         Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
-        intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : isInitial);
+        intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initial);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
         activity.startActivity(intent);
