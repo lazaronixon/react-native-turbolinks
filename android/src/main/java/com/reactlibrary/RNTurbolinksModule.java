@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
@@ -158,7 +159,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     private void presentActivityForSession(TurbolinksRoute route, Boolean initial) {
         try {
-            Activity activity = getCurrentActivity();
+            ReactContext context = getReactApplicationContext();
             Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
             URL prevUrl = initial ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
             URL nextUrl = new URL(route.getUrl());
@@ -169,12 +170,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initial);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_ROUTE, route);
-                activity.startActivity(intent);
-                if (isActionReplace) activity.finish();
+                context.startActivity(intent);
+                if (isActionReplace) getCurrentActivity().finish();
                 this.prevRoute = route;
             } else {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(route.getUrl()));
-                activity.startActivity(intent);
+                context.startActivity(intent);
             }
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
@@ -182,25 +183,25 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     private void presentNativeView(TurbolinksRoute route, Boolean initial) {
-        Activity activity = getCurrentActivity();
+        ReactContext context = getReactApplicationContext();
         Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initial);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
-        activity.startActivity(intent);
-        if (isActionReplace) activity.finish();
+        context.startActivity(intent);
+        if (isActionReplace) getCurrentActivity().finish();
     }
 
     private void presentTabbedView(TurbolinksTabBar tabBar) {
-        Activity activity = getCurrentActivity();
+        ReactContext context = getReactApplicationContext();
         Intent intent = new Intent(getReactApplicationContext(), TabbedActivity.class);
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_SELECTED_INDEX, tabBar.getSelectedIndex());
         intent.putParcelableArrayListExtra(INTENT_ROUTES, tabBar.getRoutes());
-        activity.startActivity(intent);
+        context.startActivity(intent);
     }
 
     private Boolean getCurrInitVisit() {
