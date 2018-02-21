@@ -28,12 +28,8 @@ class Turbolinks {
     RNTurbolinksManager.back()
   }
 
-  static close() {
-    RNTurbolinksManager.close()
-  }
-
-  static visit(route) {
-    RNTurbolinksManager.visit(route)
+  static visit(route, initial = false) {
+    RNTurbolinksManager.visit(route, initial)
   }
 
   static replaceWith(route, tabIndex = -1) {

@@ -43,7 +43,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private String messageHandler;
     private String userAgent;
     private Boolean navigationBarHidden = false;
-    private Boolean initialVisit = true;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -55,12 +54,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void visit(ReadableMap route) {
+    public void visit(ReadableMap route, Boolean isInitial) {
         TurbolinksRoute tRoute = new TurbolinksRoute(route);
         if (tRoute.getUrl() != null) {
-            presentActivityForSession(tRoute);
+            presentActivityForSession(tRoute, isInitial);
         } else {
-            presentNativeView(tRoute);
+            presentNativeView(tRoute, isInitial);
         }
     }
 
@@ -68,7 +67,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void replaceWith(ReadableMap route, Integer tabIndex) {
         TurbolinksRoute tRoute = new TurbolinksRoute(route);
         tRoute.setAction(ACTION_REPLACE);
-        presentNativeView(tRoute);
+        presentNativeView(tRoute, false);
     }
 
     @ReactMethod
@@ -94,7 +93,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void reloadVisitable() {
         prevRoute.setAction(ACTION_REPLACE);
-        presentActivityForSession(prevRoute);
+        presentActivityForSession(prevRoute, false);
     }
 
     @ReactMethod
@@ -157,17 +156,17 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         );
     }
 
-    private void presentActivityForSession(TurbolinksRoute route) {
+    private void presentActivityForSession(TurbolinksRoute route, Boolean isInitial) {
         try {
             Activity activity = getCurrentActivity();
             Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-            URL prevUrl = prevRoute != null ? new URL(prevRoute.getUrl()) : new URL(route.getUrl());
+            URL prevUrl = isInitial ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
-                intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initialVisit);
+                intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : isInitial);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_ROUTE, route);
                 activity.startActivity(intent);
@@ -177,22 +176,20 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(route.getUrl()));
                 activity.startActivity(intent);
             }
-            this.initialVisit = false;
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
         }
     }
 
-    private void presentNativeView(TurbolinksRoute route) {
+    private void presentNativeView(TurbolinksRoute route, Boolean isInitial) {
         Activity activity = getCurrentActivity();
         Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
-        intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initialVisit);
+        intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : isInitial);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
         activity.startActivity(intent);
         if (isActionReplace) activity.finish();
-        this.initialVisit = false;
     }
 
     private void presentTabbedView(TurbolinksTabBar tabBar) {
@@ -204,7 +201,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_SELECTED_INDEX, tabBar.getSelectedIndex());
         intent.putParcelableArrayListExtra(INTENT_ROUTES, tabBar.getRoutes());
         activity.startActivity(intent);
-        this.initialVisit = false;
     }
 
     private Boolean getCurrInitVisit() {

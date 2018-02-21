@@ -59,13 +59,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         navigation.popViewController(animated: true)
     }
     
-    @objc func close() -> Void {
-        rootViewController.dismiss(animated: false)
-        tabBarController = nil
-    }
-    
-    @objc func visit(_ route: Dictionary<AnyHashable, Any>) -> Void {
-        initHiddenTabBarIfNull()
+    @objc func visit(_ route: Dictionary<AnyHashable, Any>,_ initial: Bool) -> Void {
+        initHiddenTabBar(initial)
         let tRoute = TurbolinksRoute(route)
         if tRoute.url != nil {
             presentVisitableForSession(tRoute)
@@ -128,13 +123,12 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController = UITabBarController()
         tabBarController.setViewControllers([UIViewController()], animated: false)
         tabBarController.setViewControllers(nil, animated: false)
-        rootViewController.dismiss(animated: false)
-        rootViewController.present(tabBarController, animated: false)
+        addTabBarView()
         for (index, route) in routes.enumerated() {
             let navController = NavigationController(self, route, index)
             tabBarController.viewControllers! += [navController]
             tabBarController.selectedIndex = index
-            visit(route)
+            visit(route, false)
         }
         tabBarController.selectedIndex = selectedIndex
     }
@@ -167,13 +161,20 @@ class RNTurbolinksManager: RCTEventEmitter {
         return navController.visibleViewController!
     }
     
-    fileprivate func initHiddenTabBarIfNull() {
-        if tabBarController != nil { return }
+    fileprivate func initHiddenTabBar(_ initial: Bool) {
+        if !initial { return }
         tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
         tabBarController.viewControllers = [NavigationController(self, 0)]
+        addTabBarView()
+    }
+    
+    fileprivate func addTabBarView() {
         rootViewController.dismiss(animated: false)
-        rootViewController.present(tabBarController, animated: false)
+        tabBarController.removeFromParentViewController()
+        tabBarController.view.removeFromSuperview()
+        rootViewController.addChildViewController(tabBarController)
+        rootViewController.view.addSubview(tabBarController.view)
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
