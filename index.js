@@ -66,8 +66,8 @@ class Turbolinks {
     })
   }
 
-  static visitTabBar(options) {
-    RNTurbolinksManager.visitTabBar(options)
+  static visitTabBar(routes, selectedIndex = 0) {
+    RNTurbolinksManager.visitTabBar(routes, selectedIndex)
   }
 
   static setTabBarStyle(options) {

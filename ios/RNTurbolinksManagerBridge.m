@@ -14,6 +14,6 @@ RCT_EXTERN_METHOD(setLoadingStyle:(NSDictionary *))
 RCT_EXTERN_METHOD(setNavigationBarHidden:(nonnull BOOL))
 RCT_EXTERN_METHOD(renderTitle:(NSString *) subtitle:(NSString *) tabIndex:(NSInteger *))
 RCT_EXTERN_METHOD(renderActions:(NSArray *) tabIndex:(NSInteger *))
-RCT_EXTERN_METHOD(visitTabBar:(NSDictionary *))
+RCT_EXTERN_METHOD(visitTabBar:(NSArray *) selectedIndex:(NSInteger *))
 RCT_EXTERN_METHOD(setTabBarStyle:(NSDictionary *))
 @end

@@ -70,24 +70,24 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func setLoadingStyle(_ style: Dictionary<AnyHashable, Any>) {
-        self.loadingColor = RCTConvert.uiColor(style["color"])
-        self.loadingBackgroundColor = RCTConvert.uiColor(style["backgroundColor"])
+        loadingColor = RCTConvert.uiColor(style["color"])
+        loadingBackgroundColor = RCTConvert.uiColor(style["backgroundColor"])
     }
     
     @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
-        self.titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
-        self.subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
         let barTintColor = RCTConvert.uiColor(style["barTintColor"])
         let tintColor = RCTConvert.uiColor(style["tintColor"])
-        if barTintColor != nil { self.navigation.navigationBar.barTintColor = barTintColor }
-        if tintColor != nil { self.navigation.navigationBar.tintColor = tintColor }
+        if barTintColor != nil { navigation.navigationBar.barTintColor = barTintColor }
+        if tintColor != nil { navigation.navigationBar.tintColor = tintColor }
+        titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
+        subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
     }
     
     @objc func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
         let barTintColor = RCTConvert.uiColor(style["barTintColor"])
         let tintColor = RCTConvert.uiColor(style["tintColor"])
-        if barTintColor != nil { self.tabBarController.tabBar.barTintColor = barTintColor }
-        if tintColor != nil { self.tabBarController.tabBar.tintColor = tintColor }
+        if barTintColor != nil { tabBarController.tabBar.barTintColor = barTintColor }
+        if tintColor != nil { tabBarController.tabBar.tintColor = tintColor }
     }
     
     @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) -> Void {
@@ -117,9 +117,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         visitable.renderActions()
     }
     
-    @objc func visitTabBar(_ tabBarParam: Dictionary<AnyHashable, Any>) {
-        let selectedIndex = RCTConvert.nsInteger(tabBarParam["selectedIndex"])
-        let routes = RCTConvert.nsDictionaryArray(tabBarParam["routes"])!
+    @objc func visitTabBar(_ routes: Array<Dictionary<AnyHashable, Any>>,_ selectedIndex: Int) {
         tabBarController = UITabBarController()
         tabBarController.setViewControllers([UIViewController()], animated: false)
         tabBarController.setViewControllers(nil, animated: false)

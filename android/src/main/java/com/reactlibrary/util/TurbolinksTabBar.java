@@ -16,10 +16,9 @@ public class TurbolinksTabBar {
     private int selectedIndex;
     private ArrayList<Bundle> routes;
 
-    public TurbolinksTabBar(ReadableMap rp) {
-        ReadableArray routes = rp.hasKey("routes") ? rp.getArray("routes") : null;
-        this.selectedIndex = rp.hasKey("selectedIndex") ? rp.getInt("selectedIndex") : 0;
-        this.routes = rp.hasKey("routes") ? Arguments.toList(routes) : null;
+    public TurbolinksTabBar(ReadableArray routes, Integer selectedIndex) {
+        this.routes = Arguments.toList(routes);
+        this.selectedIndex = selectedIndex;
     }
 
     public int getSelectedIndex() {
