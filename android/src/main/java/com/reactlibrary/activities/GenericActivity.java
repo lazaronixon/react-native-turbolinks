@@ -17,8 +17,6 @@ public interface GenericActivity {
 
     void handleTitlePress(Toolbar toolbar);
 
-    boolean superOnOptionsItemSelected(MenuItem item);
-
     Boolean getInitialVisit();
 
     Boolean getNavigationBarHidden();
@@ -38,8 +36,6 @@ public interface GenericActivity {
     void onSuperBackPressed();
 
     void startActivity(Intent intent);
-
-    void startActivityForResult(Intent intent, int requestCode);
 
     void finish();
 }

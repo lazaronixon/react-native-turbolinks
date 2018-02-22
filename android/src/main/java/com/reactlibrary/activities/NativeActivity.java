@@ -45,11 +45,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        return helperAct.onSupportNavigateUp();
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return helperAct.onPrepareOptionsMenu(menu);
     }
@@ -75,11 +70,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public boolean superOnOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
     }
@@ -98,6 +88,5 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericNat
     public Boolean getNavigationBarHidden() {
         return navigationBarHidden;
     }
-
 
 }

@@ -23,10 +23,11 @@ public class HelperNativeActivity extends HelperActivity {
     }
 
     public void onBackPressed() {
+        if (act.getRoute().getModal()) return;
         if (act.getInitialVisit()) {
             act.moveTaskToBack(true);
         } else {
-            if (!act.getRoute().getModal()) act.onSuperBackPressed();
+            act.onSuperBackPressed();
         }
     }
 

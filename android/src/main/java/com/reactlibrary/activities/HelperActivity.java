@@ -21,11 +21,6 @@ public abstract class HelperActivity {
         this.act = genericActivity;
     }
 
-    public boolean onSupportNavigateUp() {
-        act.onBackPressed();
-        return true;
-    }
-
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
         ArrayList<Bundle> actions = act.getRoute().getActions();
@@ -41,15 +36,18 @@ public abstract class HelperActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) return act.superOnOptionsItemSelected(item);
-        act.getEventEmitter().emit("turbolinksActionPress", item.getItemId());
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            act.onBackPressed();
+            return false;
+        } else {
+            act.getEventEmitter().emit("turbolinksActionPress", item.getItemId());
+            return true;
+        }
     }
 
     public void renderToolBar(Toolbar toolbar) {
         act.setSupportActionBar(toolbar);
         act.getSupportActionBar().setDisplayHomeAsUpEnabled(!act.getInitialVisit());
-        act.getSupportActionBar().setDisplayShowHomeEnabled(!act.getInitialVisit());
         act.getSupportActionBar().setTitle(null);
         if (act.getNavigationBarHidden() || act.getRoute().getModal()) {
             act.getSupportActionBar().hide();

@@ -41,9 +41,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
         helperAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
-
         turbolinksView = findViewById(R.id.turbolinks_view);
-
         helperAct.visitTurbolinksView(turbolinksView, route.getUrl());
     }
 
@@ -87,11 +85,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        return helperAct.onSupportNavigateUp();
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return helperAct.onPrepareOptionsMenu(menu);
     }
@@ -128,11 +121,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     @Override
     public TurbolinksRoute getRoute() {
         return route;
-    }
-
-    @Override
-    public boolean superOnOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

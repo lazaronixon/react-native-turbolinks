@@ -66,11 +66,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        return helperNativeAct.onSupportNavigateUp();
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return helperNativeAct.onPrepareOptionsMenu(menu);
     }
@@ -99,11 +94,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public boolean superOnOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public Boolean getInitialVisit() {
         return true;
     }
@@ -112,7 +102,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     public Boolean getNavigationBarHidden() {
         return navigationBarHidden;
     }
-
 
     @Override
     public TurbolinksRoute getRoute() {
