@@ -48,7 +48,7 @@ export default class App extends Component {
   componentDidMount() {
     Turbolinks.addEventListener('turbolinksVisit', this.handleVisit)
     Turbolinks.addEventListener('turbolinksError', this.handleError)
-    Turbolinks.visit({url: 'http://MYIP:9292'})
+    Turbolinks.visit({url: 'http://MYIP:9292'}, true)
   }
 
   handleVisit = (data) => {
@@ -80,7 +80,7 @@ You can check for this string on the server and use it to send specialized marku
 #### `setMessageHandler(messageHandler)`
 You can register a Message Handler to send messages from JavaScript to your application.
 
-#### `visit(route)`
+#### `visit(route, initial)`
 Visit a URL with Turbolinks.
 - `url:` Url to visit. (Required)
 - `title:` The default value is the title of the Web page.
@@ -93,8 +93,9 @@ Visit a URL with Turbolinks.
     - `icon:` A icon for the action.
     - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
+- `initial`: Should be true on first visit or if you need restart navigation. (Default false)
 
-#### `visit(route)`
+#### `visit(route, initial)`
 Visit a Component with Turbolinks.
 - `component:` Component to visit. (Required)
 - `modal:` A boolean to show a view without navbar and backbutton. (Default false)
@@ -109,6 +110,7 @@ Visit a Component with Turbolinks.
     - `icon:` A icon for the action.
     - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
+- `initial`: Should be true on first visit or if you need restart navigation. (Default false)
 
 #### `replaceWith(route)`
 #### `replaceWith(route, tabIndex)`
@@ -118,7 +120,7 @@ Replace current visitable with a component. With the same route param like to vi
 Reload current visitable. For example when a connection error view is launched and you want to retry.
 
 #### `reloadSession()`
-Reload current session and inject shared cookies on turbolinks before it. (iOS >= 11)
+Reload current session and (inject shared cookies on turbolinks before it (iOS >= 11)).
 
 #### `dismiss()`
 Dismiss a overlaped view presented by visiting a component with modal option.
@@ -135,10 +137,11 @@ Set style for Activity Indicator View. For android set your style on ![android/a
 #### `setNavigationBarHidden(boolean)`
 Hidden navigation bar. For example if you want to use a web navbar. (Default false)
 
-#### `setTabBar({selectedIndex, routes})`
+#### `visitTabBar(routes)`
+#### `visitTabBar(routes, selectedIndex)`
 A tab bar appears at the bottom of an app screen and provides the ability to quickly switch between different sections of an app.
-- `selectedIndex:` Index for initial selected view. (Default 0).
 - `routes:` A Array of route objects to mount TabBar. Use `tabTitle` and `tabIcon` here.
+- `selectedIndex:` Index for initial selected view. (Default 0).
 
 #### `setTabBarStyle({barTintColor, tintColor})` (iOS Only)
 Set style for TabBar. For android set your style on ![android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
