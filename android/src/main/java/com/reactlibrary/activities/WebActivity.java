@@ -90,9 +90,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return helperAct.onOptionsItemSelected(item);
-    }
+    public boolean onOptionsItemSelected(MenuItem item) { return helperAct.onOptionsItemSelected(item); }
 
     @Override
     public void renderTitle() {
@@ -149,9 +147,13 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     }
 
     @Override
-    public String getUserAgent() {
-        return userAgent;
-    }
+    public String getUserAgent() { return userAgent; }
+
+    @Override
+    public void renderComponent(TurbolinksRoute route) { helperAct.renderComponent(route, getReactInstanceManager()); }
+
+    @Override
+    public void reload() { helperAct.reload(); }
 
     @JavascriptInterface
     public void postMessage(String message) {

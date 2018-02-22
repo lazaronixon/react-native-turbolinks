@@ -66,14 +66,10 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return helperNativeAct.onPrepareOptionsMenu(menu);
-    }
+    public boolean onPrepareOptionsMenu(Menu menu) { return helperNativeAct.onPrepareOptionsMenu(menu); }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return helperNativeAct.onOptionsItemSelected(item);
-    }
+    public boolean onOptionsItemSelected(MenuItem item) { return helperNativeAct.onOptionsItemSelected(item); }
 
     @Override
     public void renderTitle() {
@@ -158,6 +154,14 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     @Override
     public void visitProposedToLocationWithAction(String location, String action) {
         helperWebAct.visitProposedToLocationWithAction(location, action);
+    }
+
+    @Override
+    public void renderComponent(TurbolinksRoute route) {
+    }
+
+    @Override
+    public void reload() {
     }
 
     @Override
