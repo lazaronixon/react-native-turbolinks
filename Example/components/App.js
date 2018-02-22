@@ -10,7 +10,7 @@ export default class App extends Component {
     Turbolinks.addEventListener('turbolinksError', this.handleError)
     Turbolinks.addEventListener('turbolinksMessage', this.showMessage)
     Turbolinks.setMessageHandler('turbolinksDemo')
-    Turbolinks.visit({url: Constants.baseUrl})
+    Turbolinks.visit({url: Constants.baseUrl}, true)
   }
 
   componentWillUnmount() {
