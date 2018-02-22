@@ -36,8 +36,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) -> Void {
         let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
         let visitable = view as! WebViewController
-        visitable.route = TurbolinksRoute(route)
-        visitable.renderComponent()
+        visitable.renderComponent(TurbolinksRoute(route))
     }
     
     @objc func reloadVisitable() -> Void {

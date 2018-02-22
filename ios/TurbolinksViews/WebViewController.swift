@@ -19,7 +19,7 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.renderLeftButton()
     }
 
-    func renderComponent() {
+    func renderComponent(_ route: TurbolinksRoute) {
         customView = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         customView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(customView)
