@@ -169,7 +169,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initial);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_ROUTE, route);
-                if (initial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 context.startActivity(intent);
                 if (isActionReplace) getCurrentActivity().finish();
                 this.prevRoute = route;
