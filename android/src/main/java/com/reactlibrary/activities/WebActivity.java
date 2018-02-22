@@ -103,11 +103,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericWebAct
     }
 
     @Override
-    public void reloadSession() {
-        helperAct.reloadSession();
-    }
-
-    @Override
     public void handleTitlePress(Toolbar toolbar) {
         helperAct.handleTitlePress(toolbar);
     }

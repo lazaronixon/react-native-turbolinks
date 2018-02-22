@@ -104,7 +104,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void reloadSession() {
-        ((WebActivity) getCurrentActivity()).reloadSession();
     }
 
     @ReactMethod

@@ -127,11 +127,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public void reloadSession() {
-        helperWebAct.reloadSession();
-    }
-
-    @Override
     public void onPageFinished() {
     }
 

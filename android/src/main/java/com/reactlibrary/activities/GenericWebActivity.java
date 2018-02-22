@@ -12,8 +12,6 @@ public interface GenericWebActivity extends GenericActivity, TurbolinksAdapter {
 
     String getUserAgent();
 
-    void reloadSession();
-
     void renderComponent(TurbolinksRoute route);
 
     void reload();

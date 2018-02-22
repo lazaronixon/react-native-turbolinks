@@ -123,10 +123,6 @@ public class HelperWebActivity extends HelperActivity {
         act.getEventEmitter().emit("turbolinksMessage", message);
     }
 
-    public void reloadSession() {
-        TurbolinksSession.getDefault(act.getApplicationContext()).getWebView().reload();
-    }
-
     public void handleTitlePress(Toolbar toolbar) {
         final WebView webView = TurbolinksSession.getDefault(act.getApplicationContext()).getWebView();
         toolbar.setOnClickListener(new View.OnClickListener() {
