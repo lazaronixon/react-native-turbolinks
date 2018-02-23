@@ -5,19 +5,14 @@ import android.content.Context;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
-import android.widget.FrameLayout.LayoutParams;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
-import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
-import com.reactlibrary.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,7 +25,6 @@ public class HelperWebActivity extends HelperActivity {
     private static final int NETWORK_FAILURE = 1;
 
     private GenericWebActivity act;
-    private ReactRootView customView;
 
     public HelperWebActivity(GenericWebActivity genericWebActivity) {
         super(genericWebActivity);
@@ -153,25 +147,6 @@ public class HelperWebActivity extends HelperActivity {
         }
 
         TurbolinksSession.getDefault(context).activity(activity).adapter(act).view(turbolinksView).visit(url);
-    }
-
-    public void renderComponent(TurbolinksRoute route, ReactInstanceManager manager) {
-        Context context = act.getApplicationContext();
-        TurbolinksView turbolinksView = act.getTurbolinksView();
-        ViewGroup webViewParent = (ViewGroup) turbolinksView.getParent();
-        turbolinksView.setVisibility(View.GONE);
-        customView = new ReactRootView(context);
-        customView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        customView.startReactApplication(manager, route.getComponent(), route.getPassProps());
-        webViewParent.addView(customView);
-    }
-
-    public void reload() {
-        TurbolinksView turbolinksView = act.getTurbolinksView();
-        ViewGroup webViewParent = (ViewGroup) turbolinksView.getParent();
-        visitTurbolinksView(turbolinksView, act.getRoute().getUrl());
-        webViewParent.removeView(customView);
-        turbolinksView.setVisibility(View.VISIBLE);
     }
 
 }

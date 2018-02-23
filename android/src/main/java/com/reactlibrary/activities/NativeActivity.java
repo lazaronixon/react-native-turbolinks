@@ -50,7 +50,9 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { return helperAct.onOptionsItemSelected(item); }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return helperAct.onOptionsItemSelected(item);
+    }
 
     @Override
     public void renderTitle() {
@@ -83,6 +85,8 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public Boolean getNavigationBarHidden() { return navigationBarHidden; }
+    public Boolean getNavigationBarHidden() {
+        return navigationBarHidden;
+    }
 
 }
