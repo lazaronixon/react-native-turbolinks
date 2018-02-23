@@ -1,4 +1,3 @@
-
 package com.reactlibrary;
 
 import android.app.Activity;

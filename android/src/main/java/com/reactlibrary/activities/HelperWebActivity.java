@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -113,9 +114,7 @@ public class HelperWebActivity extends HelperActivity {
         }
     }
 
-    public void postMessage(String message) {
-        act.getEventEmitter().emit("turbolinksMessage", message);
-    }
+    public void postMessage(String message) { act.getEventEmitter().emit("turbolinksMessage", message); }
 
     public void handleTitlePress(Toolbar toolbar) {
         final WebView webView = TurbolinksSession.getDefault(act.getApplicationContext()).getWebView();
@@ -137,16 +136,10 @@ public class HelperWebActivity extends HelperActivity {
 
     public void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
         Context context = act.getApplicationContext();
-        Activity activity = (Activity) act;
-
-        if (act.getMessageHandler() != null) {
-            TurbolinksSession.getDefault(context).addJavascriptInterface(act, act.getMessageHandler());
-        }
-        if (act.getUserAgent() != null) {
-            TurbolinksSession.getDefault(context).getWebView().getSettings().setUserAgentString(act.getUserAgent());
-        }
-
-        TurbolinksSession.getDefault(context).activity(activity).adapter(act).view(turbolinksView).visit(url);
+        TurbolinksSession session = TurbolinksSession.getDefault(context);
+        WebSettings settings = session.getWebView().getSettings();
+        if (act.getMessageHandler() != null) session.addJavascriptInterface(act, act.getMessageHandler());
+        if (act.getUserAgent() != null) settings.setUserAgentString(act.getUserAgent());
+        session.activity((Activity) act).adapter(act).view(turbolinksView).visit(url);
     }
-
 }
