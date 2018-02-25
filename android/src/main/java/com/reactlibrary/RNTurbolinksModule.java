@@ -154,7 +154,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         try {
             ReactContext context = getReactApplicationContext();
             Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-            URL prevUrl = initial ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
+            URL prevUrl = initial || prevRoute == null ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
