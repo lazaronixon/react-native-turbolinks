@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 public class TurbolinksViewPager extends ViewPager {
+
     public TurbolinksViewPager(Context context) {
         super(context);
     }
@@ -21,5 +22,4 @@ public class TurbolinksViewPager extends ViewPager {
     public boolean onTouchEvent(MotionEvent event) {
         return false;
     }
-
 }

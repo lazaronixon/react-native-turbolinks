@@ -13,7 +13,7 @@ import com.reactlibrary.util.TurbolinksAction;
 
 import java.util.ArrayList;
 
-public abstract class HelperActivity {
+public class HelperActivity {
 
     private GenericActivity act;
 

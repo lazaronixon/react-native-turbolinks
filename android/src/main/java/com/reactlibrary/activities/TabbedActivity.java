@@ -4,21 +4,20 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.JavascriptInterface;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 
-import com.basecamp.turbolinks.TurbolinksSession;
-import com.basecamp.turbolinks.TurbolinksView;
-import com.facebook.react.ReactRootView;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
-import com.reactlibrary.util.TurbolinksPagerAdapter;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksViewPager;
 
@@ -30,11 +29,9 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 import static com.reactlibrary.util.TurbolinksTabBar.INTENT_ROUTES;
 import static com.reactlibrary.util.TurbolinksTabBar.INTENT_SELECTED_INDEX;
 
-public class TabbedActivity extends ReactAppCompatActivity implements GenericNativeActivity, GenericWebActivity {
+public class TabbedActivity extends ReactAppCompatActivity implements GenericActivity {
 
-
-    private HelperNativeActivity helperNativeAct;
-    private HelperWebActivity helperWebAct;
+    private HelperActivity helperAct;
     private ArrayList<Bundle> routes;
     private String messageHandler;
     private String userAgent;
@@ -46,16 +43,15 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
 
-        helperNativeAct = new HelperNativeActivity(this);
-        helperWebAct = new HelperWebActivity(this);
+        helperAct = new HelperActivity(this);
         routes = getIntent().getParcelableArrayListExtra(INTENT_ROUTES);
         selectedIndex = getIntent().getIntExtra(INTENT_SELECTED_INDEX, 0);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        helperNativeAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
-        helperNativeAct.renderTitle();
+        helperAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
+        helperAct.renderTitle();
         renderViewPager((TurbolinksViewPager) findViewById(R.id.viewpager));
         renderBottomNav((BottomNavigationView) findViewById(R.id.navigation));
     }
@@ -67,17 +63,17 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        return helperNativeAct.onPrepareOptionsMenu(menu);
+        return helperAct.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return helperNativeAct.onOptionsItemSelected(item);
+        return helperAct.onOptionsItemSelected(item);
     }
 
     @Override
     public void renderTitle() {
-        helperNativeAct.renderTitle();
+        helperAct.renderTitle();
     }
 
     @Override
@@ -104,95 +100,40 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
     }
 
     @Override
-    public TurbolinksRoute getRoute() {
-        return new TurbolinksRoute(routes.get(selectedIndex));
-    }
-
-    @Override
-    public void onSuperBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    public TurbolinksView getTurbolinksView() {
-        TurbolinksViewPager viewPager = findViewById(R.id.viewpager);
-        TurbolinksPagerAdapter adapter = (TurbolinksPagerAdapter) viewPager.getAdapter();
-        return (TurbolinksView) adapter.getItem(viewPager.getCurrentItem());
-    }
-
-    @Override
-    public String getMessageHandler() {
-        return messageHandler;
-    }
-
-    @Override
-    public String getUserAgent() {
-        return userAgent;
-    }
-
-    @Override
-    public void onPageFinished() {
-    }
-
-    @Override
-    public void onReceivedError(int errorCode) {
-    }
-
-    @Override
-    public void pageInvalidated() {
-    }
-
-    @Override
-    public void requestFailedWithStatusCode(int statusCode) {
-    }
-
-    @Override
-    public void visitCompleted() {
-    }
-
-    @Override
-    public void visitProposedToLocationWithAction(String location, String action) {
-        helperWebAct.visitProposedToLocationWithAction(location, action);
-    }
-
-    @Override
     public RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
     }
 
-    @JavascriptInterface
-    public void postMessage(String message) {
-        helperWebAct.postMessage(message);
+    @Override
+    public TurbolinksRoute getRoute() {
+        return new TurbolinksRoute(routes.get(selectedIndex));
+    }
+
+    public String getMessageHandler() {
+        return messageHandler;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public ReactInstanceManager getManager() {
+        return getReactInstanceManager();
     }
 
     private void renderBottomNav(BottomNavigationView bottomNav) {
         Menu menu = bottomNav.getMenu();
         setupNavigation(bottomNav);
         bottomNav.setSelectedItemId(selectedIndex);
-        if (routes != null) {
-            for (int i = 0; i < routes.size(); i++) {
-                TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
-                MenuItem menuItem = menu.add(Menu.NONE, i, i, route.getTabTitle());
-                renderTabIcon(menu, menuItem, route.getTabIcon());
-            }
+        for (int i = 0; i < routes.size(); i++) {
+            TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
+            MenuItem menuItem = menu.add(Menu.NONE, i, i, route.getTabTitle());
+            renderTabIcon(menu, menuItem, route.getTabIcon());
         }
     }
 
     private void renderViewPager(TurbolinksViewPager viewPager) {
-        TurbolinksPagerAdapter adapter = new TurbolinksPagerAdapter(getApplicationContext(), routes);
-        for (int i = 0; i < adapter.getCount(); i++) {
-            View view = adapter.getItem(i);
-            TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
-            if (view instanceof ReactRootView) {
-                ReactRootView rootView = (ReactRootView) view;
-                helperNativeAct.visitComponent(rootView, getReactInstanceManager(), route);
-            }
-            if (view instanceof TurbolinksView) {
-                TurbolinksView turbolinksView = (TurbolinksView) view;
-                helperWebAct.visitTurbolinksView(turbolinksView, route.getUrl());
-                TurbolinksSession.resetDefault();
-            }
-        }
+        TurbolinksPagerAdapter adapter = new TurbolinksPagerAdapter(this);
         viewPager.setAdapter(adapter);
     }
 
@@ -214,4 +155,43 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericNat
                 });
     }
 
+    private class TurbolinksPagerAdapter extends PagerAdapter {
+
+        private ArrayList<TabbedView> viewList = new ArrayList<>();
+
+        public TurbolinksPagerAdapter(TabbedActivity tabbedActivity) {
+            for(Bundle route: routes) {
+                TurbolinksRoute tRoute = new TurbolinksRoute(route);
+                TabbedView tabView =  new TabbedView(tabbedActivity, tRoute);
+                tabView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                viewList.add(tabView);
+            }
+        }
+
+        public View getItem(int position) {
+            return viewList.get(position);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View view = viewList.get(position);
+            container.addView(view);
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public int getCount() {
+            return viewList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+    }
 }
