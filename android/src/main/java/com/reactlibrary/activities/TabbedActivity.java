@@ -6,21 +6,28 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
 
+import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksViewPager;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
@@ -28,6 +35,7 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTES;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_SELECTED_INDEX;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
 public class TabbedActivity extends ReactAppCompatActivity implements GenericActivity {
 
@@ -76,6 +84,26 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         helperAct.renderTitle();
     }
 
+    public void handleVisitCompleted(final int tabIndex) {
+        String javaScript = "document.documentElement.outerHTML";
+        final WebView webView = TurbolinksSession.getDefault(getApplicationContext()).getWebView();
+        webView.evaluateJavascript(javaScript, new ValueCallback<String>() {
+            public void onReceiveValue(String source) {
+                try {
+                    WritableMap params = Arguments.createMap();
+                    URL urlLocation = new URL(webView.getUrl());
+                    params.putString("url", urlLocation.toString());
+                    params.putString("path", urlLocation.getPath());
+                    params.putString("source", unescapeJava(source));
+                    params.putInt("tabIndex", tabIndex);
+                    getEventEmitter().emit("turbolinksVisitCompleted", params);
+                } catch (MalformedURLException e) {
+                    Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+                }
+            }
+        });
+    }
+
     @Override
     public void handleTitlePress(Toolbar toolbar) {
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +135,15 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     @Override
     public TurbolinksRoute getRoute() {
         return new TurbolinksRoute(routes.get(selectedIndex));
+    }
+
+    @Override
+    public void renderComponent(TurbolinksRoute route, int tabIndex) {
+
+    }
+
+    @Override
+    public void reload() {
     }
 
     public String getMessageHandler() {
@@ -160,9 +197,9 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         private ArrayList<TabbedView> viewList = new ArrayList<>();
 
         public TurbolinksPagerAdapter(TabbedActivity tabbedActivity) {
-            for(Bundle route: routes) {
-                TurbolinksRoute tRoute = new TurbolinksRoute(route);
-                TabbedView tabView =  new TabbedView(tabbedActivity, tRoute);
+            for (int i = 0; i < routes.size(); i++) {
+                TurbolinksRoute tRoute = new TurbolinksRoute(routes.get(i));
+                TabbedView tabView =  new TabbedView(tabbedActivity, tRoute, i);
                 tabView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 viewList.add(tabView);
             }

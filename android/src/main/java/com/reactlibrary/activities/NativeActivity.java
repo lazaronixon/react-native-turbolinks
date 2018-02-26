@@ -89,6 +89,14 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
+    public void renderComponent(TurbolinksRoute route, int tabIndex) {
+    }
+
+    @Override
+    public void reload() {
+    }
+
+    @Override
     public Boolean getInitialVisit() {
         return initialVisit;
     }

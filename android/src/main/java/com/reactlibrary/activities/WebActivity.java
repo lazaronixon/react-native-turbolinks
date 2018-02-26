@@ -22,6 +22,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEm
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksRoute;
+import com.reactlibrary.util.TurbolinksViewFrame;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,8 +36,8 @@ import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
 public class WebActivity extends ReactAppCompatActivity implements GenericActivity, TurbolinksAdapter {
 
-    private static final int HTTP_FAILURE = 0;
-    private static final int NETWORK_FAILURE = 1;
+    public static final int HTTP_FAILURE = 0;
+    public static final int NETWORK_FAILURE = 1;
 
     private HelperActivity helperAct;
     private TurbolinksRoute route;
@@ -44,7 +45,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     private String userAgent;
     private Boolean initialVisit;
     private Boolean navigationBarHidden;
-    private TurbolinksView turbolinksView;
+    private TurbolinksViewFrame turbolinksViewFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,8 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
         helperAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
-        turbolinksView = findViewById(R.id.turbolinks_view);
-        visitTurbolinksView(turbolinksView, route.getUrl());
+        turbolinksViewFrame = findViewById(R.id.turbolinks_view);
+        visitTurbolinksView(turbolinksViewFrame.getTurbolinksView(), route.getUrl());
     }
 
     private void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
@@ -79,7 +80,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
                 .activity(this)
                 .adapter(this)
                 .restoreWithCachedSnapshot(true)
-                .view(turbolinksView)
+                .view(turbolinksViewFrame.getTurbolinksView())
                 .visit(route.getUrl());
     }
 
@@ -194,6 +195,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
                     params.putString("url", urlLocation.toString());
                     params.putString("path", urlLocation.getPath());
                     params.putString("source", unescapeJava(source));
+                    params.putInt("tabIndex", 0);
                     getEventEmitter().emit("turbolinksVisitCompleted", params);
                 } catch (MalformedURLException e) {
                     Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
@@ -206,6 +208,14 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     public TurbolinksRoute getRoute() {
         return route;
     }
+
+    @Override
+    public void renderComponent(TurbolinksRoute route, int tabIndex) {
+        turbolinksViewFrame.renderComponent(getReactInstanceManager(), route);
+    }
+
+    @Override
+    public void reload() { turbolinksViewFrame.reload(route.getUrl()); }
 
     @Override
     public Boolean getInitialVisit() {

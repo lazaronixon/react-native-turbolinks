@@ -26,5 +26,8 @@ public interface GenericActivity {
 
     void setSupportActionBar(Toolbar toolbar);
 
+    void renderComponent(TurbolinksRoute route, int tabIndex);
+
+    void reload();
 
 }

@@ -17,13 +17,18 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.reactlibrary.util.TurbolinksRoute;
+import com.reactlibrary.util.TurbolinksViewFrame;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.reactlibrary.activities.WebActivity.HTTP_FAILURE;
+import static com.reactlibrary.activities.WebActivity.NETWORK_FAILURE;
+
 public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     private TabbedActivity act;
+    private int index;
 
     public TabbedView(Context context) {
         super(context);
@@ -42,15 +47,15 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public TabbedView(TabbedActivity act, TurbolinksRoute route) {
+    public TabbedView(TabbedActivity act, TurbolinksRoute route, int index) {
         super(act.getApplicationContext());
         this.act = act;
 
         if (route.getUrl() != null) {
-            TurbolinksView turbolinksView = new TurbolinksView(getContext());
-            turbolinksView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            visitTurbolinksView(turbolinksView, route.getUrl());
-            addView(turbolinksView);
+            TurbolinksViewFrame turbolinksViewFrame = new TurbolinksViewFrame(getContext());
+            turbolinksViewFrame.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            visitTurbolinksView(turbolinksViewFrame.getTurbolinksView(), route.getUrl());
+            addView(turbolinksViewFrame);
         } else {
             ReactRootView nativeView = new ReactRootView(getContext());
             nativeView.startReactApplication(act.getManager(), route.getComponent(), route.getPassProps());
@@ -74,22 +79,32 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     @Override
     public void onReceivedError(int errorCode) {
-
+        WritableMap params = Arguments.createMap();
+        params.putInt("code", NETWORK_FAILURE);
+        params.putInt("statusCode", 0);
+        params.putString("description", "Network Failure.");
+        params.putInt("tabIndex", index);
+        act.getEventEmitter().emit("turbolinksError", params);
     }
 
     @Override
     public void pageInvalidated() {
-
     }
 
     @Override
     public void requestFailedWithStatusCode(int statusCode) {
-
+        WritableMap params = Arguments.createMap();
+        params.putInt("code", HTTP_FAILURE);
+        params.putInt("statusCode", statusCode);
+        params.putString("description", "HTTP Failure. Code:" + statusCode);
+        params.putInt("tabIndex", index);
+        act.getEventEmitter().emit("turbolinksError", params);
     }
 
     @Override
     public void visitCompleted() {
-
+        act.renderTitle();
+        act.handleVisitCompleted(index);
     }
 
     @JavascriptInterface
