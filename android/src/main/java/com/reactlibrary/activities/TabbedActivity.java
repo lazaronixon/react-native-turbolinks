@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
+import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTES;
+import static com.reactlibrary.RNTurbolinksModule.INTENT_SELECTED_INDEX;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
-import static com.reactlibrary.util.TurbolinksTabBar.INTENT_ROUTES;
-import static com.reactlibrary.util.TurbolinksTabBar.INTENT_SELECTED_INDEX;
 
 public class TabbedActivity extends ReactAppCompatActivity implements GenericActivity {
 
