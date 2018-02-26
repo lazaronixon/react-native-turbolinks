@@ -23,14 +23,13 @@ public class HelperActivity {
 
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
+        if (act.getRoute().getActions() == null) return true;
         ArrayList<Bundle> actions = act.getRoute().getActions();
-        if (actions != null) {
-            for (int i = 0; i < actions.size(); i++) {
-                TurbolinksAction action = new TurbolinksAction(actions.get(i));
-                MenuItem menuItem = menu.add(Menu.NONE, action.getId(), i, action.getTitle());
-                renderActionIcon(menu, menuItem, action.getIcon());
-                if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            }
+        for (int i = 0; i < actions.size(); i++) {
+            TurbolinksAction action = new TurbolinksAction(actions.get(i));
+            MenuItem menuItem = menu.add(Menu.NONE, action.getId(), i, action.getTitle());
+            renderActionIcon(menu, menuItem, action.getIcon());
+            if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return true;
     }
@@ -49,10 +48,10 @@ public class HelperActivity {
         act.setSupportActionBar(toolbar);
         act.getSupportActionBar().setDisplayHomeAsUpEnabled(!act.getInitialVisit());
         act.getSupportActionBar().setTitle(null);
+        act.handleTitlePress(toolbar);
         if (act.getNavigationBarHidden() || act.getRoute().getModal()) {
             act.getSupportActionBar().hide();
         }
-        act.handleTitlePress(toolbar);
     }
 
     public void renderTitle() {
