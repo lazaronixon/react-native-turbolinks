@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.widget.FrameLayout;
 
@@ -89,6 +90,11 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
     @Override
     public void visitCompleted() {
 
+    }
+
+    @JavascriptInterface
+    public void postMessage(String message) {
+        act.getEventEmitter().emit("turbolinksMessage", message);
     }
 
     @Override
