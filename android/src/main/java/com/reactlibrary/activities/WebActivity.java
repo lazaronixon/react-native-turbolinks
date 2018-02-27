@@ -11,6 +11,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -90,8 +91,8 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     @Override
     public void onReceivedError(int errorCode) {
         WritableMap params = Arguments.createMap();
-        params.putInt("code", NETWORK_FAILURE);
-        params.putInt("statusCode", 0);
+        params.putInt("code", errorCode < 0 ? NETWORK_FAILURE : HTTP_FAILURE);
+        params.putInt("statusCode", errorCode);
         params.putString("description", "Network Failure.");
         params.putInt("tabIndex", 0);
         getEventEmitter().emit("turbolinksError", params);
