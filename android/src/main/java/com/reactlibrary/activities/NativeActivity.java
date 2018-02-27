@@ -62,7 +62,9 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { return helperAct.onOptionsItemSelected(item); }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return helperAct.onOptionsItemSelected(item);
+    }
 
     @Override
     public void renderTitle() {

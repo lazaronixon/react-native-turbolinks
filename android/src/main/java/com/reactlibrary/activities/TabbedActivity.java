@@ -64,7 +64,9 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public void onBackPressed() { moveTaskToBack(true); }
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -77,7 +79,9 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public void renderTitle() { helperAct.renderTitle(); }
+    public void renderTitle() {
+        helperAct.renderTitle();
+    }
 
     @Override
     public void handleTitlePress(Toolbar toolbar) {
@@ -93,10 +97,14 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public Boolean getInitialVisit() { return true; }
+    public Boolean getInitialVisit() {
+        return true;
+    }
 
     @Override
-    public Boolean getNavigationBarHidden() { return navigationBarHidden; }
+    public Boolean getNavigationBarHidden() {
+        return navigationBarHidden;
+    }
 
     @Override
     public RCTDeviceEventEmitter getEventEmitter() {
@@ -124,7 +132,9 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         return messageHandler;
     }
 
-    public String getUserAgent() { return userAgent; }
+    public String getUserAgent() {
+        return userAgent;
+    }
 
     private void setupBottomNav() {
         Menu menu = bottomNav.getMenu();
@@ -171,7 +181,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         public TurbolinksPagerAdapter(TabbedActivity tabbedActivity) {
             for (int i = 0; i < routes.size(); i++) {
                 TurbolinksRoute tRoute = new TurbolinksRoute(routes.get(i));
-                TabbedView tabView = new TabbedView(getReactInstanceManager() ,tabbedActivity, tRoute, i);
+                TabbedView tabView = new TabbedView(getReactInstanceManager(), tabbedActivity, tRoute, i);
                 tabView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 viewList.add(tabView);
             }
