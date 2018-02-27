@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
@@ -65,9 +64,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-    }
+    public void onBackPressed() { moveTaskToBack(true); }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -80,9 +77,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public void renderTitle() {
-        helperAct.renderTitle();
-    }
+    public void renderTitle() { helperAct.renderTitle(); }
 
     @Override
     public void handleTitlePress(Toolbar toolbar) {
@@ -98,14 +93,10 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public Boolean getInitialVisit() {
-        return true;
-    }
+    public Boolean getInitialVisit() { return true; }
 
     @Override
-    public Boolean getNavigationBarHidden() {
-        return navigationBarHidden;
-    }
+    public Boolean getNavigationBarHidden() { return navigationBarHidden; }
 
     @Override
     public RCTDeviceEventEmitter getEventEmitter() {
@@ -120,7 +111,8 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
 
     @Override
     public void renderComponent(TurbolinksRoute route, int tabIndex) {
-        getTabbedViewByIndex(tabIndex).renderComponent(getReactInstanceManager(), route);
+        TabbedView tabbedView = tabIndex != -1 ? getTabbedViewByIndex(tabIndex) : getCurrentTabbedView();
+        tabbedView.renderComponent(getReactInstanceManager(), route);
     }
 
     @Override
@@ -132,13 +124,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         return messageHandler;
     }
 
-    public String getUserAgent() {
-        return userAgent;
-    }
-
-    public ReactInstanceManager getManager() {
-        return getReactInstanceManager();
-    }
+    public String getUserAgent() { return userAgent; }
 
     private void setupBottomNav() {
         Menu menu = bottomNav.getMenu();
@@ -185,7 +171,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         public TurbolinksPagerAdapter(TabbedActivity tabbedActivity) {
             for (int i = 0; i < routes.size(); i++) {
                 TurbolinksRoute tRoute = new TurbolinksRoute(routes.get(i));
-                TabbedView tabView = new TabbedView(tabbedActivity, tRoute, i);
+                TabbedView tabView = new TabbedView(getReactInstanceManager() ,tabbedActivity, tRoute, i);
                 tabView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 viewList.add(tabView);
             }

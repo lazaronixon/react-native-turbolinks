@@ -50,7 +50,7 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public TabbedView(TabbedActivity act, TurbolinksRoute route, int index) {
+    public TabbedView(ReactInstanceManager manager, TabbedActivity act, TurbolinksRoute route, int index) {
         super(act.getApplicationContext());
         this.act = act;
         this.index = index;
@@ -63,7 +63,7 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
             addView(this.turbolinksViewFrame);
         } else {
             ReactRootView nativeView = new ReactRootView(getContext());
-            nativeView.startReactApplication(act.getManager(), route.getComponent(), route.getPassProps());
+            nativeView.startReactApplication(manager, route.getComponent(), route.getPassProps());
             addView(nativeView);
         }
     }
