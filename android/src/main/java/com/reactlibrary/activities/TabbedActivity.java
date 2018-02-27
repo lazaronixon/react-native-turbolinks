@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
+import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -62,6 +63,12 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         helperAct.renderTitle();
         setupViewPager(viewPager);
         setupBottomNav(bottomNavigationView);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        TurbolinksSession.resetDefault();
     }
 
     @Override
@@ -188,7 +195,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         public TurbolinksPagerAdapter(TabbedActivity tabbedActivity) {
             for (int i = 0; i < routes.size(); i++) {
                 TurbolinksRoute tRoute = new TurbolinksRoute(routes.get(i));
-                TabbedView tabView =  new TabbedView(tabbedActivity, tRoute, i);
+                TabbedView tabView = new TabbedView(tabbedActivity, tRoute, i);
                 tabView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 viewList.add(tabView);
             }
