@@ -11,11 +11,9 @@ import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
-import com.basecamp.turbolinks.TurbolinksView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
@@ -65,16 +63,15 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
         helperAct.renderToolBar(toolbar);
-        visitTurbolinksView(turbolinksViewFrame.getTurbolinksView(), route.getUrl());
+        visitTurbolinksView();
     }
 
-    private void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
-        Context context = getApplicationContext();
-        TurbolinksSession session = TurbolinksSession.getDefault(context);
+    private void visitTurbolinksView() {
+        TurbolinksSession session = TurbolinksSession.getDefault(this);
         WebSettings settings = session.getWebView().getSettings();
         if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
         if (userAgent != null) settings.setUserAgentString(userAgent);
-        session.activity(this).adapter(this).view(turbolinksView).visit(url);
+        session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
     }
 
     @Override
@@ -158,7 +155,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
 
     @Override
     public void renderTitle() {
-        WebView webView = TurbolinksSession.getDefault(getApplicationContext()).getWebView();
+        WebView webView = TurbolinksSession.getDefault(this).getWebView();
         String title = route.getTitle() != null ? route.getTitle() : webView.getTitle();
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(route.getSubtitle());
@@ -171,7 +168,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
 
     @Override
     public void handleTitlePress(Toolbar toolbar) {
-        final WebView webView = TurbolinksSession.getDefault(getApplicationContext()).getWebView();
+        final WebView webView = TurbolinksSession.getDefault(this).getWebView();
         toolbar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
@@ -190,7 +187,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
 
     private void handleVisitCompleted() {
         String javaScript = "document.documentElement.outerHTML";
-        final WebView webView = TurbolinksSession.getDefault(getApplicationContext()).getWebView();
+        final WebView webView = TurbolinksSession.getDefault(this).getWebView();
         webView.evaluateJavascript(javaScript, new ValueCallback<String>() {
             public void onReceiveValue(String source) {
                 try {

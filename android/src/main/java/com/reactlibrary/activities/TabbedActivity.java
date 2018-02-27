@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
-import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -33,7 +32,7 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 public class TabbedActivity extends ReactAppCompatActivity implements GenericActivity {
 
     private TurbolinksViewPager viewPager;
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNav;
     private Toolbar toolbar;
 
     private HelperActivity helperAct;
@@ -48,9 +47,9 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
 
-        viewPager = findViewById(R.id.viewpager);
-        bottomNavigationView = findViewById(R.id.navigation);
         toolbar = findViewById(R.id.toolbar);
+        viewPager = findViewById(R.id.viewpager);
+        bottomNav = findViewById(R.id.navigation);
 
         helperAct = new HelperActivity(this);
         routes = getIntent().getParcelableArrayListExtra(INTENT_ROUTES);
@@ -61,14 +60,8 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
 
         helperAct.renderToolBar(toolbar);
         helperAct.renderTitle();
-        setupViewPager(viewPager);
-        setupBottomNav(bottomNavigationView);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        TurbolinksSession.resetDefault();
+        setupViewPager();
+        setupBottomNav();
     }
 
     @Override
@@ -147,18 +140,25 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         return getReactInstanceManager();
     }
 
-    private void setupBottomNav(BottomNavigationView bottomNav) {
+    private void setupBottomNav() {
         Menu menu = bottomNav.getMenu();
         for (int i = 0; i < routes.size(); i++) {
             TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
             MenuItem menuItem = menu.add(Menu.NONE, i, i, route.getTabTitle());
             renderTabIcon(menu, menuItem, route.getTabIcon());
         }
-        setupNavigation(bottomNav);
+        bottomNav.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    public boolean onNavigationItemSelected(MenuItem item) {
+                        int index = item.getItemId();
+                        viewPager.setCurrentItem(index, false);
+                        return true;
+                    }
+                });
         bottomNav.setSelectedItemId(selectedIndex);
     }
 
-    private void setupViewPager(TurbolinksViewPager viewPager) {
+    private void setupViewPager() {
         TurbolinksPagerAdapter adapter = new TurbolinksPagerAdapter(this);
         viewPager.setAdapter(adapter);
     }
@@ -168,16 +168,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         Uri uri = Uri.parse(icon.getString("uri"));
         Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
         menuItem.setIcon(drawableIcon);
-    }
-
-    private void setupNavigation(BottomNavigationView bottomNav) {
-        bottomNav.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    public boolean onNavigationItemSelected(MenuItem item) {
-                        viewPager.setCurrentItem(item.getItemId(), false);
-                        return true;
-                    }
-                });
     }
 
     private TabbedView getCurrentTabbedView() {

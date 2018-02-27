@@ -64,12 +64,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void replaceWith(final ReadableMap route, final Integer tabIndex) {
+    public void replaceWith(ReadableMap route, final Integer tabIndex) {
+        final TurbolinksRoute tRoute = new TurbolinksRoute(route);
         runOnUiThread(new Runnable() {
-            public void run() {
-                TurbolinksRoute tRoute = new TurbolinksRoute(route);
-                ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex);
-            }
+            public void run() { ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex); }
         });
     }
 
