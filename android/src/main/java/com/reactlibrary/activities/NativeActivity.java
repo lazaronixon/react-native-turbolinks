@@ -20,6 +20,8 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
 
 public class NativeActivity extends ReactAppCompatActivity implements GenericActivity {
 
+    private Toolbar toolBar;
+    private ReactRootView rootView;
     private HelperActivity helperAct;
     private TurbolinksRoute route;
     private Boolean navigationBarHidden;
@@ -30,15 +32,17 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_native);
 
+        toolBar = findViewById(R.id.toolbar);
+        rootView = findViewById(R.id.react_root_view);
+
         helperAct = new HelperActivity(this);
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
         initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
 
-        helperAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
+        helperAct.renderToolBar(toolBar);
         helperAct.renderTitle();
 
-        ReactRootView rootView = findViewById(R.id.react_root_view);
         rootView.startReactApplication(getReactInstanceManager(), route.getComponent(), route.getPassProps());
     }
 

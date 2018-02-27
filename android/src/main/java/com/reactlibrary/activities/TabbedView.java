@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -29,6 +30,8 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     private TabbedActivity act;
     private int index;
+    private TurbolinksViewFrame turbolinksViewFrame;
+    private TurbolinksSession session;
 
     public TabbedView(Context context) {
         super(context);
@@ -50,12 +53,14 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
     public TabbedView(TabbedActivity act, TurbolinksRoute route, int index) {
         super(act.getApplicationContext());
         this.act = act;
+        this.index = index;
+        this.session = TurbolinksSession.getNew(getContext());
 
         if (route.getUrl() != null) {
-            TurbolinksViewFrame turbolinksViewFrame = new TurbolinksViewFrame(getContext());
-            turbolinksViewFrame.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            visitTurbolinksView(turbolinksViewFrame.getTurbolinksView(), route.getUrl());
-            addView(turbolinksViewFrame);
+            this.turbolinksViewFrame = new TurbolinksViewFrame(getContext());
+            this.turbolinksViewFrame.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            visitTurbolinksView(this.turbolinksViewFrame.getTurbolinksView(), route.getUrl());
+            addView(this.turbolinksViewFrame);
         } else {
             ReactRootView nativeView = new ReactRootView(getContext());
             nativeView.startReactApplication(act.getManager(), route.getComponent(), route.getPassProps());
@@ -63,18 +68,23 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
         }
     }
 
+    public void reload(String location) {
+        turbolinksViewFrame.reload(session, location);
+    }
+
+    public void renderComponent(ReactInstanceManager manager, TurbolinksRoute route) {
+        turbolinksViewFrame.renderComponent(manager, route);
+    }
+
     private void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
-        TurbolinksSession session = TurbolinksSession.getDefault(getContext());
         WebSettings settings = session.getWebView().getSettings();
         if (act.getMessageHandler() != null) session.addJavascriptInterface(this, act.getMessageHandler());
         if (act.getUserAgent() != null) settings.setUserAgentString(act.getUserAgent());
         session.activity(act).adapter(this).view(turbolinksView).visit(url);
-        session.resetDefault();
     }
 
     @Override
     public void onPageFinished() {
-
     }
 
     @Override
@@ -103,8 +113,6 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     @Override
     public void visitCompleted() {
-        act.renderTitle();
-        act.handleVisitCompleted(index);
     }
 
     @JavascriptInterface

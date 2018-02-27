@@ -39,18 +39,22 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     public static final int HTTP_FAILURE = 0;
     public static final int NETWORK_FAILURE = 1;
 
+    private TurbolinksViewFrame turbolinksViewFrame;
+    private Toolbar toolbar;
     private HelperActivity helperAct;
     private TurbolinksRoute route;
     private String messageHandler;
     private String userAgent;
     private Boolean initialVisit;
     private Boolean navigationBarHidden;
-    private TurbolinksViewFrame turbolinksViewFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+
+        toolbar = findViewById(R.id.toolbar);
+        turbolinksViewFrame = findViewById(R.id.turbolinks_view);
 
         helperAct = new HelperActivity(this);
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
@@ -59,8 +63,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        helperAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
-        turbolinksViewFrame = findViewById(R.id.turbolinks_view);
+        helperAct.renderToolBar(toolbar);
         visitTurbolinksView(turbolinksViewFrame.getTurbolinksView(), route.getUrl());
     }
 
@@ -215,7 +218,9 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     }
 
     @Override
-    public void reload() { turbolinksViewFrame.reload(route.getUrl()); }
+    public void reload() {
+        turbolinksViewFrame.reload(TurbolinksSession.getDefault(this), route.getUrl());
+    }
 
     @Override
     public Boolean getInitialVisit() {

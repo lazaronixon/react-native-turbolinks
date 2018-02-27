@@ -6,28 +6,21 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.webkit.ValueCallback;
-import android.webkit.WebView;
 
-import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksViewPager;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
@@ -35,9 +28,12 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTES;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_SELECTED_INDEX;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
-import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
 public class TabbedActivity extends ReactAppCompatActivity implements GenericActivity {
+
+    private TurbolinksViewPager viewPager;
+    private BottomNavigationView bottomNavigationView;
+    private Toolbar toolbar;
 
     private HelperActivity helperAct;
     private ArrayList<Bundle> routes;
@@ -51,6 +47,10 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
 
+        viewPager = findViewById(R.id.viewpager);
+        bottomNavigationView = findViewById(R.id.navigation);
+        toolbar = findViewById(R.id.toolbar);
+
         helperAct = new HelperActivity(this);
         routes = getIntent().getParcelableArrayListExtra(INTENT_ROUTES);
         selectedIndex = getIntent().getIntExtra(INTENT_SELECTED_INDEX, 0);
@@ -58,10 +58,10 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        helperAct.renderToolBar((Toolbar) findViewById(R.id.toolbar));
+        helperAct.renderToolBar(toolbar);
         helperAct.renderTitle();
-        renderViewPager((TurbolinksViewPager) findViewById(R.id.viewpager));
-        renderBottomNav((BottomNavigationView) findViewById(R.id.navigation));
+        setupViewPager(viewPager);
+        setupBottomNav(bottomNavigationView);
     }
 
     @Override
@@ -82,26 +82,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     @Override
     public void renderTitle() {
         helperAct.renderTitle();
-    }
-
-    public void handleVisitCompleted(final int tabIndex) {
-        String javaScript = "document.documentElement.outerHTML";
-        final WebView webView = TurbolinksSession.getDefault(getApplicationContext()).getWebView();
-        webView.evaluateJavascript(javaScript, new ValueCallback<String>() {
-            public void onReceiveValue(String source) {
-                try {
-                    WritableMap params = Arguments.createMap();
-                    URL urlLocation = new URL(webView.getUrl());
-                    params.putString("url", urlLocation.toString());
-                    params.putString("path", urlLocation.getPath());
-                    params.putString("source", unescapeJava(source));
-                    params.putInt("tabIndex", tabIndex);
-                    getEventEmitter().emit("turbolinksVisitCompleted", params);
-                } catch (MalformedURLException e) {
-                    Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
-                }
-            }
-        });
     }
 
     @Override
@@ -134,16 +114,18 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
 
     @Override
     public TurbolinksRoute getRoute() {
-        return new TurbolinksRoute(routes.get(selectedIndex));
+        int index = viewPager.getCurrentItem();
+        return new TurbolinksRoute(routes.get(index));
     }
 
     @Override
     public void renderComponent(TurbolinksRoute route, int tabIndex) {
-
+        getTabbedViewByIndex(tabIndex).renderComponent(getReactInstanceManager(), route);
     }
 
     @Override
     public void reload() {
+        getCurrentTabbedView().reload(getRoute().getUrl());
     }
 
     public String getMessageHandler() {
@@ -158,18 +140,18 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         return getReactInstanceManager();
     }
 
-    private void renderBottomNav(BottomNavigationView bottomNav) {
+    private void setupBottomNav(BottomNavigationView bottomNav) {
         Menu menu = bottomNav.getMenu();
-        setupNavigation(bottomNav);
-        bottomNav.setSelectedItemId(selectedIndex);
         for (int i = 0; i < routes.size(); i++) {
             TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
             MenuItem menuItem = menu.add(Menu.NONE, i, i, route.getTabTitle());
             renderTabIcon(menu, menuItem, route.getTabIcon());
         }
+        setupNavigation(bottomNav);
+        bottomNav.setSelectedItemId(selectedIndex);
     }
 
-    private void renderViewPager(TurbolinksViewPager viewPager) {
+    private void setupViewPager(TurbolinksViewPager viewPager) {
         TurbolinksPagerAdapter adapter = new TurbolinksPagerAdapter(this);
         viewPager.setAdapter(adapter);
     }
@@ -185,11 +167,18 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         bottomNav.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     public boolean onNavigationItemSelected(MenuItem item) {
-                        TurbolinksViewPager viewPager = findViewById(R.id.viewpager);
                         viewPager.setCurrentItem(item.getItemId(), false);
                         return true;
                     }
                 });
+    }
+
+    private TabbedView getCurrentTabbedView() {
+        return ((TurbolinksPagerAdapter) viewPager.getAdapter()).getItem(viewPager.getCurrentItem());
+    }
+
+    private TabbedView getTabbedViewByIndex(int index) {
+        return ((TurbolinksPagerAdapter) viewPager.getAdapter()).getItem(index);
     }
 
     private class TurbolinksPagerAdapter extends PagerAdapter {
@@ -205,7 +194,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
             }
         }
 
-        public View getItem(int position) {
+        public TabbedView getItem(int position) {
             return viewList.get(position);
         }
 

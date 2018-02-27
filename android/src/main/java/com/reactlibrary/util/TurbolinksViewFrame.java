@@ -56,10 +56,10 @@ public class TurbolinksViewFrame extends FrameLayout {
         addView(customView);
     }
 
-    public void reload(String location) {
+    public void reload(TurbolinksSession session, String location) {
         turbolinksView.setVisibility(View.VISIBLE);
         removeView(customView);
-        TurbolinksSession.getDefault(getContext()).visit(location);
+        session.visit(location);
     }
 
 }
