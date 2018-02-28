@@ -46,8 +46,7 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
 
     @Override
     public void onBackPressed() {
-        if (getRoute().getModal()) return;
-        if (getInitialVisit()) {
+        if (initialVisit || route.getModal()) {
             moveTaskToBack(true);
         } else {
             super.onBackPressed();
