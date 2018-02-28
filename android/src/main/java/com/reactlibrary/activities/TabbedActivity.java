@@ -16,6 +16,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.TabbedView;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksViewPager;
 

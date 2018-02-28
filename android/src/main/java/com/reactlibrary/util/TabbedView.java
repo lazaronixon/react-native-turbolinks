@@ -1,4 +1,4 @@
-package com.reactlibrary.activities;
+package com.reactlibrary.util;
 
 import android.content.Context;
 import android.os.Build;
@@ -17,8 +17,7 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
-import com.reactlibrary.util.TurbolinksRoute;
-import com.reactlibrary.util.TurbolinksViewFrame;
+import com.reactlibrary.activities.TabbedActivity;
 
 import java.net.MalformedURLException;
 import java.net.URL;
