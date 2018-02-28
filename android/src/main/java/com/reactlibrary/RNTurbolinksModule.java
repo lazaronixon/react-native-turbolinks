@@ -165,15 +165,18 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         try {
             ReactContext context = getReactApplicationContext();
             Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
+            Boolean isInitial = isActionReplace ? getCurrInitVisit() : initial;
             URL prevUrl = initial || prevRoute == null ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
-                intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initial);
+                intent.putExtra(INTENT_INITIAL_VISIT, isInitial);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_ROUTE, route);
+                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);
                 if (isActionReplace) getCurrentActivity().finish();
                 this.prevRoute = route;
@@ -189,10 +192,13 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private void presentNativeView(TurbolinksRoute route, Boolean initial) {
         ReactContext context = getReactApplicationContext();
         Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
+        Boolean isInitial = isActionReplace ? getCurrInitVisit() : initial;
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
-        intent.putExtra(INTENT_INITIAL_VISIT, isActionReplace ? getCurrInitVisit() : initial);
+        intent.putExtra(INTENT_INITIAL_VISIT, isInitial);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
+        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
         if (isActionReplace) getCurrentActivity().finish();
     }
