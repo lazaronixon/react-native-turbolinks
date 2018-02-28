@@ -49,6 +49,7 @@ public class TurbolinksViewFrame extends FrameLayout {
     }
 
     public void renderComponent(ReactInstanceManager manager, TurbolinksRoute route) {
+        removeView(customView);
         turbolinksView.setVisibility(View.GONE);
         customView = new ReactRootView(getContext());
         customView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
