@@ -64,7 +64,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
+        helperAct.backToHomeScreen(this);
     }
 
     @Override
@@ -85,11 +85,6 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     @Override
     public void handleTitlePress(Toolbar toolbar) {
         helperAct.handleTitlePress(toolbar, TabbedActivity.class.getSimpleName(), null, null);
-    }
-
-    @Override
-    public Boolean getInitialVisit() {
-        return true;
     }
 
     @Override

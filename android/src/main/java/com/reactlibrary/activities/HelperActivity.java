@@ -1,6 +1,8 @@
 package com.reactlibrary.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,7 +55,8 @@ public class HelperActivity {
 
     public void renderToolBar(Toolbar toolbar) {
         act.setSupportActionBar(toolbar);
-        act.getSupportActionBar().setDisplayHomeAsUpEnabled(!act.getInitialVisit());
+        act.getSupportActionBar().setDisplayHomeAsUpEnabled(!act.isTaskRoot());
+        act.getSupportActionBar().setDisplayShowHomeEnabled(!act.isTaskRoot());
         act.getSupportActionBar().setTitle(null);
         act.handleTitlePress(toolbar);
         if (act.getNavigationBarHidden() || act.getRoute().getModal()) {
@@ -80,6 +83,13 @@ public class HelperActivity {
                 getEventEmitter().emit(TURBOLINKS_TITLE_PRESS, params);
             }
         });
+    }
+
+    public void backToHomeScreen(Context context) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @SuppressLint("RestrictedApi")

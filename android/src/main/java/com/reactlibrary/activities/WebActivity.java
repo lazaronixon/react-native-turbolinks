@@ -1,5 +1,6 @@
 package com.reactlibrary.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,7 +26,6 @@ import com.reactlibrary.util.TurbolinksViewFrame;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
@@ -47,7 +47,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     private TurbolinksRoute route;
     private String messageHandler;
     private String userAgent;
-    private Boolean initialVisit;
     private Boolean navigationBarHidden;
 
     @Override
@@ -60,7 +59,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
 
         helperAct = new HelperActivity(this);
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
-        initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
@@ -139,8 +137,8 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
 
     @Override
     public void onBackPressed() {
-        if (getInitialVisit()) {
-            moveTaskToBack(true);
+        if (isTaskRoot()) {
+           helperAct.backToHomeScreen(this);
         } else {
             super.onBackPressed();
         }
@@ -214,11 +212,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     @Override
     public void reload() {
         turbolinksViewFrame.reload(TurbolinksSession.getDefault(this), route.getUrl());
-    }
-
-    @Override
-    public Boolean getInitialVisit() {
-        return initialVisit;
     }
 
     @Override

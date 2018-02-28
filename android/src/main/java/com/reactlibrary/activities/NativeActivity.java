@@ -12,7 +12,6 @@ import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 
-import static com.reactlibrary.RNTurbolinksModule.INTENT_INITIAL_VISIT;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
 
@@ -23,7 +22,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     private HelperActivity helperAct;
     private TurbolinksRoute route;
     private Boolean navigationBarHidden;
-    private Boolean initialVisit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +33,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
 
         helperAct = new HelperActivity(this);
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
-        initialVisit = getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
 
         helperAct.renderToolBar(toolBar);
@@ -46,8 +43,8 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
 
     @Override
     public void onBackPressed() {
-        if (initialVisit || route.getModal()) {
-            moveTaskToBack(true);
+        if (isTaskRoot() || route.getModal()) {
+            helperAct.backToHomeScreen(this);
         } else {
             super.onBackPressed();
         }
@@ -90,11 +87,6 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
 
     @Override
     public void reload() {
-    }
-
-    @Override
-    public Boolean getInitialVisit() {
-        return initialVisit;
     }
 
     @Override

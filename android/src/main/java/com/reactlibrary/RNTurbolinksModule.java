@@ -33,7 +33,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_NAVIGATION_BAR_HIDDEN = "intentNavigationBarHidden";
     public static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     public static final String INTENT_USER_AGENT = "intentUserAgent";
-    public static final String INTENT_INITIAL_VISIT = "intentInitialVisit";
     public static final String INTENT_ROUTE = "intentRoute";
     public static final String INTENT_ROUTES = "intentRoutes";
     public static final String INTENT_SELECTED_INDEX = "intentSelectedIndex";
@@ -94,6 +93,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
         context.startActivity(intent);
     }
@@ -163,26 +166,27 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     private void presentActivityForSession(TurbolinksRoute route, Boolean initial) {
         try {
-            ReactContext context = getReactApplicationContext();
+            Activity act = getCurrentActivity();
             Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-            Boolean isInitial = isActionReplace ? getCurrInitVisit() : initial;
+            Boolean isInitial = isActionReplace ? act.isTaskRoot() : initial;
             URL prevUrl = initial || prevRoute == null ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
-                intent.putExtra(INTENT_INITIAL_VISIT, isInitial);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_ROUTE, route);
+                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                context.startActivity(intent);
-                if (isActionReplace) getCurrentActivity().finish();
+                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                act.startActivity(intent);
+                if (isActionReplace) act.finish();
                 this.prevRoute = route;
             } else {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(route.getUrl()));
-                context.startActivity(intent);
+                act.startActivity(intent);
             }
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
@@ -190,21 +194,18 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     private void presentNativeView(TurbolinksRoute route, Boolean initial) {
-        ReactContext context = getReactApplicationContext();
+        Activity act = getCurrentActivity();
         Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-        Boolean isInitial = isActionReplace ? getCurrInitVisit() : initial;
+        Boolean isInitial = isActionReplace ? act.isTaskRoot() : initial;
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
-        intent.putExtra(INTENT_INITIAL_VISIT, isInitial);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
+        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(intent);
-        if (isActionReplace) getCurrentActivity().finish();
-    }
-
-    private Boolean getCurrInitVisit() {
-        return getCurrentActivity().getIntent().getBooleanExtra(INTENT_INITIAL_VISIT, true);
+        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        act.startActivity(intent);
+        if (isActionReplace) act.finish();
     }
 
 }

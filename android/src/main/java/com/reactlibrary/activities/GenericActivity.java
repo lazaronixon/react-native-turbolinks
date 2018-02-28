@@ -15,7 +15,7 @@ public interface GenericActivity {
 
     void handleTitlePress(Toolbar toolbar);
 
-    Boolean getInitialVisit();
+    boolean isTaskRoot();
 
     Boolean getNavigationBarHidden();
 
