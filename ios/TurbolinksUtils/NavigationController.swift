@@ -28,7 +28,6 @@ class NavigationController: UINavigationController {
         if (manager.userAgent != nil) { webViewConfiguration.applicationNameForUserAgent = manager.userAgent }
         return webViewConfiguration
     }
-    
 }
 
 extension NavigationController: WKUIDelegate {
@@ -36,15 +35,8 @@ extension NavigationController: WKUIDelegate {
         let confirm = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let cancel = TurbolinksHelper.getUIKitLocalizedString("Cancel")
         let ok = TurbolinksHelper.getUIKitLocalizedString("OK")
-        
-        confirm.addAction(UIAlertAction(title: cancel, style: .cancel) { (action) in
-            completionHandler(false)
-        })
-        
-        confirm.addAction(UIAlertAction(title: ok, style: .default) { (action) in
-            completionHandler(true)
-        })
-        
+        confirm.addAction(UIAlertAction(title: cancel, style: .cancel) { (action) in completionHandler(false) })
+        confirm.addAction(UIAlertAction(title: ok, style: .default) { (action) in completionHandler(true) })
         self.present(confirm, animated: true)
     }
 }
