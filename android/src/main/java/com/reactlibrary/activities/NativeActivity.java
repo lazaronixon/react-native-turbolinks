@@ -21,7 +21,7 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     private ReactRootView rootView;
     private HelperActivity helperAct;
     private TurbolinksRoute route;
-    private Boolean navigationBarHidden;
+    private boolean navigationBarHidden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public Boolean getNavigationBarHidden() {
+    public boolean getNavigationBarHidden() {
         return navigationBarHidden;
     }
 

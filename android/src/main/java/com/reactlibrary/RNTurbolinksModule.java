@@ -41,7 +41,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private TurbolinksRoute prevRoute;
     private String messageHandler;
     private String userAgent;
-    private Boolean navigationBarHidden = false;
+    private boolean navigationBarHidden = false;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -53,7 +53,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void visit(ReadableMap route, Boolean initial) {
+    public void visit(ReadableMap route, boolean initial) {
         TurbolinksRoute tRoute = new TurbolinksRoute(route);
         if (tRoute.getUrl() != null) {
             presentActivityForSession(tRoute, initial);
@@ -63,7 +63,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void replaceWith(ReadableMap route, final Integer tabIndex) {
+    public void replaceWith(ReadableMap route, final int tabIndex) {
         final TurbolinksRoute tRoute = new TurbolinksRoute(route);
         runOnUiThread(new Runnable() {
             public void run() { ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex); }
@@ -81,12 +81,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setNavigationBarHidden(Boolean navigationBarHidden) {
+    public void setNavigationBarHidden(boolean navigationBarHidden) {
         this.navigationBarHidden = navigationBarHidden;
     }
 
     @ReactMethod
-    public void visitTabBar(ReadableArray routes, Integer selectedIndex) {
+    public void visitTabBar(ReadableArray routes, int selectedIndex) {
         ReactContext context = getReactApplicationContext();
         Intent intent = new Intent(getReactApplicationContext(), TabbedActivity.class);
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
@@ -133,7 +133,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void renderTitle(final String title, final String subtitle, Integer tabIndex) {
+    public void renderTitle(final String title, final String subtitle, int tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
                 GenericActivity activity = (GenericActivity) getCurrentActivity();
@@ -145,7 +145,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void renderActions(final ReadableArray actions, Integer tabIndex) {
+    public void renderActions(final ReadableArray actions, int tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
                 GenericActivity act = (GenericActivity) getCurrentActivity();
@@ -164,11 +164,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         );
     }
 
-    private void presentActivityForSession(TurbolinksRoute route, Boolean initial) {
+    private void presentActivityForSession(TurbolinksRoute route, boolean initial) {
         try {
             Activity act = getCurrentActivity();
-            Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-            Boolean isInitial = isActionReplace ? act.isTaskRoot() : initial;
+            boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
+            boolean isInitial = isActionReplace ? act.isTaskRoot() : initial;
             URL prevUrl = initial || prevRoute == null ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
@@ -193,10 +193,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private void presentNativeView(TurbolinksRoute route, Boolean initial) {
+    private void presentNativeView(TurbolinksRoute route, boolean initial) {
         Activity act = getCurrentActivity();
-        Boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-        Boolean isInitial = isActionReplace ? act.isTaskRoot() : initial;
+        boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
+        boolean isInitial = isActionReplace ? act.isTaskRoot() : initial;
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);

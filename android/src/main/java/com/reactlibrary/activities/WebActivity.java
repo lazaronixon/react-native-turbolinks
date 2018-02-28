@@ -46,7 +46,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     private TurbolinksRoute route;
     private String messageHandler;
     private String userAgent;
-    private Boolean navigationBarHidden;
+    private boolean navigationBarHidden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,7 +214,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     }
 
     @Override
-    public Boolean getNavigationBarHidden() {
+    public boolean getNavigationBarHidden() {
         return navigationBarHidden;
     }
 

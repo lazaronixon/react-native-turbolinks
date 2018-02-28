@@ -17,7 +17,7 @@ public interface GenericActivity {
 
     boolean isTaskRoot();
 
-    Boolean getNavigationBarHidden();
+    boolean getNavigationBarHidden();
 
     RCTDeviceEventEmitter getEventEmitter();
 

@@ -37,8 +37,8 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     private ArrayList<Bundle> routes;
     private String messageHandler;
     private String userAgent;
-    private Boolean navigationBarHidden;
-    private Integer selectedIndex;
+    private boolean navigationBarHidden;
+    private int selectedIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public Boolean getNavigationBarHidden() {
+    public boolean getNavigationBarHidden() {
         return navigationBarHidden;
     }
 
@@ -111,9 +111,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public void reload() {
-        getCurrentTabbedView().reload(getRoute().getUrl());
-    }
+    public void reload() { getCurrentTabbedView().reload(getRoute().getUrl()); }
 
     public String getMessageHandler() {
         return messageHandler;
