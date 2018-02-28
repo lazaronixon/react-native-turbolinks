@@ -92,7 +92,7 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
         params.putInt("code", errorCode < 0 ? NETWORK_FAILURE : HTTP_FAILURE);
         params.putInt("statusCode", errorCode);
         params.putInt("tabIndex", index);
-        params.putString("description", "Network Failure.");
+        params.putString("description", "Network Failure. Code: " + errorCode);
         act.getEventEmitter().emit(TURBOLINKS_ERROR, params);
     }
 
@@ -102,7 +102,7 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
         params.putInt("code", HTTP_FAILURE);
         params.putInt("statusCode", statusCode);
         params.putInt("tabIndex", index);
-        params.putString("description", "HTTP Failure. Code:" + statusCode);
+        params.putString("description", "HTTP Failure. Code: " + statusCode);
         act.getEventEmitter().emit(TURBOLINKS_ERROR, params);
     }
 
