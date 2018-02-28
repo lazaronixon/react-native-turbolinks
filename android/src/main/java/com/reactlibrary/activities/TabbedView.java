@@ -25,6 +25,9 @@ import java.net.URL;
 
 import static com.reactlibrary.activities.WebActivity.HTTP_FAILURE;
 import static com.reactlibrary.activities.WebActivity.NETWORK_FAILURE;
+import static com.reactlibrary.activities.WebActivity.TURBOLINKS_ERROR;
+import static com.reactlibrary.activities.WebActivity.TURBOLINKS_MESSAGE;
+import static com.reactlibrary.activities.WebActivity.TURBOLINKS_VISIT;
 
 public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
@@ -55,7 +58,6 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
         this.act = act;
         this.index = index;
         this.session = TurbolinksSession.getNew(getContext());
-
         if (route.getUrl() != null) {
             this.turbolinksViewFrame = new TurbolinksViewFrame(getContext());
             this.turbolinksViewFrame.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -85,21 +87,13 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
     }
 
     @Override
-    public void onPageFinished() {
-    }
-
-    @Override
     public void onReceivedError(int errorCode) {
         WritableMap params = Arguments.createMap();
         params.putInt("code", errorCode < 0 ? NETWORK_FAILURE : HTTP_FAILURE);
         params.putInt("statusCode", errorCode);
-        params.putString("description", "Network Failure.");
         params.putInt("tabIndex", index);
-        act.getEventEmitter().emit("turbolinksError", params);
-    }
-
-    @Override
-    public void pageInvalidated() {
+        params.putString("description", "Network Failure.");
+        act.getEventEmitter().emit(TURBOLINKS_ERROR, params);
     }
 
     @Override
@@ -107,9 +101,17 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
         WritableMap params = Arguments.createMap();
         params.putInt("code", HTTP_FAILURE);
         params.putInt("statusCode", statusCode);
-        params.putString("description", "HTTP Failure. Code:" + statusCode);
         params.putInt("tabIndex", index);
-        act.getEventEmitter().emit("turbolinksError", params);
+        params.putString("description", "HTTP Failure. Code:" + statusCode);
+        act.getEventEmitter().emit(TURBOLINKS_ERROR, params);
+    }
+
+    @Override
+    public void onPageFinished() {
+    }
+
+    @Override
+    public void pageInvalidated() {
     }
 
     @Override
@@ -118,7 +120,7 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     @JavascriptInterface
     public void postMessage(String message) {
-        act.getEventEmitter().emit("turbolinksMessage", message);
+        act.getEventEmitter().emit(TURBOLINKS_MESSAGE, message);
     }
 
     @Override
@@ -130,7 +132,7 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
             params.putString("url", urlLocation.toString());
             params.putString("path", urlLocation.getPath());
             params.putString("action", action);
-            act.getEventEmitter().emit("turbolinksVisit", params);
+            act.getEventEmitter().emit(TURBOLINKS_VISIT, params);
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
         }

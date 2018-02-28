@@ -5,7 +5,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
@@ -13,6 +12,7 @@ import android.webkit.WebView;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
@@ -36,6 +36,10 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
 
     public static final int HTTP_FAILURE = 0;
     public static final int NETWORK_FAILURE = 1;
+    public static final String TURBOLINKS_ERROR = "turbolinksError";
+    public static final String TURBOLINKS_MESSAGE = "turbolinksMessage";
+    public static final String TURBOLINKS_VISIT_COMPLETED = "turbolinksVisitCompleted";
+    public static final String TURBOLINKS_VISIT = "turbolinksVisit";
 
     private TurbolinksViewFrame turbolinksViewFrame;
     private Toolbar toolbar;
@@ -89,9 +93,9 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
         WritableMap params = Arguments.createMap();
         params.putInt("code", errorCode < 0 ? NETWORK_FAILURE : HTTP_FAILURE);
         params.putInt("statusCode", errorCode);
-        params.putString("description", "Network Failure.");
         params.putInt("tabIndex", 0);
-        getEventEmitter().emit("turbolinksError", params);
+        params.putString("description", "Network Failure.");
+        getEventEmitter().emit(TURBOLINKS_ERROR, params);
     }
 
     @Override
@@ -99,9 +103,9 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
         WritableMap params = Arguments.createMap();
         params.putInt("code", HTTP_FAILURE);
         params.putInt("statusCode", statusCode);
-        params.putString("description", "HTTP Failure. Code:" + statusCode);
         params.putInt("tabIndex", 0);
-        getEventEmitter().emit("turbolinksError", params);
+        params.putString("description", "HTTP Failure. Code:" + statusCode);
+        getEventEmitter().emit(TURBOLINKS_ERROR, params);
     }
 
     @Override
@@ -113,7 +117,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
             params.putString("url", urlLocation.toString());
             params.putString("path", urlLocation.getPath());
             params.putString("action", action);
-            getEventEmitter().emit("turbolinksVisit", params);
+            getEventEmitter().emit(TURBOLINKS_VISIT, params);
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
         }
@@ -161,27 +165,20 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     }
 
     @Override
-    public RCTDeviceEventEmitter getEventEmitter() {
-        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
-    }
+    public RCTDeviceEventEmitter getEventEmitter() { return helperAct.getEventEmitter(); }
+
+    @Override
+    public ReactInstanceManager getManager() { return getReactInstanceManager(); }
 
     @Override
     public void handleTitlePress(Toolbar toolbar) {
-        final WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    WritableMap params = Arguments.createMap();
-                    URL urlLocation = new URL(webView.getUrl());
-                    params.putString("component", null);
-                    params.putString("url", urlLocation.toString());
-                    params.putString("path", urlLocation.getPath());
-                    getEventEmitter().emit("turbolinksTitlePress", params);
-                } catch (MalformedURLException e) {
-                    Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
-                }
-            }
-        });
+        try {
+            WebView webView = TurbolinksSession.getDefault(this).getWebView();
+            URL urlLocation = new URL(webView.getUrl());
+            helperAct.handleTitlePress(toolbar, null, urlLocation.toString(), urlLocation.getPath());
+        } catch (MalformedURLException e) {
+            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+        }
     }
 
     private void handleVisitCompleted() {
@@ -196,7 +193,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
                     params.putString("path", urlLocation.getPath());
                     params.putString("source", unescapeJava(source));
                     params.putInt("tabIndex", 0);
-                    getEventEmitter().emit("turbolinksVisitCompleted", params);
+                    getEventEmitter().emit(TURBOLINKS_VISIT_COMPLETED, params);
                 } catch (MalformedURLException e) {
                     Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
                 }
@@ -231,6 +228,6 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
 
     @JavascriptInterface
     public void postMessage(String message) {
-        getEventEmitter().emit("turbolinksMessage", message);
+        getEventEmitter().emit(TURBOLINKS_MESSAGE, message);
     }
 }

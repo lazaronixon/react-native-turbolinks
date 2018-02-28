@@ -3,6 +3,7 @@ package com.reactlibrary.activities;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.util.TurbolinksRoute;
 
@@ -19,6 +20,8 @@ public interface GenericActivity {
     Boolean getNavigationBarHidden();
 
     RCTDeviceEventEmitter getEventEmitter();
+
+    ReactInstanceManager getManager();
 
     TurbolinksRoute getRoute();
 

@@ -12,8 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
-import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
 import com.reactlibrary.react.ReactAppCompatActivity;
@@ -85,15 +84,7 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
 
     @Override
     public void handleTitlePress(Toolbar toolbar) {
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                WritableMap params = Arguments.createMap();
-                params.putString("component", "TabbedActivity");
-                params.putString("url", null);
-                params.putString("path", null);
-                getEventEmitter().emit("turbolinksTitlePress", params);
-            }
-        });
+        helperAct.handleTitlePress(toolbar, TabbedActivity.class.getSimpleName(), null, null);
     }
 
     @Override
@@ -107,9 +98,10 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public RCTDeviceEventEmitter getEventEmitter() {
-        return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
-    }
+    public RCTDeviceEventEmitter getEventEmitter() { return helperAct.getEventEmitter(); }
+
+    @Override
+    public ReactInstanceManager getManager() { return getReactInstanceManager(); }
 
     @Override
     public TurbolinksRoute getRoute() {

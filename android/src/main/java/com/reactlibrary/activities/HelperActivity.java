@@ -8,12 +8,19 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.util.TurbolinksAction;
 
 import java.util.ArrayList;
 
 public class HelperActivity {
+
+    public static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
+    public static final String TURBOLINKS_TITLE_PRESS = "turbolinksTitlePress";
 
     private GenericActivity act;
 
@@ -39,7 +46,7 @@ public class HelperActivity {
             act.onBackPressed();
             return false;
         } else {
-            act.getEventEmitter().emit("turbolinksActionPress", item.getItemId());
+            act.getEventEmitter().emit(TURBOLINKS_ACTION_PRESS, item.getItemId());
             return true;
         }
     }
@@ -57,6 +64,22 @@ public class HelperActivity {
     public void renderTitle() {
         act.getSupportActionBar().setTitle(act.getRoute().getTitle());
         act.getSupportActionBar().setSubtitle(act.getRoute().getSubtitle());
+    }
+
+    public RCTDeviceEventEmitter getEventEmitter() {
+        return act.getManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
+    }
+
+    public void handleTitlePress(Toolbar toolbar, final String component, final String url, final String path) {
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                WritableMap params = Arguments.createMap();
+                params.putString("component", component);
+                params.putString("url", url);
+                params.putString("path", path);
+                getEventEmitter().emit(TURBOLINKS_TITLE_PRESS, params);
+            }
+        });
     }
 
     @SuppressLint("RestrictedApi")
