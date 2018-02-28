@@ -12,12 +12,11 @@ class TurbolinksSession: Session {
     
     func injectSharedCookies() {
         if #available(iOS 11.0, *) {
-            let sharedCookies = HTTPCookieStorage.shared.cookies!
+            guard let sharedCookies = HTTPCookieStorage.shared.cookies else { return }
             let configuration = self.webView.configuration
             let websiteDataStore = configuration.websiteDataStore
             let httpCookieStore = websiteDataStore.httpCookieStore
             for cookie in sharedCookies { httpCookieStore.setCookie(cookie) }
         }
     }
-    
 }
