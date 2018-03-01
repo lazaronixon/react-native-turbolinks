@@ -137,7 +137,7 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-           helperAct.backToHomeScreen(this);
+            helperAct.backToHomeScreen(this);
         } else {
             super.onBackPressed();
         }
@@ -162,10 +162,14 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     }
 
     @Override
-    public RCTDeviceEventEmitter getEventEmitter() { return helperAct.getEventEmitter(); }
+    public RCTDeviceEventEmitter getEventEmitter() {
+        return helperAct.getEventEmitter();
+    }
 
     @Override
-    public ReactInstanceManager getManager() { return getReactInstanceManager(); }
+    public ReactInstanceManager getManager() {
+        return getReactInstanceManager();
+    }
 
     @Override
     public void handleTitlePress(Toolbar toolbar) {
@@ -176,6 +180,12 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
         }
+    }
+
+    @Override
+    public void reloadSession() {
+        TurbolinksSession.getDefault(this).resetToColdBoot();
+        TurbolinksSession.getDefault(this).visit(route.getUrl());
     }
 
     private void handleVisitCompleted() {

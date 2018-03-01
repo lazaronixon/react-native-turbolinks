@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
@@ -71,10 +72,14 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public RCTDeviceEventEmitter getEventEmitter() { return helperAct.getEventEmitter(); }
+    public RCTDeviceEventEmitter getEventEmitter() {
+        return helperAct.getEventEmitter();
+    }
 
     @Override
-    public ReactInstanceManager getManager() { return getReactInstanceManager(); }
+    public ReactInstanceManager getManager() {
+        return getReactInstanceManager();
+    }
 
     @Override
     public TurbolinksRoute getRoute() {
@@ -87,6 +92,11 @@ public class NativeActivity extends ReactAppCompatActivity implements GenericAct
 
     @Override
     public void reload() {
+    }
+
+    @Override
+    public void reloadSession() {
+        TurbolinksSession.getDefault(this).resetToColdBoot();
     }
 
     @Override

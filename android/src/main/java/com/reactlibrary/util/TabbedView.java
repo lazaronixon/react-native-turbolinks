@@ -31,6 +31,7 @@ import static com.reactlibrary.activities.WebActivity.TURBOLINKS_VISIT;
 public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     private TabbedActivity act;
+    private TurbolinksRoute route;
     private int index;
     private TurbolinksViewFrame turbolinksViewFrame;
     private TurbolinksSession session;
@@ -55,6 +56,7 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
     public TabbedView(ReactInstanceManager manager, TabbedActivity act, TurbolinksRoute route, int index) {
         super(act.getApplicationContext());
         this.act = act;
+        this.route = route;
         this.index = index;
         this.session = TurbolinksSession.getNew(getContext());
         if (route.getUrl() != null) {
@@ -69,8 +71,8 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
         }
     }
 
-    public void reload(String location) {
-        turbolinksViewFrame.reload(session, location);
+    public void reload() {
+        turbolinksViewFrame.reload(session, route.getUrl());
     }
 
     public void renderComponent(ReactInstanceManager manager, TurbolinksRoute route) {

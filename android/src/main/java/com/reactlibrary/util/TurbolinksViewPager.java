@@ -19,5 +19,7 @@ public class TurbolinksViewPager extends ViewPager {
         return false;
     }
 
-    public boolean onTouchEvent(MotionEvent event) { return false; }
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
+    }
 }

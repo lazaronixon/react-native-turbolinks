@@ -1,5 +1,6 @@
 package com.reactlibrary.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
@@ -32,5 +33,7 @@ public interface GenericActivity {
     void renderComponent(TurbolinksRoute route, int tabIndex);
 
     void reload();
+
+    void reloadSession();
 
 }

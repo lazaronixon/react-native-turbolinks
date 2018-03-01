@@ -64,10 +64,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void replaceWith(ReadableMap route, final int tabIndex) {
-        final TurbolinksRoute tRoute = new TurbolinksRoute(route);
+    public void replaceWith(final ReadableMap route, final int tabIndex) {
         runOnUiThread(new Runnable() {
-            public void run() { ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex); }
+            public void run() {
+                TurbolinksRoute tRoute = new TurbolinksRoute(route);
+                ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex);
+            }
         });
     }
 
@@ -99,6 +101,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
+        TurbolinksSession.resetDefault();
         context.startActivity(intent);
     }
 
@@ -113,6 +116,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void reloadSession() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                ((GenericActivity) getCurrentActivity()).reloadSession();
+            }
+        });
     }
 
     @ReactMethod
@@ -186,6 +194,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                if (isInitial) TurbolinksSession.resetDefault();
                 act.startActivity(intent);
                 if (isActionReplace) act.finish();
                 this.prevRoute = route;
@@ -209,6 +218,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        if (isInitial) TurbolinksSession.resetDefault();
         act.startActivity(intent);
         if (isActionReplace) act.finish();
     }

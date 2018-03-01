@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
+import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
@@ -94,10 +95,14 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public RCTDeviceEventEmitter getEventEmitter() { return helperAct.getEventEmitter(); }
+    public RCTDeviceEventEmitter getEventEmitter() {
+        return helperAct.getEventEmitter();
+    }
 
     @Override
-    public ReactInstanceManager getManager() { return getReactInstanceManager(); }
+    public ReactInstanceManager getManager() {
+        return getReactInstanceManager();
+    }
 
     @Override
     public TurbolinksRoute getRoute() {
@@ -112,7 +117,15 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public void reload() { getCurrentTabbedView().reload(getRoute().getUrl()); }
+    public void reload() {
+        getCurrentTabbedView().reload();
+    }
+
+    @Override
+    public void reloadSession() {
+        finish();
+        startActivity(getIntent());
+    }
 
     public String getMessageHandler() {
         return messageHandler;
