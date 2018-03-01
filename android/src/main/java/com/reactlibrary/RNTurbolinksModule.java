@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
+import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -95,7 +96,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
         intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
         context.startActivity(intent);
@@ -108,6 +109,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 ((GenericActivity) getCurrentActivity()).reload();
             }
         });
+    }
+
+    @ReactMethod
+    public void reloadSession() {
     }
 
     @ReactMethod
@@ -179,7 +184,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_ROUTE, route);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 act.startActivity(intent);
                 if (isActionReplace) act.finish();
@@ -202,7 +207,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_ROUTE, route);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         act.startActivity(intent);
         if (isActionReplace) act.finish();
