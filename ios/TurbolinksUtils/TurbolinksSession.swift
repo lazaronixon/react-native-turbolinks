@@ -7,6 +7,7 @@ class TurbolinksSession: Session {
     
     required convenience init(_ webViewConfiguration: WKWebViewConfiguration,_ index: Int) {
         self.init(webViewConfiguration: webViewConfiguration)
+        self.webView.customUserAgent = webViewConfiguration.applicationNameForUserAgent
         self.index = index
     }
     

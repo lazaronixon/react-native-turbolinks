@@ -180,8 +180,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
         TurbolinksSession session = TurbolinksSession.getDefault(this);
         WebSettings settings = session.getWebView().getSettings();
         if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
-        if (userAgent != null)
-            settings.setUserAgentString(settings.getUserAgentString() + " " + userAgent);
+        if (userAgent != null) { settings.setUserAgentString(userAgent); }
         session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
     }
 
