@@ -9,10 +9,11 @@ class NavigationController: UINavigationController {
     required convenience init(_ manager: RNTurbolinksManager,_ tabIndex: Int) {
         self.init()
         self.index = tabIndex
-        self.session = TurbolinksSession(NavigationController.setupWebViewConfiguration(manager), tabIndex)
+        self.session = TurbolinksSession(setupWebView(manager), tabIndex)
         self.session.delegate = manager
         self.session.webView.uiDelegate = self
         self.session.injectSharedCookies()
+        self.session.webView.customUserAgent = manager.userAgent ?? session.webView.customUserAgent
     }
     
     required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {
@@ -21,12 +22,11 @@ class NavigationController: UINavigationController {
         self.tabBarItem = UITabBarItem(title: tRoute.tabTitle , image: tRoute.tabIcon, selectedImage: tRoute.tabIcon)
     }
     
-    fileprivate static func setupWebViewConfiguration(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
-        let webViewConfiguration = WKWebViewConfiguration()
-        webViewConfiguration.processPool = manager.processPool
-        if (manager.messageHandler != nil) { webViewConfiguration.userContentController.add(manager, name: manager.messageHandler!) }
-        if (manager.userAgent != nil) { webViewConfiguration.applicationNameForUserAgent = manager.userAgent }
-        return webViewConfiguration
+    fileprivate func setupWebView(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
+        let webConfig = WKWebViewConfiguration()
+        if (manager.messageHandler != nil) { webConfig.userContentController.add(manager, name: manager.messageHandler!) }
+        webConfig.processPool = manager.processPool
+        return webConfig
     }
 }
 
