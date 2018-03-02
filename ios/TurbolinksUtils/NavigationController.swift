@@ -13,7 +13,7 @@ class NavigationController: UINavigationController {
         self.session.delegate = manager
         self.session.webView.uiDelegate = self
         self.session.injectSharedCookies()
-        self.session.webView.customUserAgent = manager.userAgent ?? session.webView.customUserAgent
+        if (manager.userAgent != nil) { self.session.webView.customUserAgent = manager.userAgent }
     }
     
     required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {
