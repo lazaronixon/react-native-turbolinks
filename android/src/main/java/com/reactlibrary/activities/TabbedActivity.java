@@ -13,7 +13,6 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.reactlibrary.R;
 import com.reactlibrary.util.TabbedView;
-import com.reactlibrary.util.TurbolinksActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksViewPager;
 
@@ -25,7 +24,7 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTES;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_SELECTED_INDEX;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 
-public class TabbedActivity extends TurbolinksActivity {
+public class TabbedActivity extends GenericActivity {
 
     private TurbolinksViewPager viewPager;
     private BottomNavigationView bottomNav;
@@ -40,14 +39,16 @@ public class TabbedActivity extends TurbolinksActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
 
+        routes = getIntent().getParcelableArrayListExtra(INTENT_ROUTES);
+
         toolBar = findViewById(R.id.toolbar);
+        route = new TurbolinksRoute(routes.get(selectedIndex));
+        navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
+
         viewPager = findViewById(R.id.viewpager);
         bottomNav = findViewById(R.id.navigation);
 
         selectedIndex = getIntent().getIntExtra(INTENT_SELECTED_INDEX, 0);
-        routes = getIntent().getParcelableArrayListExtra(INTENT_ROUTES);
-        route = new TurbolinksRoute(routes.get(selectedIndex));
-        navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
@@ -56,11 +57,6 @@ public class TabbedActivity extends TurbolinksActivity {
 
         setupViewPager();
         setupBottomNav();
-    }
-
-    @Override
-    public void onBackPressed() {
-        backToHomeScreen(this);
     }
 
     @Override

@@ -13,7 +13,6 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.reactlibrary.R;
-import com.reactlibrary.util.TurbolinksActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksViewFrame;
 
@@ -26,7 +25,7 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
-public class WebActivity extends TurbolinksActivity implements TurbolinksAdapter {
+public class WebActivity extends GenericActivity implements TurbolinksAdapter {
 
     public static final int HTTP_FAILURE = 0;
     public static final int NETWORK_FAILURE = 1;
@@ -45,10 +44,11 @@ public class WebActivity extends TurbolinksActivity implements TurbolinksAdapter
         setContentView(R.layout.activity_web);
 
         toolBar = findViewById(R.id.toolbar);
-        turbolinksViewFrame = findViewById(R.id.turbolinks_view);
-
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
+
+        turbolinksViewFrame = findViewById(R.id.turbolinks_view);
+
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
@@ -118,15 +118,6 @@ public class WebActivity extends TurbolinksActivity implements TurbolinksAdapter
     }
 
     @Override
-    public void onBackPressed() {
-        if (isTaskRoot()) {
-            backToHomeScreen(this);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     public void renderTitle(String title, String subtitle) {
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
         String mTitle = title != null ? title : webView.getTitle();
@@ -189,7 +180,8 @@ public class WebActivity extends TurbolinksActivity implements TurbolinksAdapter
         TurbolinksSession session = TurbolinksSession.getDefault(this);
         WebSettings settings = session.getWebView().getSettings();
         if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
-        if (userAgent != null) settings.setUserAgentString(settings.getUserAgentString() + " " + userAgent);
+        if (userAgent != null)
+            settings.setUserAgentString(settings.getUserAgentString() + " " + userAgent);
         session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
     }
 

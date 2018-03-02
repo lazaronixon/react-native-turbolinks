@@ -17,7 +17,7 @@ import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
 import com.reactlibrary.activities.NativeActivity;
 import com.reactlibrary.activities.TabbedActivity;
-import com.reactlibrary.util.TurbolinksActivity;
+import com.reactlibrary.activities.GenericActivity;
 import com.reactlibrary.activities.WebActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 
@@ -67,7 +67,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         runOnUiThread(new Runnable() {
             public void run() {
                 TurbolinksRoute tRoute = new TurbolinksRoute(route);
-                ((TurbolinksActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex);
+                ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex);
             }
         });
     }
@@ -108,7 +108,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void reloadVisitable() {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((TurbolinksActivity) getCurrentActivity()).reloadVisitable();
+                ((GenericActivity) getCurrentActivity()).reloadVisitable();
             }
         });
     }
@@ -117,7 +117,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void reloadSession() {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((TurbolinksActivity) getCurrentActivity()).reloadSession();
+                ((GenericActivity) getCurrentActivity()).reloadSession();
             }
         });
     }
@@ -148,7 +148,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void renderTitle(final String title, final String subtitle, int tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((TurbolinksActivity) getCurrentActivity()).renderTitle(title, subtitle);
+                ((GenericActivity) getCurrentActivity()).renderTitle(title, subtitle);
             }
         });
     }
@@ -157,7 +157,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void renderActions(final ReadableArray actions, int tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
-                TurbolinksActivity act = (TurbolinksActivity) getCurrentActivity();
+                GenericActivity act = (GenericActivity) getCurrentActivity();
                 act.setActions(Arguments.toList(actions));
                 act.invalidateOptionsMenu();
             }

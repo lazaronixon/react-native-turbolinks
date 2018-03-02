@@ -1,4 +1,4 @@
-package com.reactlibrary.util;
+package com.reactlibrary.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,17 +16,21 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.TurbolinksAction;
+import com.reactlibrary.util.TurbolinksRoute;
 
 import java.util.ArrayList;
 
-public abstract class TurbolinksActivity extends ReactAppCompatActivity {
+public abstract class GenericActivity extends ReactAppCompatActivity {
 
     private static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
     private static final String TURBOLINKS_TITLE_PRESS = "turbolinksTitlePress";
 
-    protected TurbolinksRoute route;
     protected Toolbar toolBar;
+    protected TurbolinksRoute route;
     protected boolean navigationBarHidden;
+
+    public abstract void reloadSession();
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -53,20 +57,28 @@ public abstract class TurbolinksActivity extends ReactAppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (isTaskRoot() || route.getModal()) {
+            backToHomeScreen(this);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public void renderTitle(String title, String subtitle) {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(subtitle);
     }
 
-    public void setActions(ArrayList<Bundle> actions) { route.setActions(actions); }
+    public void setActions(ArrayList<Bundle> actions) {
+        route.setActions(actions);
+    }
 
     public void renderComponent(TurbolinksRoute route, int tabIndex) {
     }
 
     public void reloadVisitable() {
-    }
-
-    public void reloadSession() {
     }
 
     public RCTDeviceEventEmitter getEventEmitter() {
