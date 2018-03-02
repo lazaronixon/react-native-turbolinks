@@ -5,19 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
-import com.basecamp.turbolinks.TurbolinksSession;
-import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
-import com.reactlibrary.react.ReactAppCompatActivity;
 import com.reactlibrary.util.TabbedView;
+import com.reactlibrary.util.TurbolinksActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksViewPager;
 
@@ -29,17 +25,14 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTES;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_SELECTED_INDEX;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 
-public class TabbedActivity extends ReactAppCompatActivity implements GenericActivity {
+public class TabbedActivity extends TurbolinksActivity {
 
     private TurbolinksViewPager viewPager;
     private BottomNavigationView bottomNav;
-    private Toolbar toolbar;
 
-    private HelperActivity helperAct;
     private ArrayList<Bundle> routes;
     private String messageHandler;
     private String userAgent;
-    private boolean navigationBarHidden;
     private int selectedIndex;
 
     @Override
@@ -47,67 +40,27 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
 
-        toolbar = findViewById(R.id.toolbar);
+        toolBar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.viewpager);
         bottomNav = findViewById(R.id.navigation);
 
-        helperAct = new HelperActivity(this);
-        routes = getIntent().getParcelableArrayListExtra(INTENT_ROUTES);
         selectedIndex = getIntent().getIntExtra(INTENT_SELECTED_INDEX, 0);
+        routes = getIntent().getParcelableArrayListExtra(INTENT_ROUTES);
+        route = new TurbolinksRoute(routes.get(selectedIndex));
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        helperAct.renderToolBar(toolbar);
-        helperAct.renderTitle();
+        renderToolBar();
+        handleTitlePress(TabbedActivity.class.getSimpleName(), null, null);
+
         setupViewPager();
         setupBottomNav();
     }
 
     @Override
     public void onBackPressed() {
-        helperAct.backToHomeScreen(this);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return helperAct.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return helperAct.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void renderTitle() {
-        helperAct.renderTitle();
-    }
-
-    @Override
-    public void handleTitlePress(Toolbar toolbar) {
-        helperAct.handleTitlePress(toolbar, TabbedActivity.class.getSimpleName(), null, null);
-    }
-
-    @Override
-    public boolean getNavigationBarHidden() {
-        return navigationBarHidden;
-    }
-
-    @Override
-    public RCTDeviceEventEmitter getEventEmitter() {
-        return helperAct.getEventEmitter();
-    }
-
-    @Override
-    public ReactInstanceManager getManager() {
-        return getReactInstanceManager();
-    }
-
-    @Override
-    public TurbolinksRoute getRoute() {
-        int index = viewPager.getCurrentItem();
-        return new TurbolinksRoute(routes.get(index));
+        backToHomeScreen(this);
     }
 
     @Override
@@ -117,14 +70,12 @@ public class TabbedActivity extends ReactAppCompatActivity implements GenericAct
     }
 
     @Override
-    public void reload() {
+    public void reloadVisitable() {
         getCurrentTabbedView().reload();
     }
 
-    @Override
     public void reloadSession() {
-        finish();
-        startActivity(getIntent());
+        restart();
     }
 
     public String getMessageHandler() {

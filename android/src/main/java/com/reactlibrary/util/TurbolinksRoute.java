@@ -3,11 +3,15 @@ package com.reactlibrary.util;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.common.ReactConstants;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class TurbolinksRoute implements Parcelable {
@@ -150,4 +154,5 @@ public class TurbolinksRoute implements Parcelable {
     public Bundle getTabIcon() {
         return tabIcon;
     }
+
 }

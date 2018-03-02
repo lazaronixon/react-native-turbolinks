@@ -15,9 +15,9 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
-import com.reactlibrary.activities.GenericActivity;
 import com.reactlibrary.activities.NativeActivity;
 import com.reactlibrary.activities.TabbedActivity;
+import com.reactlibrary.util.TurbolinksActivity;
 import com.reactlibrary.activities.WebActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 
@@ -37,7 +37,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_ROUTE = "intentRoute";
     public static final String INTENT_ROUTES = "intentRoutes";
     public static final String INTENT_SELECTED_INDEX = "intentSelectedIndex";
-
 
     private TurbolinksRoute prevRoute;
     private String messageHandler;
@@ -68,7 +67,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         runOnUiThread(new Runnable() {
             public void run() {
                 TurbolinksRoute tRoute = new TurbolinksRoute(route);
-                ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex);
+                ((TurbolinksActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex);
             }
         });
     }
@@ -109,7 +108,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void reloadVisitable() {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((GenericActivity) getCurrentActivity()).reload();
+                ((TurbolinksActivity) getCurrentActivity()).reloadVisitable();
             }
         });
     }
@@ -118,7 +117,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void reloadSession() {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((GenericActivity) getCurrentActivity()).reloadSession();
+                ((TurbolinksActivity) getCurrentActivity()).reloadSession();
             }
         });
     }
@@ -149,10 +148,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void renderTitle(final String title, final String subtitle, int tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
-                GenericActivity activity = (GenericActivity) getCurrentActivity();
-                activity.getRoute().setTitle(title);
-                activity.getRoute().setSubtitle(subtitle);
-                activity.renderTitle();
+                ((TurbolinksActivity) getCurrentActivity()).renderTitle(title, subtitle);
             }
         });
     }
@@ -161,10 +157,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void renderActions(final ReadableArray actions, int tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
-                GenericActivity act = (GenericActivity) getCurrentActivity();
-                Activity activity = (Activity) act;
-                act.getRoute().setActions(Arguments.toList(actions));
-                activity.invalidateOptionsMenu();
+                TurbolinksActivity act = (TurbolinksActivity) getCurrentActivity();
+                act.setActions(Arguments.toList(actions));
+                act.invalidateOptionsMenu();
             }
         });
     }

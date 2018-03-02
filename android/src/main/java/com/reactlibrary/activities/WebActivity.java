@@ -1,10 +1,7 @@
 package com.reactlibrary.activities;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
@@ -12,13 +9,11 @@ import android.webkit.WebView;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
-import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactlibrary.R;
-import com.reactlibrary.react.ReactAppCompatActivity;
+import com.reactlibrary.util.TurbolinksActivity;
 import com.reactlibrary.util.TurbolinksRoute;
 import com.reactlibrary.util.TurbolinksViewFrame;
 
@@ -31,7 +26,7 @@ import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
 import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
-public class WebActivity extends ReactAppCompatActivity implements GenericActivity, TurbolinksAdapter {
+public class WebActivity extends TurbolinksActivity implements TurbolinksAdapter {
 
     public static final int HTTP_FAILURE = 0;
     public static final int NETWORK_FAILURE = 1;
@@ -41,37 +36,24 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     public static final String TURBOLINKS_VISIT = "turbolinksVisit";
 
     private TurbolinksViewFrame turbolinksViewFrame;
-    private Toolbar toolbar;
-    private HelperActivity helperAct;
-    private TurbolinksRoute route;
     private String messageHandler;
     private String userAgent;
-    private boolean navigationBarHidden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
 
-        toolbar = findViewById(R.id.toolbar);
+        toolBar = findViewById(R.id.toolbar);
         turbolinksViewFrame = findViewById(R.id.turbolinks_view);
 
-        helperAct = new HelperActivity(this);
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
         navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
 
-        helperAct.renderToolBar(toolbar);
+        renderToolBar();
         visitTurbolinksView();
-    }
-
-    private void visitTurbolinksView() {
-        TurbolinksSession session = TurbolinksSession.getDefault(this);
-        WebSettings settings = session.getWebView().getSettings();
-        if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
-        if (userAgent != null) settings.setUserAgentString(userAgent);
-        session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
     }
 
     @Override
@@ -122,7 +104,8 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
 
     @Override
     public void visitCompleted() {
-        renderTitle();
+        renderTitle(route.getTitle(), route.getSubtitle());
+        handleTitlePress();
         handleVisitCompleted();
     }
 
@@ -137,55 +120,39 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
-            helperAct.backToHomeScreen(this);
+            backToHomeScreen(this);
         } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return helperAct.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return helperAct.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void renderTitle() {
+    public void renderTitle(String title, String subtitle) {
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        String title = route.getTitle() != null ? route.getTitle() : webView.getTitle();
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setSubtitle(route.getSubtitle());
+        String mTitle = title != null ? title : webView.getTitle();
+        getSupportActionBar().setTitle(mTitle);
+        getSupportActionBar().setSubtitle(subtitle);
     }
 
     @Override
-    public RCTDeviceEventEmitter getEventEmitter() {
-        return helperAct.getEventEmitter();
-    }
-
-    @Override
-    public ReactInstanceManager getManager() {
-        return getReactInstanceManager();
-    }
-
-    @Override
-    public void handleTitlePress(Toolbar toolbar) {
-        try {
-            WebView webView = TurbolinksSession.getDefault(this).getWebView();
-            URL urlLocation = new URL(webView.getUrl());
-            helperAct.handleTitlePress(toolbar, null, urlLocation.toString(), urlLocation.getPath());
-        } catch (MalformedURLException e) {
-            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
-        }
+    public void reloadVisitable() {
+        turbolinksViewFrame.reload(TurbolinksSession.getDefault(this), route.getUrl());
     }
 
     @Override
     public void reloadSession() {
         TurbolinksSession.getDefault(this).resetToColdBoot();
         TurbolinksSession.getDefault(this).visit(route.getUrl());
+    }
+
+    @Override
+    public void renderComponent(TurbolinksRoute route, int tabIndex) {
+        turbolinksViewFrame.renderComponent(getReactInstanceManager(), route);
+    }
+
+    @JavascriptInterface
+    public void postMessage(String message) {
+        getEventEmitter().emit(TURBOLINKS_MESSAGE, message);
     }
 
     private void handleVisitCompleted() {
@@ -208,28 +175,22 @@ public class WebActivity extends ReactAppCompatActivity implements GenericActivi
         });
     }
 
-    @Override
-    public TurbolinksRoute getRoute() {
-        return route;
+    private void handleTitlePress() {
+        try {
+            WebView webView = TurbolinksSession.getDefault(this).getWebView();
+            URL urlLocation = new URL(webView.getUrl());
+            handleTitlePress(null, urlLocation.toString(), urlLocation.getPath());
+        } catch (MalformedURLException e) {
+            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+        }
     }
 
-    @Override
-    public void renderComponent(TurbolinksRoute route, int tabIndex) {
-        turbolinksViewFrame.renderComponent(getReactInstanceManager(), route);
+    private void visitTurbolinksView() {
+        TurbolinksSession session = TurbolinksSession.getDefault(this);
+        WebSettings settings = session.getWebView().getSettings();
+        if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
+        if (userAgent != null) settings.setUserAgentString(userAgent);
+        session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
     }
 
-    @Override
-    public void reload() {
-        turbolinksViewFrame.reload(TurbolinksSession.getDefault(this), route.getUrl());
-    }
-
-    @Override
-    public boolean getNavigationBarHidden() {
-        return navigationBarHidden;
-    }
-
-    @JavascriptInterface
-    public void postMessage(String message) {
-        getEventEmitter().emit(TURBOLINKS_MESSAGE, message);
-    }
 }
