@@ -18,7 +18,7 @@ class MyScene extends Component {
 
   handleAuthenticated = () => {
     Turbolinks.dismiss()
-    requestAnimationFrame(() => Turbolinks.reloadSession())
+    setTimeout(() => Turbolinks.reloadSession(), 500)
   }
 
   handleNavigationStateChange = (navState) => {

@@ -9,7 +9,7 @@ export default class AuthenticationView extends Component {
 
   handleAuthenticated = () => {
     Turbolinks.dismiss()
-    requestAnimationFrame(() => Turbolinks.reloadSession())
+    setTimeout(() => Turbolinks.reloadSession(), 500)
   }
 
   handleNavigationStateChange = (navState) => {
