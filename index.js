@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
 import { NativeEventEmitter, NativeModules, processColor } from 'react-native'
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager || NativeModules.RNTurbolinksModule
