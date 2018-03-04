@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, Platform, View, Button, Text, StyleSheet }from 'react-native'
+import { View, Button, Text, StyleSheet } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
 
 export default class ErrorView extends Component {
