@@ -3,6 +3,8 @@ import { Platform }from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
 import Constants from './Constants';
 
+require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false
+
 export default class App extends Component {
 
   componentDidMount() {
