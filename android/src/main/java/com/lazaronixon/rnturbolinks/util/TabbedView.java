@@ -66,6 +66,7 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
             addView(this.turbolinksViewFrame);
         } else {
             ReactRootView nativeView = new ReactRootView(getContext());
+            nativeView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             nativeView.startReactApplication(manager, route.getComponent(), route.getPassProps());
             addView(nativeView);
         }
