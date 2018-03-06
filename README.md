@@ -188,8 +188,8 @@ Removes the listener for given event.
 ## TODO
 
 - [x] ![Third party library](https://github.com/lazaronixon/react-native-form-sheet) to provide native dialogs. Using ![MZFormSheetPresentationController
-](https://github.com/m1entus/MZFormSheetPresentationController) and ![Dialogs](https://developer.android.com/guide/topics/ui/dialogs.html).
-- [ ] ![Segmented Controls](https://developer.apple.com/ios/human-interface-guidelines/controls/segmented-controls/)
+](https://github.com/m1entus/MZFormSheetPresentationController) and [Dialogs](https://developer.android.com/guide/topics/ui/dialogs.html).
+- [ ] [Segmented Controls](https://developer.apple.com/ios/human-interface-guidelines/controls/segmented-controls/)
 
 ## Resources
 
