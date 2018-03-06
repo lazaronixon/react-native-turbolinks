@@ -14,7 +14,7 @@ import android.view.ViewGroup.LayoutParams;
 import com.lazaronixon.rnturbolinks.util.TabbedView;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import com.lazaronixon.rnturbolinks.util.TurbolinksViewPager;
-import com.reactlibrary.R;
+import com.lazaronixon.rnturbolinks.R;
 
 import java.util.ArrayList;
 

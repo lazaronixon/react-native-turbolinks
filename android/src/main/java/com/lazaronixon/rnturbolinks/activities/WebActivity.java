@@ -14,7 +14,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import com.lazaronixon.rnturbolinks.util.TurbolinksViewFrame;
-import com.reactlibrary.R;
+import com.lazaronixon.rnturbolinks.R;
 
 import java.net.MalformedURLException;
 import java.net.URL;

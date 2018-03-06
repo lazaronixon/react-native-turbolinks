@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactRootView;
-import com.reactlibrary.R;
+import com.lazaronixon.rnturbolinks.R;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
