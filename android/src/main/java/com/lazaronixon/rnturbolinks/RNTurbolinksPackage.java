@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.lazaronixon.rnturbolinks;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

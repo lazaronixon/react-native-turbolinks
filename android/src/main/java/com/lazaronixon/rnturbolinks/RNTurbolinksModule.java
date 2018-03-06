@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.lazaronixon.rnturbolinks;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,11 +15,11 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
-import com.reactlibrary.activities.NativeActivity;
-import com.reactlibrary.activities.TabbedActivity;
-import com.reactlibrary.activities.GenericActivity;
-import com.reactlibrary.activities.WebActivity;
-import com.reactlibrary.util.TurbolinksRoute;
+import com.lazaronixon.rnturbolinks.activities.NativeActivity;
+import com.lazaronixon.rnturbolinks.activities.TabbedActivity;
+import com.lazaronixon.rnturbolinks.activities.GenericActivity;
+import com.lazaronixon.rnturbolinks.activities.WebActivity;
+import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.facebook.react.bridge.UiThreadUtil.runOnUiThread;
-import static com.reactlibrary.util.TurbolinksRoute.ACTION_REPLACE;
+import static com.lazaronixon.rnturbolinks.util.TurbolinksRoute.ACTION_REPLACE;
 
 public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 

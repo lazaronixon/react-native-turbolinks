@@ -1,4 +1,4 @@
-package com.reactlibrary.util;
+package com.lazaronixon.rnturbolinks.util;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

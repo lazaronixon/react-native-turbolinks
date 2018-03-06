@@ -1,4 +1,4 @@
-package com.reactlibrary.activities;
+package com.lazaronixon.rnturbolinks.activities;
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -11,18 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
+import com.lazaronixon.rnturbolinks.util.TabbedView;
+import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
+import com.lazaronixon.rnturbolinks.util.TurbolinksViewPager;
 import com.reactlibrary.R;
-import com.reactlibrary.util.TabbedView;
-import com.reactlibrary.util.TurbolinksRoute;
-import com.reactlibrary.util.TurbolinksViewPager;
 
 import java.util.ArrayList;
 
-import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
-import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
-import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTES;
-import static com.reactlibrary.RNTurbolinksModule.INTENT_SELECTED_INDEX;
-import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTES;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_SELECTED_INDEX;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
 
 public class TabbedActivity extends GenericActivity {
 

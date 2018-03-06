@@ -1,4 +1,4 @@
-package com.reactlibrary.react; /**
+package com.lazaronixon.rnturbolinks.react; /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *

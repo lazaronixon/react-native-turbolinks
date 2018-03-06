@@ -1,4 +1,4 @@
-package com.reactlibrary.util;
+package com.lazaronixon.rnturbolinks.util;
 
 import android.os.Bundle;
 import android.os.Parcel;

@@ -1,4 +1,4 @@
-package com.reactlibrary.activities;
+package com.lazaronixon.rnturbolinks.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,17 +12,17 @@ import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
+import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
+import com.lazaronixon.rnturbolinks.util.TurbolinksViewFrame;
 import com.reactlibrary.R;
-import com.reactlibrary.util.TurbolinksRoute;
-import com.reactlibrary.util.TurbolinksViewFrame;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.reactlibrary.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
-import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
-import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
-import static com.reactlibrary.RNTurbolinksModule.INTENT_USER_AGENT;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
 public class WebActivity extends GenericActivity implements TurbolinksAdapter {

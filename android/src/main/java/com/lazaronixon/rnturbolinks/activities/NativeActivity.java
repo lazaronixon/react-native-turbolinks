@@ -1,4 +1,4 @@
-package com.reactlibrary.activities;
+package com.lazaronixon.rnturbolinks.activities;
 
 import android.os.Bundle;
 
@@ -6,8 +6,8 @@ import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactRootView;
 import com.reactlibrary.R;
 
-import static com.reactlibrary.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
-import static com.reactlibrary.RNTurbolinksModule.INTENT_ROUTE;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 
 public class NativeActivity extends GenericActivity {
 

@@ -1,4 +1,4 @@
-package com.reactlibrary.activities;
+package com.lazaronixon.rnturbolinks.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,9 +15,9 @@ import android.view.View;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
-import com.reactlibrary.react.ReactAppCompatActivity;
-import com.reactlibrary.util.TurbolinksAction;
-import com.reactlibrary.util.TurbolinksRoute;
+import com.lazaronixon.rnturbolinks.react.ReactAppCompatActivity;
+import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
+import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import java.util.ArrayList;
 

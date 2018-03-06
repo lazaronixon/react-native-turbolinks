@@ -1,5 +1,5 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-package com.reactlibrary.react;
+package com.lazaronixon.rnturbolinks.react;
 
 
 

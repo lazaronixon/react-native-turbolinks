@@ -1,4 +1,4 @@
-package com.reactlibrary.util;
+package com.lazaronixon.rnturbolinks.util;
 
 import android.content.Context;
 import android.os.Build;
@@ -17,16 +17,16 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
-import com.reactlibrary.activities.TabbedActivity;
+import com.lazaronixon.rnturbolinks.activities.TabbedActivity;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.reactlibrary.activities.WebActivity.HTTP_FAILURE;
-import static com.reactlibrary.activities.WebActivity.NETWORK_FAILURE;
-import static com.reactlibrary.activities.WebActivity.TURBOLINKS_ERROR;
-import static com.reactlibrary.activities.WebActivity.TURBOLINKS_MESSAGE;
-import static com.reactlibrary.activities.WebActivity.TURBOLINKS_VISIT;
+import static com.lazaronixon.rnturbolinks.activities.WebActivity.HTTP_FAILURE;
+import static com.lazaronixon.rnturbolinks.activities.WebActivity.NETWORK_FAILURE;
+import static com.lazaronixon.rnturbolinks.activities.WebActivity.TURBOLINKS_ERROR;
+import static com.lazaronixon.rnturbolinks.activities.WebActivity.TURBOLINKS_MESSAGE;
+import static com.lazaronixon.rnturbolinks.activities.WebActivity.TURBOLINKS_VISIT;
 
 public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
