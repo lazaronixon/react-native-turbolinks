@@ -89,8 +89,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void visitTabBar(ReadableArray routes, int selectedIndex) {
-        ReactContext context = getReactApplicationContext();
-        Intent intent = new Intent(getReactApplicationContext(), TabbedActivity.class);
+        Activity act = getCurrentActivity();
+        Intent intent = new Intent(act, TabbedActivity.class);
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
@@ -101,7 +101,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
         TurbolinksSession.resetDefault();
-        context.startActivity(intent);
+        act.startActivity(intent);
     }
 
     @ReactMethod
