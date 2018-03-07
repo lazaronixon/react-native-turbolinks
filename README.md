@@ -1,5 +1,5 @@
 # React Native Turbolinks
-A implementation of ![Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and ![Turbolinks Android](https://github.com/turbolinks/turbolinks-android) for React Native.
+A implementation of [Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and [Turbolinks Android](https://github.com/turbolinks/turbolinks-android) for React Native.
 
 ![React Native Turbolinks](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/intro-turbolinks.gif)
 
@@ -18,14 +18,14 @@ Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode E
 [Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
 
 ### Installation Android
-Change the variables below on ![/android/app/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/build.gradle):
+Change the variables below on [/android/app/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/build.gradle):
 - compileSdkVersion 27
 - buildToolsVersion "27.0.3"
 - minSdkVersion 19
 - targetSdkVersion 27
 - compile "com.android.support:appcompat-v7:27.0.2"
 
-Add google repository on ![/android/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/build.gradle):
+Add google repository on [/android/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/build.gradle):
 ```
 maven {
     url 'https://maven.google.com/'
@@ -36,7 +36,7 @@ maven {
 On android you should use `Volume UP` to show Developer Menu instead `⌘ M`.
 
 ### Warning
-This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the ![guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
+This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the [guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
 
 ## Basic Usage
 ```javascript
@@ -129,10 +129,10 @@ Dismiss a overlaped view presented by visiting a component with modal option.
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
 #### `setNavigationBarStyle({titleTextColor, subtitleTextColor, barTintColor, tintColor})`(iOS Only)
-Set style for navigation bar on iOS. For android set your style on ![android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
+Set style for navigation bar on iOS. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `setLoadingStyle({color, backgroundColor})` (iOS Only)
-Set style for Activity Indicator View. For android set your style on ![android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
+Set style for Activity Indicator View. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `setNavigationBarHidden(boolean)`
 Hidden navigation bar. For example if you want to use a web navbar. (Default false)
@@ -144,7 +144,7 @@ A tab bar appears at the bottom of an app screen and provides the ability to qui
 - `selectedIndex:` Index for initial selected view. (Default 0).
 
 #### `setTabBarStyle({barTintColor, tintColor})` (iOS Only)
-Set style for TabBar. For android set your style on ![android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
+Set style for TabBar. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `renderTitle(title)`
 #### `renderTitle(title, subtitle)`
@@ -187,7 +187,7 @@ Removes the listener for given event.
 
 ## TODO
 
-- [x] ![Third party library](https://github.com/lazaronixon/react-native-form-sheet) to provide native dialogs. Using ![MZFormSheetPresentationController
+- [x] [Third party library](https://github.com/lazaronixon/react-native-form-sheet) to provide native dialogs. Using [MZFormSheetPresentationController
 ](https://github.com/m1entus/MZFormSheetPresentationController) and [Dialogs](https://developer.android.com/guide/topics/ui/dialogs.html).
 - [ ] [Segmented Controls](https://developer.apple.com/ios/human-interface-guidelines/controls/segmented-controls/)
 
