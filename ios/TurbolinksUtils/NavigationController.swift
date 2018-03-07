@@ -13,7 +13,6 @@ class NavigationController: UINavigationController {
         self.session.delegate = manager
         self.session.webView.uiDelegate = self
         self.session.injectSharedCookies()
-        if (manager.userAgent != nil) { self.session.webView.customUserAgent = manager.userAgent }
     }
     
     required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {
@@ -25,6 +24,7 @@ class NavigationController: UINavigationController {
     fileprivate func setupWebView(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
         let webConfig = WKWebViewConfiguration()
         if (manager.messageHandler != nil) { webConfig.userContentController.add(manager, name: manager.messageHandler!) }
+        if (manager.userAgent != nil) { webConfig.applicationNameForUserAgent = manager.userAgent }
         webConfig.processPool = manager.processPool
         return webConfig
     }

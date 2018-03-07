@@ -179,8 +179,9 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
     private void visitTurbolinksView() {
         TurbolinksSession session = TurbolinksSession.getDefault(this);
         WebSettings settings = session.getWebView().getSettings();
+        String ua = settings.getUserAgentString();
         if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
-        if (userAgent != null) { settings.setUserAgentString(userAgent); }
+        if (userAgent != null && !ua.endsWith(userAgent)) { settings.setUserAgentString(ua.concat(" " + userAgent)); }
         session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
     }
 
