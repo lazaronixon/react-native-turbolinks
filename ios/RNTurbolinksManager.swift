@@ -45,7 +45,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func reloadSession() -> Void {
-        session.injectSharedCookies()
         session.reload()
     }
     
