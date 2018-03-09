@@ -4,26 +4,43 @@ import Turbolinks
 class TurbolinksSession: Session {
     
     var index: Int!
+    fileprivate var webViewCookie: WKWebView!
     
     required convenience init(_ webViewConfiguration: WKWebViewConfiguration,_ index: Int) {
         self.init(webViewConfiguration: webViewConfiguration)
         self.index = index
         self.webView.uiDelegate = self
-        self.injectCookies()
+        self.webViewCookie = WKWebView(frame: .zero, configuration: webViewConfiguration)
     }
     
     override func reload() {
-        self.injectCookies()
+        injectCookies()
         super.reload()
     }
     
     fileprivate func injectCookies() {
-        if #available(iOS 11.0, *) {
-            guard let sharedCookies = HTTPCookieStorage.shared.cookies else { return }
-            let websiteDataStore = webView.configuration.websiteDataStore
-            let httpCookieStore = websiteDataStore.httpCookieStore
-            for cookie in sharedCookies { httpCookieStore.setCookie(cookie) }
+        var isEvaluatingJavaScript = true
+        guard let visitableURL = topmostVisitable?.visitableURL else { return }
+        guard let sharedCookies = HTTPCookieStorage.shared.cookies(for: visitableURL) else { return }
+        webViewCookie.loadHTMLString("<html><body></body></html>", baseURL: visitableURL)
+        while webViewCookie.isLoading { RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture) }
+        webViewCookie.evaluateJavaScript(getJSCookie(sharedCookies)){ (r, e) in isEvaluatingJavaScript = false }
+        while isEvaluatingJavaScript { RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture) }
+    }
+    
+    fileprivate func getJSCookie(_ cookies: [HTTPCookie]) -> String {
+        var result = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss zzz"
+        for cookie in cookies {
+            result += "document.cookie='\(cookie.name)=\(cookie.value); domain=\(cookie.domain); path=\(cookie.path); "
+            if let date = cookie.expiresDate { result += "expires=\(dateFormatter.string(from: date)); " }
+            if (cookie.isSecure) { result += "secure; " }
+            result += "'; "
         }
+        return result
     }
 }
 
