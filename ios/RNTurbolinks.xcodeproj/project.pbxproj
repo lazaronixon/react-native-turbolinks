@@ -18,7 +18,6 @@
 		87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */; };
 		87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2DA2015946400FA5A46 /* NativeViewController.swift */; };
 		87BFAD8020195D4E0063FCDF /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BFAD7F20195D4E0063FCDF /* TitleView.swift */; };
-		87F5553E201E9C1200FCC40C /* TurbolinksHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5553D201E9C1200FCC40C /* TurbolinksHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,7 +46,6 @@
 		87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksRoute.swift; sourceTree = "<group>"; };
 		87B4C2DA2015946400FA5A46 /* NativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeViewController.swift; sourceTree = "<group>"; };
 		87BFAD7F20195D4E0063FCDF /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
-		87F5553D201E9C1200FCC40C /* TurbolinksHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +70,6 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				87F5553D201E9C1200FCC40C /* TurbolinksHelper.swift */,
 				87BFAD82201A06E70063FCDF /* TurbolinksModels */,
 				87BFAD81201A06990063FCDF /* TurbolinksViews */,
 				8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */,
@@ -165,7 +162,6 @@
 			files = (
 				87441D5E2037935400C938EC /* TurbolinksSession.swift in Sources */,
 				87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */,
-				87F5553E201E9C1200FCC40C /* TurbolinksHelper.swift in Sources */,
 				87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */,
 				877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */,
 				876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */,

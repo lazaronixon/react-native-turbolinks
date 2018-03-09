@@ -28,13 +28,19 @@ class TurbolinksSession: Session {
 }
 
 extension TurbolinksSession: WKUIDelegate {
+    
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let confirm = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let cancel = TurbolinksHelper.getUIKitLocalizedString("Cancel")
-        let ok = TurbolinksHelper.getUIKitLocalizedString("OK")
+        let cancel = getUIKitLocalizedString("Cancel")
+        let ok = getUIKitLocalizedString("OK")
         confirm.addAction(UIAlertAction(title: cancel, style: .cancel) { (action) in completionHandler(false) })
         confirm.addAction(UIAlertAction(title: ok, style: .default) { (action) in completionHandler(true) })
         topController.present(confirm, animated: true)
+    }
+    
+    fileprivate func getUIKitLocalizedString(_ key: String) -> String {
+        let bundle = Bundle(identifier: "com.apple.UIKit")!
+        return bundle.localizedString(forKey: key, value: nil, table: nil)
     }
     
     fileprivate var topController: UIViewController {
