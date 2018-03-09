@@ -44,9 +44,9 @@ class WebViewController: Turbolinks.VisitableViewController {
     fileprivate func handleVisitCompleted() {
         let navController = self.navigationController as! NavigationController
         let javaScriptString = "document.documentElement.outerHTML"
-        visitableView.webView!.evaluateJavaScript(javaScriptString, completionHandler: { (document, error) in
-            self.manager.handleVisitCompleted(self.visitableURL, document as! String, navController.index)
-        })
+        visitableView.webView!.evaluateJavaScript(javaScriptString) { (r, e) in
+            self.manager.handleVisitCompleted(self.visitableURL, r as! String, navController.index)
+        }
     }
     
     fileprivate func fixScrollWebView() {
