@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform }from 'react-native'
+import { Platform, View } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
 import Constants from './Constants';
 
