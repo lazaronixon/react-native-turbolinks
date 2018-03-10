@@ -13,7 +13,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route
-        self.renderLoadingStyle()
         self.renderActions()
         self.renderBackButton()
         self.renderLeftButton()
@@ -37,8 +36,12 @@ class WebViewController: Turbolinks.VisitableViewController {
     }
     
     fileprivate func renderLoadingStyle() {
-        visitableView.activityIndicatorView.backgroundColor = manager.loadingBackgroundColor ?? .white
-        visitableView.activityIndicatorView.color = manager.loadingColor ?? .gray
+        let loadingBackgroundColor = manager.loadingBackgroundColor ?? .white
+        let loadingColor = manager.loadingColor ?? .gray
+        visitableView.activityIndicatorView.color = loadingColor
+        visitableView.refreshControl.tintColor = loadingColor
+        visitableView.activityIndicatorView.backgroundColor = loadingBackgroundColor
+        visitableView.webView!.scrollView.backgroundColor = loadingBackgroundColor
     }
     
     fileprivate func handleVisitCompleted() {
@@ -56,6 +59,11 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     fileprivate func setWebViewTitle() {
         navigationItem.title = visitableView.webView?.title
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        renderLoadingStyle()
     }
     
     override func visitableDidRender() {
