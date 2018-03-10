@@ -8,6 +8,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
     var loadingBackgroundColor: UIColor?
+    var barTintColor: UIColor?
+    var tintColor: UIColor?
     var loadingColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
@@ -72,10 +74,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
-        let barTintColor = RCTConvert.uiColor(style["barTintColor"])
-        let tintColor = RCTConvert.uiColor(style["tintColor"])
-        if barTintColor != nil { navigation.navigationBar.barTintColor = barTintColor }
-        if tintColor != nil { navigation.navigationBar.tintColor = tintColor }
+        barTintColor = RCTConvert.uiColor(style["barTintColor"])
+        tintColor = RCTConvert.uiColor(style["tintColor"])
         titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
         subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
     }
@@ -161,7 +161,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         if !initial { return }
         tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
-        tabBarController.viewControllers = [NavigationController(self, 0)]
+        tabBarController.viewControllers = [NavigationController(self, 0)]        
         rootViewController.dismiss(animated: false)
         rootViewController.present(tabBarController, animated: false)
     }

@@ -11,6 +11,8 @@ class NavigationController: UINavigationController {
         self.index = tabIndex
         self.session = TurbolinksSession(setupWebView(manager), tabIndex)
         self.session.delegate = manager
+        if manager.barTintColor != nil { navigationBar.barTintColor = manager.barTintColor }
+        if manager.tintColor != nil { navigationBar.tintColor = manager.tintColor }
     }
     
     required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {
