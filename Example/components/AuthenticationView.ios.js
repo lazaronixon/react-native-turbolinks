@@ -3,6 +3,8 @@ import { NavigatorIOS, WebView } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
 import Constants from './Constants';
 
+const signInUrl = Constants.baseUrl + '/sign-in'
+
 export default class AuthenticationView extends Component {
 
   render() {
@@ -14,22 +16,17 @@ export default class AuthenticationView extends Component {
 
 class MyScene extends Component {
 
-  state = { url: Constants.baseUrl + '/sign-in' }
-
-  handleAuthenticated = () => {
-    setTimeout(() => Turbolinks.reloadSession(), 1000)
+  handleAuthentication = (navState) => {
+    if (navState.url == signInUrl) return true
     Turbolinks.dismiss()
-  }
-
-  handleNavigationStateChange = (navState) => {
-    if (this.state.url != navState.url) { this.handleAuthenticated() }
-    this.setState({ url: navState.url })
+    setTimeout(() => Turbolinks.reloadSession(), 800)
+    return false
   }
 
   render() {
     return (
-        <WebView source={{uri: this.state.url }}
-                 onNavigationStateChange={this.handleNavigationStateChange}/>
+        <WebView source={{uri: signInUrl}}
+                 onShouldStartLoadWithRequest={this.handleAuthentication}/>
     )
   }
 }
