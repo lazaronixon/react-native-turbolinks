@@ -13,6 +13,7 @@ class NavigationController: UINavigationController {
         self.session.delegate = manager
         if manager.barTintColor != nil { navigationBar.barTintColor = manager.barTintColor }
         if manager.tintColor != nil { navigationBar.tintColor = manager.tintColor }
+        if manager.navigationBarHidden != nil { navigationBar.isHidden = manager.navigationBarHidden! }
     }
     
     required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {

@@ -17,8 +17,8 @@ class MyScene extends Component {
   state = { url: Constants.baseUrl + '/sign-in' }
 
   handleAuthenticated = () => {
+    setTimeout(() => Turbolinks.reloadSession(), 1000)
     Turbolinks.dismiss()
-    setTimeout(() => Turbolinks.reloadSession(), 500)
   }
 
   handleNavigationStateChange = (navState) => {

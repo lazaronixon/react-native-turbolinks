@@ -13,6 +13,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var loadingColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
+    var navigationBarHidden: Bool?
     var processPool = WKProcessPool()
     
     fileprivate var application: UIApplication {
@@ -88,7 +89,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) -> Void {
-        navigation.isNavigationBarHidden  = navigationBarHidden
+        self.navigationBarHidden = navigationBarHidden
     }
     
     @objc func setUserAgent(_ userAgent: String) -> Void {

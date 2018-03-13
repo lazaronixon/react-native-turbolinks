@@ -52,7 +52,7 @@ class Turbolinks {
     })
   }
 
-  static setNavigationBarHidden(isHidden) {
+  static setNavigationBarHidden(isHidden = false) {
     RNTurbolinksManager.setNavigationBarHidden(isHidden)
   }
 
