@@ -125,6 +125,9 @@ Reload current session and (inject shared cookies on turbolinks before it (iOS >
 #### `dismiss()`
 Dismiss a overlaped view presented by visiting a component with modal option.
 
+#### `popToRoot()`
+Back until to root view.
+
 #### `back()`
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
