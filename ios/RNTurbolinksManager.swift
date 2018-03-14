@@ -55,6 +55,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         navigation.dismiss(animated: true)
     }
     
+    @objc func popToRoot() -> Void {
+        navigation.popToRootViewController(animated: true)
+    }
+    
     @objc func back() -> Void {
         navigation.popViewController(animated: true)
     }

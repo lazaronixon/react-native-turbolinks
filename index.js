@@ -22,6 +22,10 @@ class Turbolinks {
     RNTurbolinksManager.dismiss()
   }
 
+  static popToRoot() {
+    RNTurbolinksManager.popToRoot()
+  }
+
   static back() {
     RNTurbolinksManager.back()
   }

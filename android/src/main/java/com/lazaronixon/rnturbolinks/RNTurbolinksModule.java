@@ -8,16 +8,15 @@ import android.util.Log;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
+import com.lazaronixon.rnturbolinks.activities.GenericActivity;
 import com.lazaronixon.rnturbolinks.activities.NativeActivity;
 import com.lazaronixon.rnturbolinks.activities.TabbedActivity;
-import com.lazaronixon.rnturbolinks.activities.GenericActivity;
 import com.lazaronixon.rnturbolinks.activities.WebActivity;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
@@ -42,6 +41,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private String messageHandler;
     private String userAgent;
     private boolean navigationBarHidden = false;
+    private Intent initialIntent;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -100,6 +100,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
+        initialIntent = intent;
         TurbolinksSession.resetDefault();
         act.startActivity(intent);
     }
@@ -126,6 +127,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void dismiss() {
         getCurrentActivity().finish();
     }
+
+    @ReactMethod
+    public void popToRoot() { getCurrentActivity().startActivity(initialIntent); }
 
     @ReactMethod
     public void back() {
@@ -189,6 +193,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                if (isInitial) initialIntent = intent;
                 if (isInitial) TurbolinksSession.resetDefault();
                 act.startActivity(intent);
                 if (isActionReplace) act.finish();
@@ -213,6 +218,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        if (isInitial) initialIntent = intent;
         if (isInitial) TurbolinksSession.resetDefault();
         act.startActivity(intent);
         if (isActionReplace) act.finish();
