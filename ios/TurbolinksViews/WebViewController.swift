@@ -13,9 +13,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         self.init(url: route.url!)
         self.manager = manager
         self.route = route
-        self.renderActions()
-        self.renderBackButton()
-        self.renderLeftButton()
     }
 
     func renderComponent(_ route: TurbolinksRoute) {
@@ -63,6 +60,9 @@ class WebViewController: Turbolinks.VisitableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        renderBackButton()
+        renderLeftButton()
+        renderActions()
         renderLoadingStyle()
     }
     

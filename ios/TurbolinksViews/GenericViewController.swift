@@ -31,6 +31,7 @@ extension GenricViewController where Self: UIViewController {
     func renderLeftButton() {
         guard let icon = route.leftButtonIcon else { return }
         let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+        if (navigationController!.viewControllers.count != 1) { button.imageInsets = UIEdgeInsetsMake(0, -10, 0, 0) }
         navigationItem.leftBarButtonItem = button
     }
     

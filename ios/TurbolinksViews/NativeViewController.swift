@@ -10,11 +10,15 @@ class NativeViewController: UIViewController {
         self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         self.manager = manager
         self.route = route
-        self.renderTitle()
-        self.renderActions()
-        self.renderBackButton()
-        self.renderLeftButton()
-    }    
+    }
+    
+    override func viewDidLoad() {
+        renderTitle()
+        renderActions()
+        renderBackButton()
+        renderLeftButton()
+    }
+    
 }
 
 extension NativeViewController: GenricViewController {
