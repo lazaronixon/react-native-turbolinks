@@ -257,6 +257,20 @@
 			remoteGlobalIDString = 3DBE0D0D1F3B181C0099AA32;
 			remoteInfo = "fishhook-tvOS";
 		};
+		87733ED6205BF73000036C66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBF21BDC1FC498900052F4D5;
+			remoteInfo = jsinspector;
+		};
+		87733ED8205BF73000036C66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
+			remoteInfo = "jsinspector-tvOS";
+		};
 		87BF82B21FE7409E00855075 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -521,6 +535,8 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
+				87733ED7205BF73000036C66 /* libjsinspector.a */,
+				87733ED9205BF73000036C66 /* libjsinspector-tvOS.a */,
 				87BF82B31FE7409E00855075 /* libthird-party.a */,
 				87BF82B51FE7409E00855075 /* libthird-party.a */,
 				87BF82B71FE7409E00855075 /* libdouble-conversion.a */,
@@ -612,14 +628,6 @@
 				4C8E907A206E408ABF70AF32 /* libRNTurbolinks.a */,
 			);
 			name = "Recovered References";
-			sourceTree = "<group>";
-		};
-		872670FE20365E0900820B01 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8726712720365E0A00820B01 /* libRNTurbolinks.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		876100901FF0153200C90539 /* Frameworks */ = {
@@ -1021,6 +1029,20 @@
 			remoteRef = 871703381FE611F000BD9B9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		87733ED7205BF73000036C66 /* libjsinspector.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsinspector.a;
+			remoteRef = 87733ED6205BF73000036C66 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		87733ED9205BF73000036C66 /* libjsinspector-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsinspector-tvOS.a";
+			remoteRef = 87733ED8205BF73000036C66 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		87BF82B31FE7409E00855075 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1275,6 +1297,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1309,6 +1332,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
