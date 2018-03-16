@@ -7,12 +7,16 @@ class NativeViewController: UIViewController {
     
     convenience required init(_ manager: RNTurbolinksManager,_ route: TurbolinksRoute) {
         self.init()
-        self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
         self.manager = manager
         self.route = route
     }
     
+    override func loadView() {
+        self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
+    }
+    
     override func viewDidLoad() {
+        super.viewDidLoad()
         renderTitle()
         renderActions()
         renderBackButton()

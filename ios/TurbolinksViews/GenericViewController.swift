@@ -46,7 +46,6 @@ extension GenricViewController where Self: UIViewController {
     
     func presentActions(_ sender: UIBarButtonItem) {
         if route.actions == nil { return }
-        let actionsView = ActionsViewController(manager, route, sender)
-        present(actionsView, animated: true)
+        present(ActionsViewController(manager, route, sender), animated: true)
     }
 }
