@@ -116,7 +116,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
         let visitable = view as! GenricViewController
         visitable.route.actions = actions
-        visitable.renderActions()
     }
     
     @objc func visitTabBar(_ routes: Array<Dictionary<AnyHashable, Any>>,_ selectedIndex: Int) {
