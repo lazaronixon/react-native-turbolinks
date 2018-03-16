@@ -12,6 +12,7 @@ class ActionsViewController: UITableViewController {
         self.init()
         self.manager = manager
         self.route = route
+        self.route.actions = route.actions!.filter({ TurbolinksAction($0).button == false })
         self.tableView.rowHeight = CGFloat(defaultRowHeight)
         self.tableView.isScrollEnabled = false
         self.modalPresentationStyle = .popover;

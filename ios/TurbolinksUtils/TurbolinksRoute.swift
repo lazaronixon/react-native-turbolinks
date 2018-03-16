@@ -20,7 +20,7 @@ class TurbolinksRoute {
         self.action = Action.init(rawValue: action ?? "advance")!
         self.url = RCTConvert.nsurl(route["url"])
         self.component = RCTConvert.nsString(route["component"])
-        self.modal = RCTConvert.bool(route["modal"]) || false
+        self.modal = RCTConvert.bool(route["modal"])
         self.passProps = RCTConvert.nsDictionary(route["passProps"])
         self.actions = RCTConvert.nsDictionaryArray(route["actions"])
         self.leftButtonIcon = RCTConvert.uiImage(route["leftButtonIcon"])
