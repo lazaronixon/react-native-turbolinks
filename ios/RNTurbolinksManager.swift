@@ -146,7 +146,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
         let viewController = NativeViewController(self, route)
-        if route.modal! {
+        if route.modal {
             navigation.present(viewController, animated: true)
         } else if route.action == .Advance {
             navigation.pushViewController(viewController, animated: true)

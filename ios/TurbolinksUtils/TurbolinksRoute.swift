@@ -6,7 +6,7 @@ class TurbolinksRoute {
     var action: Action?
     var url: URL?
     var component: String?
-    var modal: Bool?
+    var modal: Bool = false
     var passProps: Dictionary<AnyHashable, Any>?
     var actions: Array<Dictionary<AnyHashable, Any>>?
     var leftButtonIcon: UIImage?
