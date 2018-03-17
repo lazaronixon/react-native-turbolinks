@@ -6,6 +6,8 @@ class NavigationController: UINavigationController {
     var session: TurbolinksSession!
     var index: Int!
     
+    var isAtRoot: Bool { return viewControllers.count == 1 }
+    
     required convenience init(_ manager: RNTurbolinksManager,_ tabIndex: Int) {
         self.init()
         self.index = tabIndex

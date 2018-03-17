@@ -17,6 +17,8 @@ protocol GenricViewController {
 
 extension GenricViewController where Self: UIViewController {
     
+    var isRoot: Bool { return navigationController?.viewControllers.count == 1 }
+    
     func renderTitle() {
         navigationItem.title = route.title ?? navigationItem.title
         navigationItem.titleView = TurbolinksTitleView(self)
@@ -31,7 +33,7 @@ extension GenricViewController where Self: UIViewController {
     func renderLeftButton() {
         guard let icon = route.leftButtonIcon else { return }
         let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
-        if (navigationController!.viewControllers.count != 1) { button.imageInsets = UIEdgeInsetsMake(0, -10, 0, 0) }
+        if isRoot { button.imageInsets = UIEdgeInsetsMake(0, -10, 0, 0) }
         navigationItem.leftBarButtonItem = button
     }
     

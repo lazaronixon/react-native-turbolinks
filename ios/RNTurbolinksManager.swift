@@ -139,8 +139,12 @@ class RNTurbolinksManager: RCTEventEmitter {
         if route.action == .Advance {
             navigation.pushViewController(visitable, animated: true)
         } else if route.action == .Replace {
-            navigation.popViewController(animated: false)
-            navigation.pushViewController(visitable, animated: false)
+            if navigation.isAtRoot {
+                navigation.setViewControllers([visitable], animated: false)
+            } else {
+                navigation.popViewController(animated: false)
+                navigation.pushViewController(visitable, animated: false)
+            }
         }
         session.visit(visitable)
     }
@@ -152,8 +156,12 @@ class RNTurbolinksManager: RCTEventEmitter {
         } else if route.action == .Advance {
             navigation.pushViewController(viewController, animated: true)
         } else if route.action == .Replace {
-            navigation.popViewController(animated: false)
-            navigation.pushViewController(viewController, animated: false)
+            if navigation.isAtRoot {
+                navigation.setViewControllers([viewController], animated: false)
+            } else {
+                navigation.popViewController(animated: false)
+                navigation.pushViewController(viewController, animated: false)
+            }
         }
     }
     
