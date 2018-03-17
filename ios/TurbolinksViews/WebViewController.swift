@@ -45,7 +45,7 @@ class WebViewController: Turbolinks.VisitableViewController {
         let navController = self.navigationController as! NavigationController
         let javaScriptString = "document.documentElement.outerHTML"
         visitableView.webView!.evaluateJavaScript(javaScriptString) { (r, e) in
-            self.manager.handleVisitCompleted(self.visitableURL, r as! String, navController.index)
+            self.manager.handleVisitCompleted(self.visitableView.webView!.url, r as! String, navController.index)
         }
     }
     
@@ -78,11 +78,11 @@ class WebViewController: Turbolinks.VisitableViewController {
 extension WebViewController: GenricViewController {
     
     func handleTitlePress() {
-        manager.handleTitlePress(visitableURL, route.component)
+        manager.handleTitlePress(visitableView.webView!.url, route.component)
     }
     
     @objc func handleLeftButtonPress() {
-        manager.handleLeftButtonPress(visitableURL, nil)
+        manager.handleLeftButtonPress(visitableView.webView!.url, nil)
     }
     
     @objc func presentActionsGeneric(_ sender: UIBarButtonItem) {
