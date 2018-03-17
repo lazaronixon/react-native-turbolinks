@@ -20,7 +20,7 @@ extension GenricViewController where Self: UIViewController {
     var isRoot: Bool { return navigationController?.viewControllers.count == 1 }
     
     func renderTitle() {
-        navigationItem.title = route.title ?? navigationItem.title
+        if let title = route.title, !title.isEmpty { navigationItem.title = title }
         navigationItem.titleView = TurbolinksTitleView(self)
     }
     
