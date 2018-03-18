@@ -20,7 +20,7 @@ class TurbolinksSession: Session {
     
     fileprivate func injectCookies() {
         var isEvaluatingJavaScript = true
-        guard let url = webView.url else { return }
+        guard let url = topmostVisitable?.visitableURL else { return }
         guard let sharedCookies = HTTPCookieStorage.shared.cookies(for: url) else { return }
         webViewCookie.loadHTMLString("<html><body></body></html>", baseURL: url)
         while webViewCookie.isLoading { RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture) }
