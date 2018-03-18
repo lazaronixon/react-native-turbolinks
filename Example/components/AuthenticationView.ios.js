@@ -16,17 +16,15 @@ export default class AuthenticationView extends Component {
 
 class MyScene extends Component {
 
-  handleAuthentication = (navState) => {
-    if (navState.url == signInUrl) return true
-    Turbolinks.dismiss()
+  handleAuthentication = (e) => {
+    if (e.nativeEvent.url == signInUrl) return
     setTimeout(() => Turbolinks.reloadSession(), 800)
-    return false
+    Turbolinks.dismiss()
   }
 
   render() {
     return (
-        <WebView source={{uri: signInUrl}}
-                 onShouldStartLoadWithRequest={this.handleAuthentication}/>
+        <WebView source={{uri: signInUrl}} onLoadStart={this.handleAuthentication}/>
     )
   }
 }
