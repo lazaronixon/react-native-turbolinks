@@ -14,8 +14,18 @@ class TurbolinksSession: Session {
     }
     
     override func reload() {
+        cleanCookies()
         injectCookies()
         super.reload()
+    }
+    
+    fileprivate func cleanCookies() {
+        var isCleaningCookies = true
+        let types = Set<String>([WKWebsiteDataTypeCookies])
+        let date = Date(timeIntervalSince1970: 0)
+        let dataStore = webView.configuration.websiteDataStore
+        dataStore.removeData(ofTypes: types, modifiedSince: date) { isCleaningCookies = false }
+        while isCleaningCookies { RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture) }
     }
     
     fileprivate func injectCookies() {
