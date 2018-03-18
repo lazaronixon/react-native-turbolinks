@@ -9,7 +9,6 @@ export default class AuthenticationView extends Component {
 
   handleAuthentication = (e) => {
     if (e.nativeEvent.url == signInUrl) return
-    setTimeout(() => Turbolinks.reloadSession(), 800)
     Turbolinks.dismiss()
   }
 
