@@ -38,7 +38,7 @@ extension GenricViewController where Self: UIViewController {
     }
     
     func renderActions() {
-        if route.actions == nil { return }
+        guard let actions = route.actions, !actions.isEmpty else { return }
         let button = UIBarButtonItem.init(title: "\u{22EF}", style: .plain, target: self, action: selectorPresentActions)
         let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
         button.setTitleTextAttributes(font, for: .normal)
@@ -47,7 +47,7 @@ extension GenricViewController where Self: UIViewController {
     }
     
     func presentActions(_ sender: UIBarButtonItem) {
-        if route.actions == nil { return }
+        guard let actions = route.actions, !actions.isEmpty else { return }
         present(ActionsViewController(manager, route, sender), animated: true)
     }
 }
