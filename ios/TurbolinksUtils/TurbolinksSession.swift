@@ -20,22 +20,22 @@ class TurbolinksSession: Session {
     }
     
     fileprivate func cleanCookies() {
-        let semaphore = DispatchSemaphore(value: 1)
-        let types = Set<String>([WKWebsiteDataTypeCookies])
-        let date = Date(timeIntervalSince1970: 0)
+        var isCleaning = true
+        let dateFrom = Date(timeIntervalSince1970: 0)
+        let dataTypes = Set<String>([WKWebsiteDataTypeCookies])
         let dataStore = self.webView.configuration.websiteDataStore
-        dataStore.removeData(ofTypes: types, modifiedSince: date) { semaphore.signal() }
-        semaphore.wait()
+        dataStore.removeData(ofTypes: dataTypes, modifiedSince: dateFrom) { isCleaning = false }
+        while isCleaning { RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture) }
     }
     
     fileprivate func injectCookies() {
-        let semaphore = DispatchSemaphore(value: 1)
+        var isInjecting = true
         guard let url = topmostVisitable?.visitableURL else { return }
         guard let sharedCookies = HTTPCookieStorage.shared.cookies(for: url) else { return }
         webViewCookie.loadHTMLString("<html><body></body></html>", baseURL: url)
         while webViewCookie.isLoading { RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture) }
-        webViewCookie.evaluateJavaScript(getJSCookie(sharedCookies)){ (r, e) in semaphore.signal() }
-        semaphore.wait()
+        webViewCookie.evaluateJavaScript(getJSCookie(sharedCookies)){ (r, e) in isInjecting = false }
+        while isInjecting { RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture) }
     }
     
     fileprivate func getJSCookie(_ cookies: [HTTPCookie]) -> String {
