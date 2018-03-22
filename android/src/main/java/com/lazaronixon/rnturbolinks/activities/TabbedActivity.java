@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
+import com.facebook.react.bridge.Promise;
 import com.lazaronixon.rnturbolinks.util.TabbedView;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import com.lazaronixon.rnturbolinks.util.TurbolinksViewPager;
@@ -68,6 +69,11 @@ public class TabbedActivity extends GenericActivity {
     @Override
     public void reloadVisitable() {
         getCurrentTabbedView().reload();
+    }
+
+    @Override
+    public void evaluateJavaScript(String script, final Promise promise) {
+        getCurrentTabbedView().evaluateJavaScript(script, promise);
     }
 
     public void reloadSession() {

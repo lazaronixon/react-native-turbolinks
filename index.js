@@ -88,6 +88,10 @@ class Turbolinks {
     RNTurbolinksManager.renderActions(actions, tabIndex)
   }
 
+  static evaluateJavaScript(script) {
+    return RNTurbolinksManager.evaluateJavaScript(script)
+  }
+
   static addEventListener(eventName, callback) {
     RNTurbolinksManagerEmitter.addListener(eventName, callback)
   }

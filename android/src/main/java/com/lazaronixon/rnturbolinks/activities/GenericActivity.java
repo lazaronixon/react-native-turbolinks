@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.lazaronixon.rnturbolinks.react.ReactAppCompatActivity;
@@ -79,6 +80,9 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     }
 
     public void reloadVisitable() {
+    }
+
+    public void evaluateJavaScript(String script, Promise promise) {
     }
 
     public RCTDeviceEventEmitter getEventEmitter() {

@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
@@ -139,6 +140,16 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
     @Override
     public void renderComponent(TurbolinksRoute route, int tabIndex) {
         turbolinksViewFrame.renderComponent(getReactInstanceManager(), route);
+    }
+
+    @Override
+    public void evaluateJavaScript(String script, final Promise promise) {
+        WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        webView.evaluateJavascript(script, new ValueCallback<String>() {
+            public void onReceiveValue(String source) {
+                promise.resolve(source);
+            }
+        });
     }
 
     @JavascriptInterface

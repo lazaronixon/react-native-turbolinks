@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -164,6 +165,15 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 GenericActivity act = (GenericActivity) getCurrentActivity();
                 act.setActions(Arguments.toList(actions));
                 act.invalidateOptionsMenu();
+            }
+        });
+    }
+
+    @ReactMethod
+    public void evaluateJavaScript(final String script, final Promise promise) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                ((GenericActivity) getCurrentActivity()).evaluateJavaScript(script, promise);
             }
         });
     }

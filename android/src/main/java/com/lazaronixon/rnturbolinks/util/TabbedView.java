@@ -6,7 +6,9 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
@@ -15,6 +17,7 @@ import com.basecamp.turbolinks.TurbolinksView;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.lazaronixon.rnturbolinks.activities.TabbedActivity;
@@ -78,6 +81,15 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     public void renderComponent(ReactInstanceManager manager, TurbolinksRoute route) {
         turbolinksViewFrame.renderComponent(manager, route);
+    }
+
+    public void evaluateJavaScript(String script, final Promise promise) {
+        WebView webView = session.getWebView();
+        webView.evaluateJavascript(script, new ValueCallback<String>() {
+            public void onReceiveValue(String source) {
+                promise.resolve(source);
+            }
+        });
     }
 
     private void visitTurbolinksView(TurbolinksView turbolinksView, String url) {

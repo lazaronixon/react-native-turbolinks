@@ -134,6 +134,16 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.selectedIndex = selectedIndex
     }
     
+    @objc func evaluateJavaScript(_ script: String,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
+        session.webView.evaluateJavaScript(script) {(result, error) in
+            if error != nil {
+                reject("js_error", "Error occurred while evaluating Javascript", error)
+            } else {
+                resolve(result)
+            }
+        }
+    }
+    
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
         let visitable = WebViewController(self, route)
         if route.action == .Advance {
