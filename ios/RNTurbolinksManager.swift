@@ -137,7 +137,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func evaluateJavaScript(_ script: String,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
         session.webView.evaluateJavaScript(script) {(result, error) in
             if error != nil {
-                reject("js_error", "Error occurred while evaluating Javascript", error)
+                reject("js_error", error!.localizedDescription, error)
             } else {
                 resolve(result)
             }
