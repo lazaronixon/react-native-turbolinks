@@ -201,8 +201,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         sendEvent(withName: "turbolinksLeftButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
-    func handleVisitCompleted(_ URL: URL?,_ source: String,_ tabIndex: Int) {
-        sendEvent(withName: "turbolinksVisitCompleted", body: ["url": URL?.absoluteString, "path": URL?.path, "source": source, "tabIndex": tabIndex])
+    func handleVisitCompleted(_ URL: URL?,_ tabIndex: Int) {
+        sendEvent(withName: "turbolinksVisitCompleted", body: ["url": URL?.absoluteString, "path": URL?.path, "tabIndex": tabIndex])
     }
     
     override static func requiresMainQueueSetup() -> Bool {

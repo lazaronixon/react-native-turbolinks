@@ -24,7 +24,6 @@ import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HAN
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
-import static org.apache.commons.lang3.StringEscapeUtils.unescapeJava;
 
 public class WebActivity extends GenericActivity implements TurbolinksAdapter {
 
@@ -158,23 +157,17 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
     }
 
     private void handleVisitCompleted() {
-        String javaScript = "document.documentElement.outerHTML";
-        final WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        webView.evaluateJavascript(javaScript, new ValueCallback<String>() {
-            public void onReceiveValue(String source) {
-                try {
-                    WritableMap params = Arguments.createMap();
-                    URL urlLocation = new URL(webView.getUrl());
-                    params.putString("url", urlLocation.toString());
-                    params.putString("path", urlLocation.getPath());
-                    params.putString("source", unescapeJava(source));
-                    params.putInt("tabIndex", 0);
-                    getEventEmitter().emit(TURBOLINKS_VISIT_COMPLETED, params);
-                } catch (MalformedURLException e) {
-                    Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
-                }
-            }
-        });
+        WebView webView = TurbolinksSession.getDefault(this).getWebView();
+        try {
+            WritableMap params = Arguments.createMap();
+            URL urlLocation = new URL(webView.getUrl());
+            params.putString("url", urlLocation.toString());
+            params.putString("path", urlLocation.getPath());
+            params.putInt("tabIndex", 0);
+            getEventEmitter().emit(TURBOLINKS_VISIT_COMPLETED, params);
+        } catch (MalformedURLException e) {
+            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+        }
     }
 
     private void handleTitlePress() {
