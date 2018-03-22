@@ -106,7 +106,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func renderTitle(_ title: String,_ subtitle: String,_ tabIndex: Int) {
         let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
-        let visitable = view as! GenricViewController
+        guard let visitable = view as? GenricViewController else { return }
         visitable.route.title = title
         visitable.route.subtitle = subtitle
         visitable.renderTitle()
@@ -114,7 +114,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>,_ tabIndex: Int) {
         let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
-        let visitable = view as! GenricViewController
+        guard let visitable = view as? GenricViewController else { return }
         visitable.route.actions = actions
         visitable.renderActions()
     }
