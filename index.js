@@ -1,4 +1,4 @@
-import { NativeEventEmitter, NativeModules, processColor } from 'react-native'
+import { NativeEventEmitter, NativeModules, processColor, Platform } from 'react-native'
 
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager || NativeModules.RNTurbolinksModule
 const RNTurbolinksManagerEmitter = new NativeEventEmitter(RNTurbolinksManager);
@@ -89,7 +89,11 @@ class Turbolinks {
   }
 
   static evaluateJavaScript(script) {
-    return RNTurbolinksManager.evaluateJavaScript(script)
+    if (Platform.OS == 'ios') {
+      return RNTurbolinksManager.evaluateJavaScript(script)
+    } else {
+      return RNTurbolinksManager.evaluateJavaScript(script).then((r) => JSON.parse(r))
+    }
   }
 
   static addEventListener(eventName, callback) {
