@@ -19,12 +19,15 @@ class MyScene extends Component {
   handleAuthentication = (e) => {
     if (e.nativeEvent.url == signInUrl) return
     setTimeout(() => Turbolinks.reloadSession(), 800)
+    this.webview.stopLoading()
     Turbolinks.dismiss()
   }
 
   render() {
     return (
-        <WebView source={{uri: signInUrl}} onLoadStart={this.handleAuthentication}/>
+        <WebView ref={webview => { this.webview = webview }}
+                 source={{uri: signInUrl}}
+                 onLoadStart={this.handleAuthentication}/>
     )
   }
 }
