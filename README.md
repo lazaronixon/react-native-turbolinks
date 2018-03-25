@@ -154,6 +154,9 @@ Set style for TabBar. For android set your style on [android/app/src/main/res/va
 #### `renderTitle(title, subtitle, tabIndex)`
 Change title of current view. For example if you want to get title from page source.
 
+### `evaluateJavaScript(script)`
+Evaluates a JavaScript string and return a promise with result of expression. You can use it to execute some kind of bridge methods on your page to make something or return something.
+
 #### `renderActions(actions)`
 #### `renderActions(actions, tabIndex)`
 Change actions of current view. For example if you want to mount a menu looking for data-attributes on page source.
@@ -171,7 +174,7 @@ Adds an event handler. Supported events:
 - `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
 - `turbolinksLeftButtonPress:` Fire when left button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
-- `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path, source, tabIndex`.
+- `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path, tabIndex`.
 
 #### `removeEventListener(eventName, handler)`
 Removes the listener for given event.
