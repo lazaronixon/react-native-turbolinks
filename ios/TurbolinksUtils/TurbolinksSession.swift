@@ -13,13 +13,7 @@ class TurbolinksSession: Session {
         self.webViewCookie = WKWebView(frame: .zero, configuration: webViewConfiguration)
     }
     
-    override func reload() {
-        cleanCookies()
-        injectCookies()
-        super.reload()
-    }
-    
-    fileprivate func cleanCookies() {
+    func cleanCookies() {
         var isCleaning = true
         let dateFrom = Date(timeIntervalSince1970: 0)
         let dataTypes = Set<String>([WKWebsiteDataTypeCookies])
@@ -28,7 +22,7 @@ class TurbolinksSession: Session {
         while isCleaning { RunLoop.main.run(mode: .defaultRunLoopMode, before: .distantFuture) }
     }
     
-    fileprivate func injectCookies() {
+    func injectCookies() {
         var isInjecting = true
         guard let url = topmostVisitable?.visitableURL else { return }
         guard let sharedCookies = HTTPCookieStorage.shared.cookies(for: url) else { return }

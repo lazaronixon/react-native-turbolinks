@@ -116,7 +116,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void reloadSession() {
+    public void reloadSession(Boolean cleanCookies) {
         runOnUiThread(new Runnable() {
             public void run() {
                 ((GenericActivity) getCurrentActivity()).reloadSession();

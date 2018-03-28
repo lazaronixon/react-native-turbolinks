@@ -47,7 +47,9 @@ class RNTurbolinksManager: RCTEventEmitter {
         visitable.reload()
     }
     
-    @objc func reloadSession() -> Void {
+    @objc func reloadSession(_ cleanCookies: Bool) -> Void {
+        if (cleanCookies) { session.cleanCookies() }
+        session.injectCookies()
         session.reload()
     }
     

@@ -14,8 +14,8 @@ class Turbolinks {
     RNTurbolinksManager.reloadVisitable()
   }
 
-  static reloadSession() {
-    RNTurbolinksManager.reloadSession()
+  static reloadSession(cleanCookies = false) {
+    RNTurbolinksManager.reloadSession(cleanCookies)
   }
 
   static dismiss() {
