@@ -22,6 +22,8 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import java.util.ArrayList;
 
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
+
 public abstract class GenericActivity extends ReactAppCompatActivity {
 
     private static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
@@ -60,8 +62,8 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (isTaskRoot() || route.getModal()) {
-            backToHomeScreen(this);
+        if (isInitial() || route.getModal()) {
+            moveTaskToBack(true);
         } else {
             super.onBackPressed();
         }
@@ -89,6 +91,10 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
     }
 
+    public boolean isInitial() {
+        return getIntent().getBooleanExtra(INTENT_INITIAL, true);
+    }
+
     protected void backToHomeScreen(Context context) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
@@ -98,8 +104,8 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
 
     protected void renderToolBar() {
         setSupportActionBar(toolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!isTaskRoot());
-        getSupportActionBar().setDisplayShowHomeEnabled(!isTaskRoot());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
+        getSupportActionBar().setDisplayShowHomeEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
         if (navigationBarHidden || route.getModal()) getSupportActionBar().hide();

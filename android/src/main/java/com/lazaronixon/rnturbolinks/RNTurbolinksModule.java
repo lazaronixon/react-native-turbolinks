@@ -37,6 +37,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_ROUTE = "intentRoute";
     public static final String INTENT_ROUTES = "intentRoutes";
     public static final String INTENT_SELECTED_INDEX = "intentSelectedIndex";
+    public static final String INTENT_INITIAL = "intentInitial";
 
     private TurbolinksRoute prevRoute;
     private String messageHandler;
@@ -96,10 +97,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra(INTENT_INITIAL, true);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
         initialIntent = intent;
         TurbolinksSession.resetDefault();
@@ -134,7 +132,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void back() {
-        getCurrentActivity().onBackPressed();
+        runOnUiThread(new Runnable() {
+            public void run() {
+                ((GenericActivity) getCurrentActivity()).onBackPressed();
+            }
+        });
     }
 
     @ReactMethod
@@ -190,7 +192,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         try {
             Activity act = getCurrentActivity();
             boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-            boolean isInitial = isActionReplace ? act.isTaskRoot() : initial;
+            boolean isInitial = isActionReplace ? getIntentInitial(act) : initial;
             URL prevUrl = initial || prevRoute == null ? new URL(route.getUrl()) : new URL(prevRoute.getUrl());
             URL nextUrl = new URL(route.getUrl());
             if (Objects.equals(prevUrl.getHost(), nextUrl.getHost())) {
@@ -198,11 +200,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
+                intent.putExtra(INTENT_INITIAL, isInitial);
                 intent.putExtra(INTENT_ROUTE, route);
-                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 if (isInitial) initialIntent = intent;
                 if (isInitial) TurbolinksSession.resetDefault();
                 act.startActivity(intent);
@@ -220,18 +219,19 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private void presentNativeView(TurbolinksRoute route, boolean initial) {
         Activity act = getCurrentActivity();
         boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
-        boolean isInitial = isActionReplace ? act.isTaskRoot() : initial;
+        boolean isInitial = isActionReplace ? getIntentInitial(act) : initial;
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
-        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        if (isInitial) intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra(INTENT_INITIAL, isInitial);
         if (isInitial) initialIntent = intent;
         if (isInitial) TurbolinksSession.resetDefault();
         act.startActivity(intent);
         if (isActionReplace) act.finish();
+    }
+
+    private Boolean getIntentInitial(Activity act) {
+        return act.getIntent().getBooleanExtra(INTENT_INITIAL, true);
     }
 
 }
