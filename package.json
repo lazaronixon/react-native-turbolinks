@@ -17,7 +17,7 @@
     "turbolinks"
   ],
   "peerDependencies": {
-    "react-native": "^0.54.3",
+    "react-native": "^0.54.4",
     "react-native-swift": "^1.2.1"
   }
 }
