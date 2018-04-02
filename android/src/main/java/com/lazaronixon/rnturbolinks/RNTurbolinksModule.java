@@ -131,13 +131,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void popToRoot() { getCurrentActivity().startActivity(initialIntent); }
 
     @ReactMethod
-    public void back() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                ((GenericActivity) getCurrentActivity()).onBackPressed();
-            }
-        });
-    }
+    public void back() { getCurrentActivity().finish(); }
 
     @ReactMethod
     public void setNavigationBarStyle(ReadableMap style) {
