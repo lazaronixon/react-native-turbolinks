@@ -38,7 +38,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         visitableView.activityIndicatorView.color = loadingColor
         visitableView.refreshControl.tintColor = loadingColor
         visitableView.activityIndicatorView.backgroundColor = loadingBackgroundColor
-        visitableView.webView!.scrollView.backgroundColor = loadingBackgroundColor
     }
     
     fileprivate func handleVisitCompleted() {
