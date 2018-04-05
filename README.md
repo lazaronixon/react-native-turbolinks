@@ -155,6 +155,7 @@ Set style for TabBar. For android set your style on [android/app/src/main/res/va
 Change title of current view. For example if you want to get title from page source.
 
 #### `evaluateJavaScript(script)`
+#### `evaluateJavaScript(script, tabIndex)`
 Evaluates a JavaScript string and return a promise with result of expression. You can use it to execute some kind of bridge methods on your page to make something or return something.
 
 #### `renderActions(actions)`
