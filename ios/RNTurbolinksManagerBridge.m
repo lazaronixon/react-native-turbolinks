@@ -18,5 +18,5 @@ RCT_EXTERN_METHOD(renderActions:(NSArray *) tabIndex:(NSInteger *))
 RCT_EXTERN_METHOD(visitTabBar:(NSArray *) selectedIndex:(NSInteger *))
 RCT_EXTERN_METHOD(setTabBarStyle:(NSDictionary *))
 RCT_EXTERN_METHOD(setCustomMenuIcon:(UIImage *))
-RCT_EXTERN_METHOD(evaluateJavaScript:(NSString *) resolve:(RCTPromiseResolveBlock *) reject:(RCTPromiseRejectBlock *))
+RCT_EXTERN_METHOD(evaluateJavaScript:(NSString *) tabIndex:(NSInteger *) resolve:(RCTPromiseResolveBlock *) reject:(RCTPromiseRejectBlock *))
 @end

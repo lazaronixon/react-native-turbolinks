@@ -137,8 +137,9 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.selectedIndex = selectedIndex
     }
     
-    @objc func evaluateJavaScript(_ script: String,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
-        session.webView.evaluateJavaScript(script) {(result, error) in
+    @objc func evaluateJavaScript(_ script: String, _ tabIndex: Int,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
+        let nav = tabIndex != -1 ? getNavigationByIndex(tabIndex) : navigation
+        nav.session.webView.evaluateJavaScript(script) {(result, error) in
             if error != nil {
                 reject("js_error", error!.localizedDescription, error)
             } else {
@@ -185,6 +186,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func getViewControllerByIndex(_ index: Int) -> UIViewController {
         let navController = tabBarController.viewControllers![index] as! NavigationController
         return navController.visibleViewController!
+    }
+    
+    fileprivate func getNavigationByIndex(_ index: Int) -> NavigationController {
+        return tabBarController.viewControllers![index] as! NavigationController
     }
     
     fileprivate func initHiddenTabBar(_ initial: Bool) {

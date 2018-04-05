@@ -92,9 +92,9 @@ class Turbolinks {
     RNTurbolinksManager.renderActions(actions, tabIndex)
   }
 
-  static evaluateJavaScript(script) {
+  static evaluateJavaScript(script, tabIndex = -1) {
     if (Platform.OS == 'ios') {
-      return RNTurbolinksManager.evaluateJavaScript(script)
+      return RNTurbolinksManager.evaluateJavaScript(script, tabIndex)
     } else {
       return RNTurbolinksManager.evaluateJavaScript(script).then((r) => JSON.parse(r))
     }
