@@ -17,7 +17,7 @@ class TurbolinksRoute {
         let action = RCTConvert.nsString(route["action"])
         self.title = RCTConvert.nsString(route["title"])
         self.subtitle = RCTConvert.nsString(route["subtitle"])
-        self.action = Action.init(rawValue: action ?? "advance")!
+        self.action = Action(rawValue: action ?? "advance")!
         self.url = RCTConvert.nsurl(route["url"])
         self.component = RCTConvert.nsString(route["component"])
         self.modal = RCTConvert.bool(route["modal"])

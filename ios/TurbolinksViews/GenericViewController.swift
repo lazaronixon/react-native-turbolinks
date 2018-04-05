@@ -38,11 +38,16 @@ extension GenricViewController where Self: UIViewController {
     
     func renderActions() {
         guard let actions = route.actions, !actions.isEmpty else { return }
-        let button = UIBarButtonItem.init(title: "\u{22EF}", style: .plain, target: self, action: selectorPresentActions)
-        let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
-        button.setTitleTextAttributes(font, for: .normal)
-        button.setTitleTextAttributes(font, for: .selected)
-        navigationItem.rightBarButtonItem = button
+        if let icon = manager.customMenuIcon {
+            let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
+            navigationItem.rightBarButtonItem = button
+        } else {
+            let button = UIBarButtonItem(title: "\u{22EF}", style: .plain, target: self, action: selectorPresentActions)
+            let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
+            button.setTitleTextAttributes(font, for: .normal)
+            button.setTitleTextAttributes(font, for: .selected)
+            navigationItem.rightBarButtonItem = button
+        }
     }
     
     func presentActions(_ sender: UIBarButtonItem) {

@@ -14,6 +14,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var messageHandler: String?
     var userAgent: String?
     var navigationBarHidden: Bool?
+    var customMenuIcon: UIImage?
     var processPool = WKProcessPool()
     
     fileprivate var application: UIApplication {
@@ -144,6 +145,10 @@ class RNTurbolinksManager: RCTEventEmitter {
                 resolve(result)
             }
         }
+    }
+    
+    @objc func setCustomMenuIcon(_ customMenuIcon: UIImage) -> Void {
+        self.customMenuIcon = customMenuIcon
     }
     
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
