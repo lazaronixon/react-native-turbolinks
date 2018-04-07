@@ -137,6 +137,9 @@ Set style for navigation bar on iOS. For android set your style on [android/app/
 #### `setLoadingStyle({color, backgroundColor})` (iOS Only)
 Set style for Activity Indicator View. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
+### `setCustomMenuIcon(icon)` (iOS Only)
+Set a custom icon for menu.
+
 #### `setNavigationBarHidden(boolean)`
 Hidden navigation bar. For example if you want to use a web navbar. (Default false)
 
