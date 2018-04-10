@@ -134,11 +134,8 @@ Trigger a native back event. For example if you using a custom navbar and need t
 #### `setNavigationBarStyle({titleTextColor, subtitleTextColor, barTintColor, tintColor})`(iOS Only)
 Set style for navigation bar on iOS. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
-#### `setLoadingStyle({color, backgroundColor})` (iOS Only)
-Set style for Activity Indicator View. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
-
-### `setCustomMenuIcon(icon)` (iOS Only)
-Set a custom icon for menu.
+#### `setLoadingView(component)`
+Set a custom loadingView using a react component.
 
 #### `setNavigationBarHidden(boolean)`
 Hidden navigation bar. For example if you want to use a web navbar. (Default false)
@@ -149,7 +146,7 @@ A tab bar appears at the bottom of an app screen and provides the ability to qui
 - `routes:` A Array of route objects to mount TabBar. Use `tabTitle` and `tabIcon` here.
 - `selectedIndex:` Index for initial selected view. (Default 0).
 
-#### `setTabBarStyle({barTintColor, tintColor})` (iOS Only)
+#### `setTabBarStyle({barTintColor, tintColor, menuIcon})` (iOS Only)
 Set style for TabBar. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `renderTitle(title)`
