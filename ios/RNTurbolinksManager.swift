@@ -89,8 +89,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
         let barTintColor = RCTConvert.uiColor(style["barTintColor"])
         let tintColor = RCTConvert.uiColor(style["tintColor"])
+        let menuIcon = RCTConvert.uiImage(style["menuIcon"])
         if barTintColor != nil { tabBarController.tabBar.barTintColor = barTintColor }
         if tintColor != nil { tabBarController.tabBar.tintColor = tintColor }
+        if menuIcon != nil { customMenuIcon = menuIcon }
     }
     
     @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) -> Void {
@@ -144,10 +146,6 @@ class RNTurbolinksManager: RCTEventEmitter {
                 resolve(result)
             }
         }
-    }
-    
-    @objc func setCustomMenuIcon(_ customMenuIcon: UIImage) -> Void {
-        self.customMenuIcon = customMenuIcon
     }
     
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
