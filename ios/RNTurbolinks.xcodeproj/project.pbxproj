@@ -15,6 +15,7 @@
 		876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */; };
 		877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */; };
 		877053131FF27E910089741D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877053121FF27E900089741D /* WebViewController.swift */; };
+		87A7F684207C55D5009E0A9B /* CustomVisitableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A7F683207C55D5009E0A9B /* CustomVisitableView.swift */; };
 		87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */; };
 		87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2DA2015946400FA5A46 /* NativeViewController.swift */; };
 		87BFAD8020195D4E0063FCDF /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BFAD7F20195D4E0063FCDF /* TitleView.swift */; };
@@ -43,6 +44,7 @@
 		8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNTurbolinksManagerBridge.m; sourceTree = "<group>"; };
 		8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNTurbolinks-Bridging-Header.h"; sourceTree = "<group>"; };
 		877053121FF27E900089741D /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		87A7F683207C55D5009E0A9B /* CustomVisitableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVisitableView.swift; sourceTree = "<group>"; };
 		87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksRoute.swift; sourceTree = "<group>"; };
 		87B4C2DA2015946400FA5A46 /* NativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeViewController.swift; sourceTree = "<group>"; };
 		87BFAD7F20195D4E0063FCDF /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				87B4C2DA2015946400FA5A46 /* NativeViewController.swift */,
 				872FD3FB2021CE360063E5CE /* ActionsViewController.swift */,
 				87201D1A2025707100BDC864 /* GenericViewController.swift */,
+				87A7F683207C55D5009E0A9B /* CustomVisitableView.swift */,
 			);
 			path = TurbolinksViews;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */,
 				877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */,
 				876100991FF01CFB00C90539 /* RNTurbolinksManager.swift in Sources */,
+				87A7F684207C55D5009E0A9B /* CustomVisitableView.swift in Sources */,
 				87201D682029B94600BDC864 /* NavigationController.swift in Sources */,
 				87201D1B2025707100BDC864 /* GenericViewController.swift in Sources */,
 				87BFAD8020195D4E0063FCDF /* TitleView.swift in Sources */,

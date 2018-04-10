@@ -1,7 +1,7 @@
 import Turbolinks
 import UIKit
 
-class WebViewController: Turbolinks.VisitableViewController {
+class WebViewController: VisitableViewController {
     
     var manager: RNTurbolinksManager!
     var route: TurbolinksRoute!
@@ -32,14 +32,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": customView ]))
     }
     
-    fileprivate func renderLoadingStyle() {
-        let loadingBackgroundColor = manager.loadingBackgroundColor ?? .white
-        let loadingColor = manager.loadingColor ?? .gray
-        visitableView.activityIndicatorView.color = loadingColor
-        visitableView.refreshControl.tintColor = loadingColor
-        visitableView.activityIndicatorView.backgroundColor = loadingBackgroundColor
-    }
-    
     fileprivate func handleVisitCompleted() {
         let navController = self.navigationController as! NavigationController
         manager.handleVisitCompleted(self.visitableView.webView!.url, navController.index)
@@ -59,7 +51,6 @@ class WebViewController: Turbolinks.VisitableViewController {
         renderBackButton()
         renderLeftButton()
         renderActions()
-        renderLoadingStyle()
     }
     
     override func visitableDidRender() {
@@ -68,7 +59,14 @@ class WebViewController: Turbolinks.VisitableViewController {
         renderTitle()
         handleVisitCompleted()
     }
-    
+
+    fileprivate var dummyVisitableView: VisitableView!
+    override var visitableView: VisitableView! {
+        if dummyVisitableView != nil { return dummyVisitableView }
+        dummyVisitableView = CustomVisitableView(self.manager)
+        dummyVisitableView.translatesAutoresizingMaskIntoConstraints = false
+        return dummyVisitableView
+    }
 }
 
 extension WebViewController: GenricViewController {

@@ -7,14 +7,13 @@ class RNTurbolinksManager: RCTEventEmitter {
     var tabBarController: UITabBarController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
-    var loadingBackgroundColor: UIColor?
     var barTintColor: UIColor?
     var tintColor: UIColor?
-    var loadingColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
     var navigationBarHidden: Bool?
     var customMenuIcon: UIImage?
+    var loadingView: String?    
     var processPool = WKProcessPool()
     
     fileprivate var application: UIApplication {
@@ -76,9 +75,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    @objc func setLoadingStyle(_ style: Dictionary<AnyHashable, Any>) {
-        loadingColor = RCTConvert.uiColor(style["color"])
-        loadingBackgroundColor = RCTConvert.uiColor(style["backgroundColor"])
+    @objc func setLoadingView(_ loadingView: String) {
+        self.loadingView = loadingView
     }
     
     @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {

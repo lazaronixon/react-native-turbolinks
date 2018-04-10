@@ -64,12 +64,8 @@ class Turbolinks {
     RNTurbolinksManager.setNavigationBarHidden(isHidden)
   }
 
-  static setLoadingStyle(options) {
-    RNTurbolinksManager.setLoadingStyle({
-      ...options,
-      color: processColor(options.color),
-      backgroundColor: processColor(options.backgroundColor)
-    })
+  static setLoadingView(loadingView) {
+    RNTurbolinksManager.setLoadingView(loadingView)
   }
 
   static visitTabBar(routes, selectedIndex = 0) {
