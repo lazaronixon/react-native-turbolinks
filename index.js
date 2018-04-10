@@ -46,10 +46,6 @@ class Turbolinks {
     RNTurbolinksManager.setMessageHandler(messageHandler)
   }
 
-  static setCustomMenuIcon(icon) {
-    RNTurbolinksManager.setCustomMenuIcon(icon)
-  }
-
   static setNavigationBarStyle(options) {
     RNTurbolinksManager.setNavigationBarStyle({
       ...options,
