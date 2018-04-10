@@ -13,13 +13,14 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
+import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import com.lazaronixon.rnturbolinks.util.TurbolinksViewFrame;
-import com.lazaronixon.rnturbolinks.R;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_LOADING_VIEW;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
@@ -37,6 +38,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
     private TurbolinksViewFrame turbolinksViewFrame;
     private String messageHandler;
     private String userAgent;
+    private String loadingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
 
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
+        loadingView = getIntent().getStringExtra(INTENT_LOADING_VIEW);
 
         renderToolBar();
         visitTurbolinksView();
@@ -186,6 +189,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
         String ua = settings.getUserAgentString();
         if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
         if (userAgent != null && !ua.endsWith(userAgent)) { settings.setUserAgentString(ua.concat(" " + userAgent)); }
+        if (loadingView != null) { setupProgressView(session, loadingView); }
         session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
     }
 

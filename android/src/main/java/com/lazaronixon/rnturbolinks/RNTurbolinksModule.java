@@ -37,11 +37,14 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_ROUTE = "intentRoute";
     public static final String INTENT_ROUTES = "intentRoutes";
     public static final String INTENT_SELECTED_INDEX = "intentSelectedIndex";
+    public static final String INTENT_LOADING_VIEW = "intentLoadingView";
     public static final String INTENT_INITIAL = "intentInitial";
+    public static final int PROGRESS_INDICATOR_DELAY = 500;
 
     private TurbolinksRoute prevRoute;
     private String messageHandler;
     private String userAgent;
+    private String loadingView;
     private boolean navigationBarHidden = false;
     private Intent initialIntent;
 
@@ -97,6 +100,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
+        intent.putExtra(INTENT_LOADING_VIEW, loadingView);
         intent.putExtra(INTENT_INITIAL, true);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
         initialIntent = intent;
@@ -134,11 +138,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void back() { getCurrentActivity().finish(); }
 
     @ReactMethod
-    public void setNavigationBarStyle(ReadableMap style) {
-    }
+    public void setLoadingView(String loadingView) { this.loadingView = loadingView; }
 
     @ReactMethod
-    public void setLoadingStyle(ReadableMap style) {
+    public void setNavigationBarStyle(ReadableMap style) {
     }
 
     @ReactMethod
@@ -195,6 +198,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_INITIAL, isInitial);
+                intent.putExtra(INTENT_LOADING_VIEW, loadingView);
                 intent.putExtra(INTENT_ROUTE, route);
                 if (isInitial) initialIntent = intent;
                 if (isInitial) TurbolinksSession.resetDefault();

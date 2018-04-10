@@ -12,13 +12,14 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import com.facebook.react.bridge.Promise;
+import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.TabbedView;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import com.lazaronixon.rnturbolinks.util.TurbolinksViewPager;
-import com.lazaronixon.rnturbolinks.R;
 
 import java.util.ArrayList;
 
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_LOADING_VIEW;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTES;
@@ -33,6 +34,7 @@ public class TabbedActivity extends GenericActivity {
     private ArrayList<Bundle> routes;
     private String messageHandler;
     private String userAgent;
+    private String loadingView;
     private int selectedIndex;
 
     @Override
@@ -52,6 +54,7 @@ public class TabbedActivity extends GenericActivity {
         selectedIndex = getIntent().getIntExtra(INTENT_SELECTED_INDEX, 0);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
+        loadingView = getIntent().getStringExtra(INTENT_LOADING_VIEW);
 
         renderToolBar();
         handleTitlePress(TabbedActivity.class.getSimpleName(), null, null);
@@ -84,9 +87,9 @@ public class TabbedActivity extends GenericActivity {
         return messageHandler;
     }
 
-    public String getUserAgent() {
-        return userAgent;
-    }
+    public String getUserAgent() {  return userAgent; }
+
+    public String getLoadingView() { return loadingView; }
 
     private void setupBottomNav() {
         Menu menu = bottomNav.getMenu();
