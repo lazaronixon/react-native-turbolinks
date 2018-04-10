@@ -146,10 +146,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setCustomMenuIcon(ReadableMap icon) {
-    }
-
-    @ReactMethod
     public void renderTitle(final String title, final String subtitle, int tabIndex) {
         runOnUiThread(new Runnable() {
             public void run() {
