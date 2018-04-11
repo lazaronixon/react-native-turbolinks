@@ -20,9 +20,8 @@ class CustomVisitableView : VisitableView {
     }
     
     override func showActivityIndicator() {
-        if isRefreshing { return }
         if (loadingView != nil) {
-            bringSubview(toFront: loadingView)
+            if !isRefreshing { bringSubview(toFront: loadingView) }
         } else {
             super.showActivityIndicator()
         }
