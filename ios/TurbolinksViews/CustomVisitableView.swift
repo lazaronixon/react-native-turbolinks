@@ -6,11 +6,14 @@ class CustomVisitableView : VisitableView {
     
     convenience init(_ manager: RNTurbolinksManager) {
         self.init(frame: CGRect.zero)
-        if (manager.loadingView != nil) {
-            self.loadingView = RCTRootView(bridge: manager.bridge, moduleName: manager.loadingView, initialProperties: nil)
-            self.loadingView.translatesAutoresizingMaskIntoConstraints = false
-            installLoadingView()
-        }
+        initLoadingView(manager)
+    }
+    
+    fileprivate func initLoadingView(_ manager: RNTurbolinksManager) {
+        if (manager.loadingView == nil) { return }
+        self.loadingView = RCTRootView(bridge: manager.bridge, moduleName: manager.loadingView, initialProperties: nil)
+        self.loadingView.translatesAutoresizingMaskIntoConstraints = false
+        installLoadingView()
     }
     
     fileprivate func installLoadingView() {
