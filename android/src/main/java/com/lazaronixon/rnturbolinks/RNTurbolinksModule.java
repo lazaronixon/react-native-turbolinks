@@ -39,7 +39,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_SELECTED_INDEX = "intentSelectedIndex";
     public static final String INTENT_LOADING_VIEW = "intentLoadingView";
     public static final String INTENT_INITIAL = "intentInitial";
-    public static final int PROGRESS_INDICATOR_DELAY = 500;
 
     private TurbolinksRoute prevRoute;
     private String messageHandler;

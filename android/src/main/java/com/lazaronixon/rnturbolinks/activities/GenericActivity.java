@@ -3,16 +3,15 @@ package com.lazaronixon.rnturbolinks.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactRootView;
@@ -20,6 +19,7 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
+import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.react.ReactAppCompatActivity;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
@@ -27,7 +27,6 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import java.util.ArrayList;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.PROGRESS_INDICATOR_DELAY;
 
 public abstract class GenericActivity extends ReactAppCompatActivity {
 
@@ -97,12 +96,10 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     }
 
     public void setupProgressView(TurbolinksSession turbolinksSession, String loadingView) {
-        ReactRootView progressView = new ReactRootView(this);
-        progressView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        progressView.startReactApplication(getReactInstanceManager(), loadingView, null);
-        Drawable background = new ColorDrawable(this.getResources().getColor(android.R.color.white));
-        progressView.setBackground(background);
-        turbolinksSession.progressView(progressView,progressView.getId(), PROGRESS_INDICATOR_DELAY);
+        View progressView = LayoutInflater.from(this).inflate(R.layout.custom_progress, null);
+        ReactRootView progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
+        progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
+        turbolinksSession.progressView(progressView, progressIndicator.getId(), 0);
     }
 
     public boolean isInitial() {
