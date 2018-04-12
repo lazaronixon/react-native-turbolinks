@@ -100,7 +100,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         progressView.setBackground(getWindow().getDecorView().getBackground());
         ReactRootView progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
         progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
-        turbolinksSession.progressView(progressView, progressIndicator.getId(), 0);
+        turbolinksSession.progressView(progressView, progressIndicator.getId(), 500);
     }
 
     public boolean isInitial() {
