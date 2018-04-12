@@ -10,6 +10,7 @@ class TurbolinksSession: Session {
         self.init(webViewConfiguration: webViewConfiguration)
         self.index = index
         self.webView.uiDelegate = self
+        self.webView.allowsLinkPreview = false
         self.webViewCookie = WKWebView(frame: .zero, configuration: webViewConfiguration)
     }
     
