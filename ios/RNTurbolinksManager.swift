@@ -126,8 +126,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController = UITabBarController()
         tabBarController.setViewControllers([UIViewController()], animated: false)
         tabBarController.setViewControllers(nil, animated: false)
-        rootViewController.dismiss(animated: false)
-        rootViewController.present(tabBarController, animated: false)
+        rootViewController.addChildViewController(tabBarController)
+        rootViewController.view.addSubview(tabBarController.view)
         for (index, route) in routes.enumerated() {
             let navController = NavigationController(self, route, index)
             tabBarController.viewControllers! += [navController]
@@ -192,9 +192,9 @@ class RNTurbolinksManager: RCTEventEmitter {
         if !initial { return }
         tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
-        tabBarController.viewControllers = [NavigationController(self, 0)]        
-        rootViewController.dismiss(animated: false)
-        rootViewController.present(tabBarController, animated: false)
+        tabBarController.viewControllers = [NavigationController(self, 0)]
+        rootViewController.addChildViewController(tabBarController)
+        rootViewController.view.addSubview(tabBarController.view)
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
