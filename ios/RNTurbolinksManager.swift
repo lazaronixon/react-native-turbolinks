@@ -66,8 +66,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>,_ initial: Bool) -> Void {
-        initHiddenTabBar(initial)
         let tRoute = TurbolinksRoute(route)
+        if initial { initHiddenTabBar() }
         if tRoute.url != nil {
             presentVisitableForSession(tRoute)
         } else {
@@ -188,8 +188,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         return tabBarController.viewControllers![index] as! NavigationController
     }
     
-    fileprivate func initHiddenTabBar(_ initial: Bool) {
-        if !initial { return }
+    fileprivate func initHiddenTabBar() {
         tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
         tabBarController.viewControllers = [NavigationController(self, 0)]
