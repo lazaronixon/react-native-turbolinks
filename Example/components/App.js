@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { Platform, View } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
 import Constants from './Constants';
-
-require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false
 
 export default class App extends Component {
 
@@ -64,7 +61,5 @@ export default class App extends Component {
     alert(message)
   }
 
-  render() {
-    return null
-  }
+  render() { return null }
 }
