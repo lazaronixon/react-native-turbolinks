@@ -80,7 +80,7 @@ You can check for this string on the server and use it to send specialized marku
 #### `setMessageHandler(messageHandler)`
 You can register a Message Handler to send messages from JavaScript to your application.
 
-### `startSingleScreenApp(route)`
+#### `startSingleScreenApp(route)`
 Start a Single Screen App. Use it instead visit for first visit.
 
 #### `startTabBasedApp(routes)`
