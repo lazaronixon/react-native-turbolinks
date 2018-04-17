@@ -48,7 +48,7 @@ export default class App extends Component {
   componentDidMount() {
     Turbolinks.addEventListener('turbolinksVisit', this.handleVisit)
     Turbolinks.addEventListener('turbolinksError', this.handleError)
-    Turbolinks.visit({url: 'http://MYIP:9292'}, true)
+    Turbolinks.startSingleScreenApp({url: 'http://MYIP:9292'})
   }
 
   handleVisit = (data) => {
