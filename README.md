@@ -80,7 +80,16 @@ You can check for this string on the server and use it to send specialized marku
 #### `setMessageHandler(messageHandler)`
 You can register a Message Handler to send messages from JavaScript to your application.
 
-#### `visit(route, initial)`
+### `startSingleScreenApp(route)`
+Start a Single Screen App. Use it instead visit for first visit.
+
+#### `startTabBasedApp(routes)`
+#### `startTabBasedApp(routes, selectedIndex)`
+A tab bar appears at the bottom of an app screen and provides the ability to quickly switch between different sections of an app.
+- `routes:` A Array of route objects to mount TabBar. Use `tabTitle` and `tabIcon` here.
+- `selectedIndex:` Index for initial selected view. (Default 0).
+
+#### `visit(route)`
 Visit a URL with Turbolinks.
 - `url:` Url to visit. (Required)
 - `title:` The default value is the title of the Web page.
@@ -93,9 +102,8 @@ Visit a URL with Turbolinks.
     - `icon:` A icon for the action.
     - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
-- `initial`: Should be true on first visit or if you need restart navigation. (Default false)
 
-#### `visit(route, initial)`
+#### `visit(route)`
 Visit a Component with Turbolinks.
 - `component:` Component to visit. (Required)
 - `modal:` A boolean to show a view without navbar and backbutton. (Default false)
@@ -110,7 +118,6 @@ Visit a Component with Turbolinks.
     - `icon:` A icon for the action.
     - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
-- `initial`: Should be true on first visit or if you need restart navigation. (Default false)
 
 #### `replaceWith(route)`
 #### `replaceWith(route, tabIndex)`
@@ -139,12 +146,6 @@ Set a custom loadingView using a react component.
 
 #### `setNavigationBarHidden(boolean)`
 Hidden navigation bar. For example if you want to use a web navbar. (Default false)
-
-#### `visitTabBar(routes)`
-#### `visitTabBar(routes, selectedIndex)`
-A tab bar appears at the bottom of an app screen and provides the ability to quickly switch between different sections of an app.
-- `routes:` A Array of route objects to mount TabBar. Use `tabTitle` and `tabIcon` here.
-- `selectedIndex:` Index for initial selected view. (Default 0).
 
 #### `setTabBarStyle({barTintColor, tintColor, menuIcon})` (iOS Only)
 Set style for TabBar. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).

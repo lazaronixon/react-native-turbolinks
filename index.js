@@ -30,8 +30,8 @@ class Turbolinks {
     RNTurbolinksManager.back()
   }
 
-  static visit(route, initial = false) {
-    RNTurbolinksManager.visit(route, initial)
+  static visit(route) {
+    RNTurbolinksManager.visit(route)
   }
 
   static replaceWith(route, tabIndex = -1) {
@@ -64,8 +64,12 @@ class Turbolinks {
     RNTurbolinksManager.setLoadingView(loadingView)
   }
 
-  static visitTabBar(routes, selectedIndex = 0) {
-    RNTurbolinksManager.visitTabBar(routes, selectedIndex)
+  static startSingleScreenApp(route) {
+    RNTurbolinksManager.startSingleScreenApp(route)
+  }
+
+  static startTabBasedApp(routes, selectedIndex = 0) {
+    RNTurbolinksManager.startTabBasedApp(routes, selectedIndex)
   }
 
   static setTabBarStyle(options) {

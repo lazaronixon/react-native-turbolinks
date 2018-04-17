@@ -57,14 +57,26 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void visit(ReadableMap route, boolean initial) {
-        TurbolinksRoute tRoute = new TurbolinksRoute(route);
-        if (tRoute.getUrl() != null) {
-            presentActivityForSession(tRoute, initial);
-        } else {
-            presentNativeView(tRoute, initial);
-        }
+    public void startSingleScreenApp(ReadableMap route) { visit(route, true); }
+
+    @ReactMethod
+    public void startTabBasedApp(ReadableArray routes, int selectedIndex) {
+        Activity act = getCurrentActivity();
+        Intent intent = new Intent(act, TabbedActivity.class);
+        intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
+        intent.putExtra(INTENT_USER_AGENT, userAgent);
+        intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
+        intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
+        intent.putExtra(INTENT_LOADING_VIEW, loadingView);
+        intent.putExtra(INTENT_INITIAL, true);
+        intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
+        initialIntent = intent;
+        TurbolinksSession.resetDefault();
+        act.startActivity(intent);
     }
+
+    @ReactMethod
+    public void visit(ReadableMap route) { visit(route, false); }
 
     @ReactMethod
     public void replaceWith(final ReadableMap route, final int tabIndex) {
@@ -89,22 +101,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setNavigationBarHidden(boolean navigationBarHidden) {
         this.navigationBarHidden = navigationBarHidden;
-    }
-
-    @ReactMethod
-    public void visitTabBar(ReadableArray routes, int selectedIndex) {
-        Activity act = getCurrentActivity();
-        Intent intent = new Intent(act, TabbedActivity.class);
-        intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
-        intent.putExtra(INTENT_USER_AGENT, userAgent);
-        intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
-        intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
-        intent.putExtra(INTENT_LOADING_VIEW, loadingView);
-        intent.putExtra(INTENT_INITIAL, true);
-        intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
-        initialIntent = intent;
-        TurbolinksSession.resetDefault();
-        act.startActivity(intent);
     }
 
     @ReactMethod
@@ -182,6 +178,15 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 "ErrorCode", MapBuilder.of("httpFailure", 0, "networkFailure", 1),
                 "Action", MapBuilder.of("advance", "advance", "replace", "replace", "restore", "restore")
         );
+    }
+
+    private void visit(ReadableMap route, boolean initial ) {
+        TurbolinksRoute tRoute = new TurbolinksRoute(route);
+        if (tRoute.getUrl() != null) {
+            presentActivityForSession(tRoute, initial);
+        } else {
+            presentNativeView(tRoute, initial);
+        }
     }
 
     private void presentActivityForSession(TurbolinksRoute route, boolean initial) {

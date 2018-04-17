@@ -36,38 +36,61 @@ class RNTurbolinksManager: RCTEventEmitter {
         return navigation.visibleViewController!
     }
     
-    @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) -> Void {
+    @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {
         let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
         let visitable = view as! WebViewController
         visitable.renderComponent(TurbolinksRoute(route))
     }
     
-    @objc func reloadVisitable() -> Void {
+    @objc func reloadVisitable() {
         let visitable = visibleViewController as! WebViewController
         visitable.reload()
     }
     
-    @objc func reloadSession(_ cleanCookies: Bool) -> Void {
+    @objc func reloadSession(_ cleanCookies: Bool) {
         if (cleanCookies) { session.cleanCookies() }
         session.injectCookies()
         session.reload()
     }
     
-    @objc func dismiss() -> Void {
+    @objc func dismiss() {
         navigation.dismiss(animated: true)
     }
     
-    @objc func popToRoot() -> Void {
+    @objc func popToRoot() {
         navigation.popToRootViewController(animated: true)
     }
     
-    @objc func back() -> Void {
+    @objc func back() {
         navigation.popViewController(animated: true)
     }
     
-    @objc func visit(_ route: Dictionary<AnyHashable, Any>,_ initial: Bool) -> Void {
+    @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>) {
+        tabBarController = UITabBarController()
+        tabBarController.tabBar.isHidden = true
+        tabBarController.viewControllers = [NavigationController(self, 0)]
+        rootViewController.addChildViewController(tabBarController)
+        rootViewController.view.addSubview(tabBarController.view)
+        visit(route)
+    }
+    
+    @objc func startTabBasedApp(_ routes: Array<Dictionary<AnyHashable, Any>>,_ selectedIndex: Int) {
+        tabBarController = UITabBarController()
+        tabBarController.setViewControllers([UIViewController()], animated: false)
+        tabBarController.setViewControllers(nil, animated: false)
+        rootViewController.addChildViewController(tabBarController)
+        rootViewController.view.addSubview(tabBarController.view)
+        for (index, route) in routes.enumerated() {
+            let navController = NavigationController(self, route, index)
+            tabBarController.viewControllers! += [navController]
+            tabBarController.selectedIndex = index
+            visit(route)
+        }
+        tabBarController.selectedIndex = selectedIndex
+    }
+    
+    @objc func visit(_ route: Dictionary<AnyHashable, Any>) {
         let tRoute = TurbolinksRoute(route)
-        if initial { initHiddenTabBar() }
         if tRoute.url != nil {
             presentVisitableForSession(tRoute)
         } else {
@@ -79,14 +102,14 @@ class RNTurbolinksManager: RCTEventEmitter {
         self.loadingView = loadingView
     }
     
-    @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
+    @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) {
         barTintColor = RCTConvert.uiColor(style["barTintColor"])
         tintColor = RCTConvert.uiColor(style["tintColor"])
         titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
         subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
     }
     
-    @objc func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) -> Void {
+    @objc func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
         let barTintColor = RCTConvert.uiColor(style["barTintColor"])
         let tintColor = RCTConvert.uiColor(style["tintColor"])
         let menuIcon = RCTConvert.uiImage(style["menuIcon"])
@@ -95,15 +118,15 @@ class RNTurbolinksManager: RCTEventEmitter {
         if menuIcon != nil { customMenuIcon = menuIcon }
     }
     
-    @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) -> Void {
+    @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) {
         self.navigationBarHidden = navigationBarHidden
     }
     
-    @objc func setUserAgent(_ userAgent: String) -> Void {
+    @objc func setUserAgent(_ userAgent: String) {
         self.userAgent = userAgent
     }
     
-    @objc func setMessageHandler(_ handler: String) -> Void {
+    @objc func setMessageHandler(_ handler: String) {
         self.messageHandler = handler
     }
     
@@ -120,21 +143,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         guard let visitable = view as? GenricViewController else { return }
         visitable.route.actions = actions
         visitable.renderActions()
-    }
-    
-    @objc func visitTabBar(_ routes: Array<Dictionary<AnyHashable, Any>>,_ selectedIndex: Int) {
-        tabBarController = UITabBarController()
-        tabBarController.setViewControllers([UIViewController()], animated: false)
-        tabBarController.setViewControllers(nil, animated: false)
-        rootViewController.addChildViewController(tabBarController)
-        rootViewController.view.addSubview(tabBarController.view)
-        for (index, route) in routes.enumerated() {
-            let navController = NavigationController(self, route, index)
-            tabBarController.viewControllers! += [navController]
-            tabBarController.selectedIndex = index
-            visit(route, false)
-        }
-        tabBarController.selectedIndex = selectedIndex
     }
     
     @objc func evaluateJavaScript(_ script: String, _ tabIndex: Int,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
@@ -186,14 +194,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     fileprivate func getNavigationByIndex(_ index: Int) -> NavigationController {
         return tabBarController.viewControllers![index] as! NavigationController
-    }
-    
-    fileprivate func initHiddenTabBar() {
-        tabBarController = UITabBarController()
-        tabBarController.tabBar.isHidden = true
-        tabBarController.viewControllers = [NavigationController(self, 0)]
-        rootViewController.addChildViewController(tabBarController)
-        rootViewController.view.addSubview(tabBarController.view)
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
