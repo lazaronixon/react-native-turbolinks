@@ -66,7 +66,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (isInitial() || route.getModal()) {
+        if (isInitial()) {
             moveTaskToBack(true);
         } else {
             super.onBackPressed();
