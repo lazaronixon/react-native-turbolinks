@@ -39,6 +39,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_SELECTED_INDEX = "intentSelectedIndex";
     public static final String INTENT_LOADING_VIEW = "intentLoadingView";
     public static final String INTENT_INITIAL = "intentInitial";
+    public static final String INTENT_FROM_TAB = "intentFromTab";
 
     private TurbolinksRoute prevRoute;
     private String messageHandler;
@@ -202,6 +203,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_INITIAL, isInitial);
+                intent.putExtra(INTENT_FROM_TAB, isTabbedActivity(act));
                 intent.putExtra(INTENT_LOADING_VIEW, loadingView);
                 intent.putExtra(INTENT_ROUTE, route);
                 if (isInitial) initialIntent = intent;
@@ -226,14 +228,19 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
         intent.putExtra(INTENT_INITIAL, isInitial);
+        intent.putExtra(INTENT_FROM_TAB, isTabbedActivity(act));
         if (isInitial) initialIntent = intent;
         if (isInitial) TurbolinksSession.resetDefault();
         act.startActivity(intent);
         if (isActionReplace) act.finish();
     }
 
-    private Boolean getIntentInitial(Activity act) {
+    private boolean getIntentInitial(Activity act) {
         return act.getIntent().getBooleanExtra(INTENT_INITIAL, true);
+    }
+
+    private boolean isTabbedActivity(Activity act) {
+        return (act instanceof TabbedActivity);
     }
 
 }

@@ -61,6 +61,7 @@ public class TabbedActivity extends GenericActivity {
 
         setupViewPager();
         setupBottomNav();
+        setupTransitionOnEnter();
     }
 
     @Override

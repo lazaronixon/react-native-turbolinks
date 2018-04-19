@@ -26,6 +26,7 @@ public class NativeActivity extends GenericActivity {
 
         renderToolBar();
         handleTitlePress(route.getComponent(), null, null);
+        setupTransitionOnEnter();
 
         rootView.startReactApplication(getReactInstanceManager(), route.getComponent(), route.getPassProps());
     }

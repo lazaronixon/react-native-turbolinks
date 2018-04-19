@@ -57,6 +57,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
 
         renderToolBar();
         visitTurbolinksView();
+        setupTransitionOnEnter();
     }
 
     @Override

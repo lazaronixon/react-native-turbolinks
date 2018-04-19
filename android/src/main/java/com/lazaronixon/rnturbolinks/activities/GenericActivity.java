@@ -26,7 +26,9 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import java.util.ArrayList;
 
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_FROM_TAB;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
+import static com.lazaronixon.rnturbolinks.util.TurbolinksRoute.ACTION_REPLACE;
 
 public abstract class GenericActivity extends ReactAppCompatActivity {
 
@@ -73,6 +75,12 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         }
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        setupTransitionOnFinish();
+    }
+
     public void renderTitle(String title, String subtitle) {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(subtitle);
@@ -107,6 +115,10 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         return getIntent().getBooleanExtra(INTENT_INITIAL, true);
     }
 
+    public boolean isFromTab() {
+        return getIntent().getBooleanExtra(INTENT_FROM_TAB, false);
+    }
+
     protected void backToHomeScreen(Context context) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
@@ -138,6 +150,26 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     protected void restart() {
         finish();
         startActivity(getIntent());
+    }
+
+    public void setupTransitionOnEnter() {
+        if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
+            overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
+        } else if (isFromTab() || route.getModal()) {
+            overridePendingTransition(R.anim.slide_up, R.anim.stay_its);
+        } else {
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+    }
+
+    protected void setupTransitionOnFinish() {
+        if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
+            overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
+        } else if (isFromTab() || route.getModal()) {
+            overridePendingTransition(R.anim.stay_its, R.anim.slide_down);
+        } else {
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
     }
 
     @SuppressLint("RestrictedApi")
