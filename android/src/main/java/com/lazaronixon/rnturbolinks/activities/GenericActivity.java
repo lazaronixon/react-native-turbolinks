@@ -163,7 +163,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     }
 
     protected void setupTransitionOnFinish() {
-        if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
+        if (isInitial()) {
             overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
         } else if (isFromTab() || route.getModal()) {
             overridePendingTransition(R.anim.stay_its, R.anim.slide_down);
