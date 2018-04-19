@@ -103,12 +103,14 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     @Override
     public void onReceivedError(int errorCode) {
-        WritableMap params = Arguments.createMap();
-        params.putInt("code", errorCode < 0 ? NETWORK_FAILURE : HTTP_FAILURE);
-        params.putInt("statusCode", errorCode);
-        params.putInt("tabIndex", index);
-        params.putString("description", "Network Failure. Code: " + errorCode);
-        act.getEventEmitter().emit(TURBOLINKS_ERROR, params);
+        if (errorCode < 0) {
+            WritableMap params = Arguments.createMap();
+            params.putInt("code", NETWORK_FAILURE);
+            params.putInt("statusCode", errorCode);
+            params.putInt("tabIndex", index);
+            params.putString("description", "Network Failure. Code: " + errorCode);
+            act.getEventEmitter().emit(TURBOLINKS_ERROR, params);
+        }
     }
 
     @Override

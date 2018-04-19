@@ -73,12 +73,14 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
 
     @Override
     public void onReceivedError(int errorCode) {
-        WritableMap params = Arguments.createMap();
-        params.putInt("code", errorCode < 0 ? NETWORK_FAILURE : HTTP_FAILURE);
-        params.putInt("statusCode", errorCode);
-        params.putInt("tabIndex", 0);
-        params.putString("description", "Network Failure.");
-        getEventEmitter().emit(TURBOLINKS_ERROR, params);
+        if (errorCode < 0) {
+            WritableMap params = Arguments.createMap();
+            params.putInt("code", NETWORK_FAILURE);
+            params.putInt("statusCode", errorCode);
+            params.putInt("tabIndex", 0);
+            params.putString("description", "Network Failure.");
+            getEventEmitter().emit(TURBOLINKS_ERROR, params);
+        }
     }
 
     @Override
