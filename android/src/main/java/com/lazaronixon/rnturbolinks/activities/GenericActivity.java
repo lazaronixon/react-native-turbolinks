@@ -1,8 +1,6 @@
 package com.lazaronixon.rnturbolinks.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -117,13 +115,6 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
 
     public boolean isFromTab() {
         return getIntent().getBooleanExtra(INTENT_FROM_TAB, false);
-    }
-
-    protected void backToHomeScreen(Context context) {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
     }
 
     protected void renderToolBar() {
