@@ -51,7 +51,7 @@ extension GenricViewController where Self: UIViewController {
     }
     
     func setupNavigationBar() {
-        navigationController!.navigationBar.isHidden = route.navBarHidden
+        navigationController?.navigationBar.isHidden = route.navBarHidden
     }
     
     func presentActions(_ sender: UIBarButtonItem) {
