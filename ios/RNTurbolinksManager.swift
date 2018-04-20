@@ -11,7 +11,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     var tintColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
-    var navigationBarHidden: Bool?
     var customMenuIcon: UIImage?
     var loadingView: String?    
     var processPool = WKProcessPool()
@@ -68,7 +67,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>) {
         tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
-        tabBarController.viewControllers = [NavigationController(self, 0)]
+        tabBarController.viewControllers = [NavigationController(self, route, 0)]
         rootViewController.addChildViewController(tabBarController)
         rootViewController.view.addSubview(tabBarController.view)
         visit(route)
@@ -116,10 +115,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         if barTintColor != nil { tabBarController.tabBar.barTintColor = barTintColor }
         if tintColor != nil { tabBarController.tabBar.tintColor = tintColor }
         if menuIcon != nil { customMenuIcon = menuIcon }
-    }
-    
-    @objc func setNavigationBarHidden(_ navigationBarHidden: Bool) {
-        self.navigationBarHidden = navigationBarHidden
     }
     
     @objc func setUserAgent(_ userAgent: String) {

@@ -94,6 +94,7 @@ Visit a URL with Turbolinks.
 - `url:` Url to visit. (Required)
 - `title:` The default value is the title of the Web page.
 - `subtitle:` A subtitle for visitable view.
+- `navBarHidden`: Hidden navigation bar. (Default false)
 - `leftButtonIcon`: A left button icon. (iOS Only)
 - `actions:` A Array of action objects to mount a menu.
   - `action:`
@@ -110,6 +111,7 @@ Visit a Component with Turbolinks.
 - `passProps`: Passes this in as props to the rendered component.
 - `title:` The default value is the title of the Web page.
 - `subtitle:` A subtitle for visitable view.
+- `navBarHidden`: Hidden navigation bar. (Default false)
 - `leftButtonIcon`: A left button icon. (iOS Only)
 - `actions:` A Array of action objects to mount a menu.
   - `action:`
@@ -143,9 +145,6 @@ Set style for navigation bar on iOS. For android set your style on [android/app/
 
 #### `setLoadingView(component)`
 Set a custom loadingView using a react component.
-
-#### `setNavigationBarHidden(boolean)`
-Hidden navigation bar. For example if you want to use a web navbar. (Default false)
 
 #### `setTabBarStyle({barTintColor, tintColor, menuIcon})` (iOS Only)
 Set style for TabBar. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
@@ -197,7 +196,6 @@ Removes the listener for given event.
 
 - [x] [Third party library](https://github.com/lazaronixon/react-native-form-sheet) to provide native dialogs. Using [MZFormSheetPresentationController
 ](https://github.com/m1entus/MZFormSheetPresentationController) and [Dialogs](https://developer.android.com/guide/topics/ui/dialogs.html).
-- [ ] [Segmented Controls](https://developer.apple.com/ios/human-interface-guidelines/controls/segmented-controls/)
 
 ## Resources
 

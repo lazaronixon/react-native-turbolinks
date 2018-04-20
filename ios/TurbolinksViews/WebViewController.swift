@@ -38,12 +38,13 @@ class WebViewController: VisitableViewController {
     }
     
     fileprivate func fixScrollWebView() {
-        let navBarHeight =  navigationController!.navigationBar.frame.size.height
+        let navBar = navigationController!.navigationBar
+        let navBarHeight = navBar.isHidden ? 0 : navBar.frame.size.height
         visitableView.contentInset = UIEdgeInsetsMake(navBarHeight + 20, 0, 0, 0)
     }
     
     fileprivate func setWebViewTitle() {
-        navigationItem.title = visitableView.webView?.title
+        navigationItem.title = visitableView.webView!.title
     }
     
     override func viewDidLoad() {
@@ -58,6 +59,11 @@ class WebViewController: VisitableViewController {
         setWebViewTitle()
         renderTitle()
         handleVisitCompleted()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
     }
 
     fileprivate var dummyVisitableView: VisitableView!

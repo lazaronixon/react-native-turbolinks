@@ -56,10 +56,6 @@ class Turbolinks {
     })
   }
 
-  static setNavigationBarHidden(isHidden = false) {
-    RNTurbolinksManager.setNavigationBarHidden(isHidden)
-  }
-
   static setLoadingView(loadingView) {
     RNTurbolinksManager.setLoadingView(loadingView)
   }

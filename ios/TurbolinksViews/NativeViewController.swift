@@ -23,6 +23,11 @@ class NativeViewController: UIViewController {
         renderLeftButton()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
+    
 }
 
 extension NativeViewController: GenricViewController {
