@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_LOADING_VIEW;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTES;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_SELECTED_INDEX;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
@@ -46,7 +45,6 @@ public class TabbedActivity extends GenericActivity {
 
         toolBar = findViewById(R.id.toolbar);
         route = new TurbolinksRoute(routes.get(selectedIndex));
-        navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
 
         viewPager = findViewById(R.id.viewpager);
         bottomNav = findViewById(R.id.navigation);

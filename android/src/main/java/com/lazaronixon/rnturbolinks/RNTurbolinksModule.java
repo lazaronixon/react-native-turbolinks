@@ -31,7 +31,6 @@ import static com.lazaronixon.rnturbolinks.util.TurbolinksRoute.ACTION_REPLACE;
 
 public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
-    public static final String INTENT_NAVIGATION_BAR_HIDDEN = "intentNavigationBarHidden";
     public static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     public static final String INTENT_USER_AGENT = "intentUserAgent";
     public static final String INTENT_ROUTE = "intentRoute";
@@ -45,7 +44,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private String messageHandler;
     private String userAgent;
     private String loadingView;
-    private boolean navigationBarHidden = false;
     private Intent initialIntent;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
@@ -66,7 +64,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(act, TabbedActivity.class);
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
         intent.putExtra(INTENT_USER_AGENT, userAgent);
-        intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
         intent.putExtra(INTENT_LOADING_VIEW, loadingView);
         intent.putExtra(INTENT_INITIAL, true);
@@ -97,11 +94,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setUserAgent(String userAgent) {
         this.userAgent = userAgent;
-    }
-
-    @ReactMethod
-    public void setNavigationBarHidden(boolean navigationBarHidden) {
-        this.navigationBarHidden = navigationBarHidden;
     }
 
     @ReactMethod
@@ -201,7 +193,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 Intent intent = new Intent(getReactApplicationContext(), WebActivity.class);
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
-                intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
                 intent.putExtra(INTENT_INITIAL, isInitial);
                 intent.putExtra(INTENT_FROM_TAB, isTabbedActivity(act));
                 intent.putExtra(INTENT_LOADING_VIEW, loadingView);
@@ -225,7 +216,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
         boolean isInitial = isActionReplace ? getIntentInitial(act) : initial;
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
-        intent.putExtra(INTENT_NAVIGATION_BAR_HIDDEN, navigationBarHidden);
         intent.putExtra(INTENT_ROUTE, route);
         intent.putExtra(INTENT_INITIAL, isInitial);
         intent.putExtra(INTENT_FROM_TAB, isTabbedActivity(act));

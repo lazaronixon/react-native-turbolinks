@@ -6,7 +6,6 @@ import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactRootView;
 import com.lazaronixon.rnturbolinks.R;
 
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAVIGATION_BAR_HIDDEN;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 
 public class NativeActivity extends GenericActivity {
@@ -20,7 +19,6 @@ public class NativeActivity extends GenericActivity {
 
         toolBar = findViewById(R.id.toolbar);
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
-        navigationBarHidden = getIntent().getBooleanExtra(INTENT_NAVIGATION_BAR_HIDDEN, false);
 
         rootView = findViewById(R.id.react_root_view);
 

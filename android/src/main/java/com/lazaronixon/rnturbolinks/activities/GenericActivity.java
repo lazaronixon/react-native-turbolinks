@@ -123,7 +123,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
-        if (navigationBarHidden || route.getModal()) getSupportActionBar().hide();
+        if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
     }
 
     protected void handleTitlePress(final String component, final String url, final String path) {
