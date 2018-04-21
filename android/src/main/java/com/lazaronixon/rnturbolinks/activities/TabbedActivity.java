@@ -3,8 +3,11 @@ package com.lazaronixon.rnturbolinks.activities;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.PagerAdapter;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,6 +79,19 @@ public class TabbedActivity extends GenericActivity {
     @Override
     public void evaluateJavaScript(String script, final Promise promise) {
         getCurrentTabbedView().evaluateJavaScript(script, promise);
+    }
+
+    @Override
+    public void notifyTabItem(int tabIndex, boolean enabled) {
+        BottomNavigationMenuView bottomNavMenu = (BottomNavigationMenuView) bottomNav.getChildAt(0);
+        BottomNavigationItemView bottomNavItem = (BottomNavigationItemView) bottomNavMenu.getChildAt(tabIndex);
+        if (enabled) {
+            View badge = LayoutInflater.from(this).inflate(R.layout.badge_layout, bottomNavMenu, false);
+            bottomNavItem.addView(badge);
+        } else {
+            View badge = bottomNavItem.findViewById(R.id.badge_view);
+            bottomNavItem.removeView(badge);
+        }
     }
 
     public void reloadSession() {

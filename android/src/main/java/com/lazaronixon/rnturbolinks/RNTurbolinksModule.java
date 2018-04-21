@@ -165,6 +165,15 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         });
     }
 
+    @ReactMethod
+    public void notifyTabItem(final int tabIndex, final boolean enabled) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                ((GenericActivity) getCurrentActivity()).notifyTabItem(tabIndex, enabled);
+            }
+        });
+    }
+
     @Override
     public Map getConstants() {
         return MapBuilder.of(

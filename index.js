@@ -92,6 +92,10 @@ class Turbolinks {
     }
   }
 
+  static notifyTabItem(tabIndex, enabled) {
+    RNTurbolinksManager.notifyTabItem(tabIndex, enabled)
+  }
+
   static addEventListener(eventName, callback) {
     RNTurbolinksManagerEmitter.addListener(eventName, callback)
   }
