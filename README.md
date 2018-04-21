@@ -146,6 +146,9 @@ Set style for navigation bar on iOS. For android set your style on [android/app/
 #### `setLoadingView(component)`
 Set a custom loadingView using a react component.
 
+#### `notifyTabItem(tabIndex, enabled)`
+Show or hide a badge on tabBarItem.
+
 #### `setTabBarStyle({barTintColor, tintColor, menuIcon})` (iOS Only)
 Set style for TabBar. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
