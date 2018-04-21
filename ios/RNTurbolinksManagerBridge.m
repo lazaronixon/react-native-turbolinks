@@ -18,4 +18,5 @@ RCT_EXTERN_METHOD(startSingleScreenApp:(NSDictionary *))
 RCT_EXTERN_METHOD(startTabBasedApp:(NSArray *) selectedIndex:(NSInteger *))
 RCT_EXTERN_METHOD(setTabBarStyle:(NSDictionary *))
 RCT_EXTERN_METHOD(evaluateJavaScript:(NSString *) tabIndex:(NSInteger *) resolve:(RCTPromiseResolveBlock *) reject:(RCTPromiseRejectBlock *))
+RCT_EXTERN_METHOD(notifyTabItem:(NSInteger *) enabled:(BOOL))
 @end

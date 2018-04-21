@@ -151,6 +151,15 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
+    @objc func notifyTabItem(_ tabIndex: Int, _ enabled: Bool) {
+        let tabItem = tabBarController.tabBar.items![tabIndex]
+        if (enabled) {
+            tabItem.badgeValue = ""
+        } else {
+            tabItem.badgeValue = nil
+        }
+    }
+    
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
         let visitable = WebViewController(self, route)
         if route.action == .Advance {
