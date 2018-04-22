@@ -106,15 +106,14 @@ class RNTurbolinksManager: RCTEventEmitter {
         tintColor = RCTConvert.uiColor(style["tintColor"])
         titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
         subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
+        customMenuIcon = RCTConvert.uiImage(style["menuIcon"])
     }
     
     @objc func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
         let barTintColor = RCTConvert.uiColor(style["barTintColor"])
         let tintColor = RCTConvert.uiColor(style["tintColor"])
-        let menuIcon = RCTConvert.uiImage(style["menuIcon"])
         if barTintColor != nil { tabBarController.tabBar.barTintColor = barTintColor }
         if tintColor != nil { tabBarController.tabBar.tintColor = tintColor }
-        if menuIcon != nil { customMenuIcon = menuIcon }
     }
     
     @objc func setUserAgent(_ userAgent: String) {

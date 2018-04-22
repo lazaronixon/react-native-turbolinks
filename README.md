@@ -140,7 +140,7 @@ Back until to root view.
 #### `back()`
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
-#### `setNavigationBarStyle({titleTextColor, subtitleTextColor, barTintColor, tintColor})`(iOS Only)
+#### `setNavigationBarStyle({titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon})`(iOS Only)
 Set style for navigation bar on iOS. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `setLoadingView(component)`
@@ -149,7 +149,7 @@ Set a custom loadingView using a react component.
 #### `notifyTabItem(tabIndex, enabled)`
 Show or hide a badge on tabBarItem.
 
-#### `setTabBarStyle({barTintColor, tintColor, menuIcon})` (iOS Only)
+#### `setTabBarStyle({barTintColor, tintColor})` (iOS Only)
 Set style for TabBar. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `renderTitle(title)`
