@@ -107,7 +107,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void reloadSession(Boolean cleanCookies) {
+    public void reloadSession() {
         CookieSyncManager.getInstance().sync();
         runOnUiThread(new Runnable() {
             public void run() {
