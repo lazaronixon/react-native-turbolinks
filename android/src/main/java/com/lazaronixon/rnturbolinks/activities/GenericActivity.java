@@ -35,7 +35,6 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
 
     protected Toolbar toolBar;
     protected TurbolinksRoute route;
-    protected boolean navigationBarHidden;
 
     public abstract void reloadSession();
 
