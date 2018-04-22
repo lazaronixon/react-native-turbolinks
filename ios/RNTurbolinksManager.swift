@@ -9,6 +9,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     var subtitleTextColor: UIColor?
     var barTintColor: UIColor?
     var tintColor: UIColor?
+    var tabBarBarTintColor: UIColor?
+    var tabBarTintColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
     var customMenuIcon: UIImage?
@@ -64,7 +66,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         navigation.popViewController(animated: true)
     }
     
-    @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>) {
+    @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
+        setAppOptions(options)
         tabBarController = UITabBarController()
         tabBarController.tabBar.isHidden = true
         tabBarController.viewControllers = [NavigationController(self, route, 0)]
@@ -73,7 +76,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         visit(route)
     }
     
-    @objc func startTabBasedApp(_ routes: Array<Dictionary<AnyHashable, Any>>,_ selectedIndex: Int) {
+    @objc func startTabBasedApp(_ routes: Array<Dictionary<AnyHashable, Any>> ,_ options: Dictionary<AnyHashable, Any> ,_ selectedIndex: Int) {
+        setAppOptions(options)
         tabBarController = UITabBarController()
         tabBarController.setViewControllers([UIViewController()], animated: false)
         tabBarController.setViewControllers(nil, animated: false)
@@ -85,6 +89,8 @@ class RNTurbolinksManager: RCTEventEmitter {
             tabBarController.selectedIndex = index
             visit(route)
         }
+        if tabBarBarTintColor != nil { tabBarController.tabBar.barTintColor = tabBarBarTintColor }
+        if tabBarTintColor != nil { tabBarController.tabBar.tintColor = tabBarTintColor }
         tabBarController.selectedIndex = selectedIndex
     }
     
@@ -95,33 +101,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         } else {
             presentNativeView(tRoute)
         }
-    }
-    
-    @objc func setLoadingView(_ loadingView: String) {
-        self.loadingView = loadingView
-    }
-    
-    @objc func setNavigationBarStyle(_ style: Dictionary<AnyHashable, Any>) {
-        barTintColor = RCTConvert.uiColor(style["barTintColor"])
-        tintColor = RCTConvert.uiColor(style["tintColor"])
-        titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
-        subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
-        customMenuIcon = RCTConvert.uiImage(style["menuIcon"])
-    }
-    
-    @objc func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
-        let barTintColor = RCTConvert.uiColor(style["barTintColor"])
-        let tintColor = RCTConvert.uiColor(style["tintColor"])
-        if barTintColor != nil { tabBarController.tabBar.barTintColor = barTintColor }
-        if tintColor != nil { tabBarController.tabBar.tintColor = tintColor }
-    }
-    
-    @objc func setUserAgent(_ userAgent: String) {
-        self.userAgent = userAgent
-    }
-    
-    @objc func setMessageHandler(_ handler: String) {
-        self.messageHandler = handler
     }
     
     @objc func renderTitle(_ title: String,_ subtitle: String,_ tabIndex: Int) {
@@ -197,6 +176,27 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     fileprivate func getNavigationByIndex(_ index: Int) -> NavigationController {
         return tabBarController.viewControllers![index] as! NavigationController
+    }
+    
+    fileprivate func setAppOptions(_ options: Dictionary<AnyHashable, Any>) {
+        self.userAgent = RCTConvert.nsString(options["userAgent"])
+        self.messageHandler = RCTConvert.nsString(options["messageHandler"])
+        self.loadingView = RCTConvert.nsString(options["loadingView"])
+        if (options["navBarStyle"] != nil) { setNavBarStyle(RCTConvert.nsDictionary(options["navBarStyle"])) }
+        if (options["tabBarStyle"] != nil) { setTabBarStyle(RCTConvert.nsDictionary(options["tabBarStyle"])) }
+    }
+    
+    fileprivate func setNavBarStyle(_ style: Dictionary<AnyHashable, Any>) {
+        barTintColor = RCTConvert.uiColor(style["barTintColor"])
+        tintColor = RCTConvert.uiColor(style["tintColor"])
+        titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
+        subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
+        customMenuIcon = RCTConvert.uiImage(style["menuIcon"])
+    }
+    
+    fileprivate func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
+        tabBarBarTintColor = RCTConvert.uiColor(style["barTintColor"])
+        tabBarTintColor = RCTConvert.uiColor(style["tintColor"])
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {

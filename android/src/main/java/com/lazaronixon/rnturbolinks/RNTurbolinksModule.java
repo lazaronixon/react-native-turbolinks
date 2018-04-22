@@ -57,10 +57,14 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startSingleScreenApp(ReadableMap route) { visit(route, true); }
+    public void startSingleScreenApp(ReadableMap route, ReadableMap options) {
+        setAppOptions(options);
+        visit(route, true);
+    }
 
     @ReactMethod
-    public void startTabBasedApp(ReadableArray routes, int selectedIndex) {
+    public void startTabBasedApp(ReadableArray routes, ReadableMap options, int selectedIndex) {
+        setAppOptions(options);
         Activity act = getCurrentActivity();
         Intent intent = new Intent(act, TabbedActivity.class);
         intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
@@ -85,16 +89,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex);
             }
         });
-    }
-
-    @ReactMethod
-    public void setMessageHandler(String messageHandler) {
-        this.messageHandler = messageHandler;
-    }
-
-    @ReactMethod
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
     }
 
     @ReactMethod
@@ -126,17 +120,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void back() { getCurrentActivity().finish(); }
-
-    @ReactMethod
-    public void setLoadingView(String loadingView) { this.loadingView = loadingView; }
-
-    @ReactMethod
-    public void setNavigationBarStyle(ReadableMap style) {
-    }
-
-    @ReactMethod
-    public void setTabBarStyle(ReadableMap style) {
-    }
 
     @ReactMethod
     public void renderTitle(final String title, final String subtitle, int tabIndex) {
@@ -182,6 +165,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 "ErrorCode", MapBuilder.of("httpFailure", 0, "networkFailure", 1),
                 "Action", MapBuilder.of("advance", "advance", "replace", "replace", "restore", "restore")
         );
+    }
+
+    private void setAppOptions(ReadableMap opts) {
+        this.messageHandler = opts.hasKey("messageHandler") ? opts.getString("messageHandler") : null;
+        this.userAgent = opts.hasKey("userAgent") ? opts.getString("userAgent") : null;
+        this.loadingView = opts.hasKey("loadingView") ? opts.getString("loadingView") : null;
     }
 
     private void visit(ReadableMap route, boolean initial ) {

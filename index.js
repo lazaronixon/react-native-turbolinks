@@ -10,6 +10,16 @@ class Turbolinks {
     Action: RNTurbolinksManager.Action
   }
 
+  static startSingleScreenApp(route, options = {}) {
+    this._processAppOptions(options)
+    RNTurbolinksManager.startSingleScreenApp(route, options)
+  }
+
+  static startTabBasedApp(routes, options = {}, selectedIndex = 0) {
+    this._processAppOptions(options)
+    RNTurbolinksManager.startTabBasedApp(routes, options, selectedIndex)
+  }
+
   static reloadVisitable() {
     RNTurbolinksManager.reloadVisitable()
   }
@@ -38,44 +48,6 @@ class Turbolinks {
     RNTurbolinksManager.replaceWith(route, tabIndex)
   }
 
-  static setUserAgent(userAgent) {
-    RNTurbolinksManager.setUserAgent(userAgent)
-  }
-
-  static setMessageHandler(messageHandler) {
-    RNTurbolinksManager.setMessageHandler(messageHandler)
-  }
-
-  static setNavigationBarStyle(options) {
-    RNTurbolinksManager.setNavigationBarStyle({
-      ...options,
-      barTintColor: processColor(options.barTintColor),
-      tintColor: processColor(options.tintColor),
-      titleTextColor: processColor(options.titleTextColor),
-      subtitleTextColor: processColor(options.subtitleTextColor)
-    })
-  }
-
-  static setLoadingView(loadingView) {
-    RNTurbolinksManager.setLoadingView(loadingView)
-  }
-
-  static startSingleScreenApp(route) {
-    RNTurbolinksManager.startSingleScreenApp(route)
-  }
-
-  static startTabBasedApp(routes, selectedIndex = 0) {
-    RNTurbolinksManager.startTabBasedApp(routes, selectedIndex)
-  }
-
-  static setTabBarStyle(options) {
-    RNTurbolinksManager.setTabBarStyle({
-      ...options,
-      barTintColor: processColor(options.barTintColor),
-      tintColor: processColor(options.tintColor)
-    })
-  }
-
   static renderTitle(title, subtitle = null, tabIndex = -1) {
     RNTurbolinksManager.renderTitle(title, subtitle, tabIndex)
   }
@@ -94,6 +66,25 @@ class Turbolinks {
 
   static notifyTabItem(tabIndex, enabled) {
     RNTurbolinksManager.notifyTabItem(tabIndex, enabled)
+  }
+
+  static _processAppOptions(options) {
+    if (options.navBarStyle) {
+      options.navBarStyle = {
+        ...options.navBarStyle,
+        barTintColor: processColor(options.navBarStyle.barTintColor),
+        tintColor: processColor(options.navBarStyle.tintColor),
+        titleTextColor: processColor(options.navBarStyle.titleTextColor),
+        subtitleTextColor: processColor(options.navBarStyle.subtitleTextColor)
+      }
+    }
+    if (options.tabBarStyle) {
+      options.tabBarStyle = {
+        ...options.tabBarStyle,
+        barTintColor: processColor(options.tabBarStyle.barTintColor),
+        tintColor: processColor(options.tabBarStyle.tintColor)
+      }
+    }
   }
 
   static addEventListener(eventName, callback) {
