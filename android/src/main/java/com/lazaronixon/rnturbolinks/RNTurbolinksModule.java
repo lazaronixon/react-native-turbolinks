@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.webkit.CookieSyncManager;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.bridge.Arguments;
@@ -107,6 +108,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void reloadSession(Boolean cleanCookies) {
+        CookieSyncManager.getInstance().sync();
         runOnUiThread(new Runnable() {
             public void run() {
                 ((GenericActivity) getCurrentActivity()).reloadSession();
