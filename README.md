@@ -74,19 +74,27 @@ Once you’ve started the demo server, explore the demo application in the Simul
 
 ## Methods
 
-#### `setUserAgent(userAgent)`
-You can check for this string on the server and use it to send specialized markup or assets to your application.
-
-#### `setMessageHandler(messageHandler)`
-You can register a Message Handler to send messages from JavaScript to your application.
-
 #### `startSingleScreenApp(route)`
+#### `startSingleScreenApp(route, options)`
 Start a Single Screen App. Use it instead visit for first visit.
+- `options`:
+  - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
+  - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
+  - `loadingView`: Set a custom loadingView using a react component.
+  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon} (iOS Only).
+  - `tabBarStyle`: {barTintColor, tintColor} (iOS Only).
 
 #### `startTabBasedApp(routes)`
-#### `startTabBasedApp(routes, selectedIndex)`
+#### `startTabBasedApp(routes, options)`
+#### `startTabBasedApp(routes, options, selectedIndex)`
 A tab bar appears at the bottom of an app screen and provides the ability to quickly switch between different sections of an app.
 - `routes:` A Array of route objects to mount TabBar. Use `tabTitle` and `tabIcon` here.
+- `options`:
+  - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
+  - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
+  - `loadingView`: Set a custom loadingView using a react component.
+  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon} (iOS Only).
+  - `tabBarStyle`: {barTintColor, tintColor} (iOS Only).
 - `selectedIndex:` Index for initial selected view. (Default 0).
 
 #### `visit(route)`
@@ -140,17 +148,8 @@ Back until to root view.
 #### `back()`
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
-#### `setNavigationBarStyle({titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon})`(iOS Only)
-Set style for navigation bar on iOS. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
-
-#### `setLoadingView(component)`
-Set a custom loadingView using a react component.
-
 #### `notifyTabItem(tabIndex, enabled)`
 Show or hide a badge on tabBarItem.
-
-#### `setTabBarStyle({barTintColor, tintColor})` (iOS Only)
-Set style for TabBar. For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 #### `renderTitle(title)`
 #### `renderTitle(title, subtitle)`
@@ -182,6 +181,9 @@ Adds an event handler. Supported events:
 
 #### `removeEventListener(eventName, handler)`
 Removes the listener for given event.
+
+## Android Style
+For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 ## Constants
 
