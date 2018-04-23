@@ -39,7 +39,7 @@ class WebViewController: VisitableViewController {
     
     fileprivate func fixScrollWebView() {
         let navBar = navigationController!.navigationBar
-        let navBarHeight = navBar.isHidden ? 0 : navBar.frame.size.height
+        let navBarHeight = route.navBarHidden ? 0 : navBar.frame.size.height
         visitableView.contentInset = UIEdgeInsetsMake(navBarHeight + 20, 0, 0, 0)
     }
     
