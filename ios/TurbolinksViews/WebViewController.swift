@@ -34,7 +34,7 @@ class WebViewController: VisitableViewController {
     
     fileprivate func handleVisitCompleted() {
         let navController = self.navigationController as! NavigationController
-        manager.handleVisitCompleted(self.visitableView.webView!.url, navController.index)
+        manager.handleVisitCompleted(self.visitableView.webView!.url!, navController.index)
     }
     
     fileprivate func fixScrollWebView() {
@@ -78,7 +78,7 @@ class WebViewController: VisitableViewController {
 extension WebViewController: GenricViewController {
     
     func handleTitlePress() {
-        manager.handleTitlePress(visitableView.webView!.url, route.component)
+        manager.handleTitlePress(visitableView.webView!.url, nil)
     }
     
     @objc func handleLeftButtonPress() {
