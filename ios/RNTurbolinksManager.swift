@@ -109,7 +109,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         visitable.renderActions()
     }
     
-    @objc func evaluateJavaScript(_ script: String, _ tabIndex: Int,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
+    @objc func evaluateJavaScript(_ script: String,_ tabIndex: Int,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
         let nav = navigationController ?? getNavigationByIndex(tabIndex)
         nav.session.webView.evaluateJavaScript(script) {(result, error) in
             if error != nil {
@@ -120,7 +120,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    @objc func notifyTabItem(_ tabIndex: Int, _ enabled: Bool) {
+    @objc func notifyTabItem(_ tabIndex: Int,_ enabled: Bool) {
         let tabItem = tabBarController.tabBar.items![tabIndex]
         if (enabled) {
             tabItem.badgeValue = ""
