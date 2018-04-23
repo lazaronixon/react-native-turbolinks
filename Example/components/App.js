@@ -8,16 +8,7 @@ export default class App extends Component {
     Turbolinks.addEventListener('turbolinksVisit', this.handleVisit)
     Turbolinks.addEventListener('turbolinksError', this.handleError)
     Turbolinks.addEventListener('turbolinksMessage', this.showMessage)
-    Turbolinks.startSingleScreenApp(
-      { url: Constants.baseUrl },
-      { messageHandler: 'turbolinksDemo' }
-    )
-  }
-
-  componentWillUnmount() {
-    Turbolinks.removeEventListener('turbolinksVisit', this.handleVisit)
-    Turbolinks.removeEventListener('turbolinksError', this.handleError)
-    Turbolinks.removeEventListener('turbolinksMessage', this.showMessage)
+    Turbolinks.startSingleScreenApp({url: Constants.baseUrl}, {messageHandler: 'turbolinksDemo'})
   }
 
   handleVisit = (data) => {
