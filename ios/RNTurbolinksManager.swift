@@ -5,6 +5,7 @@ import Turbolinks
 class RNTurbolinksManager: RCTEventEmitter {
     
     var tabBarController: UITabBarController!
+    var navigationController: NavigationController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
     var barTintColor: UIColor?
@@ -26,7 +27,11 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate var navigation: NavigationController {
-        return tabBarController.selectedViewController as! NavigationController
+        if (navigationController != nil) {
+            return navigationController
+        } else {
+            return tabBarController.selectedViewController as! NavigationController
+        }
     }
     
     fileprivate var session: TurbolinksSession {
@@ -68,29 +73,21 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
-        tabBarController = UITabBarController()
-        tabBarController.tabBar.isHidden = true
-        tabBarController.viewControllers = [NavigationController(self, route, 0)]
-        rootViewController.addChildViewController(tabBarController)
-        rootViewController.view.addSubview(tabBarController.view)
+        navigationController = NavigationController(self, route, 0)
+        rootViewController.addChildViewController(navigationController)
+        rootViewController.view.addSubview(navigationController.view)
         visit(route)
     }
     
     @objc func startTabBasedApp(_ routes: Array<Dictionary<AnyHashable, Any>> ,_ options: Dictionary<AnyHashable, Any> ,_ selectedIndex: Int) {
         setAppOptions(options)
         tabBarController = UITabBarController()
-        tabBarController.setViewControllers([UIViewController()], animated: false)
-        tabBarController.setViewControllers(nil, animated: false)
-        rootViewController.addChildViewController(tabBarController)
-        rootViewController.view.addSubview(tabBarController.view)
-        for (index, route) in routes.enumerated() {
-            let navController = NavigationController(self, route, index)
-            tabBarController.viewControllers! += [navController]
-            tabBarController.selectedIndex = index
-            visit(route)
-        }
+        tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
         if tabBarBarTintColor != nil { tabBarController.tabBar.barTintColor = tabBarBarTintColor }
         if tabBarTintColor != nil { tabBarController.tabBar.tintColor = tabBarTintColor }
+        rootViewController.addChildViewController(tabBarController)
+        rootViewController.view.addSubview(tabBarController.view)
+        visitTabRoutes(routes)
         tabBarController.selectedIndex = selectedIndex
     }
     
@@ -197,6 +194,13 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
         tabBarBarTintColor = RCTConvert.uiColor(style["barTintColor"])
         tabBarTintColor = RCTConvert.uiColor(style["tintColor"])
+    }
+    
+    fileprivate func visitTabRoutes(_ routes: Array<Dictionary<AnyHashable, Any>>) {
+        for (index, route) in routes.enumerated() {
+            tabBarController.selectedIndex = index
+            visit(route)
+        }
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
