@@ -27,11 +27,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate var navigation: NavigationController {
-        if (navigationController != nil) {
-            return navigationController
-        } else {
-            return tabBarController.selectedViewController as! NavigationController
-        }
+        return (navigationController ?? tabBarController.selectedViewController) as! NavigationController
     }
     
     fileprivate var session: TurbolinksSession {
@@ -43,8 +39,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {
-        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
-        let visitable = view as! WebViewController
+        let nav = navigationController ?? getNavigationByIndex(tabIndex)
+        let visitable = nav.visibleViewController as! WebViewController
         visitable.renderComponent(TurbolinksRoute(route))
     }
     
@@ -74,8 +70,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
         navigationController = NavigationController(self, route, 0)
-        rootViewController.addChildViewController(navigationController)
-        rootViewController.view.addSubview(navigationController.view)
+        addToRootViewController(navigationController)
         visit(route)
     }
     
@@ -83,10 +78,9 @@ class RNTurbolinksManager: RCTEventEmitter {
         setAppOptions(options)
         tabBarController = UITabBarController()
         tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
-        if tabBarBarTintColor != nil { tabBarController.tabBar.barTintColor = tabBarBarTintColor }
-        if tabBarTintColor != nil { tabBarController.tabBar.tintColor = tabBarTintColor }
-        rootViewController.addChildViewController(tabBarController)
-        rootViewController.view.addSubview(tabBarController.view)
+        tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
+        tabBarController.tabBar.tintColor = tabBarTintColor ?? tabBarController.tabBar.tintColor
+        addToRootViewController(tabBarController)
         visitTabRoutes(routes)
         tabBarController.selectedIndex = selectedIndex
     }
@@ -101,22 +95,22 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func renderTitle(_ title: String,_ subtitle: String,_ tabIndex: Int) {
-        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
-        guard let visitable = view as? GenricViewController else { return }
+        let nav = navigationController ?? getNavigationByIndex(tabIndex)
+        guard let visitable = nav.visibleViewController as? GenricViewController else { return }
         visitable.route.title = title
         visitable.route.subtitle = subtitle
         visitable.renderTitle()
     }
     
     @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>,_ tabIndex: Int) {
-        let view = tabIndex != -1 ? getViewControllerByIndex(tabIndex) : visibleViewController
-        guard let visitable = view as? GenricViewController else { return }
+        let nav = navigationController ?? getNavigationByIndex(tabIndex)
+        guard let visitable = nav.visibleViewController as? GenricViewController else { return }
         visitable.route.actions = actions
         visitable.renderActions()
     }
     
     @objc func evaluateJavaScript(_ script: String, _ tabIndex: Int,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
-        let nav = tabIndex != -1 ? getNavigationByIndex(tabIndex) : navigation
+        let nav = navigationController ?? getNavigationByIndex(tabIndex)
         nav.session.webView.evaluateJavaScript(script) {(result, error) in
             if error != nil {
                 reject("js_error", error!.localizedDescription, error)
@@ -166,11 +160,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    fileprivate func getViewControllerByIndex(_ index: Int) -> UIViewController {
-        let navController = tabBarController.viewControllers![index] as! NavigationController
-        return navController.visibleViewController!
-    }
-    
     fileprivate func getNavigationByIndex(_ index: Int) -> NavigationController {
         return tabBarController.viewControllers![index] as! NavigationController
     }
@@ -201,6 +190,11 @@ class RNTurbolinksManager: RCTEventEmitter {
             tabBarController.selectedIndex = index
             visit(route)
         }
+    }
+    
+    fileprivate func addToRootViewController(_ viewController: UIViewController) {
+        rootViewController.addChildViewController(viewController)
+        rootViewController.view.addSubview(viewController.view)
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {

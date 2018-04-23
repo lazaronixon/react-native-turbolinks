@@ -44,19 +44,19 @@ class Turbolinks {
     RNTurbolinksManager.visit(route)
   }
 
-  static replaceWith(route, tabIndex = -1) {
+  static replaceWith(route, tabIndex = 0) {
     RNTurbolinksManager.replaceWith(route, tabIndex)
   }
 
-  static renderTitle(title, subtitle = null, tabIndex = -1) {
+  static renderTitle(title, subtitle = null, tabIndex = 0) {
     RNTurbolinksManager.renderTitle(title, subtitle, tabIndex)
   }
 
-  static renderActions(actions, tabIndex = -1) {
+  static renderActions(actions, tabIndex = 0) {
     RNTurbolinksManager.renderActions(actions, tabIndex)
   }
 
-  static evaluateJavaScript(script, tabIndex = -1) {
+  static evaluateJavaScript(script, tabIndex = 0) {
     if (Platform.OS == 'ios') {
       return RNTurbolinksManager.evaluateJavaScript(script, tabIndex)
     } else {
