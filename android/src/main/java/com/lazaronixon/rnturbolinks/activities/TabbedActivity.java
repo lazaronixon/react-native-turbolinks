@@ -67,7 +67,7 @@ public class TabbedActivity extends GenericActivity {
 
     @Override
     public void renderComponent(TurbolinksRoute route, int tabIndex) {
-        TabbedView tabbedView = tabIndex != -1 ? getTabbedViewByIndex(tabIndex) : getCurrentTabbedView();
+        TabbedView tabbedView = getTabbedViewByIndex(tabIndex);
         tabbedView.renderComponent(getReactInstanceManager(), route);
     }
 
