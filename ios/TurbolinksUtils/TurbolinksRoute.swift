@@ -3,6 +3,7 @@ import Turbolinks
 class TurbolinksRoute {
     var title: String?
     var subtitle: String?
+    var titleImage: UIImage?
     var action: Action?
     var url: URL?
     var component: String?
@@ -18,6 +19,7 @@ class TurbolinksRoute {
         let action = RCTConvert.nsString(route["action"])
         self.title = RCTConvert.nsString(route["title"])
         self.subtitle = RCTConvert.nsString(route["subtitle"])
+        self.titleImage = RCTConvert.uiImage(route["titleImage"])
         self.action = Action(rawValue: action ?? "advance")!
         self.url = RCTConvert.nsurl(route["url"])
         self.component = RCTConvert.nsString(route["component"])

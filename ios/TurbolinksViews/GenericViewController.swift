@@ -20,8 +20,11 @@ extension GenricViewController where Self: UIViewController {
     var isRoot: Bool { return navigationController?.viewControllers.count == 1 }
     
     func renderTitle() {
-        if let title = route.title, !title.isEmpty { navigationItem.title = title }
-        navigationItem.titleView = TurbolinksTitleView(self)
+        if let titleImage = route.titleImage {
+            navigationItem.titleView = UIImageView.init(image: titleImage)
+        } else {            
+            navigationItem.titleView = TurbolinksTitleView(self)
+        }
     }
     
     func renderBackButton() {

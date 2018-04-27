@@ -9,7 +9,7 @@ class TurbolinksTitleView : UIStackView {
     convenience init(_ viewController: GenricViewController) {
         self.init()
         self.viewController = viewController
-        self.title = viewController.navigationItem.title
+        self.title = viewController.route.title ?? viewController.navigationItem.title
         self.subtitle = viewController.route.subtitle
         self.textColor = viewController.manager.titleTextColor ?? UIColor.black
         self.subtitleTextColor = viewController.manager.subtitleTextColor ?? UIColor.gray
