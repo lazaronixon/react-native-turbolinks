@@ -83,6 +83,7 @@ Start a Single Screen App. Use it instead visit for first visit.
   - `loadingView`: Set a custom loadingView using a react component.
   - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon} (iOS Only).
   - `tabBarStyle`: {barTintColor, tintColor} (iOS Only).
+  - `appIcon`: Icon will be visible on navbar. For images see this [guide](https://facebook.github.io/react-native/docs/images.html#images-from-hybrid-app-s-resources) (Android Only).
 
 #### `startTabBasedApp(routes)`
 #### `startTabBasedApp(routes, options)`
