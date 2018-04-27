@@ -120,8 +120,10 @@ Visit a Component with Turbolinks.
 - `passProps`: Passes this in as props to the rendered component.
 - `title:` The default value is the title of the Web page.
 - `subtitle:` A subtitle for visitable view.
-- `navBarHidden`: Hidden navigation bar. (Default false)
-- `leftButtonIcon`: A left button icon. (iOS Only)
+- `titleImage:` A image to show on navbar. (iOS Only)
+- `navBarHidden:` Hidden navigation bar. (Default false)
+- `leftButtonIcon:` A left button icon. (iOS Only)
+- `appIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
 - `actions:` A Array of action objects to mount a menu.
   - `action:`
     - `id:` A integer identifier for the action. (Required)
