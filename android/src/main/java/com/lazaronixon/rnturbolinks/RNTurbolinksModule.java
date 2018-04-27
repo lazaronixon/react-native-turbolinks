@@ -40,13 +40,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_LOADING_VIEW = "intentLoadingView";
     public static final String INTENT_INITIAL = "intentInitial";
     public static final String INTENT_FROM_TAB = "intentFromTab";
-    public static final String INTENT_APP_ICON = "intentAppIcon";
 
     private TurbolinksRoute prevRoute;
     private String messageHandler;
     private String userAgent;
     private String loadingView;
-    private String appIcon;
     private Intent initialIntent;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
@@ -74,7 +72,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
         intent.putExtra(INTENT_LOADING_VIEW, loadingView);
         intent.putExtra(INTENT_INITIAL, true);
-        intent.putExtra(INTENT_APP_ICON, appIcon);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
         initialIntent = intent;
         TurbolinksSession.resetDefault();
@@ -174,7 +171,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         this.messageHandler = opts.hasKey("messageHandler") ? opts.getString("messageHandler") : null;
         this.userAgent = opts.hasKey("userAgent") ? opts.getString("userAgent") : null;
         this.loadingView = opts.hasKey("loadingView") ? opts.getString("loadingView") : null;
-        this.appIcon = opts.hasKey("appIcon") ? opts.getMap("appIcon").getString("uri") : null;
     }
 
     private void visit(ReadableMap route, boolean initial ) {
@@ -200,7 +196,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_INITIAL, isInitial);
                 intent.putExtra(INTENT_FROM_TAB, isTabbedActivity(act));
                 intent.putExtra(INTENT_LOADING_VIEW, loadingView);
-                intent.putExtra(INTENT_APP_ICON, appIcon);
                 intent.putExtra(INTENT_ROUTE, route);
                 if (isInitial) initialIntent = intent;
                 if (isInitial) TurbolinksSession.resetDefault();
@@ -221,7 +216,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         boolean isActionReplace = route.getAction().equals(ACTION_REPLACE);
         boolean isInitial = isActionReplace ? getIntentInitial(act) : initial;
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
-        intent.putExtra(INTENT_APP_ICON, appIcon);
         intent.putExtra(INTENT_ROUTE, route);
         intent.putExtra(INTENT_INITIAL, isInitial);
         intent.putExtra(INTENT_FROM_TAB, isTabbedActivity(act));

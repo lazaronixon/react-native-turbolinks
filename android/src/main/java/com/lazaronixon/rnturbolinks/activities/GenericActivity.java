@@ -24,7 +24,6 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import java.util.ArrayList;
 
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_APP_ICON;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_FROM_TAB;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
 import static com.lazaronixon.rnturbolinks.util.TurbolinksRoute.ACTION_REPLACE;
@@ -135,7 +134,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
-        getSupportActionBar().setIcon(getAppIcon());
+        getSupportActionBar().setIcon(getAppIcon(route.getAppIcon()));
         if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
     }
 
@@ -166,10 +165,10 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         }
     }
 
-    protected Drawable getAppIcon() {
-        String icon = getIntent().getStringExtra(INTENT_APP_ICON);
+    protected Drawable getAppIcon(Bundle icon) {
         if (icon == null) return null;
-        return ImageLoader.loadImage(getApplicationContext(), icon);
+        String uri = icon.getString("uri");
+        return ImageLoader.loadImage(getApplicationContext(), uri);
     }
 
     @SuppressLint("RestrictedApi")
