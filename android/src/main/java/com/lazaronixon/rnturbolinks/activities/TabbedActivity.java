@@ -16,6 +16,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.facebook.react.bridge.Promise;
 import com.lazaronixon.rnturbolinks.R;
+import com.lazaronixon.rnturbolinks.util.ImageLoader;
 import com.lazaronixon.rnturbolinks.util.TabbedView;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import com.lazaronixon.rnturbolinks.util.TurbolinksViewPager;
@@ -131,9 +132,8 @@ public class TabbedActivity extends GenericActivity {
 
     private void renderTabIcon(Menu menu, MenuItem menuItem, Bundle icon) {
         if (icon == null) return;
-        Uri uri = Uri.parse(icon.getString("uri"));
-        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
-        menuItem.setIcon(drawableIcon);
+        String uri = icon.getString("uri");
+        menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), uri));
     }
 
     private TabbedView getCurrentTabbedView() {

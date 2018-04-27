@@ -2,7 +2,6 @@ package com.lazaronixon.rnturbolinks.activities;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
@@ -19,11 +18,13 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.react.ReactAppCompatActivity;
+import com.lazaronixon.rnturbolinks.util.ImageLoader;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import java.util.ArrayList;
 
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_APP_ICON;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_FROM_TAB;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
 import static com.lazaronixon.rnturbolinks.util.TurbolinksRoute.ACTION_REPLACE;
@@ -119,12 +120,22 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         return getIntent().getBooleanExtra(INTENT_FROM_TAB, false);
     }
 
+    public void setupTransitionOnEnter() {
+        if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
+            overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
+        } else if (isFromTab() || route.getModal()) {
+            overridePendingTransition(R.anim.slide_up, R.anim.stay_its);
+        } else {
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+    }
+
     protected void renderToolBar() {
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
-        getSupportActionBar().setDisplayShowHomeEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
+        getSupportActionBar().setIcon(getAppIcon());
         if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
     }
 
@@ -145,16 +156,6 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         startActivity(getIntent());
     }
 
-    public void setupTransitionOnEnter() {
-        if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
-            overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
-        } else if (isFromTab() || route.getModal()) {
-            overridePendingTransition(R.anim.slide_up, R.anim.stay_its);
-        } else {
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        }
-    }
-
     protected void setupTransitionOnFinish() {
         if (isInitial()) {
             overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
@@ -165,13 +166,18 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         }
     }
 
+    protected Drawable getAppIcon() {
+        String icon = getIntent().getStringExtra(INTENT_APP_ICON);
+        if (icon == null) return null;
+        return ImageLoader.loadImage(getApplicationContext(), icon);
+    }
+
     @SuppressLint("RestrictedApi")
-    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
+    protected void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
         if (icon == null) return;
         if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        Uri uri = Uri.parse(icon.getString("uri"));
-        Drawable drawableIcon = Drawable.createFromPath(uri.getPath());
-        menuItem.setIcon(drawableIcon);
+        String uri = icon.getString("uri");
+        menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), uri));
     }
 
 }
