@@ -73,6 +73,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_USER_AGENT, userAgent);
         intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
         intent.putExtra(INTENT_LOADING_VIEW, loadingView);
+        intent.putExtra(INTENT_INITIAL, true);
         intent.putExtra(INTENT_APP_ICON, appIcon);
         intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
         initialIntent = intent;
