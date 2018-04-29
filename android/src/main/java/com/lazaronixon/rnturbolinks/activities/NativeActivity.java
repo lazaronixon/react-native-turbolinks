@@ -30,6 +30,13 @@ public class NativeActivity extends GenericActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        rootView.unmountReactApplication();
+        rootView = null;
+    }
+
+    @Override
     public void reloadSession() {
         TurbolinksSession.getDefault(this).resetToColdBoot();
     }

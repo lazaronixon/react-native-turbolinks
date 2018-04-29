@@ -1,7 +1,4 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
 package com.lazaronixon.rnturbolinks.react;
-
-
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -13,12 +10,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 
 import com.facebook.infer.annotation.Assertions;
-import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactApplication;
-import com.facebook.react.ReactFragmentActivity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
-import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.devsupport.DoubleTapReloadRecognizer;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
@@ -26,76 +20,23 @@ import com.facebook.react.modules.core.PermissionListener;
 
 import javax.annotation.Nullable;
 
-/**
- * Delegate class for {@link ReactActivity} and {@link ReactFragmentActivity}. You can subclass this
- * to provide custom implementations for e.g. {@link #getReactNativeHost()}, if your Application
- * class doesn't implement {@link ReactApplication}.
- */
 public class ReactActivityDelegate {
 
     private final @Nullable Activity mActivity;
-    private final @Nullable FragmentActivity mFragmentActivity;
-    private final @Nullable String mMainComponentName;
 
-    private @Nullable ReactRootView mReactRootView;
-    private @Nullable DoubleTapReloadRecognizer mDoubleTapReloadRecognizer;
     private @Nullable PermissionListener mPermissionListener;
     private @Nullable Callback mPermissionsCallback;
 
-    public ReactActivityDelegate(Activity activity, @Nullable String mainComponentName) {
+    public ReactActivityDelegate(Activity activity) {
         mActivity = activity;
-        mMainComponentName = mainComponentName;
-        mFragmentActivity = null;
     }
 
-    public ReactActivityDelegate(
-            FragmentActivity fragmentActivity,
-            @Nullable String mainComponentName) {
-        mFragmentActivity = fragmentActivity;
-        mMainComponentName = mainComponentName;
-        mActivity = null;
-    }
-
-    protected @Nullable Bundle getLaunchOptions() {
-        return null;
-    }
-
-    protected ReactRootView createRootView() {
-        return new ReactRootView(getContext());
-    }
-
-    /**
-     * Get the {@link ReactNativeHost} used by this app. By default, assumes
-     * {@link Activity#getApplication()} is an instance of {@link ReactApplication} and calls
-     * {@link ReactApplication#getReactNativeHost()}. Override this method if your application class
-     * does not implement {@code ReactApplication} or you simply have a different mechanism for
-     * storing a {@code ReactNativeHost}, e.g. as a static field somewhere.
-     */
     protected ReactNativeHost getReactNativeHost() {
         return ((ReactApplication) getPlainActivity().getApplication()).getReactNativeHost();
     }
 
     public ReactInstanceManager getReactInstanceManager() {
         return getReactNativeHost().getReactInstanceManager();
-    }
-
-    protected void onCreate(Bundle savedInstanceState) {
-        if (mMainComponentName != null) {
-            loadApp(mMainComponentName);
-        }
-        mDoubleTapReloadRecognizer = new DoubleTapReloadRecognizer();
-    }
-
-    protected void loadApp(String appKey) {
-        if (mReactRootView != null) {
-            throw new IllegalStateException("Cannot loadApp while app is already running.");
-        }
-        mReactRootView = createRootView();
-        mReactRootView.startReactApplication(
-                getReactNativeHost().getReactInstanceManager(),
-                appKey,
-                getLaunchOptions());
-        getPlainActivity().setContentView(mReactRootView);
     }
 
     protected void onPause() {
@@ -118,10 +59,6 @@ public class ReactActivityDelegate {
     }
 
     protected void onDestroy() {
-        if (mReactRootView != null) {
-            mReactRootView.unmountReactApplication();
-            mReactRootView = null;
-        }
         if (getReactNativeHost().hasInstance()) {
             getReactNativeHost().getReactInstanceManager().onHostDestroy(getPlainActivity());
         }
@@ -148,12 +85,6 @@ public class ReactActivityDelegate {
         if (getReactNativeHost().hasInstance() && getReactNativeHost().getUseDeveloperSupport()) {
             if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
                 getReactNativeHost().getReactInstanceManager().showDevOptionsDialog();
-                return true;
-            }
-            boolean didDoubleTapR = Assertions.assertNotNull(mDoubleTapReloadRecognizer)
-                    .didDoubleTapR(keyCode, getPlainActivity().getCurrentFocus());
-            if (didDoubleTapR) {
-                getReactNativeHost().getReactInstanceManager().getDevSupportManager().handleReloadJS();
                 return true;
             }
         }
@@ -210,10 +141,7 @@ public class ReactActivityDelegate {
     }
 
     private Context getContext() {
-        if (mActivity != null) {
-            return mActivity;
-        }
-        return Assertions.assertNotNull(mFragmentActivity);
+        return mActivity;
     }
 
     private Activity getPlainActivity() {
