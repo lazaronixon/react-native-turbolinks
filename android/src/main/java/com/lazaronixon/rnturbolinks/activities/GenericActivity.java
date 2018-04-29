@@ -5,10 +5,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactRootView;
@@ -135,6 +137,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
         getSupportActionBar().setIcon(getAppIcon(route.getAppIcon()));
+        renderTitleImage(route.getTitleImage());
         if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
     }
 
@@ -169,6 +172,19 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         if (icon == null) return null;
         String uri = icon.getString("uri");
         return ImageLoader.loadImage(getApplicationContext(), uri);
+    }
+
+    protected void renderTitleImage(Bundle image) {
+        if (image == null) return;
+        String uri = image.getString("uri");
+        Drawable imgDraw = ImageLoader.loadImage(getApplicationContext(), uri);
+        ImageView imageView = new ImageView(getApplicationContext());
+        imageView.setImageDrawable(imgDraw);
+
+        Toolbar.LayoutParams params = new Toolbar.LayoutParams(imgDraw.getIntrinsicWidth(), imgDraw.getIntrinsicHeight());
+        params.gravity = Gravity.CENTER;
+        imageView.setLayoutParams(params);
+        toolBar.addView(imageView);
     }
 
     @SuppressLint("RestrictedApi")

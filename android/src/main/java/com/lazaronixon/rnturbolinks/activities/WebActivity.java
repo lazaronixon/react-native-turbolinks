@@ -123,6 +123,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
 
     @Override
     public void renderTitle(String title, String subtitle) {
+        if (route.getTitleImage() != null) return;
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
         String mTitle = title != null ? title : webView.getTitle();
         getSupportActionBar().setTitle(mTitle);
