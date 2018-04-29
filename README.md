@@ -102,7 +102,7 @@ Visit a URL with Turbolinks.
 - `url:` Url to visit. (Required)
 - `title:` The default value is the title of the Web page.
 - `subtitle:` A subtitle for visitable view.
-- `titleImage:` A image to show on navbar. (iOS Only)
+- `titleImage:` A image to show on navbar.
 - `navBarHidden`: Hidden navigation bar. (Default false)
 - `leftButtonIcon`: A left button icon. (iOS Only)
 - `rightButtonIcon`: A right button icon. (iOS Only)
@@ -122,7 +122,7 @@ Visit a Component with Turbolinks.
 - `passProps`: Passes this in as props to the rendered component.
 - `title:` The default value is the title of the Web page.
 - `subtitle:` A subtitle for visitable view.
-- `titleImage:` A image to show on navbar. (iOS Only)
+- `titleImage:` A image to show on navbar.
 - `navBarHidden:` Hidden navigation bar. (Default false)
 - `leftButtonIcon:` A left button icon. (iOS Only)
 - `rightButtonIcon`: A right button icon. (iOS Only)
