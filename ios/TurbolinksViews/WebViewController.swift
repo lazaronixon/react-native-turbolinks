@@ -7,6 +7,7 @@ class WebViewController: VisitableViewController {
     var route: TurbolinksRoute!
     var customView: UIView!
     var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
+    var selectorHandleRightButtonPress: Selector = #selector(handleRightButtonPress)
     var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
     convenience required init(_ manager: RNTurbolinksManager,_ route: TurbolinksRoute) {
@@ -51,6 +52,7 @@ class WebViewController: VisitableViewController {
         super.viewDidLoad()
         renderBackButton()
         renderLeftButton()
+        renderRightButton()
         renderActions()
     }
     
@@ -83,6 +85,10 @@ extension WebViewController: GenricViewController {
     
     @objc func handleLeftButtonPress() {
         manager.handleLeftButtonPress(visitableView.webView!.url, nil)
+    }
+    
+    @objc func handleRightButtonPress() {
+        manager.handleRightButtonPress(visitableView.webView!.url, nil)
     }
     
     @objc func presentActionsGeneric(_ sender: UIBarButtonItem) {

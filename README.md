@@ -81,7 +81,7 @@ Start a Single Screen App. Use it instead visit for first visit.
   - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
   - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
   - `loadingView`: Set a custom loadingView using a react component.
-  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon} (iOS Only).
+  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor} (iOS Only).
   - `tabBarStyle`: {barTintColor, tintColor} (iOS Only).
 
 #### `startTabBasedApp(routes)`
@@ -93,7 +93,7 @@ A tab bar appears at the bottom of an app screen and provides the ability to qui
   - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
   - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
   - `loadingView`: Set a custom loadingView using a react component.
-  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon} (iOS Only).
+  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor} (iOS Only).
   - `tabBarStyle`: {barTintColor, tintColor} (iOS Only).
 - `selectedIndex:` Index for initial selected view. (Default 0).
 
@@ -105,6 +105,7 @@ Visit a URL with Turbolinks.
 - `titleImage:` A image to show on navbar. (iOS Only)
 - `navBarHidden`: Hidden navigation bar. (Default false)
 - `leftButtonIcon`: A left button icon. (iOS Only)
+- `rightButtonIcon`: A right button icon. (iOS Only)
 - `appIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
 - `actions:` A Array of action objects to mount a menu.
   - `action:`
@@ -124,6 +125,7 @@ Visit a Component with Turbolinks.
 - `titleImage:` A image to show on navbar. (iOS Only)
 - `navBarHidden:` Hidden navigation bar. (Default false)
 - `leftButtonIcon:` A left button icon. (iOS Only)
+- `rightButtonIcon`: A right button icon. (iOS Only)
 - `appIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
 - `actions:` A Array of action objects to mount a menu.
   - `action:`
@@ -181,6 +183,7 @@ Adds an event handler. Supported events:
 - `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
 - `turbolinksLeftButtonPress:` Fire when left button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
+- `turbolinksRightButtonPress:` Fire when right button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path, tabIndex`.
 
 #### `removeEventListener(eventName, handler)`

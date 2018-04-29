@@ -3,6 +3,7 @@ protocol GenricViewController {
     var manager: RNTurbolinksManager! { get set }
     var route: TurbolinksRoute! { get set }
     var selectorHandleLeftButtonPress: Selector { get }
+    var selectorHandleRightButtonPress: Selector { get }
     var selectorPresentActions: Selector { get }
     var navigationItem: UINavigationItem { get }
     
@@ -11,6 +12,7 @@ protocol GenricViewController {
     func renderActions()
     func renderBackButton()
     func renderLeftButton()
+    func renderRightButton()
     func handleTitlePress()
     func presentActionsGeneric(_ sender: UIBarButtonItem)
 }
@@ -35,18 +37,19 @@ extension GenricViewController where Self: UIViewController {
         navigationItem.leftBarButtonItem = button
     }
     
+    func renderRightButton() {
+        guard let icon = route.rightButtonIcon else { return }
+        let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleRightButtonPress)
+        navigationItem.rightBarButtonItem = button
+    }
+    
     func renderActions() {
         guard let actions = route.actions, !actions.isEmpty else { return }
-        if let icon = manager.customMenuIcon {
-            let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
-            navigationItem.rightBarButtonItem = button
-        } else {
-            let button = UIBarButtonItem(title: "\u{22EF}", style: .plain, target: self, action: selectorPresentActions)
-            let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
-            button.setTitleTextAttributes(font, for: .normal)
-            button.setTitleTextAttributes(font, for: .selected)
-            navigationItem.rightBarButtonItem = button
-        }
+        let button = UIBarButtonItem(title: "\u{22EF}", style: .plain, target: self, action: selectorPresentActions)
+        let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
+        button.setTitleTextAttributes(font, for: .normal)
+        button.setTitleTextAttributes(font, for: .selected)
+        navigationItem.rightBarButtonItem = button
     }
     
     func setupNavigationBar() {

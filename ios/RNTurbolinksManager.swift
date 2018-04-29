@@ -14,7 +14,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     var tabBarTintColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
-    var customMenuIcon: UIImage?
     var loadingView: String?    
     var processPool = WKProcessPool()
     
@@ -177,7 +176,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         tintColor = RCTConvert.uiColor(style["tintColor"])
         titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
         subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
-        customMenuIcon = RCTConvert.uiImage(style["menuIcon"])
     }
     
     fileprivate func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
@@ -209,6 +207,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         sendEvent(withName: "turbolinksLeftButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
+    func handleRightButtonPress(_ URL: URL?,_ component: String?) {
+        sendEvent(withName: "turbolinksRightButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
+    }
+    
     func handleVisitCompleted(_ URL: URL,_ tabIndex: Int) {
         sendEvent(withName: "turbolinksVisitCompleted", body: ["url": URL.absoluteString, "path": URL.path, "tabIndex": tabIndex])
     }
@@ -236,7 +238,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override func supportedEvents() -> [String]! {
-        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksTitlePress", "turbolinksActionPress", "turbolinksLeftButtonPress", "turbolinksVisitCompleted"]
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksTitlePress", "turbolinksActionPress", "turbolinksLeftButtonPress", "turbolinksRightButtonPress", "turbolinksVisitCompleted"]
     }
 }
 
