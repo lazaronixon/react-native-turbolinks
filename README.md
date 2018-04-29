@@ -83,7 +83,6 @@ Start a Single Screen App. Use it instead visit for first visit.
   - `loadingView`: Set a custom loadingView using a react component.
   - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon} (iOS Only).
   - `tabBarStyle`: {barTintColor, tintColor} (iOS Only).
-  - `appIcon`: Icon will be visible on navbar. For images see this [guide](https://facebook.github.io/react-native/docs/images.html#images-from-hybrid-app-s-resources) (Android Only).
 
 #### `startTabBasedApp(routes)`
 #### `startTabBasedApp(routes, options)`
@@ -103,8 +102,10 @@ Visit a URL with Turbolinks.
 - `url:` Url to visit. (Required)
 - `title:` The default value is the title of the Web page.
 - `subtitle:` A subtitle for visitable view.
+- `titleImage:` A image to show on navbar. (iOS Only)
 - `navBarHidden`: Hidden navigation bar. (Default false)
 - `leftButtonIcon`: A left button icon. (iOS Only)
+- `appIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
 - `actions:` A Array of action objects to mount a menu.
   - `action:`
     - `id:` A integer identifier for the action. (Required)
