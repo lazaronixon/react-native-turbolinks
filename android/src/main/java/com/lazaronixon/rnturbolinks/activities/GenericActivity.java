@@ -21,6 +21,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEm
 import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.react.ReactAppCompatActivity;
 import com.lazaronixon.rnturbolinks.util.ImageLoader;
+import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
@@ -37,6 +38,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
 
     protected Toolbar toolBar;
     protected TurbolinksRoute route;
+    protected NavBarStyle navBarStyle;
 
     public abstract void reloadSession();
 
@@ -138,6 +140,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         getSupportActionBar().setSubtitle(route.getSubtitle());
         getSupportActionBar().setIcon(getAppIcon(route.getAppIcon()));
         renderTitleImage(route.getTitleImage());
+        setupNavBarStyle(navBarStyle);
         if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
     }
 
@@ -185,6 +188,13 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         params.gravity = Gravity.CENTER;
         imageView.setLayoutParams(params);
         toolBar.addView(imageView);
+    }
+
+    protected void setupNavBarStyle(NavBarStyle style) {
+        if (style == null) return;
+        if (style.getBarTintColor() != 0) { toolBar.setBackgroundColor(style.getBarTintColor()); }
+        if (style.getTitleTextColor() != 0) { toolBar.setTitleTextColor(style.getTitleTextColor()); }
+        if (style.getSubtitleTextColor() != 0) { toolBar.setSubtitleTextColor(style.getSubtitleTextColor()); }
     }
 
     @SuppressLint("RestrictedApi")

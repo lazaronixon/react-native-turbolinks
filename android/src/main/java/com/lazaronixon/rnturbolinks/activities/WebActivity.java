@@ -22,6 +22,7 @@ import java.net.URL;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_LOADING_VIEW;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAV_BAR_STYLE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
 
@@ -46,6 +47,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
 
         toolBar = findViewById(R.id.toolbar);
         route = getIntent().getParcelableExtra(INTENT_ROUTE);
+        navBarStyle = getIntent().getParcelableExtra(INTENT_NAV_BAR_STYLE);
 
         turbolinksViewFrame = findViewById(R.id.turbolinks_view);
 
