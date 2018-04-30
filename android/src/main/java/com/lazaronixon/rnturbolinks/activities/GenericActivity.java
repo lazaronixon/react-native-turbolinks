@@ -39,6 +39,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     protected Toolbar toolBar;
     protected TurbolinksRoute route;
     protected NavBarStyle navBarStyle;
+    protected ReactRootView progressIndicator;
 
     public abstract void reloadSession();
 
@@ -82,6 +83,15 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         setupTransitionOnFinish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (progressIndicator != null) {
+            progressIndicator.unmountReactApplication();
+            progressIndicator = null;
+        }
+    }
+
     public void renderTitle(String title, String subtitle) {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(subtitle);
@@ -110,7 +120,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     public void setupProgressView(TurbolinksSession turbolinksSession, String loadingView) {
         View progressView = LayoutInflater.from(this).inflate(R.layout.custom_progress, null);
         progressView.setBackground(getWindow().getDecorView().getBackground());
-        ReactRootView progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
+        progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
         progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
         turbolinksSession.progressView(progressView, progressIndicator.getId(), 500);
     }
