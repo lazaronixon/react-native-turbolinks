@@ -1,5 +1,7 @@
 package com.lazaronixon.rnturbolinks.activities;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import android.view.ViewGroup.LayoutParams;
 import com.facebook.react.bridge.Promise;
 import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.ImageLoader;
+import com.lazaronixon.rnturbolinks.util.NavBarStyle;
+import com.lazaronixon.rnturbolinks.util.TabBarStyle;
 import com.lazaronixon.rnturbolinks.util.TabbedView;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import com.lazaronixon.rnturbolinks.util.TurbolinksViewPager;
@@ -28,6 +32,7 @@ import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HAN
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAV_BAR_STYLE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTES;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_SELECTED_INDEX;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_TAB_BAR_STYLE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
 
 public class TabbedActivity extends GenericActivity {
@@ -40,6 +45,7 @@ public class TabbedActivity extends GenericActivity {
     private String userAgent;
     private String loadingView;
     private int selectedIndex;
+    private TabBarStyle tabBarStyle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class TabbedActivity extends GenericActivity {
         toolBar = findViewById(R.id.toolbar);
         route = new TurbolinksRoute(routes.get(selectedIndex));
         navBarStyle = getIntent().getParcelableExtra(INTENT_NAV_BAR_STYLE);
+        tabBarStyle = getIntent().getParcelableExtra(INTENT_TAB_BAR_STYLE);
 
         viewPager = findViewById(R.id.viewpager);
         bottomNav = findViewById(R.id.navigation);
@@ -125,6 +132,7 @@ public class TabbedActivity extends GenericActivity {
                     }
                 });
         bottomNav.setSelectedItemId(selectedIndex);
+        setupTabBarStyle(tabBarStyle);
     }
 
     private void setupViewPager() {
@@ -144,6 +152,18 @@ public class TabbedActivity extends GenericActivity {
 
     private TabbedView getTabbedViewByIndex(int index) {
         return ((TurbolinksPagerAdapter) viewPager.getAdapter()).getItem(index);
+    }
+
+
+    protected void setupTabBarStyle(TabBarStyle style) {
+        if (style == null) return;
+        if (style.getBarTintColor() != 0) { bottomNav.setBackgroundColor(style.getBarTintColor()); }
+        if (style.getTintColor() != 0) {
+            int[][] state = new int[][] { new int[] {-android.R.attr.state_checked}, new int[] {android.R.attr.state_checked} };
+            int[] color = new int[] { Color.GRAY, style.getTintColor() };
+            bottomNav.setItemTextColor(new ColorStateList(state, color));
+            bottomNav.setItemIconTintList(new ColorStateList(state, color));
+        }
     }
 
     private class TurbolinksPagerAdapter extends PagerAdapter {
