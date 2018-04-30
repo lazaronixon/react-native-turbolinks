@@ -12,6 +12,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var tintColor: UIColor?
     var tabBarBarTintColor: UIColor?
     var tabBarTintColor: UIColor?
+    var tabBarUnselectedTintColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
     var loadingView: String?    
@@ -79,6 +80,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
         tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
         tabBarController.tabBar.tintColor = tabBarTintColor ?? tabBarController.tabBar.tintColor
+        if #available(iOS 10.0, *) { tabBarController.tabBar.unselectedItemTintColor = tabBarUnselectedTintColor ?? tabBarController.tabBar.unselectedItemTintColor }
         addToRootViewController(tabBarController)
         visitTabRoutes(routes)
         tabBarController.selectedIndex = selectedIndex
@@ -181,6 +183,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
         tabBarBarTintColor = RCTConvert.uiColor(style["barTintColor"])
         tabBarTintColor = RCTConvert.uiColor(style["tintColor"])
+        tabBarUnselectedTintColor = RCTConvert.uiColor(style["unselectedTintColor"])
     }
     
     fileprivate func visitTabRoutes(_ routes: Array<Dictionary<AnyHashable, Any>>) {

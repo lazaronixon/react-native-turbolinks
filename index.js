@@ -82,7 +82,8 @@ class Turbolinks {
       options.tabBarStyle = {
         ...options.tabBarStyle,
         barTintColor: processColor(options.tabBarStyle.barTintColor),
-        tintColor: processColor(options.tabBarStyle.tintColor)
+        tintColor: processColor(options.tabBarStyle.tintColor),
+        unselectedTintColor: processColor(options.tabBarStyle.unselectedTintColor)
       }
     }
   }

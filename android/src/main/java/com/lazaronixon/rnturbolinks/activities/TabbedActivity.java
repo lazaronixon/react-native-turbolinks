@@ -158,9 +158,9 @@ public class TabbedActivity extends GenericActivity {
     protected void setupTabBarStyle(TabBarStyle style) {
         if (style == null) return;
         if (style.getBarTintColor() != 0) { bottomNav.setBackgroundColor(style.getBarTintColor()); }
-        if (style.getTintColor() != 0) {
+        if (style.getTintColor() != 0 && style.getUnselectedTintColor() != 0) {
             int[][] state = new int[][] { new int[] {-android.R.attr.state_checked}, new int[] {android.R.attr.state_checked} };
-            int[] color = new int[] { Color.GRAY, style.getTintColor() };
+            int[] color = new int[] { style.getUnselectedTintColor(), style.getTintColor() };
             bottomNav.setItemTextColor(new ColorStateList(state, color));
             bottomNav.setItemIconTintList(new ColorStateList(state, color));
         }

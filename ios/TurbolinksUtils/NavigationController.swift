@@ -14,9 +14,9 @@ class NavigationController: UINavigationController {
         self.index = tabIndex
         self.session = TurbolinksSession(setupWebView(manager), tabIndex)
         self.session.delegate = manager
-        if manager.barTintColor != nil { navigationBar.barTintColor = manager.barTintColor }
-        if manager.tintColor != nil { navigationBar.tintColor = manager.tintColor }
-        self.tabBarItem = UITabBarItem(title: tRoute.tabTitle , image: tRoute.tabIcon, selectedImage: tRoute.tabIcon)
+        if let barTintColor = manager.barTintColor { navigationBar.barTintColor = barTintColor }
+        if let tintColor = manager.tintColor { navigationBar.tintColor = tintColor }
+        self.tabBarItem = UITabBarItem(title: tRoute.tabTitle , image: tRoute.tabIcon, selectedImage: tRoute.tabIcon)        
     }
     
     fileprivate func setupWebView(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
