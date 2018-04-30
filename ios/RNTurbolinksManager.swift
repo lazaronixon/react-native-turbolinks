@@ -15,6 +15,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var tabBarUnselectedTintColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
+    var customMenuIcon: UIImage?
     var loadingView: String?    
     var processPool = WKProcessPool()
     
@@ -178,6 +179,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         tintColor = RCTConvert.uiColor(style["tintColor"])
         titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
         subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
+        customMenuIcon = RCTConvert.uiImage(style["menuIcon"])
     }
     
     fileprivate func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {

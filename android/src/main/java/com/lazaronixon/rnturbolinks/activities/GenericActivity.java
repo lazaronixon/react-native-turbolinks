@@ -195,6 +195,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         if (style.getBarTintColor() != 0) { toolBar.setBackgroundColor(style.getBarTintColor()); }
         if (style.getTitleTextColor() != 0) { toolBar.setTitleTextColor(style.getTitleTextColor()); }
         if (style.getSubtitleTextColor() != 0) { toolBar.setSubtitleTextColor(style.getSubtitleTextColor()); }
+        if (style.getMenuIcon() != null) { toolBar.setOverflowIcon(ImageLoader.loadImage(getApplicationContext(), style.getMenuIcon().getString("uri"))); }
     }
 
     @SuppressLint("RestrictedApi")

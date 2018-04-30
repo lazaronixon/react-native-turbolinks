@@ -81,7 +81,7 @@ Start a Single Screen App. Use it instead visit for first visit.
   - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
   - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
   - `loadingView`: Set a custom loadingView using a react component.
-  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor}.
+  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
   - `tabBarStyle`: {barTintColor, tintColor, unselectedTintColor}.
 
 #### `startTabBasedApp(routes)`
@@ -93,7 +93,7 @@ A tab bar appears at the bottom of an app screen and provides the ability to qui
   - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
   - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
   - `loadingView`: Set a custom loadingView using a react component.
-  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor}.
+  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
   - `tabBarStyle`: {barTintColor, tintColor, unselectedTintColor}.
 - `selectedIndex:` Index for initial selected view. (Default 0).
 
