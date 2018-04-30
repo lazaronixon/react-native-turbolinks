@@ -106,7 +106,7 @@ Visit a URL with Turbolinks.
 - `navBarHidden`: Hidden navigation bar. (Default false)
 - `leftButtonIcon`: A left button icon. (iOS Only)
 - `rightButtonIcon`: A right button icon. (iOS Only)
-- `appIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
+- `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
 - `actions:` A Array of action objects to mount a menu.
   - `action:`
     - `id:` A integer identifier for the action. (Required)
@@ -126,7 +126,7 @@ Visit a Component with Turbolinks.
 - `navBarHidden:` Hidden navigation bar. (Default false)
 - `leftButtonIcon:` A left button icon. (iOS Only)
 - `rightButtonIcon`: A right button icon. (iOS Only)
-- `appIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
+- `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
 - `actions:` A Array of action objects to mount a menu.
   - `action:`
     - `id:` A integer identifier for the action. (Required)

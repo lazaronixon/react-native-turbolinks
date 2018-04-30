@@ -27,13 +27,13 @@ public class TurbolinksRoute implements Parcelable {
     private String tabTitle;
     private Bundle tabIcon;
     private boolean navBarHidden;
-    private Bundle appIcon;
+    private Bundle navIcon;
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
         ReadableArray actions = rp.hasKey("actions") ? rp.getArray("actions") : null;
         ReadableMap tabIcon = rp.hasKey("tabIcon") ? rp.getMap("tabIcon") : null;
-        ReadableMap appIcon = rp.hasKey("appIcon") ? rp.getMap("appIcon") : null;
+        ReadableMap navIcon = rp.hasKey("navIcon") ? rp.getMap("navIcon") : null;
         ReadableMap titleImage = rp.hasKey("titleImage") ? rp.getMap("titleImage") : null;
         this.url = rp.hasKey("url") ? rp.getString("url") : null;
         this.component = rp.hasKey("component") ? rp.getString("component") : null;
@@ -47,7 +47,7 @@ public class TurbolinksRoute implements Parcelable {
         this.tabTitle = rp.hasKey("tabTitle") ? rp.getString("tabTitle") : null;
         this.tabIcon = rp.hasKey("tabIcon") ? Arguments.toBundle(tabIcon) : null;
         this.navBarHidden = rp.hasKey("navBarHidden") ? rp.getBoolean("navBarHidden") : false;
-        this.appIcon = appIcon != null ? Arguments.toBundle(appIcon) : null;
+        this.navIcon = navIcon != null ? Arguments.toBundle(navIcon) : null;
     }
 
     public TurbolinksRoute(Bundle bundle) {
@@ -63,7 +63,7 @@ public class TurbolinksRoute implements Parcelable {
         this.tabTitle = bundle.getString("tabTitle");
         this.tabIcon = bundle.getBundle("tabIcon");
         this.navBarHidden = bundle.getBoolean("navBarHidden");
-        this.appIcon = bundle.getBundle("appIcon");
+        this.navIcon = bundle.getBundle("navIcon");
     }
 
     protected TurbolinksRoute(Parcel in) {
@@ -77,7 +77,7 @@ public class TurbolinksRoute implements Parcelable {
         titleImage = in.readBundle();
         actions = in.createTypedArrayList(Bundle.CREATOR);
         navBarHidden = in.readByte() != 0;
-        appIcon = in.readBundle();
+        navIcon = in.readBundle();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class TurbolinksRoute implements Parcelable {
         dest.writeBundle(titleImage);
         dest.writeTypedList(actions);
         dest.writeByte((byte) (navBarHidden ? 1 : 0));
-        dest.writeBundle(appIcon);
+        dest.writeBundle(navIcon);
     }
 
     @Override
@@ -176,8 +176,8 @@ public class TurbolinksRoute implements Parcelable {
         return navBarHidden;
     }
 
-    public Bundle getAppIcon() {
-        return appIcon;
+    public Bundle getNavIcon() {
+        return navIcon;
     }
 
 }

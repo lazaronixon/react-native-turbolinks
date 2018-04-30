@@ -138,7 +138,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
-        getSupportActionBar().setIcon(getAppIcon(route.getAppIcon()));
+        getSupportActionBar().setIcon(getNavIcon(route.getNavIcon()));
         renderTitleImage(route.getTitleImage());
         setupNavBarStyle(navBarStyle);
         if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
@@ -171,7 +171,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         }
     }
 
-    protected Drawable getAppIcon(Bundle icon) {
+    protected Drawable getNavIcon(Bundle icon) {
         if (icon == null) return null;
         String uri = icon.getString("uri");
         return ImageLoader.loadImage(getApplicationContext(), uri);
