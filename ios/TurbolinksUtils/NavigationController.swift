@@ -16,7 +16,8 @@ class NavigationController: UINavigationController {
         self.session.delegate = manager
         if let barTintColor = manager.barTintColor { navigationBar.barTintColor = barTintColor }
         if let tintColor = manager.tintColor { navigationBar.tintColor = tintColor }
-        self.tabBarItem = UITabBarItem(title: tRoute.tabTitle , image: tRoute.tabIcon, selectedImage: tRoute.tabIcon)        
+        self.tabBarItem = UITabBarItem(title: tRoute.tabTitle , image: tRoute.tabIcon, selectedImage: tRoute.tabIcon)
+        self.tabBarItem.badgeValue = tRoute.tabBadge
     }
     
     fileprivate func setupWebView(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {

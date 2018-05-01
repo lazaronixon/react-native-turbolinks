@@ -1,25 +1,19 @@
 package com.lazaronixon.rnturbolinks.activities;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.PagerAdapter;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.facebook.react.bridge.Promise;
 import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.ImageLoader;
-import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TabBarStyle;
 import com.lazaronixon.rnturbolinks.util.TabbedView;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
@@ -38,7 +32,7 @@ import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
 public class TabbedActivity extends GenericActivity {
 
     private TurbolinksViewPager viewPager;
-    private BottomNavigationView bottomNav;
+    private AHBottomNavigation bottomNav;
 
     private ArrayList<Bundle> routes;
     private String messageHandler;
@@ -92,16 +86,8 @@ public class TabbedActivity extends GenericActivity {
     }
 
     @Override
-    public void notifyTabItem(int tabIndex, boolean enabled) {
-        BottomNavigationMenuView bottomNavMenu = (BottomNavigationMenuView) bottomNav.getChildAt(0);
-        BottomNavigationItemView bottomNavItem = (BottomNavigationItemView) bottomNavMenu.getChildAt(tabIndex);
-        if (enabled) {
-            View badge = LayoutInflater.from(this).inflate(R.layout.badge_layout, bottomNavMenu, false);
-            bottomNavItem.addView(badge);
-        } else {
-            View badge = bottomNavItem.findViewById(R.id.badge_view);
-            bottomNavItem.removeView(badge);
-        }
+    public void notifyTabItem(String value, int tabIndex) {
+        bottomNav.setNotification(value, tabIndex);
     }
 
     public void reloadSession() {
@@ -117,22 +103,29 @@ public class TabbedActivity extends GenericActivity {
     public String getLoadingView() { return loadingView; }
 
     private void setupBottomNav() {
-        Menu menu = bottomNav.getMenu();
         for (int i = 0; i < routes.size(); i++) {
             TurbolinksRoute route = new TurbolinksRoute(routes.get(i));
-            MenuItem menuItem = menu.add(Menu.NONE, i, i, route.getTabTitle());
-            renderTabIcon(menu, menuItem, route.getTabIcon());
+            bottomNav.addItem(new AHBottomNavigationItem(route.getTabTitle(), getTabIcon(route.getTabIcon())));
+            bottomNav.setNotification(route.getTabBadge(), i);
         }
-        bottomNav.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    public boolean onNavigationItemSelected(MenuItem item) {
-                        int index = item.getItemId();
-                        viewPager.setCurrentItem(index, false);
+
+        bottomNav.setOnTabSelectedListener(
+                new AHBottomNavigation.OnTabSelectedListener() {
+                    public boolean onTabSelected(int position, boolean wasSelected) {
+                        viewPager.setCurrentItem(position, false);
                         return true;
                     }
-                });
-        bottomNav.setSelectedItemId(selectedIndex);
-        setupTabBarStyle(tabBarStyle);
+                }
+        );
+
+        if (tabBarStyle != null) {
+            if (tabBarStyle.getBarTintColor() != 0) { bottomNav.setDefaultBackgroundColor(tabBarStyle.getBarTintColor()); }
+            if (tabBarStyle.getTintColor() != 0) { bottomNav.setAccentColor(tabBarStyle.getTintColor()); }
+        }
+
+        bottomNav.setForceTint(true);
+        bottomNav.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        bottomNav.setCurrentItem(selectedIndex);
     }
 
     private void setupViewPager() {
@@ -140,10 +133,10 @@ public class TabbedActivity extends GenericActivity {
         viewPager.setAdapter(adapter);
     }
 
-    private void renderTabIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon == null) return;
+    private Drawable getTabIcon(Bundle icon) {
+        if (icon == null) return new ColorDrawable(Color.TRANSPARENT);
         String uri = icon.getString("uri");
-        menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), uri));
+        return ImageLoader.loadImage(getApplicationContext(), uri);
     }
 
     private TabbedView getCurrentTabbedView() {
@@ -152,18 +145,6 @@ public class TabbedActivity extends GenericActivity {
 
     private TabbedView getTabbedViewByIndex(int index) {
         return ((TurbolinksPagerAdapter) viewPager.getAdapter()).getItem(index);
-    }
-
-
-    protected void setupTabBarStyle(TabBarStyle style) {
-        if (style == null) return;
-        if (style.getBarTintColor() != 0) { bottomNav.setBackgroundColor(style.getBarTintColor()); }
-        if (style.getTintColor() != 0 && style.getUnselectedTintColor() != 0) {
-            int[][] state = new int[][] { new int[] {-android.R.attr.state_checked}, new int[] {android.R.attr.state_checked} };
-            int[] color = new int[] { style.getUnselectedTintColor(), style.getTintColor() };
-            bottomNav.setItemTextColor(new ColorStateList(state, color));
-            bottomNav.setItemIconTintList(new ColorStateList(state, color));
-        }
     }
 
     private class TurbolinksPagerAdapter extends PagerAdapter {

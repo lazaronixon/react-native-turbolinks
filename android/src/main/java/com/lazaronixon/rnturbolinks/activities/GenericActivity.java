@@ -110,7 +110,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     public void evaluateJavaScript(String script, Promise promise) {
     }
 
-    public void notifyTabItem(int tabIndex, boolean enabled) {
+    public void notifyTabItem(String value, int tabIndex) {
     }
 
     public RCTDeviceEventEmitter getEventEmitter() {

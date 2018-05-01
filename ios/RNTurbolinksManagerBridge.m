@@ -13,5 +13,5 @@ RCT_EXTERN_METHOD(renderActions:(NSArray *) tabIndex:(NSInteger *))
 RCT_EXTERN_METHOD(startSingleScreenApp:(NSDictionary *) options:(NSDictionary *))
 RCT_EXTERN_METHOD(startTabBasedApp:(NSArray *) options:(NSDictionary *) selectedIndex:(NSInteger *))
 RCT_EXTERN_METHOD(evaluateJavaScript:(NSString *) tabIndex:(NSInteger *) resolve:(RCTPromiseResolveBlock *) reject:(RCTPromiseRejectBlock *))
-RCT_EXTERN_METHOD(notifyTabItem:(NSInteger *) enabled:(BOOL))
+RCT_EXTERN_METHOD(notifyTabItem:(NSString *) tabIndex:(NSInteger *))
 @end

@@ -14,6 +14,7 @@ class TurbolinksRoute {
     var rightButtonIcon: UIImage?
     var tabTitle: String?
     var tabIcon: UIImage?
+    var tabBadge: String?
     var navBarHidden: Bool = false
     
     init(_ route: Dictionary<AnyHashable, Any>) {
@@ -31,6 +32,7 @@ class TurbolinksRoute {
         self.rightButtonIcon = RCTConvert.uiImage(route["rightButtonIcon"])
         self.tabTitle = RCTConvert.nsString(route["tabTitle"])
         self.tabIcon = RCTConvert.uiImage(route["tabIcon"])
+        self.tabBadge = RCTConvert.nsString(route["tabBadge"])
         self.navBarHidden = RCTConvert.bool(route["navBarHidden"])
     }    
 }

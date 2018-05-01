@@ -12,7 +12,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var tintColor: UIColor?
     var tabBarBarTintColor: UIColor?
     var tabBarTintColor: UIColor?
-    var tabBarUnselectedTintColor: UIColor?
+    var tabBarBadgeColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
     var customMenuIcon: UIImage?
@@ -81,7 +81,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
         tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
         tabBarController.tabBar.tintColor = tabBarTintColor ?? tabBarController.tabBar.tintColor
-        if #available(iOS 10.0, *) { tabBarController.tabBar.unselectedItemTintColor = tabBarUnselectedTintColor ?? tabBarController.tabBar.unselectedItemTintColor }
         addToRootViewController(tabBarController)
         visitTabRoutes(routes)
         tabBarController.selectedIndex = selectedIndex
@@ -122,13 +121,9 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    @objc func notifyTabItem(_ tabIndex: Int,_ enabled: Bool) {
+    @objc func notifyTabItem(_ value: String?,_ tabIndex: Int) {
         let tabItem = tabBarController.tabBar.items![tabIndex]
-        if (enabled) {
-            tabItem.badgeValue = ""
-        } else {
-            tabItem.badgeValue = nil
-        }
+        tabItem.badgeValue = value
     }
     
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
@@ -185,7 +180,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
         tabBarBarTintColor = RCTConvert.uiColor(style["barTintColor"])
         tabBarTintColor = RCTConvert.uiColor(style["tintColor"])
-        tabBarUnselectedTintColor = RCTConvert.uiColor(style["unselectedTintColor"])
+        tabBarBadgeColor = RCTConvert.uiColor(style["badgeColor"])
     }
     
     fileprivate func visitTabRoutes(_ routes: Array<Dictionary<AnyHashable, Any>>) {

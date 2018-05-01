@@ -82,19 +82,19 @@ Start a Single Screen App. Use it instead visit for first visit.
   - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
   - `loadingView`: Set a custom loadingView using a react component.
   - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
-  - `tabBarStyle`: {barTintColor, tintColor, unselectedTintColor}.
+  - `tabBarStyle`: {barTintColor, tintColor}.
 
 #### `startTabBasedApp(routes)`
 #### `startTabBasedApp(routes, options)`
 #### `startTabBasedApp(routes, options, selectedIndex)`
 A tab bar appears at the bottom of an app screen and provides the ability to quickly switch between different sections of an app.
-- `routes:` A Array of route objects to mount TabBar. Use `tabTitle` and `tabIcon` here.
+- `routes:` A Array of route objects to mount TabBar. Use `tabTitle`, `tabIcon` and `tabBadge` here.
 - `options`:
   - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
   - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
   - `loadingView`: Set a custom loadingView using a react component.
   - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
-  - `tabBarStyle`: {barTintColor, tintColor, unselectedTintColor}.
+  - `tabBarStyle`: {barTintColor, tintColor}.
 - `selectedIndex:` Index for initial selected view. (Default 0).
 
 #### `visit(route)`
@@ -154,7 +154,7 @@ Back until to root view.
 #### `back()`
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
-#### `notifyTabItem(tabIndex, enabled)`
+#### `notifyTabItem(value, tabIndex)`
 Show or hide a badge on tabBarItem.
 
 #### `renderTitle(title)`
