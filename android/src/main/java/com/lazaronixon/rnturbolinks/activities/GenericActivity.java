@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.basecamp.turbolinks.TurbolinksSession;
-import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
@@ -39,7 +36,6 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     protected Toolbar toolBar;
     protected TurbolinksRoute route;
     protected NavBarStyle navBarStyle;
-    protected ReactRootView progressIndicator;
 
     public abstract void reloadSession();
 
@@ -83,15 +79,6 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         setupTransitionOnFinish();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (progressIndicator != null) {
-            progressIndicator.unmountReactApplication();
-            progressIndicator = null;
-        }
-    }
-
     public void renderTitle(String title, String subtitle) {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(subtitle);
@@ -115,14 +102,6 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
 
     public RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
-    }
-
-    public void setupProgressView(TurbolinksSession turbolinksSession, String loadingView) {
-        View progressView = LayoutInflater.from(this).inflate(R.layout.custom_progress, null);
-        progressView.setBackground(getWindow().getDecorView().getBackground());
-        progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
-        progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
-        turbolinksSession.progressView(progressView, progressIndicator.getId(), 500);
     }
 
     public boolean isInitial() {

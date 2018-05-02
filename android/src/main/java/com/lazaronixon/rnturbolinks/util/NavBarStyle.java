@@ -5,10 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-
-import java.util.ArrayList;
 
 public class NavBarStyle implements Parcelable {
 

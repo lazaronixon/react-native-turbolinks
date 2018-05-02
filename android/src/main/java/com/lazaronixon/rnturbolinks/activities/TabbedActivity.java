@@ -21,7 +21,6 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksViewPager;
 
 import java.util.ArrayList;
 
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_LOADING_VIEW;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAV_BAR_STYLE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTES;
@@ -37,7 +36,6 @@ public class TabbedActivity extends GenericActivity {
     private ArrayList<Bundle> routes;
     private String messageHandler;
     private String userAgent;
-    private String loadingView;
     private int selectedIndex;
     private TabBarStyle tabBarStyle;
 
@@ -59,7 +57,6 @@ public class TabbedActivity extends GenericActivity {
         selectedIndex = getIntent().getIntExtra(INTENT_SELECTED_INDEX, 0);
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
-        loadingView = getIntent().getStringExtra(INTENT_LOADING_VIEW);
 
         renderToolBar();
         handleTitlePress(TabbedActivity.class.getSimpleName(), null, null);
@@ -99,8 +96,6 @@ public class TabbedActivity extends GenericActivity {
     }
 
     public String getUserAgent() {  return userAgent; }
-
-    public String getLoadingView() { return loadingView; }
 
     private void setupBottomNav() {
         for (int i = 0; i < routes.size(); i++) {

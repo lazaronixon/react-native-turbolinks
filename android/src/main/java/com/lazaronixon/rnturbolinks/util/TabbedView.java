@@ -94,10 +94,8 @@ public class TabbedView extends FrameLayout implements TurbolinksAdapter {
 
     private void visitTurbolinksView(TurbolinksView turbolinksView, String url) {
         WebSettings settings = session.getWebView().getSettings();
-        if (act.getMessageHandler() != null)
-            session.addJavascriptInterface(this, act.getMessageHandler());
+        if (act.getMessageHandler() != null) session.addJavascriptInterface(this, act.getMessageHandler());
         if (act.getUserAgent() != null) settings.setUserAgentString(act.getUserAgent());
-        if (act.getLoadingView() != null) act.setupProgressView(session, act.getLoadingView());
         session.activity(act).adapter(this).view(turbolinksView).visit(url);
     }
 

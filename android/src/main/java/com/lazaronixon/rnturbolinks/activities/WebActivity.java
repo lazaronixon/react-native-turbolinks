@@ -1,7 +1,11 @@
 package com.lazaronixon.rnturbolinks.activities;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
@@ -9,6 +13,8 @@ import android.webkit.WebView;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
+import com.basecamp.turbolinks.TurbolinksView;
+import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
@@ -39,6 +45,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
     private String messageHandler;
     private String userAgent;
     private String loadingView;
+    private ReactRootView progressIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +76,15 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
                 .restoreWithCachedSnapshot(true)
                 .view(turbolinksViewFrame.getTurbolinksView())
                 .visit(route.getUrl());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (progressIndicator != null) {
+            progressIndicator.unmountReactApplication();
+            progressIndicator = null;
+        }
     }
 
     @Override
@@ -193,8 +209,16 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
         String ua = settings.getUserAgentString();
         if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
         if (userAgent != null && !ua.endsWith(userAgent)) { settings.setUserAgentString(ua.concat(" " + userAgent)); }
-        if (loadingView != null) { setupProgressView(session, loadingView); }
+        if (loadingView != null) { setupProgressView(session, turbolinksViewFrame.getTurbolinksView(), loadingView); }
         session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
+    }
+
+    private void setupProgressView(TurbolinksSession turbolinksSession, TurbolinksView turbolinksView, String loadingView) {
+        View progressView = LayoutInflater.from(this).inflate(R.layout.custom_progress, turbolinksView, false);
+        progressView.setBackground(new ColorDrawable(Color.WHITE));
+        progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
+        progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
+        turbolinksSession.progressView(progressView, progressIndicator.getId(), 500);
     }
 
 }
