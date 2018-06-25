@@ -17,7 +17,19 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var customMenuIcon: UIImage?
     var loadingView: String?    
-    var processPool = WKProcessPool()
+    fileprivate var _processPool: WKProcessPool?
+    
+    var processPool: WKProcessPool {
+        if (_processPool == nil) {
+            _processPool = WKProcessPool()
+        }
+        return _processPool!;
+    }
+
+    deinit {
+        // freeing processPool explicitly otherwise iOS crashes on reload in simulator
+        _processPool = nil
+    }
     
     fileprivate var application: UIApplication {
         return UIApplication.shared
