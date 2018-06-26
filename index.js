@@ -15,6 +15,11 @@ class Turbolinks {
     RNTurbolinksManager.startSingleScreenApp(route, options)
   }
 
+  static startAppInView(viewTag, route, options = {}) {
+    this._processAppOptions(options)
+    RNTurbolinksManager.startAppInView(viewTag, route, options)
+  }
+
   static startTabBasedApp(routes, options = {}, selectedIndex = 0) {
     this._processAppOptions(options)
     RNTurbolinksManager.startTabBasedApp(routes, options, selectedIndex)

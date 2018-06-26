@@ -18,6 +18,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var customMenuIcon: UIImage?
     var loadingView: String?    
     fileprivate var _processPool: WKProcessPool?
+    fileprivate var _rootView: UIView?
     
     var processPool: WKProcessPool {
         if (_processPool == nil) {
@@ -29,6 +30,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     deinit {
         // freeing processPool explicitly otherwise iOS crashes on reload in simulator
         _processPool = nil
+        _rootView = nil
     }
     
     fileprivate var application: UIApplication {
@@ -83,7 +85,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
         navigationController = NavigationController(self, route, 0)
-        addToRootViewController(navigationController)
+        addToRootView(navigationController)
         visit(route)
     }
     
@@ -93,9 +95,26 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
         tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
         tabBarController.tabBar.tintColor = tabBarTintColor ?? tabBarController.tabBar.tintColor
-        addToRootViewController(tabBarController)
+        addToRootView(tabBarController)
         visitTabRoutes(routes)
         tabBarController.selectedIndex = selectedIndex
+    }
+    
+    @objc func startAppInView(_ reactTag: NSNumber!, _ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
+        let manager:RCTUIManager =  self.bridge.uiManager!
+
+        // we have to exec on methodQueue
+        manager.methodQueue.async {
+            manager.addUIBlock { (uiManager: RCTUIManager?, viewRegistry:[NSNumber : UIView]?) in
+                let view: UIView? = uiManager!.view(forReactTag: reactTag)
+                if (view != nil) {
+                    NSLog("found!");
+                    self._rootView = view;
+                }
+                self.startSingleScreenApp(route, options)
+            }
+        }
+        
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) {
@@ -202,9 +221,13 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    fileprivate func addToRootViewController(_ viewController: UIViewController) {
+    fileprivate func addToRootView(_ viewController: UIViewController) {
         rootViewController.addChildViewController(viewController)
-        rootViewController.view.addSubview(viewController.view)
+        if (_rootView != nil) {
+            _rootView?.addSubview(viewController.view)
+        } else {
+            rootViewController.view.addSubview(viewController.view)
+        }
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
