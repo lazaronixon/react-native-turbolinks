@@ -84,6 +84,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
+        removeFromRootView() // remove old NavigationController
         navigationController = NavigationController(self, route, 0)
         addToRootView(navigationController)
         visit(route)
@@ -108,7 +109,6 @@ class RNTurbolinksManager: RCTEventEmitter {
             manager.addUIBlock { (uiManager: RCTUIManager?, viewRegistry:[NSNumber : UIView]?) in
                 let view: UIView? = uiManager!.view(forReactTag: reactTag)
                 if (view != nil) {
-                    NSLog("found!");
                     self._rootView = view;
                 }
                 self.startSingleScreenApp(route, options)
@@ -224,9 +224,23 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func addToRootView(_ viewController: UIViewController) {
         rootViewController.addChildViewController(viewController)
         if (_rootView != nil) {
-            _rootView?.addSubview(viewController.view)
+            _rootView!.addSubview(viewController.view)
         } else {
             rootViewController.view.addSubview(viewController.view)
+        }
+    }
+    
+    fileprivate func removeFromRootView() {
+        var viewController: UIViewController?
+        rootViewController.childViewControllers.forEach { (child) in
+            if child is NavigationController {
+                viewController = child
+            }
+        }
+
+        if let vc = viewController {
+            vc.view.removeFromSuperview()
+            vc.removeFromParentViewController()
         }
     }
     
