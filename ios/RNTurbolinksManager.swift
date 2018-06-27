@@ -17,7 +17,21 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var customMenuIcon: UIImage?
     var loadingView: String?    
-    var processPool = WKProcessPool()
+    fileprivate var _processPool: WKProcessPool?
+    fileprivate var _rootView: UIView?
+    
+    var processPool: WKProcessPool {
+        if (_processPool == nil) {
+            _processPool = WKProcessPool()
+        }
+        return _processPool!;
+    }
+
+    deinit {
+        // freeing processPool explicitly otherwise iOS crashes on reload in simulator
+        _processPool = nil
+        _rootView = nil
+    }
     
     fileprivate var application: UIApplication {
         return UIApplication.shared
@@ -70,8 +84,9 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
+        removeFromRootView() // remove old NavigationController
         navigationController = NavigationController(self, route, 0)
-        addToRootViewController(navigationController)
+        addToRootView(navigationController)
         visit(route)
     }
     
@@ -81,9 +96,25 @@ class RNTurbolinksManager: RCTEventEmitter {
         tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
         tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
         tabBarController.tabBar.tintColor = tabBarTintColor ?? tabBarController.tabBar.tintColor
-        addToRootViewController(tabBarController)
+        addToRootView(tabBarController)
         visitTabRoutes(routes)
         tabBarController.selectedIndex = selectedIndex
+    }
+    
+    @objc func startAppInView(_ reactTag: NSNumber!, _ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
+        let manager:RCTUIManager =  self.bridge.uiManager!
+
+        // we have to exec on methodQueue
+        manager.methodQueue.async {
+            manager.addUIBlock { (uiManager: RCTUIManager?, viewRegistry:[NSNumber : UIView]?) in
+                let view: UIView? = uiManager!.view(forReactTag: reactTag)
+                if (view != nil) {
+                    self._rootView = view;
+                }
+                self.startSingleScreenApp(route, options)
+            }
+        }
+        
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) {
@@ -190,9 +221,27 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    fileprivate func addToRootViewController(_ viewController: UIViewController) {
+    fileprivate func addToRootView(_ viewController: UIViewController) {
         rootViewController.addChildViewController(viewController)
-        rootViewController.view.addSubview(viewController.view)
+        if (_rootView != nil) {
+            _rootView!.addSubview(viewController.view)
+        } else {
+            rootViewController.view.addSubview(viewController.view)
+        }
+    }
+    
+    fileprivate func removeFromRootView() {
+        var viewController: UIViewController?
+        rootViewController.childViewControllers.forEach { (child) in
+            if child is NavigationController {
+                viewController = child
+            }
+        }
+
+        if let vc = viewController {
+            vc.view.removeFromSuperview()
+            vc.removeFromParentViewController()
+        }
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
