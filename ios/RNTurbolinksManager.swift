@@ -4,7 +4,7 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
-    var tabBarController: UITabBarController!
+    var tabBarController: TabBarController!
     var navigationController: NavigationController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
@@ -84,7 +84,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startTabBasedApp(_ routes: Array<Dictionary<AnyHashable, Any>> ,_ options: Dictionary<AnyHashable, Any> ,_ selectedIndex: Int) {
         setAppOptions(options)
-        tabBarController = UITabBarController()
+        tabBarController = TabBarController()
         tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
         tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
         tabBarController.tabBar.tintColor = tabBarTintColor ?? tabBarController.tabBar.tintColor
