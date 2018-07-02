@@ -17,14 +17,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var customMenuIcon: UIImage?
     var loadingView: String?    
-    fileprivate var _processPool: WKProcessPool?
-    
-    var processPool: WKProcessPool {
-        if (_processPool == nil) {
-            _processPool = WKProcessPool()
-        }
-        return _processPool!;
-    }
+    lazy var processPool = WKProcessPool()
     
     fileprivate var application: UIApplication {
         return UIApplication.shared
