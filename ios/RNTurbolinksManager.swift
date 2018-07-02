@@ -4,7 +4,7 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
-    var tabBarController: UITabBarController!
+    var tabBarController: TabBarController!
     var navigationController: NavigationController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
@@ -17,7 +17,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var customMenuIcon: UIImage?
     var loadingView: String?    
-    var processPool = WKProcessPool()
+    lazy var processPool = WKProcessPool()
     
     fileprivate var application: UIApplication {
         return UIApplication.shared
@@ -70,6 +70,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
+        removeFromRootViewController() // remove existing childViewController, in case of debug reloading...
         navigationController = NavigationController(self, route, 0)
         addToRootViewController(navigationController)
         visit(route)
@@ -77,7 +78,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startTabBasedApp(_ routes: Array<Dictionary<AnyHashable, Any>> ,_ options: Dictionary<AnyHashable, Any> ,_ selectedIndex: Int) {
         setAppOptions(options)
-        tabBarController = UITabBarController()
+        removeFromRootViewController() // remove existing childViewController, in case of debug reloading...
+        tabBarController = TabBarController()
         tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
         tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
         tabBarController.tabBar.tintColor = tabBarTintColor ?? tabBarController.tabBar.tintColor
@@ -193,6 +195,20 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func addToRootViewController(_ viewController: UIViewController) {
         rootViewController.addChildViewController(viewController)
         rootViewController.view.addSubview(viewController.view)
+    }
+    
+    fileprivate func removeFromRootViewController() {
+        var viewController: UIViewController?
+        rootViewController.childViewControllers.forEach { (child) in
+            if (child is NavigationController) || (child is TabBarController) {
+                viewController = child
+            }
+        }
+        
+        if let vc = viewController {
+            vc.view.removeFromSuperview()
+            vc.removeFromParentViewController()
+        }
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
