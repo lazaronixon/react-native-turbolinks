@@ -207,3 +207,4 @@ For android set your style on [android/app/src/main/res/values/styles.xml](https
 
 - [RailsConf 2016 - Turbolinks 5: I Can’t Believe It’s Not Native! by Sam Stephenson](https://www.youtube.com/watch?v=SWEts0rlezA)
 - [Basecamp 3 for iOS: Hybrid Architecture](https://m.signalvnoise.com/basecamp-3-for-ios-hybrid-architecture-afc071589c25)
+- [The Majestic Monolith](https://m.signalvnoise.com/the-majestic-monolith-29166d022228)
