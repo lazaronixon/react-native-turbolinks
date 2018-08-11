@@ -10,7 +10,7 @@ public class TurbolinksAction implements Parcelable {
     private int id;
     private String title;
     private Bundle icon;
-    private boolean button = false;
+    private boolean button;
 
     public TurbolinksAction(Bundle bundle) {
         this.id = (int) bundle.getDouble("id");

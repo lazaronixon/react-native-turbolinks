@@ -39,7 +39,7 @@ public class TurbolinksRoute implements Parcelable {
         this.url = rp.hasKey("url") ? rp.getString("url") : null;
         this.component = rp.hasKey("component") ? rp.getString("component") : null;
         this.action = rp.hasKey("action") ? rp.getString("action") : ACTION_ADVANCE;
-        this.modal = rp.hasKey("modal") ? rp.getBoolean("modal") : false;
+        this.modal = rp.hasKey("modal") && rp.getBoolean("modal");
         this.passProps = props != null ? Arguments.toBundle(props) : null;
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
@@ -47,7 +47,7 @@ public class TurbolinksRoute implements Parcelable {
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
         this.tabTitle = rp.hasKey("tabTitle") ? rp.getString("tabTitle") : null;
         this.tabIcon = rp.hasKey("tabIcon") ? Arguments.toBundle(tabIcon) : null;
-        this.navBarHidden = rp.hasKey("navBarHidden") ? rp.getBoolean("navBarHidden") : false;
+        this.navBarHidden = rp.hasKey("navBarHidden") && rp.getBoolean("navBarHidden");
         this.navIcon = navIcon != null ? Arguments.toBundle(navIcon) : null;
         this.tabBadge = rp.hasKey("tabBadge") ? rp.getString("tabBadge") : null;
     }

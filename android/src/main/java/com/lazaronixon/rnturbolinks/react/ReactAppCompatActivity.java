@@ -3,7 +3,6 @@ package com.lazaronixon.rnturbolinks.react;
 import javax.annotation.Nullable;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 

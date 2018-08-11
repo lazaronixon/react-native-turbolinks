@@ -7,8 +7,8 @@ import com.facebook.react.bridge.ReadableMap;
 
 public class TabBarStyle implements Parcelable {
 
-    private static String BAR_TINT_COLOR = "barTintColor";
-    private static String TINT_COLOR = "tintColor";
+    private static final String BAR_TINT_COLOR = "barTintColor";
+    private static final String TINT_COLOR = "tintColor";
 
     private int barTintColor;
     private int tintColor;

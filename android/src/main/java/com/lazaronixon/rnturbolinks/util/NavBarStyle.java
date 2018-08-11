@@ -9,11 +9,11 @@ import com.facebook.react.bridge.ReadableMap;
 
 public class NavBarStyle implements Parcelable {
 
-    private static String TITLE_TEXT_COLOR = "titleTextColor";
-    private static String SUBTITLE_TEXT_COLOR = "subtitleTextColor";
-    private static String BAR_TINT_COLOR = "barTintColor";
-    private static String TINT_COLOR = "tintColor";
-    private static String MENU_ICON = "menuIcon";
+    private static final String TITLE_TEXT_COLOR = "titleTextColor";
+    private static final String SUBTITLE_TEXT_COLOR = "subtitleTextColor";
+    private static final String BAR_TINT_COLOR = "barTintColor";
+    private static final String TINT_COLOR = "tintColor";
+    private static final String MENU_ICON = "menuIcon";
 
     private int titleTextColor;
     private int subtitleTextColor;

@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
-import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.views.imagehelper.ResourceDrawableIdHelper;
 
 public class ImageLoader {
