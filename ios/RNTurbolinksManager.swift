@@ -19,7 +19,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var loadingView: String?    
     lazy var processPool = WKProcessPool()
     
-    fileprivate var application: UIApplication {
+    var application: UIApplication {
         return UIApplication.shared
     }
     
