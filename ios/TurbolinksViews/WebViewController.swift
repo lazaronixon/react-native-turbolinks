@@ -38,13 +38,6 @@ class WebViewController: VisitableViewController {
         manager.handleVisitCompleted(self.visitableView.webView!.url!, navController.index)
     }
     
-    fileprivate func fixScrollWebView() {
-        let navBar = navigationController!.navigationBar
-        let navBarHeight = navBar.frame.size.height
-        let statusBarHeight = manager.application.statusBarFrame.size.height
-        visitableView.contentInset = UIEdgeInsetsMake(navBarHeight + statusBarHeight, 0, 0, 0)
-    }
-    
     fileprivate func setWebViewTitle() {
         navigationItem.title = visitableView.webView!.title
     }
@@ -58,7 +51,6 @@ class WebViewController: VisitableViewController {
     }
     
     override func visitableDidRender() {
-        fixScrollWebView()
         setWebViewTitle()
         renderTitle()
         handleVisitCompleted()
