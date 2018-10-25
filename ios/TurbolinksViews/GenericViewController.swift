@@ -20,40 +20,41 @@ protocol GenricViewController {
 extension GenricViewController where Self: UIViewController {
     
     var isRoot: Bool { return navigationController?.viewControllers.count == 1 }
+    var _navigationItem: UINavigationItem { return (self as UIViewController).navigationItem }
     
     func renderTitle() {
-        navigationItem.titleView = TurbolinksTitleView(self)
+        _navigationItem.titleView = TurbolinksTitleView(self)
     }
     
     func renderBackButton() {
         let backButton = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backButton
-        navigationItem.leftItemsSupplementBackButton = true
+        _navigationItem.backBarButtonItem = backButton
+        _navigationItem.leftItemsSupplementBackButton = true
     }
     
     func renderLeftButton() {
         guard let icon = route.leftButtonIcon else { return }
         let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
-        navigationItem.leftBarButtonItem = button
+        _navigationItem.leftBarButtonItem = button
     }
     
     func renderRightButton() {
         guard let icon = route.rightButtonIcon else { return }
         let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleRightButtonPress)
-        navigationItem.rightBarButtonItem = button
+        _navigationItem.rightBarButtonItem = button
     }
     
     func renderActions() {
         guard let actions = route.actions, !actions.isEmpty else { return }
         if let icon = manager.customMenuIcon {
             let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
-            navigationItem.rightBarButtonItem = button
+            _navigationItem.rightBarButtonItem = button
         } else {
             let button = UIBarButtonItem(title: "\u{22EF}", style: .plain, target: self, action: selectorPresentActions)
             let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
             button.setTitleTextAttributes(font, for: .normal)
             button.setTitleTextAttributes(font, for: .selected)
-            navigationItem.rightBarButtonItem = button
+            _navigationItem.rightBarButtonItem = button
         }
     }
     

@@ -1,4 +1,4 @@
 framework module Turbolinks {
-    header "Turbolinks-Swift.h"
-    requires objc
+  header "Turbolinks-Swift.h"
+  requires objc
 }
