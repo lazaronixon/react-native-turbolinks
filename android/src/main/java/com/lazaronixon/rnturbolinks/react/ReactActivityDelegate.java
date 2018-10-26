@@ -136,11 +136,11 @@ public class ReactActivityDelegate {
         };
     }
 
-    private Context getContext() {
+    protected Context getContext() {
         return mActivity;
     }
 
-    private Activity getPlainActivity() {
+    protected Activity getPlainActivity() {
         return ((Activity) getContext());
     }
 }
