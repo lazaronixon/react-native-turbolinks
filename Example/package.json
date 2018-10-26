@@ -12,7 +12,6 @@
     "react-native-turbolinks": "file:../"
   },
   "devDependencies": {
-    "get-dev-paths": "^0.1.0",
-    "babel-preset-react-native": "^4.0.0"
+    "get-dev-paths": "^0.1.0"
   }
 }
