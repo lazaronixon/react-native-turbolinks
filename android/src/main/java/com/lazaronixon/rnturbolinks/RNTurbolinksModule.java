@@ -119,15 +119,15 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void dismiss() {
+    public void dismiss(Boolean animated) {
         getCurrentActivity().finish();
     }
 
     @ReactMethod
-    public void popToRoot() { getCurrentActivity().startActivity(initialIntent); }
+    public void popToRoot(Boolean animated) { getCurrentActivity().startActivity(initialIntent); }
 
     @ReactMethod
-    public void back() { getCurrentActivity().finish(); }
+    public void back(Boolean animated) { getCurrentActivity().finish(); }
 
     @ReactMethod
     public void renderTitle(final String title, final String subtitle, int tabIndex) {

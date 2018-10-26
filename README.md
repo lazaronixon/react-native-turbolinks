@@ -142,13 +142,13 @@ Reload current visitable. For example when a connection error view is launched a
 #### `reloadSession()`
 Reload current session. If iOS inject shared cookies into Turbolinks before it.
 
-#### `dismiss()`
+#### `dismiss(animated)`
 Dismiss a overlaped view presented by visiting a component with modal option.
 
-#### `popToRoot()`
+#### `popToRoot(animated)`
 Back until to root view.
 
-#### `back()`
+#### `back(animated)`
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
 #### `notifyTabItem(value, tabIndex)`

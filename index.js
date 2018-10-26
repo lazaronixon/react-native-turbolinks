@@ -28,16 +28,16 @@ class Turbolinks {
     RNTurbolinksManager.reloadSession()
   }
 
-  static dismiss() {
-    RNTurbolinksManager.dismiss()
+  static dismiss(animated = true) {
+    RNTurbolinksManager.dismiss(animated)
   }
 
-  static popToRoot() {
-    RNTurbolinksManager.popToRoot()
+  static popToRoot(animated = true) {
+    RNTurbolinksManager.popToRoot(animated)
   }
 
-  static back() {
-    RNTurbolinksManager.back()
+  static back(animated = true) {
+    RNTurbolinksManager.back(animated)
   }
 
   static visit(route) {

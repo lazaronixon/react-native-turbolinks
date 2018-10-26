@@ -54,16 +54,16 @@ class RNTurbolinksManager: RCTEventEmitter {
         methodQueue.asyncAfter(deadline: .now() + .seconds(1), execute: { self.session.reload() })
     }
     
-    @objc func dismiss() {
-        navigation.dismiss(animated: true)
+    @objc func dismiss(_ animated: Bool) {
+        navigation.dismiss(animated: animated)
     }
     
-    @objc func popToRoot() {
-        navigation.popToRootViewController(animated: true)
+    @objc func popToRoot(_ animated: Bool) {
+        navigation.popToRootViewController(animated: animated)
     }
     
-    @objc func back() {
-        navigation.popViewController(animated: true)
+    @objc func back(_ animated: Bool) {
+        navigation.popViewController(animated: animated)
     }
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
