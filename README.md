@@ -18,9 +18,16 @@ Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode E
 [Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
 
 ### Installation Android
-Change the variables below on [/android/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/build.gradle):
+Change the files below:
+
+[/android/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/build.gradle)
 ```
 minSdkVersion = 19
+```
+
+[/android/app/src/main/AndroidManifest.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/AndroidManifest.xml)
+```
+android:allowBackup="true"
 ```
 
 On android you should use `Volume UP` to show Developer Menu instead `⌘ M`.
