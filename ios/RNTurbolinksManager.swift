@@ -51,9 +51,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func reloadSession() {
-        session.cleanCookies()
-        session.injectCookies()
-        session.reload()
+        methodQueue.asyncAfter(deadline: .now() + .seconds(1), execute: { self.session.reload() })
     }
     
     @objc func dismiss() {

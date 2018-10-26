@@ -17,15 +17,18 @@ export default class AuthenticationView extends Component {
 class MyScene extends Component {
 
   handleAuthentication = (e) => {
-    if (e.nativeEvent.url == signInUrl) return
-    setTimeout(() => Turbolinks.reloadSession(), 800)
-    this.webview.stopLoading()
-    Turbolinks.dismiss()
+    if (e.nativeEvent.url != signInUrl) {
+      this.webview.stopLoading()
+
+      setTimeout(() => Turbolinks.reloadSession(), 1000)
+      Turbolinks.dismiss()
+    }
   }
 
   render() {
     return (
         <WebView ref={webview => { this.webview = webview }}
+                 useWebKit={true}
                  source={{uri: signInUrl}}
                  onLoadStart={this.handleAuthentication}/>
     )
