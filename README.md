@@ -20,11 +20,7 @@ Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode E
 ### Installation Android
 Change the variables below on [/android/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/build.gradle):
 ```
-buildToolsVersion = "27.0.3"
 minSdkVersion = 19
-compileSdkVersion = 27
-targetSdkVersion = 27
-supportLibVersion = "27.0.2"
 ```
 
 On android you should use `Volume UP` to show Developer Menu instead `⌘ M`.

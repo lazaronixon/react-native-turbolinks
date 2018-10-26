@@ -32,8 +32,8 @@ repositories {
 }
 
 dependencies {
-    compile "com.facebook.react:react-native:+"
-    compile "com.android.support:design:27.0.2"
-    compile "com.basecamp:turbolinks:1.0.8"
-    compile "com.aurelhubert:ahbottomnavigation:2.2.0"
+    implementation "com.facebook.react:react-native:+"
+    implementation "com.android.support:design:27.1.1"
+    implementation "com.basecamp:turbolinks:1.0.8"
+    implementation "com.aurelhubert:ahbottomnavigation:2.2.0"
 }
