@@ -110,9 +110,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void reloadSession() {
-        CookieSyncManager.getInstance().sync();
         runOnUiThread(new Runnable() {
             public void run() {
+                CookieSyncManager.getInstance().sync();
                 ((GenericActivity) getCurrentActivity()).reloadSession();
             }
         });
