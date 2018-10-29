@@ -13,5 +13,6 @@
   },
   "devDependencies": {
     "get-dev-paths": "^0.1.0"
-  }
+  },
+  "isSwift": true
 }

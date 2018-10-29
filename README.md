@@ -18,22 +18,12 @@ Drop `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode E
 [Install Turbolinks Framework IOS](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg)
 
 ### Installation Android
-Change the files below:
-
-[/android/build.gradle](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/build.gradle)
-```
-minSdkVersion = 19
-```
-
-[/android/app/src/main/AndroidManifest.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/AndroidManifest.xml)
-```
-android:allowBackup="true"
-```
-
-On android you should use `Volume UP` to show Developer Menu instead `⌘ M`.
+No steps needed.
 
 ### Warning
 This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the [guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
+
+On android you should use `Volume UP` to show Developer Menu instead `⌘ M`.
 
 ## Basic Usage
 ```javascript
