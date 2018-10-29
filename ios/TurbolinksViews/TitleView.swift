@@ -15,44 +15,46 @@ class TurbolinksTitleView : UIStackView {
         self.titleImage = viewController.route.titleImage
         self.textColor = viewController.manager.titleTextColor ?? UIColor.black
         self.subtitleTextColor = viewController.manager.subtitleTextColor ?? UIColor.gray
+        self.axis = .vertical
         
         if titleImage != nil {
-            let gestureImage = UITapGestureRecognizer(target: self, action: #selector(self.handleTitlePress))
-            let image = UIImageView.init(image: titleImage)
-            image.isUserInteractionEnabled = true
-            image.addGestureRecognizer(gestureImage)
-            addArrangedSubview(image)            
+            addTitleImage()
         } else {
-            let gestureOne = UITapGestureRecognizer(target: self, action: #selector(self.handleTitlePress))
-            let one = UILabel()
-            one.text = title
-            one.textColor = textColor
-            one.font = UIFont.boldSystemFont(ofSize: 17)
-            one.textAlignment = .center
-            one.isUserInteractionEnabled = true
-            one.addGestureRecognizer(gestureOne)
-            addArrangedSubview(one)
-            
-            let gestureTwo = UITapGestureRecognizer(target: self, action: #selector(self.handleTitlePress))
-            let two = UILabel()
-            two.text = subtitle
-            two.textColor = subtitleTextColor
-            two.font = UIFont.systemFont(ofSize: 12)
-            two.textAlignment = .center
-            two.isUserInteractionEnabled = true
-            two.addGestureRecognizer(gestureTwo)
-            addArrangedSubview(two)
-            
-            
-            distribution = .equalCentering
-            axis = .vertical
-            
-            let width = max(one.frame.size.width, two.frame.size.width)
-            frame = CGRect(x: 0, y: 0, width: width, height: 35)
-            
-            one.sizeToFit()
-            two.sizeToFit()
+            addTitle()
+            addSubtitle()
         }
+    }
+    
+    fileprivate func addTitleImage() {
+        let gestureImage = UITapGestureRecognizer(target: self, action: #selector(self.handleTitlePress))
+        let image = UIImageView.init(image: titleImage)
+        image.isUserInteractionEnabled = true
+        image.addGestureRecognizer(gestureImage)
+        addArrangedSubview(image)
+    }
+    
+    fileprivate func addTitle() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.handleTitlePress))
+        let label = UILabel()
+        label.text = title
+        label.textColor = textColor
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.textAlignment = .center
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(gesture)
+        addArrangedSubview(label)
+    }
+    
+    fileprivate func addSubtitle() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.handleTitlePress))
+        let label = UILabel()
+        label.text = subtitle
+        label.textColor = subtitleTextColor
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .center
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(gesture)
+        addArrangedSubview(label)
     }
     
     @objc fileprivate func handleTitlePress() {
