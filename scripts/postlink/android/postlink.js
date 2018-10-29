@@ -6,7 +6,7 @@ module.exports = () => {
 
   var ignoreFolders = { ignore: ["node_modules/**", "**/build/**"] };
   var buildGradlePath = path.join("android", "build.gradle");
-  var manifestPath = glob.sync("**/build.gradle", ignoreFolders)[0];
+  var manifestPath = glob.sync("**/AndroidManifest.xml", ignoreFolders)[0];
 
   function setMinSdkVersion() {
     if (buildGradlePath) {
