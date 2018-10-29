@@ -68,7 +68,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
-        removeFromRootViewController() // remove existing childViewController, in case of debug reloading...
+        removeChildViewControllerInCaseOfDebug()
         navigationController = NavigationController(self, route, 0)
         addToRootViewController(navigationController)
         visit(route)
@@ -76,7 +76,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startTabBasedApp(_ routes: Array<Dictionary<AnyHashable, Any>> ,_ options: Dictionary<AnyHashable, Any> ,_ selectedIndex: Int) {
         setAppOptions(options)
-        removeFromRootViewController() // remove existing childViewController, in case of debug reloading...
+        removeChildViewControllerInCaseOfDebug()
         tabBarController = TabBarController()
         tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
         tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
@@ -195,7 +195,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         rootViewController.view.addSubview(viewController.view)
     }
     
-    fileprivate func removeFromRootViewController() {
+    fileprivate func removeChildViewControllerInCaseOfDebug() {
         var viewController: UIViewController?
         rootViewController.childViewControllers.forEach { (child) in
             if (child is NavigationController) || (child is TabBarController) {
