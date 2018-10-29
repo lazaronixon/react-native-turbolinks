@@ -56,9 +56,7 @@ export default class App extends Component {
     alert(data.description)
   }
 
-  render() {
-    return null
-  }
+  render() { return null }
 }
 ```
 

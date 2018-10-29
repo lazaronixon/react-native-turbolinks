@@ -4,16 +4,12 @@ import Turbolinks from 'react-native-turbolinks'
 
 export default class ErrorView extends Component {
 
-  retry = () => {
-    Turbolinks.reloadVisitable()
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.h1}>{this.props.title}</Text>
         <Text style={styles.p}>{this.props.message}</Text>
-        <Button onPress={this.retry} title="Retry" />
+        <Button onPress={() => Turbolinks.reloadVisitable()} title="Retry" />
       </View>
     )
   }

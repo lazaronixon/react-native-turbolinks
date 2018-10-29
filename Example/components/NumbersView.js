@@ -4,16 +4,13 @@ import { FlatList, View, Text, StyleSheet, Platform }from 'react-native'
 export default class NumbersView extends Component {
 
   dataSource() {
-    let data = []
-    for (let i = 1; i <= 100; i++) data.push({key: 'Row ' + i})
-    return data
+    return Array.from(new Array(100), (x,i) => { return { key: `Row ${i}` } })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <FlatList data={this.dataSource()}
-                  renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
+        <FlatList data={this.dataSource()} renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
       </View>
     )
   }
