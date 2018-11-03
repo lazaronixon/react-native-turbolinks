@@ -38,11 +38,11 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		873B93A9218158010083882F /* Turbolinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873B93A8218158010083882F /* Turbolinks.framework */; };
 		873B93AA218158010083882F /* Turbolinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 873B93A8218158010083882F /* Turbolinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		873E11B8218E24CE0015D96B /* libRNTurbolinks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87ED9D761FF9998800B81841 /* libRNTurbolinks.a */; };
 		87578E921FF9962C00BA9CDC /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */; };
 		87578E931FF9962C00BA9CDC /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */; };
 		87578E941FF9962C00BA9CDC /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		B768E9C174254125B329480D /* libRNTurbolinks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8E907A206E408ABF70AF32 /* libRNTurbolinks.a */; };
 		FDB70C87EB6A4245AA448C18 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EECB8FD2574957B0A169BD /* RNPlaceholder.swift */; };
 /* End PBXBuildFile section */
 
@@ -388,6 +388,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				873E11B8218E24CE0015D96B /* libRNTurbolinks.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -402,7 +403,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				B768E9C174254125B329480D /* libRNTurbolinks.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
