@@ -16,7 +16,7 @@ module.exports = function frameworkSearchPathIter(project, func) {
       if (shouldVisitBuildSettings) {
         const searchPaths = buildSettings.FRAMEWORK_SEARCH_PATHS
           ? [].concat(buildSettings.FRAMEWORK_SEARCH_PATHS)
-          : defaultHeaderPaths;
+          : defaultFrameworkPaths;
 
         buildSettings.FRAMEWORK_SEARCH_PATHS = func(searchPaths);
       }
