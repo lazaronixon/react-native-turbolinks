@@ -51,7 +51,7 @@ extension GenricViewController where Self: UIViewController {
             _navigationItem.rightBarButtonItem = button
         } else {
             let button = UIBarButtonItem(title: "\u{22EF}", style: .plain, target: self, action: selectorPresentActions)
-            let font = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 32)]
+            let font = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 32)]
             button.setTitleTextAttributes(font, for: .normal)
             button.setTitleTextAttributes(font, for: .selected)
             _navigationItem.rightBarButtonItem = button

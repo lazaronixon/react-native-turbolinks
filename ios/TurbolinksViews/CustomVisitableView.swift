@@ -26,7 +26,7 @@ class CustomVisitableView : VisitableView {
         if (loadingView != nil) {
             if !isRefreshing {
                 loadingView.isHidden = false
-                bringSubview(toFront: loadingView)
+                bringSubviewToFront(loadingView)
             }
         } else {
             super.showActivityIndicator()

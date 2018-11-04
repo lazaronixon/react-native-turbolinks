@@ -190,13 +190,13 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate func addToRootViewController(_ viewController: UIViewController) {
-        rootViewController.addChildViewController(viewController)
+        rootViewController.addChild(viewController)
         rootViewController.view.addSubview(viewController.view)
     }
     
     fileprivate func removeChildViewControllerInCaseOfDebug() {
         var viewController: UIViewController?
-        rootViewController.childViewControllers.forEach { (child) in
+        rootViewController.children.forEach { (child) in
             if (child is NavigationController) || (child is TabBarController) {
                 viewController = child
             }
@@ -204,7 +204,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         
         if let vc = viewController {
             vc.view.removeFromSuperview()
-            vc.removeFromParentViewController()
+            vc.removeFromParent()
         }
     }
     
