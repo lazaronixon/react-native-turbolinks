@@ -15,9 +15,11 @@ module.exports = () => {
       const proj = pbxproj.project(projectPath);
       proj.parseSync();
 
-      addFramework(proj, frameworkPath);
-      addToFrameworkSearchPaths(proj, frameworkSearchPath);
-      fs.writeFileSync(projectPath, proj.writeSync());
+      if (!proj.hasFile(frameworkPath)) {
+        addFramework(proj, frameworkPath);
+        addToFrameworkSearchPaths(proj, frameworkSearchPath);
+        fs.writeFileSync(projectPath, proj.writeSync());
+      }
   }
 
   function installSwift() {
