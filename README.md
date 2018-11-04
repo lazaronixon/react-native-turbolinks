@@ -11,6 +11,12 @@ $ npm install react-native-turbolinks --save
 $ react-native link
 ```
 
+### iOS
+[Drop](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/install-turbolinks-framework-ios.jpg) `/node_modules/react-native-turbolinks/ios/Turbolinks.framework` to XCode Embedded Binaries and then check `"Copy items if need"` when it is prompted.
+
+### Android
+No steps.
+
 ### Warning
 This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the [guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
 
