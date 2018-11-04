@@ -8,11 +8,9 @@
   "dependencies": {
     "react": "^16.5.0",
     "react-native": "^0.57.0",
-    "react-native-swift": "^1.2.1",
     "react-native-turbolinks": "file:../"
   },
   "devDependencies": {
     "get-dev-paths": "^0.1.0"
-  },
-  "isSwift": true
+  }
 }
