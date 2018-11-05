@@ -1,9 +1,9 @@
 # React Native Turbolinks
 A implementation of [Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and [Turbolinks Android](https://github.com/turbolinks/turbolinks-android) for React Native.
 
-![React Native Turbolinks](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/intro-turbolinks.gif)
+[![React Native Turbolinks](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/intro-turbolinks.gif)](https://youtu.be/2biqMoHn3jk "Quick Start Video")
 
-## Getting started
+## [Getting started](https://youtu.be/2biqMoHn3jk "Quick Start Video")
 ```
 $ npm install react-native-turbolinks --save
 $ react-native link
