@@ -56,7 +56,6 @@ Start a Single Screen App. Use it instead visit for first visit.
   - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
   - `loadingView`: Set a custom loadingView using a react component.
   - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
-  - `tabBarStyle`: {barTintColor, tintColor}.
 
 #### `startTabBasedApp(routes)`
 #### `startTabBasedApp(routes, options)`
