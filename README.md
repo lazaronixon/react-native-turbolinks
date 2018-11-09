@@ -49,13 +49,8 @@ Once you’ve started the demo server, explore the demo application in the Simul
 ## Methods
 
 #### `startSingleScreenApp(route)`
-#### `startSingleScreenApp(route, options)`
+#### `startSingleScreenApp(route, appOptions)`
 Start a Single Screen App. Use it instead visit for first visit.
-- `options`:
-  - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
-  - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
-  - `loadingView`: Set a custom loadingView using a react component.
-  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
 
 #### `visit(route)`
 Visit a URL or Component.
@@ -120,6 +115,12 @@ Removes the listener for given event.
   - `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
   - `actions:` A Array of `action` objects to mount a menu.
   - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
+
+#### `AppOptions`
+  - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
+  - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
+  - `loadingView`: Set a custom loadingView using a react component.
+  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
 
 #### `Action`
   - `id:` A integer identifier for the action. (Required)
