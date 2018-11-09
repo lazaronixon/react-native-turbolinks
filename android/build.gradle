@@ -35,5 +35,4 @@ dependencies {
     implementation "com.facebook.react:react-native:+"
     implementation "com.android.support:design:27.1.1"
     implementation "com.basecamp:turbolinks:1.0.8"
-    implementation "com.aurelhubert:ahbottomnavigation:2.2.0"
 }

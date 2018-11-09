@@ -93,7 +93,6 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
             WritableMap params = Arguments.createMap();
             params.putInt("code", NETWORK_FAILURE);
             params.putInt("statusCode", errorCode);
-            params.putInt("tabIndex", 0);
             params.putString("description", "Network Failure.");
             getEventEmitter().emit(TURBOLINKS_ERROR, params);
         }
@@ -104,7 +103,6 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
         WritableMap params = Arguments.createMap();
         params.putInt("code", HTTP_FAILURE);
         params.putInt("statusCode", statusCode);
-        params.putInt("tabIndex", 0);
         params.putString("description", "HTTP Failure. Code:" + statusCode);
         getEventEmitter().emit(TURBOLINKS_ERROR, params);
     }
@@ -160,7 +158,7 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
     }
 
     @Override
-    public void renderComponent(TurbolinksRoute route, int tabIndex) {
+    public void renderComponent(TurbolinksRoute route) {
         turbolinksViewFrame.renderComponent(getReactInstanceManager(), route);
     }
 
@@ -186,7 +184,6 @@ public class WebActivity extends GenericActivity implements TurbolinksAdapter {
             URL urlLocation = new URL(webView.getUrl());
             params.putString("url", urlLocation.toString());
             params.putString("path", urlLocation.getPath());
-            params.putInt("tabIndex", 0);
             getEventEmitter().emit(TURBOLINKS_VISIT_COMPLETED, params);
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());

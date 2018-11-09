@@ -24,16 +24,12 @@ public class TurbolinksRoute implements Parcelable {
     private String subtitle;
     private Bundle titleImage;
     private ArrayList<Bundle> actions;
-    private String tabTitle;
-    private Bundle tabIcon;
     private boolean navBarHidden;
     private Bundle navIcon;
-    private String tabBadge;
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
         ReadableArray actions = rp.hasKey("actions") ? rp.getArray("actions") : null;
-        ReadableMap tabIcon = rp.hasKey("tabIcon") ? rp.getMap("tabIcon") : null;
         ReadableMap navIcon = rp.hasKey("navIcon") ? rp.getMap("navIcon") : null;
         ReadableMap titleImage = rp.hasKey("titleImage") ? rp.getMap("titleImage") : null;
         this.url = rp.hasKey("url") ? rp.getString("url") : null;
@@ -45,11 +41,8 @@ public class TurbolinksRoute implements Parcelable {
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
         this.titleImage = titleImage != null ? Arguments.toBundle(titleImage) : null;
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
-        this.tabTitle = rp.hasKey("tabTitle") ? rp.getString("tabTitle") : null;
-        this.tabIcon = rp.hasKey("tabIcon") ? Arguments.toBundle(tabIcon) : null;
         this.navBarHidden = rp.hasKey("navBarHidden") && rp.getBoolean("navBarHidden");
         this.navIcon = navIcon != null ? Arguments.toBundle(navIcon) : null;
-        this.tabBadge = rp.hasKey("tabBadge") ? rp.getString("tabBadge") : null;
     }
 
     public TurbolinksRoute(Bundle bundle) {
@@ -62,11 +55,8 @@ public class TurbolinksRoute implements Parcelable {
         this.subtitle = bundle.getString("subtitle");
         this.titleImage = bundle.getBundle("titleImage");
         this.actions = bundle.getParcelableArrayList("actions");
-        this.tabTitle = bundle.getString("tabTitle");
-        this.tabIcon = bundle.getBundle("tabIcon");
         this.navBarHidden = bundle.getBoolean("navBarHidden");
         this.navIcon = bundle.getBundle("navIcon");
-        this.tabBadge = bundle.getString("tabBadge");
     }
 
     protected TurbolinksRoute(Parcel in) {
@@ -81,7 +71,6 @@ public class TurbolinksRoute implements Parcelable {
         actions = in.createTypedArrayList(Bundle.CREATOR);
         navBarHidden = in.readByte() != 0;
         navIcon = in.readBundle();
-        tabBadge = in.readString();
     }
 
     @Override
@@ -97,7 +86,6 @@ public class TurbolinksRoute implements Parcelable {
         dest.writeTypedList(actions);
         dest.writeByte((byte) (navBarHidden ? 1 : 0));
         dest.writeBundle(navIcon);
-        dest.writeString(tabBadge);
     }
 
     @Override
@@ -129,16 +117,8 @@ public class TurbolinksRoute implements Parcelable {
         return action;
     }
 
-    public void setAction(String action) {
-        this.action = action;
-    }
-
     public String getSubtitle() {
         return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
     }
 
     public boolean getModal() {
@@ -153,10 +133,6 @@ public class TurbolinksRoute implements Parcelable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public Bundle getTitleImage() {
         return titleImage;
     }
@@ -169,24 +145,12 @@ public class TurbolinksRoute implements Parcelable {
         this.actions = actions;
     }
 
-    public String getTabTitle() {
-        return tabTitle;
-    }
-
-    public Bundle getTabIcon() {
-        return tabIcon;
-    }
-
     public boolean getNavBarHidden() {
         return navBarHidden;
     }
 
     public Bundle getNavIcon() {
         return navIcon;
-    }
-
-    public String getTabBadge() {
-        return tabBadge;
     }
 
 }

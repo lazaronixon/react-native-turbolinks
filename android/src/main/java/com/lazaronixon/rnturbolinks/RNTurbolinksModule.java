@@ -18,10 +18,8 @@ import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
 import com.lazaronixon.rnturbolinks.activities.GenericActivity;
 import com.lazaronixon.rnturbolinks.activities.NativeActivity;
-import com.lazaronixon.rnturbolinks.activities.TabbedActivity;
 import com.lazaronixon.rnturbolinks.activities.WebActivity;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
-import com.lazaronixon.rnturbolinks.util.TabBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import java.net.MalformedURLException;
@@ -37,13 +35,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_MESSAGE_HANDLER = "intentMessageHandler";
     public static final String INTENT_USER_AGENT = "intentUserAgent";
     public static final String INTENT_ROUTE = "intentRoute";
-    public static final String INTENT_ROUTES = "intentRoutes";
-    public static final String INTENT_SELECTED_INDEX = "intentSelectedIndex";
     public static final String INTENT_LOADING_VIEW = "intentLoadingView";
     public static final String INTENT_INITIAL = "intentInitial";
-    public static final String INTENT_FROM_TAB = "intentFromTab";
     public static final String INTENT_NAV_BAR_STYLE = "intentNavBarStyle";
-    public static final String INTENT_TAB_BAR_STYLE = "intentTabBarStyle";
 
     private TurbolinksRoute prevRoute;
     private String messageHandler;
@@ -51,7 +45,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private String loadingView;
     private Intent initialIntent;
     private ReadableMap navBarStyle;
-    private ReadableMap tabBarStyle;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -69,32 +62,14 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startTabBasedApp(ReadableArray routes, ReadableMap options, int selectedIndex) {
-        setAppOptions(options);
-        Activity act = getCurrentActivity();
-        Intent intent = new Intent(act, TabbedActivity.class);
-        intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
-        intent.putExtra(INTENT_USER_AGENT, userAgent);
-        intent.putExtra(INTENT_SELECTED_INDEX, selectedIndex);
-        intent.putExtra(INTENT_LOADING_VIEW, loadingView);
-        intent.putExtra(INTENT_INITIAL, true);
-        intent.putExtra(INTENT_NAV_BAR_STYLE, navBarStyle != null ? new NavBarStyle(navBarStyle) : null);
-        intent.putExtra(INTENT_TAB_BAR_STYLE, tabBarStyle != null ? new TabBarStyle(tabBarStyle) : null);
-        intent.putParcelableArrayListExtra(INTENT_ROUTES, Arguments.toList(routes));
-        initialIntent = intent;
-        TurbolinksSession.resetDefault();
-        act.startActivity(intent);
-    }
-
-    @ReactMethod
     public void visit(ReadableMap route) { visit(route, false); }
 
     @ReactMethod
-    public void replaceWith(final ReadableMap route, final int tabIndex) {
+    public void replaceWith(final ReadableMap route) {
         runOnUiThread(new Runnable() {
             public void run() {
                 TurbolinksRoute tRoute = new TurbolinksRoute(route);
-                ((GenericActivity) getCurrentActivity()).renderComponent(tRoute, tabIndex);
+                ((GenericActivity) getCurrentActivity()).renderComponent(tRoute);
             }
         });
     }
@@ -130,7 +105,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void back(Boolean animated) { getCurrentActivity().finish(); }
 
     @ReactMethod
-    public void renderTitle(final String title, final String subtitle, int tabIndex) {
+    public void renderTitle(final String title, final String subtitle) {
         runOnUiThread(new Runnable() {
             public void run() {
                 ((GenericActivity) getCurrentActivity()).renderTitle(title, subtitle);
@@ -139,7 +114,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void renderActions(final ReadableArray actions, int tabIndex) {
+    public void renderActions(final ReadableArray actions) {
         runOnUiThread(new Runnable() {
             public void run() {
                 GenericActivity act = (GenericActivity) getCurrentActivity();
@@ -158,15 +133,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         });
     }
 
-    @ReactMethod
-    public void notifyTabItem(final String value, final int tabIndex) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                ((GenericActivity) getCurrentActivity()).notifyTabItem(value, tabIndex);
-            }
-        });
-    }
-
     @Override
     public Map getConstants() {
         return MapBuilder.of(
@@ -180,7 +146,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         this.userAgent = opts.hasKey("userAgent") ? opts.getString("userAgent") : null;
         this.loadingView = opts.hasKey("loadingView") ? opts.getString("loadingView") : null;
         this.navBarStyle = opts.hasKey("navBarStyle") ? opts.getMap("navBarStyle") : null;
-        this.tabBarStyle = opts.hasKey("tabBarStyle") ? opts.getMap("tabBarStyle") : null;
     }
 
     private void visit(ReadableMap route, boolean initial ) {
@@ -204,11 +169,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_MESSAGE_HANDLER, messageHandler);
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_INITIAL, isInitial);
-                intent.putExtra(INTENT_FROM_TAB, isTabbedActivity(act));
                 intent.putExtra(INTENT_LOADING_VIEW, loadingView);
                 intent.putExtra(INTENT_ROUTE, route);
                 intent.putExtra(INTENT_NAV_BAR_STYLE, navBarStyle != null ? new NavBarStyle(navBarStyle) : null);
-                intent.putExtra(INTENT_TAB_BAR_STYLE, tabBarStyle != null ? new TabBarStyle(tabBarStyle) : null);
                 if (isInitial) initialIntent = intent;
                 if (isInitial) TurbolinksSession.resetDefault();
                 act.startActivity(intent);
@@ -230,9 +193,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_ROUTE, route);
         intent.putExtra(INTENT_INITIAL, isInitial);
-        intent.putExtra(INTENT_FROM_TAB, isTabbedActivity(act));
         intent.putExtra(INTENT_NAV_BAR_STYLE, navBarStyle != null ? new NavBarStyle(navBarStyle) : null);
-        intent.putExtra(INTENT_TAB_BAR_STYLE, tabBarStyle != null ? new TabBarStyle(tabBarStyle) : null);
         if (isInitial) initialIntent = intent;
         if (isInitial) TurbolinksSession.resetDefault();
         act.startActivity(intent);
@@ -241,10 +202,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     private boolean getIntentInitial(Activity act) {
         return act.getIntent().getBooleanExtra(INTENT_INITIAL, true);
-    }
-
-    private boolean isTabbedActivity(Activity act) {
-        return (act instanceof TabbedActivity);
     }
 
 }

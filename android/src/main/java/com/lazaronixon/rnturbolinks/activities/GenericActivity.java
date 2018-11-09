@@ -24,7 +24,6 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import java.util.ArrayList;
 
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_FROM_TAB;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
 import static com.lazaronixon.rnturbolinks.util.TurbolinksRoute.ACTION_REPLACE;
 
@@ -88,16 +87,13 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         route.setActions(actions);
     }
 
-    public void renderComponent(TurbolinksRoute route, int tabIndex) {
+    public void renderComponent(TurbolinksRoute route) {
     }
 
     public void reloadVisitable() {
     }
 
     public void evaluateJavaScript(String script, Promise promise) {
-    }
-
-    public void notifyTabItem(String value, int tabIndex) {
     }
 
     public RCTDeviceEventEmitter getEventEmitter() {
@@ -108,14 +104,10 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
         return getIntent().getBooleanExtra(INTENT_INITIAL, true);
     }
 
-    public boolean isFromTab() {
-        return getIntent().getBooleanExtra(INTENT_FROM_TAB, false);
-    }
-
     public void setupTransitionOnEnter() {
         if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
             overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
-        } else if (isFromTab() || route.getModal()) {
+        } else if (route.getModal()) {
             overridePendingTransition(R.anim.slide_up, R.anim.stay_its);
         } else {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -153,7 +145,7 @@ public abstract class GenericActivity extends ReactAppCompatActivity {
     protected void setupTransitionOnFinish() {
         if (isInitial()) {
             overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
-        } else if (isFromTab() || route.getModal()) {
+        } else if (route.getModal()) {
             overridePendingTransition(R.anim.stay_its, R.anim.slide_down);
         } else {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

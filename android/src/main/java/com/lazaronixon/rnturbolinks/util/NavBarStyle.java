@@ -12,13 +12,11 @@ public class NavBarStyle implements Parcelable {
     private static final String TITLE_TEXT_COLOR = "titleTextColor";
     private static final String SUBTITLE_TEXT_COLOR = "subtitleTextColor";
     private static final String BAR_TINT_COLOR = "barTintColor";
-    private static final String TINT_COLOR = "tintColor";
     private static final String MENU_ICON = "menuIcon";
 
     private int titleTextColor;
     private int subtitleTextColor;
     private int barTintColor;
-    private int tintColor;
     private Bundle menuIcon;
 
     public NavBarStyle(ReadableMap rp) {
@@ -26,7 +24,6 @@ public class NavBarStyle implements Parcelable {
         this.titleTextColor = rp.hasKey(TITLE_TEXT_COLOR) && !rp.isNull(TITLE_TEXT_COLOR) ? rp.getInt(TITLE_TEXT_COLOR) : 0;
         this.subtitleTextColor = rp.hasKey(SUBTITLE_TEXT_COLOR) && !rp.isNull(SUBTITLE_TEXT_COLOR) ? rp.getInt(SUBTITLE_TEXT_COLOR) : 0;
         this.barTintColor = rp.hasKey(BAR_TINT_COLOR) && !rp.isNull(BAR_TINT_COLOR) ? rp.getInt(BAR_TINT_COLOR) : 0;
-        this.tintColor = rp.hasKey(TINT_COLOR) && !rp.isNull(TINT_COLOR) ? rp.getInt(TINT_COLOR) : 0;
         this.menuIcon = menuIcon != null ? Arguments.toBundle(menuIcon) : null;
     }
 
@@ -34,7 +31,6 @@ public class NavBarStyle implements Parcelable {
         titleTextColor = in.readInt();
         subtitleTextColor = in.readInt();
         barTintColor = in.readInt();
-        tintColor = in.readInt();
         menuIcon = in.readBundle();
     }
 
@@ -43,7 +39,6 @@ public class NavBarStyle implements Parcelable {
         dest.writeInt(titleTextColor);
         dest.writeInt(subtitleTextColor);
         dest.writeInt(barTintColor);
-        dest.writeInt(tintColor);
         dest.writeBundle(menuIcon);
     }
 
@@ -74,10 +69,6 @@ public class NavBarStyle implements Parcelable {
 
     public int getBarTintColor() {
         return barTintColor;
-    }
-
-    public int getTintColor() {
-        return tintColor;
     }
 
     public Bundle getMenuIcon() {
