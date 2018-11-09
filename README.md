@@ -48,31 +48,16 @@ Once you’ve started the demo server, explore the demo application in the Simul
 
 ## Methods
 
-#### `startSingleScreenApp(route)`
-#### `startSingleScreenApp(route, options)`
-Start a Single Screen App. Use it instead visit for first visit.
-- `options`:
-  - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
-  - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
-  - `loadingView`: Set a custom loadingView using a react component.
-  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
-
-#### `startTabBasedApp(routes)`
-#### `startTabBasedApp(routes, options)`
-#### `startTabBasedApp(routes, options, selectedIndex)`
-A tab bar appears at the bottom of an app screen and provides the ability to quickly switch between different sections of an app.
-- `routes:` A Array of route objects to mount TabBar. Use `tabTitle`, `tabIcon` and `tabBadge` here.
-- `options`:
-  - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
-  - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
-  - `loadingView`: Set a custom loadingView using a react component.
-  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
-  - `tabBarStyle`: {barTintColor, tintColor}.
-- `selectedIndex:` Index for initial selected view. (Default 0).
-
-#### `visit(route)`
-Visit a URL with Turbolinks.
+#### Route object
+- `Url properties`
 - `url:` Url to visit. (Required)
+
+- `Component properties`
+- `component:` Component to visit. (Required)
+- `modal:` A boolean to show a view without navbar and backbutton. (Default false)
+- `passProps`: Passes this in as props to the rendered component.
+
+- `Common properties`
 - `title:` The default value is the title of the Web page.
 - `subtitle:` A subtitle for visitable view.
 - `titleImage:` A image to show on navbar.
@@ -88,28 +73,19 @@ Visit a URL with Turbolinks.
     - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
 
+#### `startSingleScreenApp(route)`
+#### `startSingleScreenApp(route, options)`
+Start a Single Screen App. Use it instead visit for first visit.
+- `options`:
+  - `userAgent`: You can check for this string on the server and use it to send specialized markup or assets to your application.
+  - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
+  - `loadingView`: Set a custom loadingView using a react component.
+  - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
+
 #### `visit(route)`
-Visit a Component with Turbolinks.
-- `component:` Component to visit. (Required)
-- `modal:` A boolean to show a view without navbar and backbutton. (Default false)
-- `passProps`: Passes this in as props to the rendered component.
-- `title:` The default value is the title of the Web page.
-- `subtitle:` A subtitle for visitable view.
-- `titleImage:` A image to show on navbar.
-- `navBarHidden:` Hidden navigation bar. (Default false)
-- `leftButtonIcon:` A left button icon. (iOS Only)
-- `rightButtonIcon`: A right button icon. (iOS Only)
-- `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
-- `actions:` A Array of action objects to mount a menu.
-  - `action:`
-    - `id:` A integer identifier for the action. (Required)
-    - `title:` A title for the action.
-    - `icon:` A icon for the action.
-    - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).
-- `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
+Visit a URL or Component.
 
 #### `replaceWith(route)`
-#### `replaceWith(route, tabIndex)`
 Replace current visitable with a component. With the same route param like to visit a component.
 
 #### `reloadVisitable()`
@@ -127,20 +103,14 @@ Back until to root view.
 #### `back(animated)`
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
 
-#### `notifyTabItem(value, tabIndex)`
-Show or hide a badge on tabBarItem.
-
 #### `renderTitle(title)`
 #### `renderTitle(title, subtitle)`
-#### `renderTitle(title, subtitle, tabIndex)`
 Change title of current view. For example if you want to get title from page source.
 
 #### `evaluateJavaScript(script)`
-#### `evaluateJavaScript(script, tabIndex)`
 Evaluates a JavaScript string and return a promise with result of expression. You can use it to execute some kind of bridge methods on your page to make something or return something.
 
 #### `renderActions(actions)`
-#### `renderActions(actions, tabIndex)`
 Change actions of current view. For example if you want to mount a menu looking for data-attributes on page source.
 - `action:`
   - `id:` A integer identifier for the action. (Required)
@@ -151,13 +121,13 @@ Change actions of current view. For example if you want to mount a menu looking 
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:
 - `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link. The argument to the event handler is an object with keys: `url, path, action`.
-- `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description, tabIndex`.
+- `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
 - `turbolinksMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
 - `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
 - `turbolinksLeftButtonPress:` Fire when left button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksRightButtonPress:` Fire when right button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
-- `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path, tabIndex`.
+- `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path`.
 
 #### `removeEventListener(eventName, handler)`
 Removes the listener for given event.
