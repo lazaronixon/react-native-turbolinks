@@ -46,9 +46,8 @@ To run the demo, clone this repository to your computer and change into its dire
 
 Once you’ve started the demo server, explore the demo application in the Simulator by running `react-native run-ios` or `react-native run-android` on `Example` folder.
 
-## Methods
-
-#### Route object
+## Objects
+#### `Route`
 `Url properties`
 - `url:` Url to visit. (Required)
 
@@ -72,6 +71,8 @@ Once you’ve started the demo server, explore the demo application in the Simul
     - `icon:` A icon for the action.
     - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
+
+## Methods
 
 #### `startSingleScreenApp(route)`
 #### `startSingleScreenApp(route, options)`
