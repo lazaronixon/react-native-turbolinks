@@ -49,15 +49,15 @@ Once you’ve started the demo server, explore the demo application in the Simul
 ## Methods
 
 #### Route object
-- `Url properties`
+`Url properties`
 - `url:` Url to visit. (Required)
 
-- `Component properties`
+`Component properties`
 - `component:` Component to visit. (Required)
 - `modal:` A boolean to show a view without navbar and backbutton. (Default false)
 - `passProps`: Passes this in as props to the rendered component.
 
-- `Common properties`
+`Common properties`
 - `title:` The default value is the title of the Web page.
 - `subtitle:` A subtitle for visitable view.
 - `titleImage:` A image to show on navbar.
