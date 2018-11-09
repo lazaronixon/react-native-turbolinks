@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55EF22C720E4DC2F005CB120 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EF22C620E4DC2F005CB120 /* TabBarController.swift */; };
 		87201D1B2025707100BDC864 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87201D1A2025707100BDC864 /* GenericViewController.swift */; };
 		87201D682029B94600BDC864 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87201D672029B94600BDC864 /* NavigationController.swift */; };
 		872FD3FC2021CE360063E5CE /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872FD3FB2021CE360063E5CE /* ActionsViewController.swift */; };
@@ -36,7 +35,6 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNTurbolinks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTurbolinks.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		55EF22C620E4DC2F005CB120 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		87201D1A2025707100BDC864 /* GenericViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
 		87201D672029B94600BDC864 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		872FD3FB2021CE360063E5CE /* ActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				87201D672029B94600BDC864 /* NavigationController.swift */,
-				55EF22C620E4DC2F005CB120 /* TabBarController.swift */,
 				87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */,
 				872FD3FD2021E1B80063E5CE /* TurbolinksAction.swift */,
 				87441D5D2037935400C938EC /* TurbolinksSession.swift */,
@@ -167,7 +164,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				87441D5E2037935400C938EC /* TurbolinksSession.swift in Sources */,
-				55EF22C720E4DC2F005CB120 /* TabBarController.swift in Sources */,
 				87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */,
 				87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */,
 				877052EB1FF0B3350089741D /* RNTurbolinksManagerBridge.m in Sources */,

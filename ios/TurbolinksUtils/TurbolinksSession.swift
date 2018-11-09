@@ -2,12 +2,9 @@ import WebKit
 import Turbolinks
 
 class TurbolinksSession: Session {
-    
-    var index: Int!
 
-    required convenience init(_ webViewConfiguration: WKWebViewConfiguration,_ index: Int) {
+    required convenience init(_ webViewConfiguration: WKWebViewConfiguration) {
         self.init(webViewConfiguration: webViewConfiguration)
-        self.index = index
         self.webView.uiDelegate = self
         self.webView.allowsLinkPreview = false
     }

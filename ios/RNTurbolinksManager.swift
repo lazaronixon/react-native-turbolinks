@@ -4,19 +4,15 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
-    var tabBarController: TabBarController!
-    var navigationController: NavigationController!
+    var navigation: NavigationController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
     var barTintColor: UIColor?
     var tintColor: UIColor?
-    var tabBarBarTintColor: UIColor?
-    var tabBarTintColor: UIColor?
-    var tabBarBadgeColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
     var customMenuIcon: UIImage?
-    var loadingView: String?    
+    var loadingView: String?
     lazy var processPool = WKProcessPool()
     
     var application: UIApplication {
@@ -27,10 +23,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         return application.keyWindow!.rootViewController!
     }
     
-    fileprivate var navigation: NavigationController {
-        return (navigationController ?? tabBarController.selectedViewController) as! NavigationController
-    }
-    
     fileprivate var session: TurbolinksSession {
         return navigation.session
     }
@@ -39,10 +31,9 @@ class RNTurbolinksManager: RCTEventEmitter {
         return navigation.visibleViewController!
     }
     
-    @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>,_ tabIndex: Int) {
+    @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) {
         let tRoute = TurbolinksRoute(route)
-        let nav = navigationController ?? getNavigationByIndex(tabIndex)
-        (nav.visibleViewController as! WebViewController).renderComponent(tRoute)
+        (navigation.visibleViewController as! WebViewController).renderComponent(tRoute)
     }
     
     @objc func reloadVisitable() {
@@ -68,21 +59,9 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
         removeChildViewControllerInCaseOfDebug()
-        navigationController = NavigationController(self, route, 0)
-        addToRootViewController(navigationController)
+        navigation = NavigationController(self, route)
+        addToRootViewController(navigation)
         visit(route)
-    }
-    
-    @objc func startTabBasedApp(_ routes: Array<Dictionary<AnyHashable, Any>> ,_ options: Dictionary<AnyHashable, Any> ,_ selectedIndex: Int) {
-        setAppOptions(options)
-        removeChildViewControllerInCaseOfDebug()
-        tabBarController = TabBarController()
-        tabBarController.viewControllers = routes.enumerated().map { (index, route) in NavigationController(self, route, index) }
-        tabBarController.tabBar.barTintColor = tabBarBarTintColor ?? tabBarController.tabBar.barTintColor
-        tabBarController.tabBar.tintColor = tabBarTintColor ?? tabBarController.tabBar.tintColor
-        addToRootViewController(tabBarController)
-        visitTabRoutes(routes)
-        tabBarController.selectedIndex = selectedIndex
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) {
@@ -94,35 +73,27 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    @objc func renderTitle(_ title: String,_ subtitle: String,_ tabIndex: Int) {
-        let nav = navigationController ?? getNavigationByIndex(tabIndex)
-        guard let visitable = nav.visibleViewController as? GenricViewController else { return }
+    @objc func renderTitle(_ title: String,_ subtitle: String) {
+        guard let visitable = navigation.visibleViewController as? GenricViewController else { return }
         visitable.route.title = title
         visitable.route.subtitle = subtitle
         visitable.renderTitle()
     }
     
-    @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>,_ tabIndex: Int) {
-        let nav = navigationController ?? getNavigationByIndex(tabIndex)
-        guard let visitable = nav.visibleViewController as? GenricViewController else { return }
+    @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>) {
+        guard let visitable = navigation.visibleViewController as? GenricViewController else { return }
         visitable.route.actions = actions
         visitable.renderActions()
     }
     
-    @objc func evaluateJavaScript(_ script: String,_ tabIndex: Int,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
-        let nav = navigationController ?? getNavigationByIndex(tabIndex)
-        nav.session.webView.evaluateJavaScript(script) {(result, error) in
+    @objc func evaluateJavaScript(_ script: String,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
+        navigation.session.webView.evaluateJavaScript(script) {(result, error) in
             if error != nil {
                 reject("js_error", error!.localizedDescription, error)
             } else {
                 resolve(result)
             }
         }
-    }
-    
-    @objc func notifyTabItem(_ value: String?,_ tabIndex: Int) {
-        let tabItem = tabBarController.tabBar.items![tabIndex]
-        tabItem.badgeValue = value
     }
     
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
@@ -156,16 +127,11 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
-    fileprivate func getNavigationByIndex(_ index: Int) -> NavigationController {
-        return tabBarController.viewControllers![index] as! NavigationController
-    }
-    
     fileprivate func setAppOptions(_ options: Dictionary<AnyHashable, Any>) {
         self.userAgent = RCTConvert.nsString(options["userAgent"])
         self.messageHandler = RCTConvert.nsString(options["messageHandler"])
         self.loadingView = RCTConvert.nsString(options["loadingView"])
         if (options["navBarStyle"] != nil) { setNavBarStyle(RCTConvert.nsDictionary(options["navBarStyle"])) }
-        if (options["tabBarStyle"] != nil) { setTabBarStyle(RCTConvert.nsDictionary(options["tabBarStyle"])) }
     }
     
     fileprivate func setNavBarStyle(_ style: Dictionary<AnyHashable, Any>) {
@@ -176,19 +142,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         customMenuIcon = RCTConvert.uiImage(style["menuIcon"])
     }
     
-    fileprivate func setTabBarStyle(_ style: Dictionary<AnyHashable, Any>) {
-        tabBarBarTintColor = RCTConvert.uiColor(style["barTintColor"])
-        tabBarTintColor = RCTConvert.uiColor(style["tintColor"])
-        tabBarBadgeColor = RCTConvert.uiColor(style["badgeColor"])
-    }
-    
-    fileprivate func visitTabRoutes(_ routes: Array<Dictionary<AnyHashable, Any>>) {
-        for (index, route) in routes.enumerated() {
-            tabBarController.selectedIndex = index
-            visit(route)
-        }
-    }
-    
     fileprivate func addToRootViewController(_ viewController: UIViewController) {
         rootViewController.addChild(viewController)
         rootViewController.view.addSubview(viewController.view)
@@ -197,7 +150,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func removeChildViewControllerInCaseOfDebug() {
         var viewController: UIViewController?
         rootViewController.children.forEach { (child) in
-            if (child is NavigationController) || (child is TabBarController) {
+            if (child is NavigationController) {
                 viewController = child
             }
         }
@@ -224,8 +177,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         sendEvent(withName: "turbolinksRightButtonPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
-    func handleVisitCompleted(_ URL: URL,_ tabIndex: Int) {
-        sendEvent(withName: "turbolinksVisitCompleted", body: ["url": URL.absoluteString, "path": URL.path, "tabIndex": tabIndex])
+    func handleVisitCompleted(_ URL: URL) {
+        sendEvent(withName: "turbolinksVisitCompleted", body: ["url": URL.absoluteString, "path": URL.path])
     }
     
     override static func requiresMainQueueSetup() -> Bool {
@@ -261,8 +214,7 @@ extension RNTurbolinksManager: SessionDelegate {
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
-        let session = session as! TurbolinksSession
-        sendEvent(withName: "turbolinksError", body: ["code": error.code, "statusCode": error.userInfo["statusCode"] ?? 0, "description": error.localizedDescription, "tabIndex": session.index])
+        sendEvent(withName: "turbolinksError", body: ["code": error.code, "statusCode": error.userInfo["statusCode"] ?? 0, "description": error.localizedDescription])
     }
     
     func sessionDidStartRequest(_ session: Session) {

@@ -34,8 +34,7 @@ class WebViewController: VisitableViewController {
     }
     
     fileprivate func handleVisitCompleted() {
-        let navController = self.navigationController as! NavigationController
-        manager.handleVisitCompleted(self.visitableView.webView!.url!, navController.index)
+        manager.handleVisitCompleted(self.visitableView.webView!.url!)
     }
     
     fileprivate func setWebViewTitle() {

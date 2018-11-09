@@ -15,11 +15,6 @@ class Turbolinks {
     RNTurbolinksManager.startSingleScreenApp(route, options)
   }
 
-  static startTabBasedApp(routes, options = {}, selectedIndex = 0) {
-    this._processAppOptions(options)
-    RNTurbolinksManager.startTabBasedApp(routes, options, selectedIndex)
-  }
-
   static reloadVisitable() {
     RNTurbolinksManager.reloadVisitable()
   }
@@ -44,28 +39,24 @@ class Turbolinks {
     RNTurbolinksManager.visit(route)
   }
 
-  static replaceWith(route, tabIndex = 0) {
-    RNTurbolinksManager.replaceWith(route, tabIndex)
+  static replaceWith(route) {
+    RNTurbolinksManager.replaceWith(route)
   }
 
-  static renderTitle(title, subtitle = null, tabIndex = 0) {
-    RNTurbolinksManager.renderTitle(title, subtitle, tabIndex)
+  static renderTitle(title, subtitle = null) {
+    RNTurbolinksManager.renderTitle(title, subtitle)
   }
 
-  static renderActions(actions, tabIndex = 0) {
-    RNTurbolinksManager.renderActions(actions, tabIndex)
+  static renderActions(actions) {
+    RNTurbolinksManager.renderActions(actions)
   }
 
-  static evaluateJavaScript(script, tabIndex = 0) {
+  static evaluateJavaScript(script) {
     if (Platform.OS == 'ios') {
-      return RNTurbolinksManager.evaluateJavaScript(script, tabIndex)
+      return RNTurbolinksManager.evaluateJavaScript(script)
     } else {
       return RNTurbolinksManager.evaluateJavaScript(script).then((r) => JSON.parse(r))
     }
-  }
-
-  static notifyTabItem(tabIndex, enabled) {
-    RNTurbolinksManager.notifyTabItem(tabIndex, enabled)
   }
 
   static _processAppOptions(options) {
@@ -76,13 +67,6 @@ class Turbolinks {
         tintColor: processColor(options.navBarStyle.tintColor),
         titleTextColor: processColor(options.navBarStyle.titleTextColor),
         subtitleTextColor: processColor(options.navBarStyle.subtitleTextColor)
-      }
-    }
-    if (options.tabBarStyle) {
-      options.tabBarStyle = {
-        ...options.tabBarStyle,
-        barTintColor: processColor(options.tabBarStyle.barTintColor),
-        tintColor: processColor(options.tabBarStyle.tintColor)
       }
     }
   }
