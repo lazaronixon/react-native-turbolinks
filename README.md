@@ -64,13 +64,14 @@ Once you’ve started the demo server, explore the demo application in the Simul
 - `leftButtonIcon`: A left button icon. (iOS Only)
 - `rightButtonIcon`: A right button icon. (iOS Only)
 - `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
-- `actions:` A Array of action objects to mount a menu.
-  - `action:`
-    - `id:` A integer identifier for the action. (Required)
-    - `title:` A title for the action.
-    - `icon:` A icon for the action.
-    - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
+- `actions:` A Array of `action` objects to mount a menu.
 - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
+
+#### `Action`
+  - `id:` A integer identifier for the action. (Required)
+  - `title:` A title for the action.
+  - `icon:` A icon for the action.
+  - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
 
 ## Methods
 
@@ -93,7 +94,7 @@ Replace current visitable with a component. With the same route param like to vi
 Reload current visitable. For example when a connection error view is launched and you want to retry.
 
 #### `reloadSession()`
-Reload current session. If iOS inject shared cookies into Turbolinks before it.
+Reload current session.
 
 #### `dismiss(animated)`
 Dismiss a overlaped view presented by visiting a component with modal option.
@@ -113,11 +114,6 @@ Evaluates a JavaScript string and return a promise with result of expression. Yo
 
 #### `renderActions(actions)`
 Change actions of current view. For example if you want to mount a menu looking for data-attributes on page source.
-- `action:`
-  - `id:` A integer identifier for the action. (Required)
-  - `title:` A title for the action.
-  - `icon:` A icon for the action.
-  - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false).
 
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:
