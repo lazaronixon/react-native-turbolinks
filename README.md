@@ -46,31 +46,6 @@ To run the demo, clone this repository to your computer and change into its dire
 
 Once you’ve started the demo server, explore the demo application in the Simulator by running `react-native run-ios` or `react-native run-android` on `Example` folder.
 
-## Objects
-#### `Route`
-- Url properties
-  - `url:` Url to visit. (Required)
-- Component properties
-  - `component:` Component to visit. (Required)
-  - `modal:` A boolean to show a view without navbar and backbutton. (Default false)
-  - `passProps`: Passes this in as props to the rendered component.
-- Common properties
-  - `title:` The default value is the title of the Web page.
-  - `subtitle:` A subtitle for visitable view.
-  - `titleImage:` A image to show on navbar.
-  - `navBarHidden`: Hidden navigation bar. (Default false)
-  - `leftButtonIcon`: A left button icon. (iOS Only)
-  - `rightButtonIcon`: A right button icon. (iOS Only)
-  - `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
-  - `actions:` A Array of `action` objects to mount a menu.
-  - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
-
-#### `Action`
-  - `id:` A integer identifier for the action. (Required)
-  - `title:` A title for the action.
-  - `icon:` A icon for the action.
-  - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
-
 ## Methods
 
 #### `startSingleScreenApp(route)`
@@ -127,8 +102,30 @@ Adds an event handler. Supported events:
 #### `removeEventListener(eventName, handler)`
 Removes the listener for given event.
 
-## Android Style
-For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
+## Objects
+#### `Route`
+- Url properties
+  - `url:` Url to visit. (Required)
+- Component properties
+  - `component:` Component to visit. (Required)
+  - `modal:` A boolean to show a view without navbar and backbutton. (Default false)
+  - `passProps`: Passes this in as props to the rendered component.
+- Common properties
+  - `title:` The default value is the title of the Web page.
+  - `subtitle:` A subtitle for visitable view.
+  - `titleImage:` A image to show on navbar.
+  - `navBarHidden`: Hidden navigation bar. (Default false)
+  - `leftButtonIcon`: A left button icon. (iOS Only)
+  - `rightButtonIcon`: A right button icon. (iOS Only)
+  - `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
+  - `actions:` A Array of `action` objects to mount a menu.
+  - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
+
+#### `Action`
+  - `id:` A integer identifier for the action. (Required)
+  - `title:` A title for the action.
+  - `icon:` A icon for the action.
+  - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
 
 ## Constants
 
@@ -140,7 +137,10 @@ For android set your style on [android/app/src/main/res/values/styles.xml](https
 
 `Turbolinks.Constants.Action.replace: 'replace'`
 
-`Turbolinks.Constants.Action.restore: 'restore'`
+`Turbolinks.Constants.Action.restore: 'restore'`  
+
+## Android Style
+For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
 
 ## TODO
 
