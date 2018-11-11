@@ -4,7 +4,7 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
-    var navigation: NavigationController!
+    var navigation: TurbolinksNavigationController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
     var barTintColor: UIColor?
@@ -59,7 +59,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
         removeChildViewControllerInCaseOfDebug()
-        navigation = NavigationController(self, route)
+        navigation = TurbolinksNavigationController(self, route)
         addToRootViewController(navigation)
         visit(route)
     }
@@ -74,14 +74,14 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func renderTitle(_ title: String,_ subtitle: String) {
-        guard let visitable = navigation.visibleViewController as? GenricViewController else { return }
+        guard let visitable = navigation.visibleViewController as? ApplicationViewController else { return }
         visitable.route.title = title
         visitable.route.subtitle = subtitle
         visitable.renderTitle()
     }
     
     @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>) {
-        guard let visitable = navigation.visibleViewController as? GenricViewController else { return }
+        guard let visitable = navigation.visibleViewController as? ApplicationViewController else { return }
         visitable.route.actions = actions
         visitable.renderActions()
     }
@@ -150,7 +150,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func removeChildViewControllerInCaseOfDebug() {
         var viewController: UIViewController?
         rootViewController.children.forEach { (child) in
-            if (child is NavigationController) {
+            if (child is TurbolinksNavigationController) {
                 viewController = child
             }
         }

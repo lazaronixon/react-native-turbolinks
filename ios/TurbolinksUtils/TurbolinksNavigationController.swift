@@ -1,7 +1,7 @@
 import WebKit
 import Turbolinks
 
-class NavigationController: UINavigationController {
+class TurbolinksNavigationController: UINavigationController {
     
     var session: TurbolinksSession!
     

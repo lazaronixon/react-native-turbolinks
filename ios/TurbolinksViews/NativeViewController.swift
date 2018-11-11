@@ -32,7 +32,7 @@ class NativeViewController: UIViewController {
     
 }
 
-extension NativeViewController: GenricViewController {
+extension NativeViewController: ApplicationViewController {
     
     func handleTitlePress() {
         manager.handleTitlePress(nil, route.component)

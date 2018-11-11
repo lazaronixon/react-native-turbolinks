@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
 import static com.lazaronixon.rnturbolinks.util.TurbolinksRoute.ACTION_REPLACE;
 
-public abstract class GenericActivity extends ReactAppCompatActivity {
+public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
     private static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
     private static final String TURBOLINKS_TITLE_PRESS = "turbolinksTitlePress";

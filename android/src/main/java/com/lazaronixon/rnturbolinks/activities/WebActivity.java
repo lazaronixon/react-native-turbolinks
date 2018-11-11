@@ -32,7 +32,7 @@ import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAV_BAR_STY
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
 
-public class WebActivity extends GenericActivity implements TurbolinksAdapter {
+public class WebActivity extends ApplicationActivity implements TurbolinksAdapter {
 
     public static final int HTTP_FAILURE = 0;
     public static final int NETWORK_FAILURE = 1;

@@ -69,7 +69,7 @@ class WebViewController: VisitableViewController {
     }
 }
 
-extension WebViewController: GenricViewController {
+extension WebViewController: ApplicationViewController {
     
     func handleTitlePress() {
         manager.handleTitlePress(visitableView.webView!.url, nil)

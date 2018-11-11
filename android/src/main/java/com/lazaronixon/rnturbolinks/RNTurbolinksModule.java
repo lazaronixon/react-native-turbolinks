@@ -16,7 +16,7 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
-import com.lazaronixon.rnturbolinks.activities.GenericActivity;
+import com.lazaronixon.rnturbolinks.activities.ApplicationActivity;
 import com.lazaronixon.rnturbolinks.activities.NativeActivity;
 import com.lazaronixon.rnturbolinks.activities.WebActivity;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
@@ -69,7 +69,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         runOnUiThread(new Runnable() {
             public void run() {
                 TurbolinksRoute tRoute = new TurbolinksRoute(route);
-                ((GenericActivity) getCurrentActivity()).renderComponent(tRoute);
+                ((ApplicationActivity) getCurrentActivity()).renderComponent(tRoute);
             }
         });
     }
@@ -78,7 +78,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void reloadVisitable() {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((GenericActivity) getCurrentActivity()).reloadVisitable();
+                ((ApplicationActivity) getCurrentActivity()).reloadVisitable();
             }
         });
     }
@@ -88,7 +88,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         runOnUiThread(new Runnable() {
             public void run() {
                 CookieSyncManager.getInstance().sync();
-                ((GenericActivity) getCurrentActivity()).reloadSession();
+                ((ApplicationActivity) getCurrentActivity()).reloadSession();
             }
         });
     }
@@ -108,7 +108,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void renderTitle(final String title, final String subtitle) {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((GenericActivity) getCurrentActivity()).renderTitle(title, subtitle);
+                ((ApplicationActivity) getCurrentActivity()).renderTitle(title, subtitle);
             }
         });
     }
@@ -117,7 +117,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void renderActions(final ReadableArray actions) {
         runOnUiThread(new Runnable() {
             public void run() {
-                GenericActivity act = (GenericActivity) getCurrentActivity();
+                ApplicationActivity act = (ApplicationActivity) getCurrentActivity();
                 act.setActions(Arguments.toList(actions));
                 act.invalidateOptionsMenu();
             }
@@ -128,7 +128,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void evaluateJavaScript(final String script, final Promise promise) {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((GenericActivity) getCurrentActivity()).evaluateJavaScript(script, promise);
+                ((ApplicationActivity) getCurrentActivity()).evaluateJavaScript(script, promise);
             }
         });
     }

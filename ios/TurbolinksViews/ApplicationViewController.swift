@@ -1,4 +1,4 @@
-protocol GenricViewController {
+protocol ApplicationViewController {
     
     var manager: RNTurbolinksManager! { get set }
     var route: TurbolinksRoute! { get set }
@@ -17,7 +17,7 @@ protocol GenricViewController {
     func presentActionsGeneric(_ sender: UIBarButtonItem)
 }
 
-extension GenricViewController where Self: UIViewController {
+extension ApplicationViewController where Self: UIViewController {
     
     var isRoot: Bool { return navigationController?.viewControllers.count == 1 }
     var _navigationItem: UINavigationItem { return (self as UIViewController).navigationItem }

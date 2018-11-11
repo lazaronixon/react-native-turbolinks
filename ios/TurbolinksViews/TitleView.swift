@@ -1,13 +1,13 @@
 class TurbolinksTitleView : UIStackView {
     
-    fileprivate var viewController: GenricViewController!
+    fileprivate var viewController: ApplicationViewController!
     fileprivate var title: String?
     fileprivate var subtitle: String?
     fileprivate var titleImage: UIImage?
     fileprivate var textColor: UIColor?
     fileprivate var subtitleTextColor: UIColor?
     
-    convenience init(_ viewController: GenricViewController) {
+    convenience init(_ viewController: ApplicationViewController) {
         self.init()
         self.viewController = viewController
         self.title = viewController.route.title ?? viewController.navigationItem.title

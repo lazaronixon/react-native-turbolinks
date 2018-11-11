@@ -9,7 +9,7 @@ import com.lazaronixon.rnturbolinks.R;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAV_BAR_STYLE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 
-public class NativeActivity extends GenericActivity {
+public class NativeActivity extends ApplicationActivity {
 
     private ReactRootView rootView;
 
