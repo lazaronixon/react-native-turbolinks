@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
-import { View, Button, Text, StyleSheet } from 'react-native'
+import { View, Button, Text, StyleSheet, SafeAreaView } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
 
 export default class ErrorView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.h1}>{this.props.title}</Text>
-        <Text style={styles.p}>{this.props.message}</Text>
-        <Button onPress={() => Turbolinks.reloadVisitable()} title="Retry" />
-      </View>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+        <View style={styles.container}>
+          <Text style={styles.h1}>{this.props.title}</Text>
+          <Text style={styles.p}>{this.props.message}</Text>
+          <Button onPress={() => Turbolinks.reloadVisitable()} title="Retry" />
+        </View>
+      </SafeAreaView>
     )
   }
 }
