@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, View, Text, StyleSheet, Platform }from 'react-native'
+import { FlatList, View, Text, StyleSheet, SafeAreaView }from 'react-native'
 
 export default class NumbersView extends Component {
 
@@ -9,18 +9,16 @@ export default class NumbersView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <FlatList data={this.dataSource()} renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
-      </View>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+        <View style={{flex: 1}}>
+          <FlatList data={this.dataSource()} renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
+        </View>
+      </SafeAreaView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 64 : 0,
-  },
   item: {
     padding: 10,
     fontSize: 18,
