@@ -137,11 +137,6 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         });
     }
 
-    protected void restart() {
-        finish();
-        startActivity(getIntent());
-    }
-
     protected void setupTransitionOnFinish() {
         if (isInitial()) {
             overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
