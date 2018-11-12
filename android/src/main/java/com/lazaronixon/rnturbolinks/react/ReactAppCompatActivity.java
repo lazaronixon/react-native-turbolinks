@@ -21,10 +21,6 @@ public abstract class ReactAppCompatActivity extends AppCompatActivity
         mDelegate = createReactActivityDelegate();
     }
 
-    protected @Nullable String getMainComponentName() {
-        return null;
-    }
-
     protected ReactActivityDelegate createReactActivityDelegate() {
         return new ReactActivityDelegate(this);
     }
@@ -100,10 +96,6 @@ public abstract class ReactAppCompatActivity extends AppCompatActivity
             String[] permissions,
             int[] grantResults) {
         mDelegate.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    protected final ReactNativeHost getReactNativeHost() {
-        return mDelegate.getReactNativeHost();
     }
 
     protected final ReactInstanceManager getReactInstanceManager() {
