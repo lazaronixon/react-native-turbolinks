@@ -1,19 +1,13 @@
 package com.lazaronixon.rnturbolinks.react;
 
-import javax.annotation.Nullable;
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
 import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.ReactNativeHost;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
-import com.facebook.react.modules.core.PermissionAwareActivity;
-import com.facebook.react.modules.core.PermissionListener;
 
-public abstract class ReactAppCompatActivity extends AppCompatActivity
-        implements DefaultHardwareBackBtnHandler, PermissionAwareActivity {
+public abstract class ReactAppCompatActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 
     private final ReactActivityDelegate mDelegate;
 
@@ -49,18 +43,8 @@ public abstract class ReactAppCompatActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return mDelegate.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
-    }
-
-    @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         return mDelegate.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        return mDelegate.onKeyLongPress(keyCode, event) || super.onKeyLongPress(keyCode, event);
     }
 
     @Override
@@ -80,22 +64,6 @@ public abstract class ReactAppCompatActivity extends AppCompatActivity
         if (!mDelegate.onNewIntent(intent)) {
             super.onNewIntent(intent);
         }
-    }
-
-    @Override
-    public void requestPermissions(
-            String[] permissions,
-            int requestCode,
-            PermissionListener listener) {
-        mDelegate.requestPermissions(permissions, requestCode, listener);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode,
-            String[] permissions,
-            int[] grantResults) {
-        mDelegate.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     protected final ReactInstanceManager getReactInstanceManager() {
