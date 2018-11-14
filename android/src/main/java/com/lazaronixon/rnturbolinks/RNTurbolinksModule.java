@@ -172,9 +172,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_LOADING_VIEW, loadingView);
                 intent.putExtra(INTENT_ROUTE, route);
                 intent.putExtra(INTENT_NAV_BAR_STYLE, navBarStyle != null ? new NavBarStyle(navBarStyle) : null);
+                act.startActivity(intent);
+
                 if (isInitial) initialIntent = intent;
                 if (isInitial) TurbolinksSession.resetDefault();
-                act.startActivity(intent);
                 if (isActionReplace) act.finish();
                 this.prevRoute = route;
             } else {
@@ -194,9 +195,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         intent.putExtra(INTENT_ROUTE, route);
         intent.putExtra(INTENT_INITIAL, isInitial);
         intent.putExtra(INTENT_NAV_BAR_STYLE, navBarStyle != null ? new NavBarStyle(navBarStyle) : null);
+        act.startActivity(intent);
+
         if (isInitial) initialIntent = intent;
         if (isInitial) TurbolinksSession.resetDefault();
-        act.startActivity(intent);
         if (isActionReplace) act.finish();
     }
 

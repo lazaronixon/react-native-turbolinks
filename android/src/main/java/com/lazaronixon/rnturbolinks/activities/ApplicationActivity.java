@@ -36,8 +36,6 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     protected TurbolinksRoute route;
     protected NavBarStyle navBarStyle;
 
-    public abstract void reloadSession();
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
@@ -78,13 +76,13 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         setupTransitionOnFinish();
     }
 
+    public void setActions(ArrayList<Bundle> actions) {
+        route.setActions(actions);
+    }
+
     public void renderTitle(String title, String subtitle) {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(subtitle);
-    }
-
-    public void setActions(ArrayList<Bundle> actions) {
-        route.setActions(actions);
     }
 
     public void renderComponent(TurbolinksRoute route) {
@@ -93,25 +91,14 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     public void reloadVisitable() {
     }
 
+    public void reloadSession() {
+    }
+
     public void evaluateJavaScript(String script, Promise promise) {
     }
 
-    public RCTDeviceEventEmitter getEventEmitter() {
+    protected RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
-    }
-
-    public boolean isInitial() {
-        return getIntent().getBooleanExtra(INTENT_INITIAL, true);
-    }
-
-    public void setupTransitionOnEnter() {
-        if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
-            overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
-        } else if (route.getModal()) {
-            overridePendingTransition(R.anim.slide_up, R.anim.stay_its);
-        } else {
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        }
     }
 
     protected void renderToolBar() {
@@ -137,7 +124,17 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         });
     }
 
-    protected void setupTransitionOnFinish() {
+    protected void setupTransitionOnEnter() {
+        if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
+            overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
+        } else if (route.getModal()) {
+            overridePendingTransition(R.anim.slide_up, R.anim.stay_its);
+        } else {
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+    }
+
+    private void setupTransitionOnFinish() {
         if (isInitial()) {
             overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
         } else if (route.getModal()) {
@@ -147,13 +144,13 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         }
     }
 
-    protected Drawable getNavIcon(Bundle icon) {
+    private Drawable getNavIcon(Bundle icon) {
         if (icon == null) return null;
         String uri = icon.getString("uri");
         return ImageLoader.loadImage(getApplicationContext(), uri);
     }
 
-    protected void renderTitleImage(Bundle image) {
+    private void renderTitleImage(Bundle image) {
         if (image == null) return;
         String uri = image.getString("uri");
         Drawable imgDraw = ImageLoader.loadImage(getApplicationContext(), uri);
@@ -166,7 +163,15 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         toolBar.addView(imageView);
     }
 
-    protected void setupNavBarStyle(NavBarStyle style) {
+    @SuppressLint("RestrictedApi")
+    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
+        if (icon == null) return;
+        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        String uri = icon.getString("uri");
+        menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), uri));
+    }
+
+    private void setupNavBarStyle(NavBarStyle style) {
         if (style == null) return;
         if (style.getBarTintColor() != 0) { toolBar.setBackgroundColor(style.getBarTintColor()); }
         if (style.getTitleTextColor() != 0) { toolBar.setTitleTextColor(style.getTitleTextColor()); }
@@ -174,12 +179,8 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         if (style.getMenuIcon() != null) { toolBar.setOverflowIcon(ImageLoader.loadImage(getApplicationContext(), style.getMenuIcon().getString("uri"))); }
     }
 
-    @SuppressLint("RestrictedApi")
-    protected void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon == null) return;
-        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        String uri = icon.getString("uri");
-        menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), uri));
+    private boolean isInitial() {
+        return getIntent().getBooleanExtra(INTENT_INITIAL, true);
     }
 
 }

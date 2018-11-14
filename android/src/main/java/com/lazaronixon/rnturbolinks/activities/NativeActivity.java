@@ -23,12 +23,11 @@ public class NativeActivity extends ApplicationActivity {
         navBarStyle = getIntent().getParcelableExtra(INTENT_NAV_BAR_STYLE);
 
         rootView = findViewById(R.id.react_root_view);
+        rootView.startReactApplication(getReactInstanceManager(), route.getComponent(), route.getPassProps());
 
         renderToolBar();
         handleTitlePress(route.getComponent(), null, null);
         setupTransitionOnEnter();
-
-        rootView.startReactApplication(getReactInstanceManager(), route.getComponent(), route.getPassProps());
     }
 
     @Override

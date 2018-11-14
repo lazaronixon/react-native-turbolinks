@@ -125,7 +125,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     @Override
     public void visitCompleted() {
         renderTitle(route.getTitle(), route.getSubtitle());
-        handleTitlePress();
+        handleWebTitlePress();
         handleVisitCompleted();
     }
 
@@ -190,7 +190,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
         }
     }
 
-    private void handleTitlePress() {
+    private void handleWebTitlePress() {
         try {
             WebView webView = TurbolinksSession.getDefault(this).getWebView();
             URL urlLocation = new URL(webView.getUrl());
