@@ -46,7 +46,7 @@ extension ApplicationViewController where Self: UIViewController {
     
     func renderActions() {
         guard let actions = route.actions, !actions.isEmpty else { return }
-        if let icon = manager.customMenuIcon {
+        if let icon = manager.menuIcon {
             let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
             _navigationItem.rightBarButtonItem = button
         } else {

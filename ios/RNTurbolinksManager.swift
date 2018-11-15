@@ -11,7 +11,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var tintColor: UIColor?
     var messageHandler: String?
     var userAgent: String?
-    var customMenuIcon: UIImage?
+    var menuIcon: UIImage?
     var loadingView: String?
     lazy var processPool = WKProcessPool()
     
@@ -139,7 +139,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         tintColor = RCTConvert.uiColor(style["tintColor"])
         titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
         subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
-        customMenuIcon = RCTConvert.uiImage(style["menuIcon"])
+        menuIcon = RCTConvert.uiImage(style["menuIcon"])
     }
     
     fileprivate func addToRootViewController(_ viewController: UIViewController) {
