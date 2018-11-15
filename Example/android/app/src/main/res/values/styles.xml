@@ -10,6 +10,10 @@
         <item name="colorPrimaryDark">#BDBDBD</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">#009688</item>
+    </style>
 
+    <!-- action bar style -->
+    <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">#DD000000</item>
     </style>
 </resources>
