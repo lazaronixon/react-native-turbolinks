@@ -59,6 +59,14 @@ class Turbolinks {
     }
   }
 
+  static addEventListener(eventName, callback) {
+    RNTurbolinksManagerEmitter.addListener(eventName, callback)
+  }
+
+  static removeEventListener(eventName, callback) {
+    RNTurbolinksManagerEmitter.removeListener(eventName, callback)
+  }
+
   static _processAppOptions(options) {
     if (options.navBarStyle) {
       options.navBarStyle = {
@@ -69,15 +77,7 @@ class Turbolinks {
         subtitleTextColor: processColor(options.navBarStyle.subtitleTextColor)
       }
     }
-  }
-
-  static addEventListener(eventName, callback) {
-    RNTurbolinksManagerEmitter.addListener(eventName, callback)
-  }
-
-  static removeEventListener(eventName, callback) {
-    RNTurbolinksManagerEmitter.removeListener(eventName, callback)
-  }
+  }  
 
 }
 
