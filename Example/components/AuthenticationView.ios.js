@@ -20,7 +20,7 @@ class MyScene extends Component {
     if (e.nativeEvent.url != signInUrl) {
       this.webview.stopLoading()
 
-      setTimeout(() => Turbolinks.reloadSession(), 2000)
+      setTimeout(() => Turbolinks.reloadSession(), 3000)
       Turbolinks.dismiss()
     }
   }
