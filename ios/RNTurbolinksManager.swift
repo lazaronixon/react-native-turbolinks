@@ -13,7 +13,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var menuIcon: UIImage?
     var loadingView: String?
-    lazy var processPool = WKProcessPool()
     
     var application: UIApplication {
         return UIApplication.shared
