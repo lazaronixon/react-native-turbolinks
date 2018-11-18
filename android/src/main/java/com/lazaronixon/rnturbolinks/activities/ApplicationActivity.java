@@ -94,7 +94,7 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     public void reloadSession() {
     }
 
-    public void evaluateJavaScript(String script, Promise promise) {
+    public void injectJavaScript(String script) {
     }
 
     protected RCTDeviceEventEmitter getEventEmitter() {

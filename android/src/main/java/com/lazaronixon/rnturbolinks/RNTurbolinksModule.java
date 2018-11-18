@@ -125,10 +125,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void evaluateJavaScript(final String script, final Promise promise) {
+    public void injectJavaScript(final String script) {
         runOnUiThread(new Runnable() {
             public void run() {
-                ((ApplicationActivity) getCurrentActivity()).evaluateJavaScript(script, promise);
+                ((ApplicationActivity) getCurrentActivity()).injectJavaScript(script);
             }
         });
     }

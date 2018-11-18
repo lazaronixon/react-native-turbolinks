@@ -163,13 +163,9 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     }
 
     @Override
-    public void evaluateJavaScript(String script, final Promise promise) {
+    public void injectJavaScript(String script) {
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        webView.evaluateJavascript(script, new ValueCallback<String>() {
-            public void onReceiveValue(String source) {
-                promise.resolve(source);
-            }
-        });
+        webView.evaluateJavascript(script, null);
     }
 
     @JavascriptInterface

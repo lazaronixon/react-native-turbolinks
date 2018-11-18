@@ -11,5 +11,5 @@ RCT_EXTERN_METHOD(replaceWith:(NSDictionary *))
 RCT_EXTERN_METHOD(renderTitle:(NSString *) subtitle:(NSString *))
 RCT_EXTERN_METHOD(renderActions:(NSArray *))
 RCT_EXTERN_METHOD(startSingleScreenApp:(NSDictionary *) options:(NSDictionary *))
-RCT_EXTERN_METHOD(evaluateJavaScript:(NSString *) resolve:(RCTPromiseResolveBlock *) reject:(RCTPromiseRejectBlock *))
+RCT_EXTERN_METHOD(injectJavaScript:(NSString *))
 @end

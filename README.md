@@ -77,8 +77,8 @@ Trigger a native back event. For example if you using a custom navbar and need t
 #### `renderTitle(title, subtitle)`
 Change title of current view. For example if you want to get title from page source.
 
-#### `evaluateJavaScript(script)`
-Evaluates a JavaScript string and return a promise with result of expression. You can use it to execute some kind of bridge methods on your page to make something or return something.
+#### `injectJavaScript(script)`
+Function that accepts a string that will be passed to the WebView and executed immediately as JavaScript.
 
 #### `renderActions(actions)`
 Change actions of current view. For example if you want to mount a menu looking for data-attributes on page source.

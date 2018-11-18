@@ -85,14 +85,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         visitable.renderActions()
     }
     
-    @objc func evaluateJavaScript(_ script: String,_ resolve: @escaping RCTPromiseResolveBlock,_ reject: @escaping RCTPromiseRejectBlock) {
-        navigation.session.webView.evaluateJavaScript(script) {(result, error) in
-            if error != nil {
-                reject("js_error", error!.localizedDescription, error)
-            } else {
-                resolve(result)
-            }
-        }
+    @objc func injectJavaScript(_ script: String) {
+        navigation.session.webView.evaluateJavaScript(script) {(result, error) in }
     }
     
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {

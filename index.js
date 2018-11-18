@@ -51,12 +51,8 @@ class Turbolinks {
     RNTurbolinksManager.renderActions(actions)
   }
 
-  static evaluateJavaScript(script) {
-    if (Platform.OS == 'ios') {
-      return RNTurbolinksManager.evaluateJavaScript(script)
-    } else {
-      return RNTurbolinksManager.evaluateJavaScript(script).then((r) => JSON.parse(r))
-    }
+  static injectJavaScript(script) {
+    return RNTurbolinksManager.injectJavaScript(script)
   }
 
   static addEventListener(eventName, callback) {
@@ -77,7 +73,7 @@ class Turbolinks {
         subtitleTextColor: processColor(options.navBarStyle.subtitleTextColor)
       }
     }
-  }  
+  }
 
 }
 
