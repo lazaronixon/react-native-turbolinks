@@ -19,6 +19,9 @@ class TurbolinksNavigationController: UINavigationController {
         let webConfig = WKWebViewConfiguration()
         if (manager.messageHandler != nil) { webConfig.userContentController.add(manager, name: manager.messageHandler!) }
         if (manager.userAgent != nil) { webConfig.applicationNameForUserAgent = manager.userAgent }
+        if (manager.injectedJavaScript != nil) {
+            webConfig.userContentController.addUserScript(WKUserScript(source: manager.injectedJavaScript!, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
+        }
         return webConfig
     }
 }

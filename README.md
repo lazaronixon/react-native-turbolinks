@@ -121,6 +121,7 @@ Removes the listener for given event.
   - `messageHandler`: You can register a Message Handler to send messages from JavaScript to your application.
   - `loadingView`: Set a custom loadingView using a react component.
   - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
+  - `injectedJavaScript`: Set this to provide JavaScript that will be injected into the web page when the view loads.
 
 #### `Action`
   - `id:` A integer identifier for the action. (Required)

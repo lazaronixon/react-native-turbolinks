@@ -10,6 +10,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     var barTintColor: UIColor?
     var tintColor: UIColor?
     var messageHandler: String?
+    var injectedJavaScript: String?
     var userAgent: String?
     var menuIcon: UIImage?
     var loadingView: String?
@@ -124,6 +125,7 @@ class RNTurbolinksManager: RCTEventEmitter {
         self.userAgent = RCTConvert.nsString(options["userAgent"])
         self.messageHandler = RCTConvert.nsString(options["messageHandler"])
         self.loadingView = RCTConvert.nsString(options["loadingView"])
+        self.injectedJavaScript = RCTConvert.nsString(options["injectedJavaScript"])
         if (options["navBarStyle"] != nil) { setNavBarStyle(RCTConvert.nsDictionary(options["navBarStyle"])) }
     }
     
