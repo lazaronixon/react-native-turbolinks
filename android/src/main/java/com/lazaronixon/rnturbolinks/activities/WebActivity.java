@@ -26,6 +26,7 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksViewFrame;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INJECTED_JAVASCRIPT;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_LOADING_VIEW;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAV_BAR_STYLE;
@@ -45,6 +46,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     private String messageHandler;
     private String userAgent;
     private String loadingView;
+    private String injectedJavaScript;
     private ReactRootView progressIndicator;
 
     @Override
@@ -61,6 +63,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
         messageHandler = getIntent().getStringExtra(INTENT_MESSAGE_HANDLER);
         userAgent = getIntent().getStringExtra(INTENT_USER_AGENT);
         loadingView = getIntent().getStringExtra(INTENT_LOADING_VIEW);
+        injectedJavaScript = getIntent().getStringExtra(INTENT_INJECTED_JAVASCRIPT);
 
         renderToolBar();
         visitTurbolinksView();
@@ -131,6 +134,10 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
     @Override
     public void onPageFinished() {
+        if (injectedJavaScript != null) {
+            WebView webView = TurbolinksSession.getDefault(this).getWebView();
+            webView.evaluateJavascript(injectedJavaScript, null);
+        }
     }
 
     @Override

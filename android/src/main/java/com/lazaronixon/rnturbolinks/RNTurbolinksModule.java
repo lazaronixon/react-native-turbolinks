@@ -36,6 +36,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_USER_AGENT = "intentUserAgent";
     public static final String INTENT_ROUTE = "intentRoute";
     public static final String INTENT_LOADING_VIEW = "intentLoadingView";
+    public static final String INTENT_INJECTED_JAVASCRIPT = "intentInjectedJavaScript";
     public static final String INTENT_INITIAL = "intentInitial";
     public static final String INTENT_NAV_BAR_STYLE = "intentNavBarStyle";
 
@@ -43,6 +44,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private String messageHandler;
     private String userAgent;
     private String loadingView;
+    private String injectedJavaScript;
     private Intent initialIntent;
     private ReadableMap navBarStyle;
 
@@ -146,6 +148,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         this.userAgent = opts.hasKey("userAgent") ? opts.getString("userAgent") : null;
         this.loadingView = opts.hasKey("loadingView") ? opts.getString("loadingView") : null;
         this.navBarStyle = opts.hasKey("navBarStyle") ? opts.getMap("navBarStyle") : null;
+        this.injectedJavaScript = opts.hasKey("injectedJavaScript") ? opts.getString("injectedJavaScript") : null;
     }
 
     private void visit(ReadableMap route, boolean initial ) {
@@ -170,6 +173,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_USER_AGENT, userAgent);
                 intent.putExtra(INTENT_INITIAL, isInitial);
                 intent.putExtra(INTENT_LOADING_VIEW, loadingView);
+                intent.putExtra(INTENT_INJECTED_JAVASCRIPT, injectedJavaScript);
                 intent.putExtra(INTENT_ROUTE, route);
                 intent.putExtra(INTENT_NAV_BAR_STYLE, navBarStyle != null ? new NavBarStyle(navBarStyle) : null);
                 act.startActivity(intent);
