@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { NavigatorIOS, WebView } from 'react-native'
+import { NavigatorIOS } from 'react-native'
 import Turbolinks from 'react-native-turbolinks'
-import Constants from './Constants';
+import { WebView } from 'react-native-webview'
+import Constants from './Constants'
 
 const signInUrl = Constants.baseUrl + '/sign-in'
 
@@ -28,7 +29,6 @@ class MyScene extends Component {
   render() {
     return (
         <WebView ref={webview => { this.webview = webview }}
-                 useWebKit={true}
                  source={{uri: signInUrl}}
                  onLoadStart={this.handleAuthentication}/>
     )

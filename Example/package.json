@@ -8,7 +8,8 @@
   "dependencies": {
     "react": "^16.5.0",
     "react-native": "^0.57.0",
-    "react-native-turbolinks": "file:../"
+    "react-native-turbolinks": "file:../",
+    "react-native-webview": "^2.8.1"
   },
   "devDependencies": {
     "get-dev-paths": "^0.1.0"
