@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ToolbarAndroid, View } from 'react-native'
-import Turbolinks from 'react-native-turbolinks'
 import { WebView } from 'react-native-webview'
+import Turbolinks from 'react-native-turbolinks'
 import Constants from './Constants'
 
 const signInUrl = Constants.baseUrl + '/sign-in'
