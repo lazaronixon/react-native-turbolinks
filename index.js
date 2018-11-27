@@ -1,7 +1,8 @@
 import { NativeEventEmitter, NativeModules, processColor, Platform } from 'react-native'
 
+const resolveAssetSource = require('resolveAssetSource')
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager || NativeModules.RNTurbolinksModule
-const RNTurbolinksManagerEmitter = new NativeEventEmitter(RNTurbolinksManager);
+const RNTurbolinksManagerEmitter = new NativeEventEmitter(RNTurbolinksManager)
 
 class Turbolinks {
 
@@ -11,6 +12,7 @@ class Turbolinks {
   }
 
   static startSingleScreenApp(route, options = {}) {
+    this._processRoute(route)
     this._processAppOptions(options)
     RNTurbolinksManager.startSingleScreenApp(route, options)
   }
@@ -36,10 +38,12 @@ class Turbolinks {
   }
 
   static visit(route) {
+    this._processRoute(route)
     RNTurbolinksManager.visit(route)
   }
 
   static replaceWith(route) {
+    this._processRoute(route)
     RNTurbolinksManager.replaceWith(route)
   }
 
@@ -72,7 +76,25 @@ class Turbolinks {
         titleTextColor: processColor(options.navBarStyle.titleTextColor),
         subtitleTextColor: processColor(options.navBarStyle.subtitleTextColor)
       }
+      if (options.navBarStyle.menuIcon) {
+        options.navBarStyle.menuIcon = resolveAssetSource(options.navBarStyle.menuIcon)
+      }
     }
+  }
+
+  static _processRoute(route) {
+    if (route.titleImage) { route.titleImage = resolveAssetSource(route.titleImage) }
+    if (route.leftButtonIcon) { route.leftButtonIcon = resolveAssetSource(route.leftButtonIcon) }
+    if (route.rightButtonIcon) { route.rightButtonIcon = resolveAssetSource(route.rightButtonIcon) }
+    if (route.navIcon) { route.navIcon = resolveAssetSource(route.navIcon) }
+    if (route.actions) { route.actions = this._processActions(route.actions) }
+  }
+
+  static _processActions(actions) {
+    return actions.map((action) => {
+      if (action.icon) { action.icon = resolveAssetSource(action.icon) }
+      return action
+    })
   }
 
 }
