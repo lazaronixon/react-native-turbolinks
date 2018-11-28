@@ -36,7 +36,7 @@ public class ImageLoader {
             }
             return drawable;
         } catch (IOException e) {
-            Log.e(ReactConstants.TAG, "Error loading image. " + e.toString());
+            Log.e(ReactConstants.TAG, "Error loading image." + e.toString());
             return null;
         }
     }
