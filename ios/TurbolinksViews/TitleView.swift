@@ -15,7 +15,7 @@ class TurbolinksTitleView : UIStackView {
         self.titleImage = viewController.route.titleImage
         self.textColor = viewController.manager.titleTextColor ?? UIColor.black
         self.subtitleTextColor = viewController.manager.subtitleTextColor ?? UIColor.gray
-        self.axis = .vertical
+        self.configureView()
         
         if titleImage != nil {
             addTitleImage()
@@ -25,10 +25,14 @@ class TurbolinksTitleView : UIStackView {
         }
     }
     
+    fileprivate func configureView() {
+        self.alignment = .center
+        self.axis = .vertical
+        self.addGestureRecognizer(getTitlePressGesture(self))
+    }
+    
     fileprivate func addTitleImage() {
         let image = UIImageView.init(image: titleImage)
-        image.isUserInteractionEnabled = true
-        image.addGestureRecognizer(getGesture(self))
         addArrangedSubview(image)
     }
     
@@ -37,9 +41,6 @@ class TurbolinksTitleView : UIStackView {
         label.text = title
         label.textColor = textColor
         label.font = UIFont.boldSystemFont(ofSize: 17)
-        label.textAlignment = .center
-        label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(getGesture(self))
         addArrangedSubview(label)
     }
     
@@ -48,13 +49,10 @@ class TurbolinksTitleView : UIStackView {
         label.text = subtitle
         label.textColor = subtitleTextColor
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textAlignment = .center
-        label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(getGesture(self))
         addArrangedSubview(label)
     }
     
-    fileprivate func getGesture(_ target: Any) -> UITapGestureRecognizer {
+    fileprivate func getTitlePressGesture(_ target: Any) -> UITapGestureRecognizer {
         return UITapGestureRecognizer(target: target, action: #selector(self.handleTitlePress))
     }
     
