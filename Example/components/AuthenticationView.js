@@ -11,9 +11,9 @@ export default class AuthenticationView extends React.Component {
   handleAuthentication = (e) => {
     if (e.nativeEvent.url != signInUrl) {
       this.webview.stopLoading()
+      Turbolinks.dismiss()
 
       setTimeout(() => Turbolinks.reloadSession(), 2500)
-      Turbolinks.dismiss()
     }
   }
 
