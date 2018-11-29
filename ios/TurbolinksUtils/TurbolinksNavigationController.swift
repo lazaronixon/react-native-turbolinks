@@ -17,6 +17,7 @@ class TurbolinksNavigationController: UINavigationController {
     
     fileprivate func setupWebView(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
         let webConfig = WKWebViewConfiguration()
+        webConfig.processPool = manager.processPool
         if (manager.messageHandler != nil) { webConfig.userContentController.add(manager, name: manager.messageHandler!) }
         if (manager.userAgent != nil) { webConfig.applicationNameForUserAgent = manager.userAgent }
         if (manager.injectedJavaScript != nil) {
