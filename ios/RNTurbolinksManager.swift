@@ -60,7 +60,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
         removeChildViewControllerInCaseOfDebug()
-        navigation = TurbolinksNavigationController(self, route)
+        navigation = TurbolinksNavigationController(self)
         addToRootViewController(navigation)
         visit(route)
     }
@@ -109,7 +109,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
         let viewController = NativeViewController(self, route)
         if route.modal {
-            navigation.present(viewController, animated: true)
+            let modalNavigation = UINavigationController(rootViewController: viewController)
+            navigation.present(modalNavigation, animated: true)
         } else if route.action == .Advance {
             navigation.pushViewController(viewController, animated: true)
         } else if route.action == .Replace {

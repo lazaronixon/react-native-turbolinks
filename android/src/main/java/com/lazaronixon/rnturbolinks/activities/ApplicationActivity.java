@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.lazaronixon.rnturbolinks.R;
@@ -63,7 +62,7 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (isInitial()) {
+        if (isInitial() || isModal()) {
             moveTaskToBack(true);
         } else {
             super.onBackPressed();
@@ -103,13 +102,13 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
     protected void renderToolBar() {
         setSupportActionBar(toolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(!(isInitial() || isModal()));
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
         getSupportActionBar().setIcon(getNavIcon(route.getNavIcon()));
         renderTitleImage(route.getTitleImage());
         setupNavBarStyle(navBarStyle);
-        if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
+        if (route.getNavBarHidden()) getSupportActionBar().hide();
     }
 
     protected void handleTitlePress(final String component, final String url, final String path) {
@@ -125,9 +124,9 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     }
 
     protected void setupTransitionOnEnter() {
-        if (isInitial() || route.getAction().equals(ACTION_REPLACE)) {
+        if (isInitial() || isReplace()) {
             overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
-        } else if (route.getModal()) {
+        } else if (isModal()) {
             overridePendingTransition(R.anim.slide_up, R.anim.stay_its);
         } else {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -137,7 +136,7 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     private void setupTransitionOnFinish() {
         if (isInitial()) {
             overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
-        } else if (route.getModal()) {
+        } else if (isModal()) {
             overridePendingTransition(R.anim.stay_its, R.anim.slide_down);
         } else {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -146,14 +145,12 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
     private Drawable getNavIcon(Bundle icon) {
         if (icon == null) return null;
-        String uri = icon.getString("uri");
-        return ImageLoader.loadImage(getApplicationContext(), uri);
+        return ImageLoader.loadImage(getApplicationContext(), icon.getString("uri"));
     }
 
     private void renderTitleImage(Bundle image) {
         if (image == null) return;
-        String uri = image.getString("uri");
-        Drawable imgDraw = ImageLoader.loadImage(getApplicationContext(), uri);
+        Drawable imgDraw = ImageLoader.loadImage(getApplicationContext(), image.getString("uri"));
         ImageView imageView = new ImageView(getApplicationContext());
         imageView.setImageDrawable(imgDraw);
 
@@ -167,8 +164,7 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
         if (icon == null) return;
         if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        String uri = icon.getString("uri");
-        menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), uri));
+        menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), icon.getString("uri")));
     }
 
     private void setupNavBarStyle(NavBarStyle style) {
@@ -181,6 +177,14 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
     private boolean isInitial() {
         return getIntent().getBooleanExtra(INTENT_INITIAL, true);
+    }
+
+    private boolean isModal() {
+        return route.getModal();
+    }
+
+    private boolean isReplace() {
+        return route.getAction().equals(ACTION_REPLACE);
     }
 
 }

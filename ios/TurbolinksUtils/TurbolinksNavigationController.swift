@@ -7,7 +7,7 @@ class TurbolinksNavigationController: UINavigationController {
     
     var isAtRoot: Bool { return viewControllers.count == 1 }
     
-    required convenience init(_ manager: RNTurbolinksManager,_ route: Dictionary<AnyHashable, Any>) {
+    required convenience init(_ manager: RNTurbolinksManager) {
         self.init()
         self.session = TurbolinksSession(setupWebView(manager))
         self.session.delegate = manager

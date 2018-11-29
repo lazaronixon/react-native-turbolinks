@@ -27,7 +27,7 @@ export default class App extends Component {
       case httpFailure: {
         switch (data.statusCode) {
           case 401:
-            Turbolinks.visit({component: 'AuthenticationView', modal: true})
+            Turbolinks.visit({component: 'AuthenticationView', title: 'Sign in', modal: true})
             break
           case 404:
             var title = 'Page Not Found'
