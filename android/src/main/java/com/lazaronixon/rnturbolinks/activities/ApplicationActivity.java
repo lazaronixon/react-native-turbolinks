@@ -38,13 +38,14 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-        if (route.getActions() == null) return true;
-        ArrayList<Bundle> actions = route.getActions();
-        for (int i = 0; i < actions.size(); i++) {
-            TurbolinksAction action = new TurbolinksAction(actions.get(i));
-            MenuItem menuItem = menu.add(Menu.NONE, action.getId(), i, action.getTitle());
-            renderActionIcon(menu, menuItem, action.getIcon());
-            if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if (route.getActions() != null) {
+            ArrayList<Bundle> actions = route.getActions();
+            for (int i = 0; i < actions.size(); i++) {
+                TurbolinksAction action = new TurbolinksAction(actions.get(i));
+                MenuItem menuItem = menu.add(Menu.NONE, action.getId(), i, action.getTitle());
+                renderActionIcon(menu, menuItem, action.getIcon());
+                if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            }
         }
         return true;
     }
@@ -144,35 +145,41 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     }
 
     private Drawable getNavIcon(Bundle icon) {
-        if (icon == null) return null;
-        return ImageLoader.loadImage(getApplicationContext(), icon.getString("uri"));
+        if (icon != null) {
+            return ImageLoader.loadImage(getApplicationContext(), icon.getString("uri"));
+        } else {
+            return null;
+        }
     }
 
     private void renderTitleImage(Bundle image) {
-        if (image == null) return;
-        Drawable imgDraw = ImageLoader.loadImage(getApplicationContext(), image.getString("uri"));
-        ImageView imageView = new ImageView(getApplicationContext());
-        imageView.setImageDrawable(imgDraw);
+        if (image != null) {
+            Drawable imgDraw = ImageLoader.loadImage(getApplicationContext(), image.getString("uri"));
+            ImageView imageView = new ImageView(getApplicationContext());
+            imageView.setImageDrawable(imgDraw);
 
-        Toolbar.LayoutParams params = new Toolbar.LayoutParams(imgDraw.getIntrinsicWidth(), imgDraw.getIntrinsicHeight());
-        params.gravity = Gravity.CENTER;
-        imageView.setLayoutParams(params);
-        toolBar.addView(imageView);
+            Toolbar.LayoutParams params = new Toolbar.LayoutParams(imgDraw.getIntrinsicWidth(), imgDraw.getIntrinsicHeight());
+            params.gravity = Gravity.CENTER;
+            imageView.setLayoutParams(params);
+            toolBar.addView(imageView);
+        }
     }
 
     @SuppressLint("RestrictedApi")
     private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon == null) return;
-        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), icon.getString("uri")));
+        if (icon != null) {
+            if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
+            menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), icon.getString("uri")));
+        }
     }
 
     private void setupNavBarStyle(NavBarStyle style) {
-        if (style == null) return;
-        if (style.getBarTintColor() != 0) { toolBar.setBackgroundColor(style.getBarTintColor()); }
-        if (style.getTitleTextColor() != 0) { toolBar.setTitleTextColor(style.getTitleTextColor()); }
-        if (style.getSubtitleTextColor() != 0) { toolBar.setSubtitleTextColor(style.getSubtitleTextColor()); }
-        if (style.getMenuIcon() != null) { toolBar.setOverflowIcon(ImageLoader.loadImage(getApplicationContext(), style.getMenuIcon().getString("uri"))); }
+        if (style != null) {
+            if (style.getBarTintColor() != 0) toolBar.setBackgroundColor(style.getBarTintColor());
+            if (style.getTitleTextColor() != 0) toolBar.setTitleTextColor(style.getTitleTextColor());
+            if (style.getSubtitleTextColor() != 0) toolBar.setSubtitleTextColor(style.getSubtitleTextColor());
+            if (style.getMenuIcon() != null) toolBar.setOverflowIcon(ImageLoader.loadImage(getApplicationContext(), style.getMenuIcon().getString("uri")));
+        }
     }
 
     private boolean isInitial() {

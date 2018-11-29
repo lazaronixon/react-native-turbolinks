@@ -25,8 +25,9 @@ public class NativeActivity extends ApplicationActivity {
         rootView = findViewById(R.id.react_root_view);
         rootView.startReactApplication(getReactInstanceManager(), route.getComponent(), route.getPassProps());
 
-        renderToolBar();
         handleTitlePress(route.getComponent(), null, null);
+
+        renderToolBar();
         setupTransitionOnEnter();
     }
 
