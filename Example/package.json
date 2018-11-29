@@ -8,9 +8,10 @@
   "dependencies": {
     "react": "^16.5.0",
     "react-native": "^0.57.0",
-    "react-native-navbar": "^2.1.0",
+    "react-native-gesture-handler": "^1.0.10",
     "react-native-turbolinks": "file:../",
-    "react-native-webview": "^2.8.1"
+    "react-native-webview": "^2.8.1",
+    "react-navigation": "^3.0.2"
   },
   "devDependencies": {
     "get-dev-paths": "^0.1.0"
