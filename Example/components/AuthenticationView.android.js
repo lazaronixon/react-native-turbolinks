@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ToolbarAndroid, View } from 'react-native'
+import { StyleSheet, ToolbarAndroid, View } from 'react-native'
 import { WebView } from 'react-native-webview'
 import Turbolinks from 'react-native-turbolinks'
 import Constants from './Constants'
@@ -18,7 +18,7 @@ export default class AuthenticationView extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <ToolbarAndroid title="Sign in" style={{height: 56, elevation: 4, backgroundColor: '#f5f5f5'}}/>
+        <ToolbarAndroid title="Sign in" style={styles.toolBar}/>
         <WebView ref={webview => { this.webview = webview }}
                  source={{uri: signInUrl}}
                  onLoadStart={this.handleAuthentication}/>
@@ -26,3 +26,11 @@ export default class AuthenticationView extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  toolBar: {
+    height: 56,
+    elevation: 4,
+    backgroundColor: '#f5f5f5'
+  }
+})

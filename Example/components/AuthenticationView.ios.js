@@ -20,8 +20,8 @@ export default class AuthenticationView extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: '#F9F9F9'}}>
-        <NavigationBar title={{title: 'Sign in', style: styles.navBarTitle}} statusBar={{hidden: true}} style={styles.navBar} />
+      <SafeAreaView style={styles.container}>
+        <NavigationBar title={{title: 'Sign in', style: styles.navBarTitle}} statusBar={{hidden: true}} style={styles.navBar}/>
         <WebView ref={webview => { this.webview = webview }}
                  source={{uri: signInUrl}}
                  onLoadStart={this.handleAuthentication}/>
@@ -31,6 +31,10 @@ export default class AuthenticationView extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F9F9F9'
+  },
   navBar: {
     height: 44,
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -39,6 +43,6 @@ const styles = StyleSheet.create({
   },
   navBarTitle: {
     fontSize: 17,
-    fontWeight: '600',
+    fontWeight: '600'
   },
 })
