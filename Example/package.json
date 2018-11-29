@@ -8,6 +8,7 @@
   "dependencies": {
     "react": "^16.5.0",
     "react-native": "^0.57.0",
+    "react-native-navbar": "^2.1.0",
     "react-native-turbolinks": "file:../",
     "react-native-webview": "^2.8.1"
   },
