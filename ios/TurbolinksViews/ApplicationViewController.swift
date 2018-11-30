@@ -46,16 +46,9 @@ extension ApplicationViewController where Self: UIViewController {
     
     func renderActions() {
         guard let actions = route.actions, !actions.isEmpty else { return }
-        if let icon = manager.menuIcon {
-            let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
-            _navigationItem.rightBarButtonItem = button
-        } else {
-            let button = UIBarButtonItem(title: "\u{22EF}", style: .plain, target: self, action: selectorPresentActions)
-            let font = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 32)]
-            button.setTitleTextAttributes(font, for: .normal)
-            button.setTitleTextAttributes(font, for: .selected)
-            _navigationItem.rightBarButtonItem = button
-        }
+        let icon = manager.menuIcon ?? UIImage(named: "ic_menu")
+        let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
+        _navigationItem.rightBarButtonItem = button
     }
     
     func setupNavigationBar() {
