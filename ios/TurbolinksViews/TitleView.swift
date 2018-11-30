@@ -6,6 +6,7 @@ class TurbolinksTitleView : UIStackView {
     fileprivate var titleImage: UIImage?
     fileprivate var textColor: UIColor?
     fileprivate var subtitleTextColor: UIColor?
+    fileprivate var navBarDropDown: Bool = false
     
     convenience init(_ viewController: ApplicationViewController) {
         self.init()
@@ -13,8 +14,9 @@ class TurbolinksTitleView : UIStackView {
         self.title = viewController.route.title ?? viewController.navigationItem.title
         self.subtitle = viewController.route.subtitle
         self.titleImage = viewController.route.titleImage
-        self.textColor = viewController.manager.titleTextColor ?? UIColor.black
-        self.subtitleTextColor = viewController.manager.subtitleTextColor ?? UIColor.gray
+        self.navBarDropDown = viewController.route.navBarDropDown
+        self.textColor = viewController.manager.titleTextColor ?? .black
+        self.subtitleTextColor = viewController.manager.subtitleTextColor ?? .gray
         self.configureView()
         
         if titleImage != nil {
@@ -26,22 +28,34 @@ class TurbolinksTitleView : UIStackView {
     }
     
     fileprivate func configureView() {
-        self.alignment = .center
         self.axis = .vertical
+        self.alignment = .center
         self.addGestureRecognizer(getTitlePressGesture(self))
     }
     
     fileprivate func addTitleImage() {
-        let image = UIImageView.init(image: titleImage)
+        let image = UIImageView(image: titleImage)
         addArrangedSubview(image)
     }
     
     fileprivate func addTitle() {
+        let stackView: UIStackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 5
+        
         let label = UILabel()
         label.text = title
         label.textColor = textColor
-        label.font = UIFont.boldSystemFont(ofSize: 17)
-        addArrangedSubview(label)
+        label.font = .boldSystemFont(ofSize: 17)
+        stackView.addArrangedSubview(label)
+        
+        if (self.navBarDropDown) {
+            let dropDown = UIImageView(image: UIImage(named: "ic_caret"))
+            stackView.addArrangedSubview(dropDown)
+        }
+        
+        addArrangedSubview(stackView)
     }
     
     fileprivate func addSubtitle() {

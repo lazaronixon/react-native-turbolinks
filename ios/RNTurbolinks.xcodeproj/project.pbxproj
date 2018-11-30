@@ -39,6 +39,7 @@
 		87201D672029B94600BDC864 /* TurbolinksNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksNavigationController.swift; sourceTree = "<group>"; };
 		872FD3FB2021CE360063E5CE /* ActionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
 		872FD3FD2021E1B80063E5CE /* TurbolinksAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksAction.swift; sourceTree = "<group>"; };
+		874324CF21B18AB600F41FAC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		87441D5D2037935400C938EC /* TurbolinksSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksSession.swift; sourceTree = "<group>"; };
 		876100981FF01CFB00C90539 /* RNTurbolinksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNTurbolinksManager.swift; sourceTree = "<group>"; };
 		8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNTurbolinksManagerBridge.m; sourceTree = "<group>"; };
@@ -72,6 +73,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				874324CF21B18AB600F41FAC /* Images.xcassets */,
 				87BFAD82201A06E70063FCDF /* TurbolinksModels */,
 				87BFAD81201A06990063FCDF /* TurbolinksViews */,
 				8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */,
