@@ -15,11 +15,9 @@ module.exports = () => {
       const proj = pbxproj.project(projectPath);
       proj.parseSync();
 
-      if (!proj.hasFile(frameworkPath)) {
-        addFramework(proj, frameworkPath);
-        addToFrameworkSearchPaths(proj, frameworkSearchPath);
-        fs.writeFileSync(projectPath, proj.writeSync());
-      }
+      addFramework(proj, frameworkPath);
+      addToFrameworkSearchPaths(proj, frameworkSearchPath);
+      fs.writeFileSync(projectPath, proj.writeSync());
   }
 
   function installSwift() {
@@ -36,7 +34,18 @@ module.exports = () => {
     fs.writeFileSync(projectPath, proj.writeSync());
   }
 
+  function addResources() {
+    const proj = pbxproj.project(projectPath);
+    proj.parseSync();
+
+    const imagesPath = "../node_modules/react-native-turbolinks/ios/RNTurbolinksImages.xcassets";
+    const firstTarget = proj.getFirstTarget().uuid
+    proj.addResourceFile(imagesPath, { target: firstTarget })
+    fs.writeFileSync(projectPath, proj.writeSync());
+  }
+
   installTurbolinksIOS();
   installSwift();
+  addResources();
   return Promise.resolve();
 }
