@@ -8,6 +8,7 @@ function createFrameworkGroup(project) {
 
 function createEmbedFrameworkBuildPhase(project) {
   const target = project.getFirstTarget().uuid
+  
   if (!project.buildPhaseObject('PBXCopyFilesBuildPhase', 'Embed Frameworks', target)) {
     project.addBuildPhase([], 'PBXCopyFilesBuildPhase', 'Embed Frameworks', target, 'frameworks');
   }

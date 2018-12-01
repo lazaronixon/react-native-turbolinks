@@ -3,6 +3,7 @@ const fs = require('fs');
 const glob = require("glob");
 const path = require("path")
 const addFramework = require('./addFramework');
+const addResource = require('./addResource');
 const addToFrameworkSearchPaths = require('./addToFrameworkSearchPaths');
 
 module.exports = () => {
@@ -10,44 +11,38 @@ module.exports = () => {
   const projectPath = xcodeprojPath + "/project.pbxproj";
 
   function installTurbolinksIOS() {
+      const project = pbxproj.project(projectPath);
+      project.parseSync();
+
       const frameworkPath = "../node_modules/react-native-turbolinks/ios/Turbolinks.framework";
       const frameworkSearchPath = '"$(SRCROOT)/../node_modules/react-native-turbolinks/ios/**"';
-      const proj = pbxproj.project(projectPath);
-      proj.parseSync();
-
-      if (!proj.hasFile(frameworkPath)) {
-        addFramework(proj, frameworkPath);
-        addToFrameworkSearchPaths(proj, frameworkSearchPath);
-        fs.writeFileSync(projectPath, proj.writeSync());
+      if (!project.hasFile(frameworkPath)) {
+        addFramework(project, frameworkPath);
+        addToFrameworkSearchPaths(project, frameworkSearchPath);
+        fs.writeFileSync(projectPath, project.writeSync());
       }
   }
 
   function installSwift() {
-    const proj = pbxproj.project(projectPath);
-    proj.parseSync();
+    const project = pbxproj.project(projectPath);
+    project.parseSync();
 
+    const firstTarget = project.getFirstTarget().uuid;
+    const firstProject = project.getFirstProject();
     const placeholderPath = path.join("ios", "RNPlaceholder.swift");
-    fs.writeFileSync(placeholderPath, "");
 
-    const firstProject = proj.getFirstProject();
-    const firstTarget = proj.getFirstTarget().uuid;
-    proj.addSourceFile("RNPlaceholder.swift", { target: firstTarget }, firstProject);
-    proj.addBuildProperty("SWIFT_VERSION", "4.2");
-    fs.writeFileSync(projectPath, proj.writeSync());
+    fs.writeFileSync(placeholderPath, "");
+    project.addSourceFile("RNPlaceholder.swift", { target: firstTarget }, firstProject);
+    project.addBuildProperty("SWIFT_VERSION", "4.2");
+    fs.writeFileSync(projectPath, project.writeSync());
   }
 
   function addResources() {
-    const proj = pbxproj.project(projectPath);
-    proj.parseSync();
+    const project = pbxproj.project(projectPath);
+    project.parseSync();
 
-    if (!proj.pbxGroupByName('Resources')) {
-      proj.addPbxGroup([], 'Resources');
-    }
-
-    const imagesPath = "../node_modules/react-native-turbolinks/ios/RNTurbolinksImages.xcassets";
-    const firstTarget = proj.getFirstTarget().uuid
-    proj.addResourceFile(imagesPath, { target: firstTarget })
-    fs.writeFileSync(projectPath, proj.writeSync());
+    addResource(project, "../node_modules/react-native-turbolinks/ios/RNTurbolinksImages.xcassets");
+    fs.writeFileSync(projectPath, project.writeSync());
   }
 
   installTurbolinksIOS();
