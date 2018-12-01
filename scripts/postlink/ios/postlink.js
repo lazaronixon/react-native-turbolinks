@@ -1,3 +1,5 @@
+/** https://github.com/transistorsoft/react-native-background-geolocation/blob/master/scripts/postlink.js */
+
 const pbxproj = require("xcode");
 const fs = require('fs');
 const glob = require("glob");

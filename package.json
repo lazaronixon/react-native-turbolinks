@@ -18,7 +18,8 @@
   ],
   "rnpm": {
     "commands": {
-      "postlink": "node node_modules/react-native-turbolinks/scripts/postlink/run"
+      "postlink": "node node_modules/react-native-turbolinks/scripts/postlink/run",
+      "postunlink": "node node_modules/react-native-turbolinks/scripts/postunlink/run"
     }
   },
   "peerDependencies": {
