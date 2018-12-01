@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Turbolinks from 'react-native-turbolinks'
-import Constants from './Constants';
+import { baseUrl } from './../app.json'
 
 export default class App extends Component {
 
@@ -8,7 +8,7 @@ export default class App extends Component {
     Turbolinks.addEventListener('turbolinksVisit', this.handleVisit)
     Turbolinks.addEventListener('turbolinksError', this.handleError)
     Turbolinks.addEventListener('turbolinksMessage', this.showMessage)
-    Turbolinks.startSingleScreenApp({url: Constants.baseUrl}, {messageHandler: 'turbolinksDemo'})
+    Turbolinks.startSingleScreenApp({url: baseUrl}, {messageHandler: 'turbolinksDemo'})
   }
 
   handleVisit = (data) => {
