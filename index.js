@@ -1,8 +1,9 @@
 import { NativeEventEmitter, NativeModules, processColor, Platform } from 'react-native'
 
-const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource')
 const RNTurbolinksManager = NativeModules.RNTurbolinksManager || NativeModules.RNTurbolinksModule
 const RNTurbolinksManagerEmitter = new NativeEventEmitter(RNTurbolinksManager)
+
+const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource')
 
 class Turbolinks {
 
