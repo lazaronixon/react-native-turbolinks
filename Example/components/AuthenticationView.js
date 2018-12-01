@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { SafeAreaView } from 'react-native'
 import { WebView } from 'react-native-webview'
 import Turbolinks from 'react-native-turbolinks'
-import Constants from './Constants'
+import { baseUrl } from './../app.json'
 
-const signInUrl = Constants.baseUrl + '/sign-in'
+const signInUrl = baseUrl + '/sign-in'
 
 export default class AuthenticationView extends React.Component {
 
