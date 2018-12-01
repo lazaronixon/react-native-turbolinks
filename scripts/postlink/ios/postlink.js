@@ -40,6 +40,10 @@ module.exports = () => {
     const proj = pbxproj.project(projectPath);
     proj.parseSync();
 
+    if (!proj.pbxGroupByName('Resources')) {
+      proj.addPbxGroup([], 'Resources');
+    }
+
     const imagesPath = "../node_modules/react-native-turbolinks/ios/RNTurbolinksImages.xcassets";
     const firstTarget = proj.getFirstTarget().uuid
     proj.addResourceFile(imagesPath, { target: firstTarget })
