@@ -110,6 +110,7 @@ Removes the listener for given event.
   - `subtitle:` A subtitle for visitable view.
   - `titleImage:` A image to show on navbar.
   - `navBarHidden`: Hidden navigation bar. (Default false)
+  - `navBarDropDown`: Show a small dropdown next to the title. (Default false)(iOS Only)
   - `leftButtonIcon`: A left button icon. (iOS Only)
   - `rightButtonIcon`: A right button icon. (iOS Only)
   - `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
