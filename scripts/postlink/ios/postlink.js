@@ -11,6 +11,19 @@ module.exports = () => {
   const xcodeprojPath = glob.sync("ios/*.xcodeproj")[0];
   const projectPath = xcodeprojPath + "/project.pbxproj";
 
+  function installSwift() {
+    const project = pbxproj.project(projectPath);
+    project.parseSync();
+
+    const firstTarget = project.getFirstTarget().uuid;
+    const firstProject = project.getFirstProject();
+
+    fs.writeFileSync("ios/RNPlaceholder.swift", "");
+    project.addSourceFile("RNPlaceholder.swift", { target: firstTarget }, firstProject);
+    project.addBuildProperty("SWIFT_VERSION", "4.2");
+    fs.writeFileSync(projectPath, project.writeSync());
+  }  
+
   function installTurbolinksIOS() {
       const project = pbxproj.project(projectPath);
       project.parseSync();
@@ -24,20 +37,7 @@ module.exports = () => {
       }
   }
 
-  function installSwift() {
-    const project = pbxproj.project(projectPath);
-    project.parseSync();
-
-    const firstTarget = project.getFirstTarget().uuid;
-    const firstProject = project.getFirstProject();
-
-    fs.writeFileSync("ios/RNPlaceholder.swift", "");
-    project.addSourceFile("RNPlaceholder.swift", { target: firstTarget }, firstProject);
-    project.addBuildProperty("SWIFT_VERSION", "4.2");
-    fs.writeFileSync(projectPath, project.writeSync());
-  }
-
-  function addResources() {
+  function installTurbolinksResources() {
     const project = pbxproj.project(projectPath);
     project.parseSync();
 
@@ -45,8 +45,8 @@ module.exports = () => {
     fs.writeFileSync(projectPath, project.writeSync());
   }
 
-  installTurbolinksIOS();
   installSwift();
-  addResources();
+  installTurbolinksIOS();
+  installTurbolinksResources();
   return Promise.resolve();
 }
