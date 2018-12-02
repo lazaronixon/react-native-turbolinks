@@ -3,7 +3,6 @@
 const pbxproj = require("xcode");
 const fs = require('fs');
 const glob = require("glob");
-const path = require("path")
 const addFramework = require('./addFramework');
 const addResource = require('./addResource');
 const addToFrameworkSearchPaths = require('./addToFrameworkSearchPaths');
@@ -31,9 +30,8 @@ module.exports = () => {
 
     const firstTarget = project.getFirstTarget().uuid;
     const firstProject = project.getFirstProject();
-    const placeholderPath = path.join("ios", "RNPlaceholder.swift");
 
-    fs.writeFileSync(placeholderPath, "");
+    fs.writeFileSync("ios/RNPlaceholder.swift", "");
     project.addSourceFile("RNPlaceholder.swift", { target: firstTarget }, firstProject);
     project.addBuildProperty("SWIFT_VERSION", "4.2");
     fs.writeFileSync(projectPath, project.writeSync());
