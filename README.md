@@ -90,8 +90,8 @@ Adds an event handler. Supported events:
 - `turbolinksMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
 - `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
-- `turbolinksLeftButtonPress:` Fire when left button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
-- `turbolinksRightButtonPress:` Fire when right button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
+- `turbolinksLeftButtonPress`: Fire when left button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
+- `turbolinksRightButtonPress`: Fire when right button item on iOS is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path`.
 
 #### `removeEventListener(eventName, handler)`
@@ -100,21 +100,21 @@ Removes the listener for given event.
 ## Objects
 #### `Route`
 - Url properties
-  - `url:` Url to visit. (Required)
+  - `url`: Url to visit. (Required)
 - Component properties
-  - `component:` Component to visit. (Required)
-  - `modal:` A boolean to show a view without navbar and backbutton. (Default false)
+  - `component`: Component to visit. (Required)
+  - `modal`: A boolean to show a view without navbar and backbutton. (Default false)
   - `passProps`: Passes this in as props to the rendered component.
 - Common properties
-  - `title:` The default value is the title of the Web page.
-  - `subtitle:` A subtitle for visitable view.
-  - `titleImage:` A image to show on navbar.
+  - `title`: The default value is the title of the Web page.
+  - `subtitle`: A subtitle for visitable view.
+  - `titleImage`: A image to show on navbar.
   - `navBarHidden`: Hidden navigation bar. (Default false)
   - `navBarDropDown`: Show a small dropdown next to the title. (Default false)(iOS Only)
   - `leftButtonIcon`: A left button icon. (iOS Only)
   - `rightButtonIcon`: A right button icon. (iOS Only)
-  - `navIcon:` Set the icon to display in the 'home' section of the action bar. (Android Only)
-  - `actions:` A Array of `action` objects to mount a menu.
+  - `navIcon`: Set the icon to display in the 'home' section of the action bar. (Android Only)
+  - `actions`: A Array of `action` objects to mount a menu.
   - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
 
 #### `AppOption`
@@ -125,22 +125,22 @@ Removes the listener for given event.
   - `injectedJavaScript`: Set this to provide JavaScript that will be injected into the web page when the view loads.
 
 #### `Action`
-  - `id:` A integer identifier for the action. (Required)
-  - `title:` A title for the action.
-  - `icon:` A icon for the action.
-  - `button:` A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
+  - `id`: A integer identifier for the action. (Required)
+  - `title`: A title for the action.
+  - `icon`: A icon for the action.
+  - `button`: A boolean to show action inside menu or in toolbar. (Android Only)(Default false)
 
 ## Constants
 
-`Turbolinks.Constants.ErrorCode.httpFailure: 0`
+`Turbolinks.Constants.ErrorCode.httpFailure`: 0
 
-`Turbolinks.Constants.ErrorCode.networkFailure: 1`
+`Turbolinks.Constants.ErrorCode.networkFailure`: 1
 
-`Turbolinks.Constants.Action.advance: 'advance'`
+`Turbolinks.Constants.Action.advance`: 'advance'
 
-`Turbolinks.Constants.Action.replace: 'replace'`
+`Turbolinks.Constants.Action.replace`: 'replace'
 
-`Turbolinks.Constants.Action.restore: 'restore'`  
+`Turbolinks.Constants.Action.restore`: 'restore'
 
 ## Android Style
 For android set your style on [android/app/src/main/res/values/styles.xml](https://github.com/lazaronixon/react-native-turbolinks/blob/master/Example/android/app/src/main/res/values/styles.xml).
