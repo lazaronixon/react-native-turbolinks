@@ -103,7 +103,7 @@ Removes the listener for given event.
   - `url:` Url to visit. (Required)
 - Component properties
   - `component:` Component to visit. (Required)
-  - `modal:` A boolean to show a view without backbutton. (Default false)
+  - `modal:` A boolean to show a view without navbar and backbutton. (Default false)
   - `passProps`: Passes this in as props to the rendered component.
 - Common properties
   - `title:` The default value is the title of the Web page.
