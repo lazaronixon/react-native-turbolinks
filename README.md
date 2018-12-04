@@ -45,6 +45,7 @@ This repository includes a demo application to show off features of the framewor
 To run the demo, clone this repository to your computer and change into its directory. Then, Open file `Example/app.json` and change `baseUrl` with your IP and start the demo server by running `Example/demo-server` from the command line.
 
 Once you’ve started the demo server, explore the demo application in the Simulator by running `react-native run-ios` or `react-native run-android` on `Example` folder.
+
 ![React Native Turbolinks Demo Application](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/application-demo.png)
 
 ## Methods
