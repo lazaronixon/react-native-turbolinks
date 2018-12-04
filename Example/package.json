@@ -3,15 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "preinstall": "cd .. && npm install"
   },
   "dependencies": {
     "react": "16.6.1",
     "react-native": "0.57.7",
-    "react-native-turbolinks": "latest",
+    "react-native-turbolinks": "file:../",
     "react-native-webview": "^2.8.1"
   },
   "devDependencies": {
+    "get-dev-paths": "^0.1.0",
     "metro-react-native-babel-preset": "0.50.0"
   }
 }
