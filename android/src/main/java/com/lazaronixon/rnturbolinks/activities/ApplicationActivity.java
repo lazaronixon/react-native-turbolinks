@@ -103,13 +103,13 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
     protected void renderToolBar() {
         setSupportActionBar(toolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!(isInitial() || isModal()));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
         getSupportActionBar().setIcon(getNavIcon(route.getNavIcon()));
         renderTitleImage(route.getTitleImage());
         setupNavBarStyle(navBarStyle);
-        if (route.getNavBarHidden()) getSupportActionBar().hide();
+        if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
     }
 
     protected void handleTitlePress(final String component, final String url, final String path) {
