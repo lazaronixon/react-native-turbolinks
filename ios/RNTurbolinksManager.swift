@@ -16,7 +16,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     var loadingView: String?
     var automaticallyAdjustContentInsets: Bool?
     var contentInset: UIEdgeInsets?
-    var processPool = WKProcessPool()
     
     var application: UIApplication {
         return UIApplication.shared
