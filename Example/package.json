@@ -10,10 +10,9 @@
     "react": "16.6.1",
     "react-native": "0.57.7",
     "react-native-turbolinks": "file:../",
-    "react-native-webview": "^2.8.1"
+    "react-native-webview": "^2.14.0"
   },
   "devDependencies": {
-    "get-dev-paths": "^0.1.0",
-    "metro-react-native-babel-preset": "0.50.0"
+    "get-dev-paths": "^0.1.0"
   }
 }
