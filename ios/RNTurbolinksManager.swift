@@ -4,7 +4,7 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {
     
-    var navigation: TurbolinksNavigationController!
+    var navigationController: TurbolinksNavigationController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?
     var barTintColor: UIColor?
@@ -25,16 +25,16 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate var session: TurbolinksSession {
-        return navigation.session
+        return navigationController.session
     }
     
     fileprivate var visibleViewController: UIViewController {
-        return navigation.visibleViewController!
+        return navigationController.visibleViewController!
     }
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) {
         let tRoute = TurbolinksRoute(route)
-        (navigation.visibleViewController as! WebViewController).renderComponent(tRoute)
+        (navigationController.visibleViewController as! WebViewController).renderComponent(tRoute)
     }
     
     @objc func reloadVisitable() {
@@ -46,22 +46,22 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func dismiss(_ animated: Bool) {
-        navigation.dismiss(animated: animated)
+        navigationController.dismiss(animated: animated)
     }
     
     @objc func popToRoot(_ animated: Bool) {
-        navigation.popToRootViewController(animated: animated)
+        navigationController.popToRootViewController(animated: animated)
     }
     
     @objc func back(_ animated: Bool) {
-        navigation.popViewController(animated: animated)
+        navigationController.popViewController(animated: animated)
     }
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
 
-        navigation = TurbolinksNavigationController(self)
-        addToRootViewController(navigation)
+        navigationController = TurbolinksNavigationController(self)
+        addToRootViewController(navigationController)
         visit(route)
     }
     
@@ -75,32 +75,32 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func renderTitle(_ title: String,_ subtitle: String) {
-        guard let visitable = navigation.visibleViewController as? ApplicationViewController else { return }
+        guard let visitable = navigationController.visibleViewController as? ApplicationViewController else { return }
         visitable.route.title = title
         visitable.route.subtitle = subtitle
         visitable.renderTitle()
     }
     
     @objc func renderActions(_ actions: Array<Dictionary<AnyHashable, Any>>) {
-        guard let visitable = navigation.visibleViewController as? ApplicationViewController else { return }
+        guard let visitable = navigationController.visibleViewController as? ApplicationViewController else { return }
         visitable.route.actions = actions
         visitable.renderActions()
     }
     
     @objc func injectJavaScript(_ script: String) {
-        navigation.session.webView.evaluateJavaScript(script) {(result, error) in }
+        navigationController.session.webView.evaluateJavaScript(script) {(result, error) in }
     }
     
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
         let visitable = WebViewController(self, route)
         if route.action == .Advance {
-            navigation.pushViewController(visitable, animated: true)
+            navigationController.pushViewController(visitable, animated: true)
         } else if route.action == .Replace {
-            if navigation.isAtRoot {
-                navigation.setViewControllers([visitable], animated: false)
+            if navigationController.isAtRoot {
+                navigationController.setViewControllers([visitable], animated: false)
             } else {
-                navigation.popViewController(animated: false)
-                navigation.pushViewController(visitable, animated: false)
+                navigationController.popViewController(animated: false)
+                navigationController.pushViewController(visitable, animated: false)
             }
         }
         session.visit(visitable)
@@ -109,15 +109,15 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
         let viewController = NativeViewController(self, route)
         if route.modal {
-            navigation.present(viewController, animated: true)
+            navigationController.present(viewController, animated: true)
         } else if route.action == .Advance {
-            navigation.pushViewController(viewController, animated: true)
+            navigationController.pushViewController(viewController, animated: true)
         } else if route.action == .Replace {
-            if navigation.isAtRoot {
-                navigation.setViewControllers([viewController], animated: false)
+            if navigationController.isAtRoot {
+                navigationController.setViewControllers([viewController], animated: false)
             } else {
-                navigation.popViewController(animated: false)
-                navigation.pushViewController(viewController, animated: false)
+                navigationController.popViewController(animated: false)
+                navigationController.pushViewController(viewController, animated: false)
             }
         }
     }
