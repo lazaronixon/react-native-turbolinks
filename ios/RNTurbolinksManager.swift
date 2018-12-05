@@ -59,7 +59,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
-        removeChildViewControllerInCaseOfDebug()
+
         navigation = TurbolinksNavigationController(self)
         addToRootViewController(navigation)
         visit(route)
@@ -139,22 +139,9 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate func addToRootViewController(_ viewController: UIViewController) {
+        rootViewController.dismiss(animated: false)
         rootViewController.addChild(viewController)
         rootViewController.view.addSubview(viewController.view)
-    }
-    
-    fileprivate func removeChildViewControllerInCaseOfDebug() {
-        var viewController: UIViewController?
-        rootViewController.children.forEach { (child) in
-            if (child is TurbolinksNavigationController) {
-                viewController = child
-            }
-        }
-        
-        if let vc = viewController {
-            vc.view.removeFromSuperview()
-            vc.removeFromParent()
-        }
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
