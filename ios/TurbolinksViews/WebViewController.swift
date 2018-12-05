@@ -67,6 +67,17 @@ class WebViewController: VisitableViewController {
         dummyVisitableView.translatesAutoresizingMaskIntoConstraints = false
         return dummyVisitableView
     }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if !(manager.automaticallyAdjustContentInsets ?? true) {
+            if let contentInset = manager.contentInset {
+                visitableView.contentInset = contentInset
+            } else {
+                visitableView.contentInset = UIEdgeInsets.zero
+            }
+        }
+    }
 }
 
 extension WebViewController: ApplicationViewController {

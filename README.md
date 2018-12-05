@@ -125,6 +125,8 @@ Removes the listener for given event.
   - `loadingView`: Set a custom loadingView using a react component.
   - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
   - `injectedJavaScript`: Set this to provide JavaScript that will be injected into the web page when the view loads.
+  - `automaticallyAdjustContentInsets`: Controls whether to adjust the content inset for web views that are placed behind of navigation bar. (Default true)
+  - `contentInset`: The amount by which the web view content is inset from the edges of the scroll view. Defaults to {top: 0, left: 0, bottom: 0, right: 0}.
 
 #### `Action`
   - `id`: A integer identifier for the action. (Required)

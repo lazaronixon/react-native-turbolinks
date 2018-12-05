@@ -14,6 +14,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var menuIcon: UIImage?
     var loadingView: String?
+    var automaticallyAdjustContentInsets: Bool?
+    var contentInset: UIEdgeInsets?
     var processPool = WKProcessPool()
     
     var application: UIApplication {
@@ -127,6 +129,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         self.messageHandler = RCTConvert.nsString(options["messageHandler"])
         self.loadingView = RCTConvert.nsString(options["loadingView"])
         self.injectedJavaScript = RCTConvert.nsString(options["injectedJavaScript"])
+        if (options["automaticallyAdjustContentInsets"] != nil) { self.automaticallyAdjustContentInsets = RCTConvert.bool(options["automaticallyAdjustContentInsets"]) }
+        if (options["contentInset"] != nil) { self.contentInset = RCTConvert.uiEdgeInsets(options["contentInset"]) }
         if (options["navBarStyle"] != nil) { setNavBarStyle(RCTConvert.nsDictionary(options["navBarStyle"])) }
     }
     
