@@ -39,8 +39,6 @@ public class NativeActivity extends ApplicationActivity {
     }
 
     @Override
-    public void reloadSession() {
-        TurbolinksSession.getDefault(this).resetToColdBoot();
-    }
+    public void reloadSession() { TurbolinksSession.getDefault(this).resetToColdBoot(); }
 
 }

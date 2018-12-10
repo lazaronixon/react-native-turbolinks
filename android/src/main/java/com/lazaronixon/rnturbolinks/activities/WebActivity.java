@@ -139,8 +139,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     }
 
     @Override
-    public void pageInvalidated() {
-    }
+    public void pageInvalidated() {}
 
     @Override
     public void renderTitle(String title, String subtitle) {

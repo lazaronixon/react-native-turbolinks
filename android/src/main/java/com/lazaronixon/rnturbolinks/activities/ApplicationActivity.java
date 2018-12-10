@@ -76,26 +76,20 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         setupTransitionOnFinish();
     }
 
-    public void setActions(ArrayList<Bundle> actions) {
-        route.setActions(actions);
-    }
+    public void setActions(ArrayList<Bundle> actions) { route.setActions(actions); }
 
     public void renderTitle(String title, String subtitle) {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(subtitle);
     }
 
-    public void renderComponent(TurbolinksRoute route) {
-    }
+    public void renderComponent(TurbolinksRoute route) {}
 
-    public void reloadVisitable() {
-    }
+    public void reloadVisitable() {}
 
-    public void reloadSession() {
-    }
+    public void reloadSession() {}
 
-    public void injectJavaScript(String script) {
-    }
+    public void injectJavaScript(String script) {}
 
     protected RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
@@ -182,9 +176,7 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         }
     }
 
-    private boolean isInitial() {
-        return getIntent().getBooleanExtra(INTENT_INITIAL, true);
-    }
+    private boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
 
     private boolean isModal() {
         return route.getModal();
