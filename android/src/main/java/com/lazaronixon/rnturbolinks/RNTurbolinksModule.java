@@ -51,11 +51,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         super(reactContext);
     }
 
-    @Override
-    public String getName() {
-        return "RNTurbolinksModule";
-    }
-
     @ReactMethod
     public void startSingleScreenApp(ReadableMap route, ReadableMap options) {
         setAppOptions(options);
@@ -141,6 +136,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 "Action", MapBuilder.of("advance", "advance", "replace", "replace", "restore", "restore")
         );
     }
+
+    @Override
+    public String getName() { return "RNTurbolinksModule"; }
 
     private void setAppOptions(ReadableMap opts) {
         this.messageHandler = opts.hasKey("messageHandler") ? opts.getString("messageHandler") : null;
