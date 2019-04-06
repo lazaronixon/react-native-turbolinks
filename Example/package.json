@@ -7,13 +7,12 @@
     "preinstall": "cd .. && npm install"
   },
   "dependencies": {
-    "react": "16.6.1",
-    "react-native": "0.57.7",
+    "react": "16.8.3",
+    "react-native": "0.59.3",
     "react-native-turbolinks": "file:../",
-    "react-native-webview": "^2.14.0"
+    "react-native-webview": "^5.6.0"
   },
   "devDependencies": {
-    "get-dev-paths": "^0.1.0",
-    "metro-react-native-babel-preset": "0.50.0"
+    "metro-react-native-babel-preset": "^0.53.1"
   }
 }

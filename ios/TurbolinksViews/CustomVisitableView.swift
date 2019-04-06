@@ -18,8 +18,8 @@ class CustomVisitableView : VisitableView {
     
     fileprivate func installLoadingView() {
         addSubview(loadingView)
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: [ "view": loadingView ]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": loadingView ]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: [ "view": loadingView! ]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": loadingView! ]))
     }
     
     override func showActivityIndicator() {

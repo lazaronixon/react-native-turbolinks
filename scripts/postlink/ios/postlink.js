@@ -20,7 +20,7 @@ module.exports = () => {
 
     fs.writeFileSync("ios/RNPlaceholder.swift", "");
     project.addSourceFile("RNPlaceholder.swift", { target: firstTarget }, firstProject);
-    project.addBuildProperty("SWIFT_VERSION", "4.2");
+    project.addBuildProperty("SWIFT_VERSION", "5.0");
     fs.writeFileSync(projectPath, project.writeSync());
   }  
 
