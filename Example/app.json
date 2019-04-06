@@ -1,5 +1,5 @@
 {
   "name": "Example",
   "displayName": "Example",
-  "baseUrl": "http://192.168.1.4:9292"
+  "baseUrl": "http://MYIP:9292"
 }
