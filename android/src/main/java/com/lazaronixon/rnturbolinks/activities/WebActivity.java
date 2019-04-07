@@ -2,10 +2,13 @@ package com.lazaronixon.rnturbolinks.activities;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -157,6 +160,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
     @Override
     public void reloadSession() {
+        refreshCookies();
         TurbolinksSession.getDefault(this).resetToColdBoot();
         TurbolinksSession.getDefault(this).visit(route.getUrl());
     }
@@ -216,6 +220,15 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
         progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
         progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
         turbolinksSession.progressView(progressView, progressIndicator.getId(), 500);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void refreshCookies() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().flush();
+        } else {
+            CookieSyncManager.getInstance().sync();
+        }
     }
 
 }

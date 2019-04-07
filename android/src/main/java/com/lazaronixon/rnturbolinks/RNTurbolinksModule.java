@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import android.webkit.CookieSyncManager;
-
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -83,7 +81,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void reloadSession() {
         runOnUiThread(new Runnable() {
             public void run() {
-                CookieSyncManager.getInstance().sync();
                 ((ApplicationActivity) getCurrentActivity()).reloadSession();
             }
         });
@@ -114,8 +111,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         runOnUiThread(new Runnable() {
             public void run() {
                 ApplicationActivity act = (ApplicationActivity) getCurrentActivity();
-                act.setActions(Arguments.toList(actions));
-                act.invalidateOptionsMenu();
+                if (act != null) {
+                    act.setActions(Arguments.toList(actions));
+                    act.invalidateOptionsMenu();
+                }
             }
         });
     }
@@ -130,10 +129,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @Override
-    public Map getConstants() {
-        return MapBuilder.of(
-                "ErrorCode", MapBuilder.of("httpFailure", 0, "networkFailure", 1),
-                "Action", MapBuilder.of("advance", "advance", "replace", "replace", "restore", "restore")
+    public Map<String, Object> getConstants() {
+        return MapBuilder.<String, Object>of(
+                "ErrorCode", MapBuilder.<String, Object>of("httpFailure", 0, "networkFailure", 1),
+                "Action", MapBuilder.<String, Object>of("advance", "advance", "replace", "replace", "restore", "restore")
         );
     }
 
