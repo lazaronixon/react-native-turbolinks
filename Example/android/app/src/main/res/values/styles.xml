@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:textColor">#000000</item>
 
         <!--   your app branding color for the app bar -->
         <item name="colorPrimary">#F5F5F5</item>

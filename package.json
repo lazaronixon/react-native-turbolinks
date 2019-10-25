@@ -1,6 +1,6 @@
 {
   "name": "react-native-turbolinks",
-  "version": "2.0.10",
+  "version": "2.1.0",
   "description": "Turbolinks for React Native.",
   "author": "Lázaro Nixon <lazaronixon@hotmail.com>",
   "homepage": "https://github.com/lazaronixon/react-native-turbolinks",
@@ -16,16 +16,7 @@
     "native",
     "turbolinks"
   ],
-  "rnpm": {
-    "commands": {
-      "postlink": "node node_modules/react-native-turbolinks/scripts/postlink/run",
-      "postunlink": "node node_modules/react-native-turbolinks/scripts/postunlink/run"
-    }
-  },
   "peerDependencies": {
-    "react-native": "^0.59.0"
-  },
-  "devDependencies": {
-    "@babel/runtime": "^7.2.0"
+    "react-native": "^0.61"
   }
 }

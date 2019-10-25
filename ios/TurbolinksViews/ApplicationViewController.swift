@@ -19,8 +19,9 @@ protocol ApplicationViewController {
 
 extension ApplicationViewController where Self: UIViewController {
     
-    var isRoot: Bool { return navigationController?.viewControllers.count == 1 }
-    var _navigationItem: UINavigationItem { return (self as UIViewController).navigationItem }
+    var isRoot: Bool { navigationController?.viewControllers.count == 1 }
+    var _navigationItem: UINavigationItem { (self as UIViewController).navigationItem }
+    var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
     
     func renderTitle() {
         _navigationItem.titleView = TurbolinksTitleView(self)
@@ -46,7 +47,7 @@ extension ApplicationViewController where Self: UIViewController {
     
     func renderActions() {
         guard let actions = route.actions, !actions.isEmpty else { return }
-        let icon = manager.menuIcon ?? UIImage(named: "ic_menu")
+        let icon = manager.menuIcon ?? UIImage(named: "ic_menu", in: turbolinksBundle, compatibleWith: nil)
         let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
         _navigationItem.rightBarButtonItem = button
     }

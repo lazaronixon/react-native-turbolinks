@@ -7,6 +7,7 @@ class TurbolinksTitleView : UIStackView {
     fileprivate var textColor: UIColor?
     fileprivate var subtitleTextColor: UIColor?
     fileprivate var navBarDropDown: Bool = false
+    fileprivate var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
     
     convenience init(_ viewController: ApplicationViewController) {
         self.init()
@@ -51,7 +52,7 @@ class TurbolinksTitleView : UIStackView {
         stackView.addArrangedSubview(label)
         
         if (self.navBarDropDown) {
-            let dropDown = UIImageView(image: UIImage(named: "ic_caret"))
+            let dropDown = UIImageView(image: UIImage(named: "ic_caret", in: turbolinksBundle, compatibleWith: nil))
             stackView.addArrangedSubview(dropDown)
         }
         

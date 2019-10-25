@@ -13,7 +13,7 @@ class NativeViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component, initialProperties: route.passProps)
+        self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component!, initialProperties: route.passProps)
     }
     
     override func viewDidLoad() {
