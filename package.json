@@ -16,6 +16,9 @@
     "native",
     "turbolinks"
   ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall/run"
+  },
   "peerDependencies": {
     "react-native": "^0.61"
   }

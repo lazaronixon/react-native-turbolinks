@@ -1,8 +1,8 @@
 /** https://github.com/Microsoft/react-native-code-push/blob/master/scripts/postlink/run.js */
 
 var postlinks = [
-  require("./ios/postlink"),
-  require("./android/postlink")
+  require("./ios"),
+  require("./android")
 ];
 
 //run them sequentially
