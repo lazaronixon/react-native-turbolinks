@@ -4,9 +4,13 @@ A implementation of [Turbolinks for iOS](https://github.com/turbolinks/turbolink
 [![React Native Turbolinks](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/intro-turbolinks.gif)](https://youtu.be/2biqMoHn3jk "Quick Start Video")
 
 ## [Getting started](https://youtu.be/2biqMoHn3jk "Quick Start Video")
-```
-$ npm install react-native-turbolinks --save
-$ react-native link
+```sh
+# install
+yarn add react-native-turbolinks
+cd ios && pod install && cd .. # CocoaPods on iOS needs this extra step
+# run
+yarn react-native run-ios
+yarn react-native run-android
 ```
 
 ### Warning
