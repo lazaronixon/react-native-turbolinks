@@ -1,5 +1,4 @@
-class TurbolinksAction {
-    
+class TurbolinksAction {    
     var id: Int
     var title: String?
     var icon: UIImage?

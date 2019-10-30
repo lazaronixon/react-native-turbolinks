@@ -1,5 +1,4 @@
-class TurbolinksTitleView : UIStackView {
-    
+class TurbolinksTitleView : UIStackView {    
     fileprivate var viewController: ApplicationViewController!
     fileprivate var title: String?
     fileprivate var subtitle: String?

@@ -2,7 +2,6 @@ import Turbolinks
 import UIKit
 
 class WebViewController: VisitableViewController {
-    
     var manager: RNTurbolinksManager!
     var route: TurbolinksRoute!
     var customView: UIView!
@@ -98,5 +97,3 @@ extension WebViewController: ApplicationViewController {
         self.presentActions(sender)
     }
 }
-
-

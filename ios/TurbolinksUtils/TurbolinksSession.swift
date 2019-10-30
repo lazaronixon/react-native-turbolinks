@@ -2,17 +2,14 @@ import WebKit
 import Turbolinks
 
 class TurbolinksSession: Session {
-
     required convenience init(_ webViewConfiguration: WKWebViewConfiguration) {
         self.init(webViewConfiguration: webViewConfiguration)
         self.webView.uiDelegate = self
         self.webView.allowsLinkPreview = false
     }
-    
 }
 
 extension TurbolinksSession: WKUIDelegate {
-
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let confirm = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let cancel = getUIKitLocalizedString("Cancel")

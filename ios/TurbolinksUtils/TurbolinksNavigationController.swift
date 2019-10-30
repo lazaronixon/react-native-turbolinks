@@ -2,9 +2,7 @@ import WebKit
 import Turbolinks
 
 class TurbolinksNavigationController: UINavigationController {
-    
-    var session: TurbolinksSession!
-    
+    var session: TurbolinksSession!   
     var isAtRoot: Bool { return viewControllers.count == 1 }
     
     required convenience init(_ manager: RNTurbolinksManager) {

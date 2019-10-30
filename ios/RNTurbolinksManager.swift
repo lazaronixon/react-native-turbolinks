@@ -2,8 +2,7 @@ import WebKit
 import Turbolinks
 
 @objc(RNTurbolinksManager)
-class RNTurbolinksManager: RCTEventEmitter {
-    
+class RNTurbolinksManager: RCTEventEmitter {    
     var navigationController: TurbolinksNavigationController!
     var titleTextColor: UIColor?
     var subtitleTextColor: UIColor?

@@ -1,7 +1,6 @@
 import Turbolinks
 
 class CustomVisitableView : VisitableView {
-    
     fileprivate var loadingView : UIView!
     
     convenience init(_ manager: RNTurbolinksManager) {
@@ -40,5 +39,4 @@ class CustomVisitableView : VisitableView {
             super.hideActivityIndicator()
         }
     }
-    
 }

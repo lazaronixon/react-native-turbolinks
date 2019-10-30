@@ -1,7 +1,6 @@
 import UIKit
 
 class ActionsViewController: UITableViewController {
-    
     fileprivate let CellIdentifier = "CellIdentifier"
     fileprivate let defaultRowHeight = 42
     
@@ -55,4 +54,3 @@ extension ActionsViewController: UIPopoverPresentationControllerDelegate {
         return .none
     }
 }
-

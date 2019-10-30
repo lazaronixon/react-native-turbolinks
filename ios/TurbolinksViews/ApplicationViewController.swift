@@ -1,5 +1,4 @@
 protocol ApplicationViewController {
-    
     var manager: RNTurbolinksManager! { get set }
     var route: TurbolinksRoute! { get set }
     var selectorHandleLeftButtonPress: Selector { get }
@@ -17,8 +16,7 @@ protocol ApplicationViewController {
     func presentActionsGeneric(_ sender: UIBarButtonItem)
 }
 
-extension ApplicationViewController where Self: UIViewController {
-    
+extension ApplicationViewController where Self: UIViewController {    
     var isRoot: Bool { navigationController?.viewControllers.count == 1 }
     var _navigationItem: UINavigationItem { (self as UIViewController).navigationItem }
     var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }

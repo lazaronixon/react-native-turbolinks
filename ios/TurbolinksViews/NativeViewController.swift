@@ -1,5 +1,4 @@
-class NativeViewController: UIViewController {
-    
+class NativeViewController: UIViewController {    
     var manager: RNTurbolinksManager!    
     var route: TurbolinksRoute!
     var selectorHandleLeftButtonPress: Selector = #selector(handleLeftButtonPress)
