@@ -75,27 +75,23 @@ class Turbolinks {
         barTintColor: processColor(options.navBarStyle.barTintColor),
         tintColor: processColor(options.navBarStyle.tintColor),
         titleTextColor: processColor(options.navBarStyle.titleTextColor),
-        subtitleTextColor: processColor(options.navBarStyle.subtitleTextColor)
-      }
-      if (options.navBarStyle.menuIcon) {
-        options.navBarStyle.menuIcon = resolveAssetSource(options.navBarStyle.menuIcon)
+        subtitleTextColor: processColor(options.navBarStyle.subtitleTextColor),
+        menuIcon: !!options.navBarStyle.menuIcon ? resolveAssetSource(options.navBarStyle.menuIcon) : undefined
       }
     }
   }
 
   static _processRoute(route) {
-    if (route.titleImage) { route.titleImage = resolveAssetSource(route.titleImage) }
-    if (route.leftButtonIcon) { route.leftButtonIcon = resolveAssetSource(route.leftButtonIcon) }
-    if (route.rightButtonIcon) { route.rightButtonIcon = resolveAssetSource(route.rightButtonIcon) }
-    if (route.navIcon) { route.navIcon = resolveAssetSource(route.navIcon) }
-    if (route.actions) { route.actions = this._processActions(route.actions) }
-  }
+    if (route.titleImage) route.titleImage = resolveAssetSource(route.titleImage)
+    if (route.leftButtonIcon) route.leftButtonIcon = resolveAssetSource(route.leftButtonIcon)
+    if (route.rightButtonIcon) route.rightButtonIcon = resolveAssetSource(route.rightButtonIcon)
+    if (route.navIcon) route.navIcon = resolveAssetSource(route.navIcon)
+    if (route.actions) route.actions = resolveAssetSourceActions(route.actions)
 
-  static _processActions(actions) {
-    return actions.map((action) => {
-      if (action.icon) { action.icon = resolveAssetSource(action.icon) }
-      return action
-    })
+    function resolveAssetSourceActions(actions) {
+      actions.filter(act => act.icon).forEach(act => { act.icon = resolveAssetSource(act.icon) })
+      return actions
+    }
   }
 
 }
