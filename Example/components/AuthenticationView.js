@@ -8,11 +8,11 @@ const signInUrl = baseUrl + '/sign-in'
 
 export default class AuthenticationView extends React.Component {
 
-  handleAuthentication = (e) => {
-    if (e.nativeEvent.url != signInUrl) {
+  handleAuthentication = (event) => {
+    if (event.nativeEvent.url != signInUrl) {
       this.webview.stopLoading()
-      Turbolinks.dismiss()
 
+      Turbolinks.dismiss()
       setTimeout(() => Turbolinks.reloadSession(), 2500)
     }
   }

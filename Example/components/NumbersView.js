@@ -3,7 +3,7 @@ import { FlatList, View, Text, StyleSheet, SafeAreaView }from 'react-native'
 
 export default class NumbersView extends Component {
 
-  dataSource() {
+  get dataSource() {
     return Array.from(new Array(100), (x,i) => { return { key: `Row ${i}` } })
   }
 
@@ -11,7 +11,7 @@ export default class NumbersView extends Component {
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
         <View style={{flex: 1}}>
-          <FlatList data={this.dataSource()} renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
+          <FlatList data={this.dataSource} renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
         </View>
       </SafeAreaView>
     )
