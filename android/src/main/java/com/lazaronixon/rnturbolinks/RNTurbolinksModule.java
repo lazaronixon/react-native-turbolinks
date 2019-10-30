@@ -176,6 +176,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
                 if (isInitial) initialIntent = intent;
                 if (isInitial) TurbolinksSession.resetDefault();
+                if (isActionReplace) act.overridePendingTransition(0, 0);
                 if (isActionReplace) act.finish();
                 this.prevRoute = route;
             } else {

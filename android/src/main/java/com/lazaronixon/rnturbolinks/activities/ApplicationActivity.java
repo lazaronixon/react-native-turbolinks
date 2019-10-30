@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
-import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.react.ReactAppCompatActivity;
 import com.lazaronixon.rnturbolinks.util.ImageLoader;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
@@ -24,7 +23,6 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import java.util.ArrayList;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
-import static com.lazaronixon.rnturbolinks.util.TurbolinksRoute.ACTION_REPLACE;
 
 public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
@@ -70,12 +68,6 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         }
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        setupTransitionOnFinish();
-    }
-
     public void setActions(ArrayList<Bundle> actions) { route.setActions(actions); }
 
     public void renderTitle(String title, String subtitle) {
@@ -116,26 +108,6 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
                 getEventEmitter().emit(TURBOLINKS_TITLE_PRESS, params);
             }
         });
-    }
-
-    protected void setupTransitionOnEnter() {
-        if (isInitial() || isReplace()) {
-            overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
-        } else if (isModal()) {
-            overridePendingTransition(R.anim.slide_up, R.anim.stay_its);
-        } else {
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        }
-    }
-
-    private void setupTransitionOnFinish() {
-        if (isInitial()) {
-            overridePendingTransition(R.anim.stay_its, R.anim.stay_its);
-        } else if (isModal()) {
-            overridePendingTransition(R.anim.stay_its, R.anim.slide_down);
-        } else {
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        }
     }
 
     private Drawable getNavIcon(Bundle icon) {
@@ -180,10 +152,6 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
     private boolean isModal() {
         return route.getModal();
-    }
-
-    private boolean isReplace() {
-        return route.getAction().equals(ACTION_REPLACE);
     }
 
 }

@@ -68,7 +68,6 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
         renderToolBar();
         visitTurbolinksView();
-        setupTransitionOnEnter();
     }
 
     @Override

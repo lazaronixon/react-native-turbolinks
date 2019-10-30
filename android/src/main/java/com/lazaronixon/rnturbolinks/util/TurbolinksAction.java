@@ -6,7 +6,6 @@ import android.os.Parcelable;
 
 public class TurbolinksAction implements Parcelable {
 
-
     private int id;
     private String title;
     private Bundle icon;

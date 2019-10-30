@@ -28,7 +28,6 @@ public class NativeActivity extends ApplicationActivity {
         handleTitlePress(route.getComponent(), null, null);
 
         renderToolBar();
-        setupTransitionOnEnter();
     }
 
     @Override
