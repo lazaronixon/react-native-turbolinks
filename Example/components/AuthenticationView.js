@@ -6,7 +6,7 @@ import { baseUrl } from './../app.json'
 
 const signInUrl = baseUrl + '/sign-in'
 
-export default class AuthenticationView extends React.Component {
+export default class AuthenticationView extends Component {
 
   handleAuthentication = (event) => {
     if (event.nativeEvent.url != signInUrl) {
