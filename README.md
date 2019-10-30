@@ -5,12 +5,8 @@ A implementation of [Turbolinks for iOS](https://github.com/turbolinks/turbolink
 
 ## [Getting started](https://youtu.be/2biqMoHn3jk "Quick Start Video")
 ```sh
-# install
 yarn add react-native-turbolinks
 cd ios && pod install && cd .. # CocoaPods on iOS needs this extra step
-# run
-yarn react-native run-ios
-yarn react-native run-android
 ```
 
 ### Warning
