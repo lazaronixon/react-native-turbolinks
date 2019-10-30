@@ -19,6 +19,7 @@ class ActionsViewController: UITableViewController {
         self.popoverPresentationController?.barButtonItem = barButtonItem
         self.popoverPresentationController?.delegate = self
         self.popoverPresentationController?.backgroundColor = self.view.backgroundColor;
+        self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 12))
         self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
     }
     
