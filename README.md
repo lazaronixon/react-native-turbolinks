@@ -14,6 +14,8 @@ This component only applies to projects made with react-native init or to those 
 
 On android you should use `Volume UP` to show Developer Menu instead `⌘ M`.
 
+React Native Turbolinks doesn't support [Fast Refresh](https://facebook.github.io/react-native/docs/fast-refresh), please disable it on React Native developer menu.
+
 ## Basic Usage
 ```javascript
 import React, { Component } from 'react'
