@@ -14,7 +14,7 @@ cd ios && pod install && cd .. # CocoaPods on iOS needs this extra step
 
 - On android you should use `Volume UP` to show Developer Menu instead `⌘ M`.
 
-- React Native Turbolinks doesn't support [Fast Refresh](https://facebook.github.io/react-native/docs/fast-refresh), please disable it on React Native developer menu.
+- React Native Turbolinks doesn't support [Fast Refresh](https://facebook.github.io/react-native/docs/fast-refresh), please disable it on React Native developer menu `⌘ D`.
 
 - Upload files using web forms is not widely compatible, please use a native approach for that.
 
