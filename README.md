@@ -18,6 +18,8 @@ cd ios && pod install && cd .. # CocoaPods on iOS needs this extra step
 
 - Upload files using web forms is not widely compatible, please use a native approach for that.
 
+- Start rails with `rails s -b 0.0.0.0`.
+
 ## Basic Usage
 ```javascript
 import React, { Component } from 'react'
