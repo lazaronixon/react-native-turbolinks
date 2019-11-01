@@ -2,9 +2,9 @@ import WebKit
 import Turbolinks
 
 class TurbolinksNavigationController: UINavigationController {
-    var session: TurbolinksSession!   
+    var session: TurbolinksSession!
     var isAtRoot: Bool { return viewControllers.count == 1 }
-    
+
     required convenience init(_ manager: RNTurbolinksManager) {
         self.init()
         self.session = TurbolinksSession(setupWebView(manager))
@@ -12,14 +12,13 @@ class TurbolinksNavigationController: UINavigationController {
         if let barTintColor = manager.barTintColor { navigationBar.barTintColor = barTintColor }
         if let tintColor = manager.tintColor { navigationBar.tintColor = tintColor }
     }
-    
+
     fileprivate func setupWebView(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
         let webConfig = WKWebViewConfiguration()
-        if (manager.messageHandler != nil) { webConfig.userContentController.add(manager, name: manager.messageHandler!) }
-        if (manager.userAgent != nil) { webConfig.applicationNameForUserAgent = manager.userAgent }
-        if (manager.injectedJavaScript != nil) {
-            webConfig.userContentController.addUserScript(WKUserScript(source: manager.injectedJavaScript!, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
-        }
+        if manager.messageHandler != nil { webConfig.userContentController.add(manager, name: manager.messageHandler!) }
+        if manager.userAgent != nil { webConfig.applicationNameForUserAgent = manager.userAgent }
+        if manager.injectedJavaScript != nil { webConfig.userContentController.addUserScript(WKUserScript(source: manager.injectedJavaScript!, injectionTime: .atDocumentEnd, forMainFrameOnly: true)) }
+        webConfig.processPool = RNCWKProcessPoolManager.shared()!.sharedProcessPool()
         return webConfig
     }
 }

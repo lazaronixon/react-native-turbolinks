@@ -5,7 +5,7 @@ A implementation of [Turbolinks for iOS](https://github.com/turbolinks/turbolink
 
 ## [Getting started](https://youtu.be/2biqMoHn3jk "Quick Start Video")
 ```sh
-yarn add react-native-turbolinks
+yarn add react-native-webview react-native-turbolinks
 cd ios && pod install && cd .. # CocoaPods on iOS needs this extra step
 ```
 
