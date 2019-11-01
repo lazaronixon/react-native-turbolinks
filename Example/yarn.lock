@@ -5206,10 +5206,8 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
-react-native-turbolinks@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-turbolinks/-/react-native-turbolinks-2.1.0.tgz#c7b85d7355874da5942cf0405c3a812eddc0186c"
-  integrity sha512-XoTTci1WSifhohu3xtwRDWuz2S/ez4wWxV0CjPYFy0GjXsqX1p4xRqfY6+sTvtZIsmxZTB2fegCd54I2/sPI+g==
+"react-native-turbolinks@file:..":
+  version "2.1.2"
 
 react-native-webview@^7.4.3:
   version "7.4.3"

@@ -13,7 +13,7 @@ export default class AuthenticationView extends Component {
       this.webview.stopLoading()
 
       Turbolinks.dismiss()
-      setTimeout(() => Turbolinks.reloadSession(), 2500)
+      setTimeout(() => Turbolinks.reloadSession(), 1000)
     }
   }
 
