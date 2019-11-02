@@ -110,6 +110,8 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
         });
     }
 
+    protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
+
     private Drawable getNavIcon(Bundle icon) {
         if (icon != null) {
             return ImageLoader.loadImage(getApplicationContext(), icon.getString("uri"));
@@ -147,8 +149,6 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
             if (style.getMenuIcon() != null) toolBar.setOverflowIcon(ImageLoader.loadImage(getApplicationContext(), style.getMenuIcon().getString("uri")));
         }
     }
-
-    private boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
 
     private boolean isModal() {
         return route.getModal();

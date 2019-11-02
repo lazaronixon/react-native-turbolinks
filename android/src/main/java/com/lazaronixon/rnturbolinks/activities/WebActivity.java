@@ -67,6 +67,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
         injectedJavaScript = getIntent().getStringExtra(INTENT_INJECTED_JAVASCRIPT);
 
         renderToolBar();
+        setupAppOptions();
         visitTurbolinksView();
     }
 
@@ -180,6 +181,24 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
         getEventEmitter().emit(TURBOLINKS_MESSAGE, message);
     }
 
+    private void setupAppOptions() {
+        if (isInitial()) {
+            TurbolinksSession session = TurbolinksSession.getDefault(this);
+            WebSettings settings = session.getWebView().getSettings();
+            if (userAgent != null) { settings.setUserAgentString(settings.getUserAgentString() + " " + userAgent); }
+            if (loadingView != null) { setupProgressView(session, turbolinksViewFrame.getTurbolinksView(), loadingView); }
+            if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
+        }
+    }
+
+    private void setupProgressView(TurbolinksSession turbolinksSession, TurbolinksView turbolinksView, String loadingView) {
+        View progressView = LayoutInflater.from(this).inflate(R.layout.custom_progress, turbolinksView, false);
+        progressView.setBackground(new ColorDrawable(Color.WHITE));
+        progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
+        progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
+        turbolinksSession.progressView(progressView, progressIndicator.getId(), 500);
+    }
+
     private void handleVisitCompleted() {
         WebView webView = TurbolinksSession.getDefault(this).getWebView();
         try {
@@ -204,21 +223,11 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     }
 
     private void visitTurbolinksView() {
-        TurbolinksSession session = TurbolinksSession.getDefault(this);
-        WebSettings settings = session.getWebView().getSettings();
-        String ua = settings.getUserAgentString();
-        if (messageHandler != null) session.addJavascriptInterface(this, messageHandler);
-        if (userAgent != null && !ua.endsWith(userAgent)) { settings.setUserAgentString(ua.concat(" " + userAgent)); }
-        if (loadingView != null) { setupProgressView(session, turbolinksViewFrame.getTurbolinksView(), loadingView); }
-        session.activity(this).adapter(this).view(turbolinksViewFrame.getTurbolinksView()).visit(route.getUrl());
-    }
-
-    private void setupProgressView(TurbolinksSession turbolinksSession, TurbolinksView turbolinksView, String loadingView) {
-        View progressView = LayoutInflater.from(this).inflate(R.layout.custom_progress, turbolinksView, false);
-        progressView.setBackground(new ColorDrawable(Color.WHITE));
-        progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
-        progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
-        turbolinksSession.progressView(progressView, progressIndicator.getId(), 500);
+        TurbolinksSession.getDefault(this)
+                .activity(this)
+                .adapter(this)
+                .view(turbolinksViewFrame.getTurbolinksView())
+                .visit(route.getUrl());
     }
 
     @SuppressWarnings("deprecation")
