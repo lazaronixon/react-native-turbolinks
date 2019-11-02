@@ -62,8 +62,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void replaceWith(final ReadableMap route) {
         runOnUiThread(new Runnable() {
             public void run() {
-                TurbolinksRoute tRoute = new TurbolinksRoute(route);
-                ((ApplicationActivity) getCurrentActivity()).renderComponent(tRoute);
+                ((ApplicationActivity) getCurrentActivity()).renderComponent(new TurbolinksRoute(route));
             }
         });
     }

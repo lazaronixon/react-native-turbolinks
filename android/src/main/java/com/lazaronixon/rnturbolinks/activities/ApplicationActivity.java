@@ -113,11 +113,7 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
     protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
 
     private Drawable getNavIcon(Bundle icon) {
-        if (icon != null) {
-            return ImageLoader.loadImage(getApplicationContext(), icon.getString("uri"));
-        } else {
-            return null;
-        }
+        return (icon != null) ? ImageLoader.loadImage(getApplicationContext(), icon.getString("uri")) : null;
     }
 
     private void renderTitleImage(Bundle image) {
@@ -135,10 +131,8 @@ public abstract class ApplicationActivity extends ReactAppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon != null) {
-            if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-            menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), icon.getString("uri")));
-        }
+        if (icon != null && menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        if (icon != null) menuItem.setIcon(ImageLoader.loadImage(getApplicationContext(), icon.getString("uri")));
     }
 
     private void setupNavBarStyle(NavBarStyle style) {
