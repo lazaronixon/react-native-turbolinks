@@ -34,8 +34,7 @@ class TurbolinksTitleView : UIStackView {
     }
     
     fileprivate func addTitleImage() {
-        let image = UIImageView(image: titleImage)
-        addArrangedSubview(image)
+        addArrangedSubview(UIImageView(image: titleImage))
     }
     
     fileprivate func addTitle() {
@@ -67,7 +66,7 @@ class TurbolinksTitleView : UIStackView {
     }
     
     fileprivate func getTitlePressGesture(_ target: Any) -> UITapGestureRecognizer {
-        return UITapGestureRecognizer(target: target, action: #selector(self.handleTitlePress))
+        UITapGestureRecognizer(target: target, action: #selector(self.handleTitlePress))
     }
     
     @objc fileprivate func handleTitlePress() {
