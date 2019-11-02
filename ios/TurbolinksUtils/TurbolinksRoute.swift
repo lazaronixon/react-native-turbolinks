@@ -16,11 +16,10 @@ class TurbolinksRoute {
     var navBarDropDown: Bool = false
     
     init(_ route: Dictionary<AnyHashable, Any>) {
-        let action = RCTConvert.nsString(route["action"])
         self.title = RCTConvert.nsString(route["title"])
         self.subtitle = RCTConvert.nsString(route["subtitle"])
         self.titleImage = RCTConvert.uiImage(route["titleImage"])
-        self.action = Action(rawValue: action ?? "advance")!
+        self.action = Action(rawValue: RCTConvert.nsString(route["action"]) ?? "advance")
         self.url = RCTConvert.nsurl(route["url"])
         self.component = RCTConvert.nsString(route["component"])
         self.modal = RCTConvert.bool(route["modal"])
