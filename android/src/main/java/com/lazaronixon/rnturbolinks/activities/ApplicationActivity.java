@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
-import com.lazaronixon.rnturbolinks.react.ReactAppCompatActivity;
+import com.lazaronixon.rnturbolinks.RNTurbolinksActivity;
 import com.lazaronixon.rnturbolinks.util.ImageLoader;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
 
-public abstract class ApplicationActivity extends ReactAppCompatActivity {
+public abstract class ApplicationActivity extends RNTurbolinksActivity {
 
     private static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
     private static final String TURBOLINKS_TITLE_PRESS = "turbolinksTitlePress";
