@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactRootView;
 import com.lazaronixon.rnturbolinks.R;
+import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAV_BAR_STYLE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
@@ -39,5 +40,14 @@ public class NativeActivity extends ApplicationActivity {
 
     @Override
     public void reloadSession() { TurbolinksSession.getDefault(this).resetToColdBoot(); }
+
+    @Override
+    public void renderComponent(TurbolinksRoute route) {}
+
+    @Override
+    public void reloadVisitable() {}
+
+    @Override
+    public void injectJavaScript(String script) {}
 
 }

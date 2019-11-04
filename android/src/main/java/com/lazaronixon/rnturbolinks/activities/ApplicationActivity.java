@@ -3,18 +3,15 @@ package com.lazaronixon.rnturbolinks.activities;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.*;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
+import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
-import com.lazaronixon.rnturbolinks.RNTurbolinksActivity;
 import com.lazaronixon.rnturbolinks.util.ImageLoader;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
@@ -24,7 +21,7 @@ import java.util.ArrayList;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
 
-public abstract class ApplicationActivity extends RNTurbolinksActivity {
+public abstract class ApplicationActivity extends ReactActivity {
 
     private static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
     private static final String TURBOLINKS_TITLE_PRESS = "turbolinksTitlePress";
@@ -32,6 +29,11 @@ public abstract class ApplicationActivity extends RNTurbolinksActivity {
     protected Toolbar toolBar;
     protected TurbolinksRoute route;
     protected NavBarStyle navBarStyle;
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        return super.onKeyUp(keyCode == KeyEvent.KEYCODE_VOLUME_UP ? KeyEvent.KEYCODE_MENU : keyCode, event);
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -75,13 +77,13 @@ public abstract class ApplicationActivity extends RNTurbolinksActivity {
         getSupportActionBar().setSubtitle(subtitle);
     }
 
-    public void renderComponent(TurbolinksRoute route) {}
+    public abstract void renderComponent(TurbolinksRoute route);
 
-    public void reloadVisitable() {}
+    public abstract void reloadVisitable();
 
-    public void reloadSession() {}
+    public abstract void reloadSession();
 
-    public void injectJavaScript(String script) {}
+    public abstract void injectJavaScript(String script);
 
     protected RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
