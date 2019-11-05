@@ -34,7 +34,10 @@ class TurbolinksTitleView : UIStackView {
     }
     
     fileprivate func addTitleImage() {
-        addArrangedSubview(UIImageView(image: titleImage))
+        let imageView = UIImageView()
+        imageView.image = titleImage!.withAlignmentRectInsets(UIEdgeInsets(top: -5, left: 0, bottom: -5, right: 0))
+        imageView.contentMode = .scaleAspectFit
+        addArrangedSubview(imageView)
     }
     
     fileprivate func addTitle() {

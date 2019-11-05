@@ -1,22 +1,33 @@
 package com.lazaronixon.rnturbolinks.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.widget.LinearLayout.LayoutParams;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
+import com.facebook.common.executors.UiThreadImmediateExecutorService;
+import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ScalingUtils.ScaleType;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
-import com.lazaronixon.rnturbolinks.util.ImageLoader;
+import com.facebook.react.views.imagehelper.ImageSource;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
@@ -123,7 +134,16 @@ public abstract class ApplicationActivity extends ReactActivity {
     protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
 
     private void renderTitleImage(Bundle image) {
-        if (image != null) toolBar.addView(ImageLoader.imageViewFor(image, getApplicationContext()));
+        if (image != null) {
+            ImageSource source = new ImageSource(getApplicationContext(), image.getString("uri"));
+
+            SimpleDraweeView draweeView = new SimpleDraweeView(getApplicationContext());
+            draweeView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            draweeView.setAspectRatio(1);
+            draweeView.getHierarchy().setActualImageScaleType(ScaleType.CENTER);
+            draweeView.setImageURI(source.getUri());
+            toolBar.addView(draweeView);
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -141,12 +161,10 @@ public abstract class ApplicationActivity extends ReactActivity {
         }
     }
 
-    private boolean isModal() {
-        return route.getModal();
-    }
+    private boolean isModal() { return route.getModal(); }
 
     private void setToolbarOverFlowIcon(Bundle icon, final Toolbar toolBar) {
-        ImageLoader.bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {
+        bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {
             @Override
             public void onNewResultImpl(@Nullable Bitmap bitmap) {
                 toolBar.setOverflowIcon(new BitmapDrawable(getApplicationContext().getResources(), bitmap));
@@ -161,7 +179,7 @@ public abstract class ApplicationActivity extends ReactActivity {
 
     private void setActionBarNavIcon(Bundle icon, final ActionBar actionBar) {
         if (icon != null) {
-            ImageLoader.bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {
+            bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {
                 @Override
                 public void onNewResultImpl(@Nullable Bitmap bitmap) {
                     actionBar.setIcon(new BitmapDrawable(getApplicationContext().getResources(), bitmap));
@@ -176,7 +194,7 @@ public abstract class ApplicationActivity extends ReactActivity {
     }
 
     private void setMenuItemIcon(Bundle icon, final MenuItem menuItem) {
-        ImageLoader.bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {
+        bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {
             @Override
             public void onNewResultImpl(@Nullable Bitmap bitmap) {
                 menuItem.setIcon(new BitmapDrawable(getApplicationContext().getResources(), bitmap));
@@ -187,6 +205,16 @@ public abstract class ApplicationActivity extends ReactActivity {
                 Log.e(ApplicationActivity.class.getName(), "Invalid bitmap: ", dataSource.getFailureCause());
             }
         });
+    }
+
+    private void bitmapFor(Bundle image, Context context, BaseBitmapDataSubscriber baseBitmapDataSubscriber) {
+        ImageSource source = new ImageSource(context, image.getString("uri"));
+        ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(source.getUri()).build();
+
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, context);
+
+        dataSource.subscribe(baseBitmapDataSubscriber, UiThreadImmediateExecutorService.getInstance());
     }
 
 }
