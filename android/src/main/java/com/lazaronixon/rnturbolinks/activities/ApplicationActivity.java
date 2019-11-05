@@ -54,12 +54,11 @@ public abstract class ApplicationActivity extends ReactActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
         if (route.getActions() != null) {
-            ArrayList<Bundle> actions = route.getActions();
-            for (int i = 0; i < actions.size(); i++) {
-                TurbolinksAction action = new TurbolinksAction(actions.get(i));
-                MenuItem menuItem = menu.add(Menu.NONE, action.getId(), i, action.getTitle());
+            for (Bundle bundle : route.getActions()) {
+                TurbolinksAction action = new TurbolinksAction(bundle);
+                MenuItem menuItem = menu.add(Menu.NONE, action.getId(), route.getActions().indexOf(bundle), action.getTitle());
+                menuItem.setShowAsAction(action.getButton() ? MenuItem.SHOW_AS_ACTION_ALWAYS : MenuItem.SHOW_AS_ACTION_NEVER);
                 renderActionIcon(menu, menuItem, action.getIcon());
-                if (action.getButton()) menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             }
         }
         return true;
