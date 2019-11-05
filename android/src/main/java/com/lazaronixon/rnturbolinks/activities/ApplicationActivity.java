@@ -139,8 +139,9 @@ public abstract class ApplicationActivity extends ReactActivity {
 
             SimpleDraweeView draweeView = new SimpleDraweeView(getApplicationContext());
             draweeView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            draweeView.setPadding(0, 15, 0, 15);
             draweeView.setAspectRatio(1);
-            draweeView.getHierarchy().setActualImageScaleType(ScaleType.CENTER);
+            draweeView.getHierarchy().setActualImageScaleType(ScaleType.FIT_CENTER);
             draweeView.setImageURI(source.getUri());
             toolBar.addView(draweeView);
         }
