@@ -10,6 +10,7 @@ RCT_EXTERN_METHOD(visit:(NSDictionary *))
 RCT_EXTERN_METHOD(replaceWith:(NSDictionary *))
 RCT_EXTERN_METHOD(renderTitle:(NSString *) subtitle:(NSString *))
 RCT_EXTERN_METHOD(renderActions:(NSArray *))
+RCT_EXTERN_METHOD(renderNavBarStyle:(NSDictionary *))
 RCT_EXTERN_METHOD(startSingleScreenApp:(NSDictionary *) options:(NSDictionary *))
 RCT_EXTERN_METHOD(injectJavaScript:(NSString *))
 @end

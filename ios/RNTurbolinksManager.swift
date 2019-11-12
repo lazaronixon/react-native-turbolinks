@@ -4,10 +4,6 @@ import Turbolinks
 @objc(RNTurbolinksManager)
 class RNTurbolinksManager: RCTEventEmitter {    
     var navigationController: TurbolinksNavigationController!
-    var titleTextColor: UIColor?
-    var subtitleTextColor: UIColor?
-    var barTintColor: UIColor?
-    var tintColor: UIColor?
     var messageHandler: String?
     var injectedJavaScript: String?
     var userAgent: String?
@@ -74,6 +70,11 @@ class RNTurbolinksManager: RCTEventEmitter {
         }
     }
     
+    @objc func renderNavBarStyle(_ style: Dictionary<AnyHashable, Any>) {
+        setNavBarStyle(style)
+        refreshAppearence()
+    }
+    
     @objc func renderTitle(_ title: String,_ subtitle: String) {
         guard let visitable = navigationController.visibleViewController as? ApplicationViewController else { return }
         visitable.route.title = title
@@ -133,11 +134,20 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate func setNavBarStyle(_ style: Dictionary<AnyHashable, Any>) {
-        barTintColor = RCTConvert.uiColor(style["barTintColor"])
-        tintColor = RCTConvert.uiColor(style["tintColor"])
-        titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
-        subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
+        UINavigationBar.appearance().barTintColor = RCTConvert.uiColor(style["barTintColor"])
+        UINavigationBar.appearance().tintColor = RCTConvert.uiColor(style["tintColor"])
+        UITitleView.appearance().titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
+        UITitleView.appearance().subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
         menuIcon = RCTConvert.uiImage(style["menuIcon"])
+    }
+    
+    fileprivate func refreshAppearence() {
+        for window in application.windows {
+            for view in window.subviews {
+                view.removeFromSuperview()
+                window.addSubview(view)
+            }
+        }
     }
     
     fileprivate func addToRootViewController(_ viewController: UIViewController) {

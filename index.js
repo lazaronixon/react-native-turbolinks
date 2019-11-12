@@ -14,7 +14,7 @@ class Turbolinks {
 
   static startSingleScreenApp(route, options = {}) {
     this._processRoute(route)
-    this._processAppOptions(options)
+    this._processNavBarStyle(options.navBarStyle)
     RNTurbolinksManager.startSingleScreenApp(route, options)
   }
 
@@ -56,6 +56,11 @@ class Turbolinks {
     RNTurbolinksManager.renderActions(actions)
   }
 
+  static renderNavBarStyle(style) {
+    this._processNavBarStyle(style)
+    RNTurbolinksManager.renderNavBarStyle(style)
+  }
+
   static injectJavaScript(script) {
     return RNTurbolinksManager.injectJavaScript(script)
   }
@@ -68,17 +73,12 @@ class Turbolinks {
     RNTurbolinksManagerEmitter.removeListener(eventName, callback)
   }
 
-  static _processAppOptions(options) {
-    if (options.navBarStyle) {
-      options.navBarStyle = {
-        ...options.navBarStyle,
-        barTintColor: processColor(options.navBarStyle.barTintColor),
-        tintColor: processColor(options.navBarStyle.tintColor),
-        titleTextColor: processColor(options.navBarStyle.titleTextColor),
-        subtitleTextColor: processColor(options.navBarStyle.subtitleTextColor),
-        menuIcon: !!options.navBarStyle.menuIcon ? resolveAssetSource(options.navBarStyle.menuIcon) : undefined
-      }
-    }
+  static _processNavBarStyle(style) {
+    if (style && style.barTintColor) style.barTintColor = processColor(style.barTintColor)
+    if (style && style.tintColor) style.tintColor = processColor(style.tintColor)
+    if (style && style.titleTextColor) style.titleTextColor = processColor(style.titleTextColor)
+    if (style && style.subtitleTextColor) style.subtitleTextColor = processColor(style.subtitleTextColor)
+    if (style && style.menuIcon) style.menuIcon = resolveAssetSource(style.menuIcon)
   }
 
   static _processRoute(route) {

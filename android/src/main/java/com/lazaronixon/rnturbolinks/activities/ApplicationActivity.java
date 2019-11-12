@@ -28,6 +28,7 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.facebook.react.views.imagehelper.ImageSource;
+import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
@@ -35,6 +36,7 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 import java.util.ArrayList;
 
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 
 public abstract class ApplicationActivity extends ReactActivity {
 
@@ -43,7 +45,18 @@ public abstract class ApplicationActivity extends ReactActivity {
 
     protected Toolbar toolBar;
     protected TurbolinksRoute route;
-    protected NavBarStyle navBarStyle;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        route = getIntent().getParcelableExtra(INTENT_ROUTE);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setNavBarStyle(NavBarStyle.getInstance());
+    }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -84,12 +97,19 @@ public abstract class ApplicationActivity extends ReactActivity {
         }
     }
 
-    public void setActions(ArrayList<Bundle> actions) { route.setActions(actions); }
-
     public void renderTitle(String title, String subtitle) {
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle(subtitle);
     }
+
+    public void setNavBarStyle(NavBarStyle style) {
+        if (style.getBarTintColor() != 0) toolBar.setBackgroundColor(style.getBarTintColor());
+        if (style.getTitleTextColor() != 0) toolBar.setTitleTextColor(style.getTitleTextColor());
+        if (style.getSubtitleTextColor() != 0) toolBar.setSubtitleTextColor(style.getSubtitleTextColor());
+        if (style.getMenuIcon() != null) setToolbarOverFlowIcon(style.getMenuIcon(), toolBar);
+    }
+
+    public void setActions(ArrayList<Bundle> actions) { route.setActions(actions); }
 
     public abstract void renderComponent(TurbolinksRoute route);
 
@@ -103,18 +123,20 @@ public abstract class ApplicationActivity extends ReactActivity {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);
     }
 
-    protected void renderToolBar() {
+    protected void setupToolBar() {
+        toolBar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
+
         setActionBarNavIcon(route.getNavIcon(), getSupportActionBar());
 
-        setupNavBarStyle(navBarStyle);
+        setNavBarStyle(NavBarStyle.getInstance());
 
-        renderTitleImage(route.getTitleImage());
-
+        if (route.getTitleImage() != null) renderTitleImage(route.getTitleImage());
         if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
     }
 
@@ -133,32 +155,21 @@ public abstract class ApplicationActivity extends ReactActivity {
     protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
 
     private void renderTitleImage(Bundle image) {
-        if (image != null) {
-            ImageSource source = new ImageSource(getApplicationContext(), image.getString("uri"));
+        ImageSource source = new ImageSource(getApplicationContext(), image.getString("uri"));
 
-            SimpleDraweeView draweeView = new SimpleDraweeView(getApplicationContext());
-            draweeView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            draweeView.setPadding(0, 15, 0, 15);
-            draweeView.setAspectRatio(1);
-            draweeView.getHierarchy().setActualImageScaleType(ScaleType.FIT_CENTER);
-            draweeView.setImageURI(source.getUri());
-            toolBar.addView(draweeView);
-        }
+        SimpleDraweeView draweeView = new SimpleDraweeView(getApplicationContext());
+        draweeView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        draweeView.setPadding(0, 15, 0, 15);
+        draweeView.setAspectRatio(1);
+        draweeView.getHierarchy().setActualImageScaleType(ScaleType.FIT_CENTER);
+        draweeView.setImageURI(source.getUri());
+        toolBar.addView(draweeView);
     }
 
     @SuppressLint("RestrictedApi")
     private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
         if (icon != null && menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
         if (icon != null) setMenuItemIcon(icon, menuItem);
-    }
-
-    private void setupNavBarStyle(NavBarStyle style) {
-        if (style != null) {
-            if (style.getBarTintColor() != 0) toolBar.setBackgroundColor(style.getBarTintColor());
-            if (style.getTitleTextColor() != 0) toolBar.setTitleTextColor(style.getTitleTextColor());
-            if (style.getSubtitleTextColor() != 0) toolBar.setSubtitleTextColor(style.getSubtitleTextColor());
-            if (style.getMenuIcon() != null) setToolbarOverFlowIcon(style.getMenuIcon(), toolBar);
-        }
     }
 
     private boolean isModal() { return route.getModal(); }

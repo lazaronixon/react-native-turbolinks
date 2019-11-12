@@ -85,6 +85,9 @@ Trigger a native back event. For example if you using a custom navbar and need t
 #### `renderTitle(title, subtitle)`
 Change title of current view. For example if you want to get title from page source.
 
+#### `renderNavBarStyle(navBarStyle)`
+Change navbarStyle on run time. For example if you want to provide a way for the user to choose a theme.
+
 #### `injectJavaScript(script)`
 Function that accepts a string that will be passed to the WebView and executed immediately as JavaScript.
 

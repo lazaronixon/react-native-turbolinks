@@ -21,9 +21,9 @@ extension ApplicationViewController where Self: UIViewController {
     var _navigationItem: UINavigationItem { (self as UIViewController).navigationItem }
     var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
     
-    func renderTitle() {
-        _navigationItem.titleView = TurbolinksTitleView(self)
-    }
+    func renderTitle() { _navigationItem.titleView = UITitleView(self) }
+    
+    func setupNavigationBar() { navigationController?.navigationBar.isHidden = route.navBarHidden }
     
     func renderBackButton() {
         let backButton = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
@@ -46,12 +46,7 @@ extension ApplicationViewController where Self: UIViewController {
     func renderActions() {
         guard let actions = route.actions, !actions.isEmpty else { return }
         let icon = manager.menuIcon ?? UIImage(named: "ic_menu", in: turbolinksBundle, compatibleWith: nil)
-        let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
-        _navigationItem.rightBarButtonItem = button
-    }
-    
-    func setupNavigationBar() {
-        navigationController?.navigationBar.isHidden = route.navBarHidden
+        _navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorPresentActions)
     }
     
     func presentActions(_ sender: UIBarButtonItem) {

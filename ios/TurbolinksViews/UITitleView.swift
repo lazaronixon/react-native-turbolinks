@@ -1,12 +1,15 @@
-class TurbolinksTitleView : UIStackView {    
+open class UITitleView : UIStackView {
     fileprivate var viewController: ApplicationViewController!
     fileprivate var title: String?
     fileprivate var subtitle: String?
-    fileprivate var titleImage: UIImage?
-    fileprivate var textColor: UIColor?
-    fileprivate var subtitleTextColor: UIColor?
+    fileprivate var titleLabel: UILabel!
+    fileprivate var subtitleLabel: UILabel!
+    fileprivate var titleImage: UIImage!
     fileprivate var navBarDropDown: Bool = false
     fileprivate var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
+        
+    @objc dynamic var titleTextColor: UIColor? { willSet { titleLabel.textColor = newValue } }
+    @objc dynamic var subtitleTextColor: UIColor? { willSet { subtitleLabel.textColor = newValue } }
     
     convenience init(_ viewController: ApplicationViewController) {
         self.init()
@@ -15,8 +18,6 @@ class TurbolinksTitleView : UIStackView {
         self.subtitle = viewController.route.subtitle
         self.titleImage = viewController.route.titleImage
         self.navBarDropDown = viewController.route.navBarDropDown
-        self.textColor = viewController.manager.titleTextColor ?? .black
-        self.subtitleTextColor = viewController.manager.subtitleTextColor ?? .gray
         self.configureView()
         
         if titleImage != nil {
@@ -35,7 +36,8 @@ class TurbolinksTitleView : UIStackView {
     
     fileprivate func addTitleImage() {
         let imageView = UIImageView()
-        imageView.image = titleImage!.withAlignmentRectInsets(UIEdgeInsets(top: -5, left: 0, bottom: -5, right: 0))
+        let insets = UIEdgeInsets(top: -5, left: 0, bottom: -5, right: 0)
+        imageView.image = titleImage.withAlignmentRectInsets(insets)
         imageView.contentMode = .scaleAspectFit
         addArrangedSubview(imageView)
     }
@@ -46,11 +48,11 @@ class TurbolinksTitleView : UIStackView {
         stackView.alignment = .center
         stackView.spacing = 5
         
-        let label = UILabel()
-        label.text = title
-        label.textColor = textColor
-        label.font = .boldSystemFont(ofSize: 17)
-        stackView.addArrangedSubview(label)
+        titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.textColor = titleTextColor
+        titleLabel.font = .boldSystemFont(ofSize: 17)
+        stackView.addArrangedSubview(titleLabel!)
         
         if (self.navBarDropDown) {
             let dropDown = UIImageView(image: UIImage(named: "ic_caret", in: turbolinksBundle, compatibleWith: nil))
@@ -61,11 +63,11 @@ class TurbolinksTitleView : UIStackView {
     }
     
     fileprivate func addSubtitle() {
-        let label = UILabel()
-        label.text = subtitle
-        label.textColor = subtitleTextColor
-        label.font = UIFont.systemFont(ofSize: 12)
-        addArrangedSubview(label)
+        subtitleLabel = UILabel()
+        subtitleLabel.text = subtitle
+        subtitleLabel.textColor = subtitleTextColor
+        subtitleLabel.font = UIFont.systemFont(ofSize: 12)
+        addArrangedSubview(subtitleLabel)
     }
     
     fileprivate func getTitlePressGesture(_ target: Any) -> UITapGestureRecognizer {

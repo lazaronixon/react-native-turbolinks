@@ -35,7 +35,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public static final String INTENT_LOADING_VIEW = "intentLoadingView";
     public static final String INTENT_INJECTED_JAVASCRIPT = "intentInjectedJavaScript";
     public static final String INTENT_INITIAL = "intentInitial";
-    public static final String INTENT_NAV_BAR_STYLE = "intentNavBarStyle";
 
     private TurbolinksRoute prevRoute;
     private String messageHandler;
@@ -43,7 +42,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     private String loadingView;
     private String injectedJavaScript;
     private Intent initialIntent;
-    private ReadableMap navBarStyle;
 
     public RNTurbolinksModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -52,6 +50,8 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void startSingleScreenApp(ReadableMap route, ReadableMap options) {
         setAppOptions(options);
+        setNavBarStyle(options);
+
         visit(route, true);
     }
 
@@ -110,10 +110,18 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         runOnUiThread(new Runnable() {
             public void run() {
                 ApplicationActivity act = (ApplicationActivity) getCurrentActivity();
-                if (act != null) {
-                    act.setActions(Arguments.toList(actions));
-                    act.invalidateOptionsMenu();
-                }
+                act.setActions(Arguments.toList(actions));
+                act.invalidateOptionsMenu();
+            }
+        });
+    }
+
+    @ReactMethod
+    public void renderNavBarStyle(final ReadableMap style) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                ApplicationActivity act = (ApplicationActivity) getCurrentActivity();
+                act.setNavBarStyle(NavBarStyle.getInstance().build(style));
             }
         });
     }
@@ -142,7 +150,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         this.messageHandler = opts.hasKey("messageHandler") ? opts.getString("messageHandler") : null;
         this.userAgent = opts.hasKey("userAgent") ? opts.getString("userAgent") : null;
         this.loadingView = opts.hasKey("loadingView") ? opts.getString("loadingView") : null;
-        this.navBarStyle = opts.hasKey("navBarStyle") ? opts.getMap("navBarStyle") : null;
         this.injectedJavaScript = opts.hasKey("injectedJavaScript") ? opts.getString("injectedJavaScript") : null;
     }
 
@@ -170,7 +177,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
                 intent.putExtra(INTENT_LOADING_VIEW, loadingView);
                 intent.putExtra(INTENT_INJECTED_JAVASCRIPT, injectedJavaScript);
                 intent.putExtra(INTENT_ROUTE, route);
-                intent.putExtra(INTENT_NAV_BAR_STYLE, navBarStyle != null ? new NavBarStyle(navBarStyle) : null);
                 act.startActivity(intent);
 
                 if (isInitial) initialIntent = intent;
@@ -194,7 +200,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(getReactApplicationContext(), NativeActivity.class);
         intent.putExtra(INTENT_ROUTE, route);
         intent.putExtra(INTENT_INITIAL, isInitial);
-        intent.putExtra(INTENT_NAV_BAR_STYLE, navBarStyle != null ? new NavBarStyle(navBarStyle) : null);
         act.startActivity(intent);
 
         if (isInitial) initialIntent = intent;
@@ -205,6 +210,10 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
 
     private boolean getIntentInitial(Activity act) {
         return act.getIntent().getBooleanExtra(INTENT_INITIAL, true);
+    }
+
+    private void setNavBarStyle(ReadableMap opts) {
+        if (opts.hasKey("navBarStyle")) NavBarStyle.getInstance().build(opts.getMap("navBarStyle"));
     }
 
 }

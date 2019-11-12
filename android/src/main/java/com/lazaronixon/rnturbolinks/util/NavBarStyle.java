@@ -1,13 +1,12 @@
 package com.lazaronixon.rnturbolinks.util;
 
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableMap;
 
-public class NavBarStyle implements Parcelable {
+public class NavBarStyle {
+    static volatile NavBarStyle defaultInstance;
 
     private static final String TITLE_TEXT_COLOR = "titleTextColor";
     private static final String SUBTITLE_TEXT_COLOR = "subtitleTextColor";
@@ -19,45 +18,21 @@ public class NavBarStyle implements Parcelable {
     private int barTintColor;
     private Bundle menuIcon;
 
-    public NavBarStyle(ReadableMap rp) {
+    public NavBarStyle() {
+        this.titleTextColor = 0;
+        this.subtitleTextColor = 0;
+        this.barTintColor = 0;
+        this.menuIcon = null;
+    }
+
+    public NavBarStyle build(ReadableMap rp) {
         ReadableMap menuIcon = rp.hasKey(MENU_ICON) ? rp.getMap(MENU_ICON) : null;
         this.titleTextColor = rp.hasKey(TITLE_TEXT_COLOR) && !rp.isNull(TITLE_TEXT_COLOR) ? rp.getInt(TITLE_TEXT_COLOR) : 0;
         this.subtitleTextColor = rp.hasKey(SUBTITLE_TEXT_COLOR) && !rp.isNull(SUBTITLE_TEXT_COLOR) ? rp.getInt(SUBTITLE_TEXT_COLOR) : 0;
         this.barTintColor = rp.hasKey(BAR_TINT_COLOR) && !rp.isNull(BAR_TINT_COLOR) ? rp.getInt(BAR_TINT_COLOR) : 0;
         this.menuIcon = menuIcon != null ? Arguments.toBundle(menuIcon) : null;
+        return this;
     }
-
-    protected NavBarStyle(Parcel in) {
-        titleTextColor = in.readInt();
-        subtitleTextColor = in.readInt();
-        barTintColor = in.readInt();
-        menuIcon = in.readBundle();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(titleTextColor);
-        dest.writeInt(subtitleTextColor);
-        dest.writeInt(barTintColor);
-        dest.writeBundle(menuIcon);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<NavBarStyle> CREATOR = new Creator<NavBarStyle>() {
-        @Override
-        public NavBarStyle createFromParcel(Parcel in) {
-            return new NavBarStyle(in);
-        }
-
-        @Override
-        public NavBarStyle[] newArray(int size) {
-            return new NavBarStyle[size];
-        }
-    };
 
     public int getTitleTextColor() {
         return titleTextColor;
@@ -73,6 +48,17 @@ public class NavBarStyle implements Parcelable {
 
     public Bundle getMenuIcon() {
         return menuIcon;
+    }
+
+    public static NavBarStyle getInstance() {
+        if (defaultInstance == null) {
+            synchronized (NavBarStyle.class) {
+                if (defaultInstance == null) {
+                    defaultInstance = new NavBarStyle();
+                }
+            }
+        }
+        return defaultInstance;
     }
 
 }

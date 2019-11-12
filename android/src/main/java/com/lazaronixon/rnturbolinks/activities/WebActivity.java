@@ -30,8 +30,6 @@ import java.net.URL;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INJECTED_JAVASCRIPT;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_LOADING_VIEW;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_NAV_BAR_STYLE;
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
 
 public class WebActivity extends ApplicationActivity implements TurbolinksAdapter {
@@ -54,10 +52,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-
-        toolBar = findViewById(R.id.toolbar);
-        route = getIntent().getParcelableExtra(INTENT_ROUTE);
-        navBarStyle = getIntent().getParcelableExtra(INTENT_NAV_BAR_STYLE);
+        setupToolBar();
 
         turbolinksViewFrame = findViewById(R.id.turbolinks_view);
 
@@ -66,7 +61,6 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
         loadingView = getIntent().getStringExtra(INTENT_LOADING_VIEW);
         injectedJavaScript = getIntent().getStringExtra(INTENT_INJECTED_JAVASCRIPT);
 
-        renderToolBar();
         setupAppOptions();
         visitTurbolinksView();
     }

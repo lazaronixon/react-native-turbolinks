@@ -9,8 +9,6 @@ class TurbolinksNavigationController: UINavigationController {
         self.init()
         self.session = TurbolinksSession(setupWebView(manager))
         self.session.delegate = manager
-        if let barTintColor = manager.barTintColor { navigationBar.barTintColor = barTintColor }
-        if let tintColor = manager.tintColor { navigationBar.tintColor = tintColor }
     }
 
     fileprivate func setupWebView(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
