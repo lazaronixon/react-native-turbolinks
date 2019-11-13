@@ -6,7 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -103,9 +106,9 @@ public abstract class ApplicationActivity extends ReactActivity {
     }
 
     public void setNavBarStyle(NavBarStyle style) {
-        if (style.getBarTintColor() != 0) toolBar.setBackgroundColor(style.getBarTintColor());
-        if (style.getTitleTextColor() != 0) toolBar.setTitleTextColor(style.getTitleTextColor());
-        if (style.getSubtitleTextColor() != 0) toolBar.setSubtitleTextColor(style.getSubtitleTextColor());
+        if (style.getBarTintColor() != null) toolBar.setBackgroundColor(style.getBarTintColor());
+        if (style.getTitleTextColor() != null) toolBar.setTitleTextColor(style.getTitleTextColor());
+        if (style.getSubtitleTextColor() != null) toolBar.setSubtitleTextColor(style.getSubtitleTextColor());
         if (style.getMenuIcon() != null) setToolbarOverFlowIcon(style.getMenuIcon(), toolBar);
     }
 

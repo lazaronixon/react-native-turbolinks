@@ -1,7 +1,6 @@
 package com.lazaronixon.rnturbolinks.util;
 
 import android.os.Bundle;
-
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableMap;
 
@@ -13,36 +12,32 @@ public class NavBarStyle {
     private static final String BAR_TINT_COLOR = "barTintColor";
     private static final String MENU_ICON = "menuIcon";
 
-    private int titleTextColor;
-    private int subtitleTextColor;
-    private int barTintColor;
+    private Integer titleTextColor;
+    private Integer subtitleTextColor;
+    private Integer barTintColor;
     private Bundle menuIcon;
 
-    public NavBarStyle() {
-        this.titleTextColor = 0;
-        this.subtitleTextColor = 0;
-        this.barTintColor = 0;
-        this.menuIcon = null;
+    private NavBarStyle() {
     }
 
-    public NavBarStyle build(ReadableMap rp) {
+    public NavBarStyle setData(ReadableMap rp) {
         ReadableMap menuIcon = rp.hasKey(MENU_ICON) ? rp.getMap(MENU_ICON) : null;
-        this.titleTextColor = rp.hasKey(TITLE_TEXT_COLOR) && !rp.isNull(TITLE_TEXT_COLOR) ? rp.getInt(TITLE_TEXT_COLOR) : 0;
-        this.subtitleTextColor = rp.hasKey(SUBTITLE_TEXT_COLOR) && !rp.isNull(SUBTITLE_TEXT_COLOR) ? rp.getInt(SUBTITLE_TEXT_COLOR) : 0;
-        this.barTintColor = rp.hasKey(BAR_TINT_COLOR) && !rp.isNull(BAR_TINT_COLOR) ? rp.getInt(BAR_TINT_COLOR) : 0;
+        this.titleTextColor = rp.hasKey(TITLE_TEXT_COLOR) && !rp.isNull(TITLE_TEXT_COLOR) ? rp.getInt(TITLE_TEXT_COLOR) : null;
+        this.subtitleTextColor = rp.hasKey(SUBTITLE_TEXT_COLOR) && !rp.isNull(SUBTITLE_TEXT_COLOR) ? rp.getInt(SUBTITLE_TEXT_COLOR) : null;
+        this.barTintColor = rp.hasKey(BAR_TINT_COLOR) && !rp.isNull(BAR_TINT_COLOR) ? rp.getInt(BAR_TINT_COLOR) : null;
         this.menuIcon = menuIcon != null ? Arguments.toBundle(menuIcon) : null;
         return this;
     }
 
-    public int getTitleTextColor() {
+    public Integer getTitleTextColor() {
         return titleTextColor;
     }
 
-    public int getSubtitleTextColor() {
+    public Integer getSubtitleTextColor() {
         return subtitleTextColor;
     }
 
-    public int getBarTintColor() {
+    public Integer getBarTintColor() {
         return barTintColor;
     }
 

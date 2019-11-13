@@ -5,12 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import com.basecamp.turbolinks.TurbolinksSession;
-import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.*;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
 import com.lazaronixon.rnturbolinks.activities.ApplicationActivity;
@@ -121,7 +116,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         runOnUiThread(new Runnable() {
             public void run() {
                 ApplicationActivity act = (ApplicationActivity) getCurrentActivity();
-                act.setNavBarStyle(NavBarStyle.getInstance().build(style));
+                act.setNavBarStyle(NavBarStyle.getInstance().setData(style));
             }
         });
     }
@@ -213,7 +208,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     private void setNavBarStyle(ReadableMap opts) {
-        if (opts.hasKey("navBarStyle")) NavBarStyle.getInstance().build(opts.getMap("navBarStyle"));
+        if (opts.hasKey("navBarStyle")) NavBarStyle.getInstance().setData(opts.getMap("navBarStyle"));
     }
 
 }

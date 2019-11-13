@@ -7,12 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-
+import android.webkit.*;
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
@@ -27,10 +22,7 @@ import com.lazaronixon.rnturbolinks.util.TurbolinksViewFrame;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INJECTED_JAVASCRIPT;
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_LOADING_VIEW;
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_MESSAGE_HANDLER;
-import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_USER_AGENT;
+import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.*;
 
 public class WebActivity extends ApplicationActivity implements TurbolinksAdapter {
 

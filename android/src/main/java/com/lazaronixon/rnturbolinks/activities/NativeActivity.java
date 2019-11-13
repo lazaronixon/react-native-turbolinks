@@ -1,7 +1,6 @@
 package com.lazaronixon.rnturbolinks.activities;
 
 import android.os.Bundle;
-
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactRootView;
 import com.lazaronixon.rnturbolinks.R;
