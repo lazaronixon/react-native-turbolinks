@@ -115,6 +115,7 @@ Removes the listener for given event.
 - Component properties
   - `component`: Component to visit. (Required)
   - `modal`: A boolean to show a view without navbar and backbutton. (Default false)
+  - `dismissable`: When true is possible dismiss modal. (Default false)  
   - `passProps`: Passes this in as props to the rendered component.
 - Common properties
   - `title`: The default value is the title of the Web page.

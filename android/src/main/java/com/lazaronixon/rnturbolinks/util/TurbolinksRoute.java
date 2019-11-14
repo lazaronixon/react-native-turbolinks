@@ -18,6 +18,7 @@ public class TurbolinksRoute implements Parcelable {
     private String component;
     private String action;
     private boolean modal;
+    private boolean dismissable;
     private Bundle passProps;
     private String title;
     private String subtitle;
@@ -35,6 +36,7 @@ public class TurbolinksRoute implements Parcelable {
         this.component = rp.hasKey("component") ? rp.getString("component") : null;
         this.action = rp.hasKey("action") ? rp.getString("action") : ACTION_ADVANCE;
         this.modal = rp.hasKey("modal") && rp.getBoolean("modal");
+        this.dismissable = rp.hasKey("dismissable") && rp.getBoolean("dismissable");
         this.passProps = props != null ? Arguments.toBundle(props) : null;
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
@@ -49,6 +51,7 @@ public class TurbolinksRoute implements Parcelable {
         this.component = bundle.getString("component");
         this.action = bundle.getString("action");
         this.modal = bundle.getBoolean("modal");
+        this.dismissable = bundle.getBoolean("dismissable");
         this.passProps = bundle.getBundle("passProps");
         this.title = bundle.getString("title");
         this.subtitle = bundle.getString("subtitle");
@@ -63,6 +66,7 @@ public class TurbolinksRoute implements Parcelable {
         component = in.readString();
         action = in.readString();
         modal = in.readByte() != 0;
+        dismissable = in.readByte() != 0;
         passProps = in.readBundle();
         title = in.readString();
         subtitle = in.readString();
@@ -78,6 +82,7 @@ public class TurbolinksRoute implements Parcelable {
         dest.writeString(component);
         dest.writeString(action);
         dest.writeByte((byte) (modal ? 1 : 0));
+        dest.writeByte((byte) (dismissable ? 1 : 0));
         dest.writeBundle(passProps);
         dest.writeString(title);
         dest.writeString(subtitle);
@@ -122,6 +127,10 @@ public class TurbolinksRoute implements Parcelable {
 
     public boolean getModal() {
         return modal;
+    }
+
+    public boolean getDismissable() {
+        return dismissable;
     }
 
     public Bundle getPassProps() {

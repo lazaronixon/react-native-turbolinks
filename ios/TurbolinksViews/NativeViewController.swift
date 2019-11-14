@@ -7,9 +7,9 @@ class NativeViewController: UIViewController {
     
     convenience required init(_ manager: RNTurbolinksManager,_ route: TurbolinksRoute) {
         self.init()
-        self.modalPresentationStyle = .fullScreen
         self.manager = manager
         self.route = route
+        self.modalPresentationStyle = route.dismissable ? .formSheet : .fullScreen
     }
     
     override func loadView() {

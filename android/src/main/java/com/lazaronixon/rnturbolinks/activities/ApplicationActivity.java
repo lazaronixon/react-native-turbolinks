@@ -93,7 +93,7 @@ public abstract class ApplicationActivity extends ReactActivity {
 
     @Override
     public void onBackPressed() {
-        if (isInitial() || isModal()) {
+        if (isInitial() || (isModal() && !isDismissable())) {
             moveTaskToBack(true);
         } else {
             super.onBackPressed();
@@ -176,6 +176,8 @@ public abstract class ApplicationActivity extends ReactActivity {
     }
 
     private boolean isModal() { return route.getModal(); }
+
+    private boolean isDismissable() { return route.getDismissable(); }
 
     private void setToolbarOverFlowIcon(Bundle icon, final Toolbar toolBar) {
         bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {

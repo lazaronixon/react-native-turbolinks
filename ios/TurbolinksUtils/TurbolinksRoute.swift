@@ -8,6 +8,7 @@ class TurbolinksRoute {
     var url: URL?
     var component: String?
     var modal: Bool = false
+    var dismissable: Bool = false
     var passProps: Dictionary<AnyHashable, Any>?
     var actions: Array<Dictionary<AnyHashable, Any>>?
     var leftButtonIcon: UIImage?
@@ -23,6 +24,7 @@ class TurbolinksRoute {
         self.url = RCTConvert.nsurl(route["url"])
         self.component = RCTConvert.nsString(route["component"])
         self.modal = RCTConvert.bool(route["modal"])
+        self.dismissable = RCTConvert.bool(route["dismissable"])
         self.passProps = RCTConvert.nsDictionary(route["passProps"])
         self.actions = RCTConvert.nsDictionaryArray(route["actions"])
         self.leftButtonIcon = RCTConvert.uiImage(route["leftButtonIcon"])
