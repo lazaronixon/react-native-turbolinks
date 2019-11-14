@@ -19,7 +19,7 @@ export default class AuthenticationView extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      <SafeAreaView style={{flex: 1}}>
         <WebView ref={webview => { this.webview = webview }}
                  source={{uri: signInUrl}}
                  onLoadStart={this.handleAuthentication}/>
