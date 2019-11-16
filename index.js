@@ -65,7 +65,7 @@ class Turbolinks {
   }
 
   static injectJavaScript(script) {
-    return RNTurbolinksManager.injectJavaScript(script)
+    RNTurbolinksManager.injectJavaScript(script)
   }
 
   static addEventListener(eventName, callback) {
