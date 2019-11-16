@@ -28,14 +28,17 @@ class Turbolinks {
 
   static dismiss(animated = true) {
     RNTurbolinksManager.dismiss(animated)
+    return new Promise((resolve) => setTimeout(() => resolve(), 1000))
   }
 
   static popToRoot(animated = true) {
     RNTurbolinksManager.popToRoot(animated)
+    return new Promise((resolve) => setTimeout(() => resolve(), 1000))
   }
 
   static back(animated = true) {
     RNTurbolinksManager.back(animated)
+    return new Promise((resolve) => setTimeout(() => resolve(), 1000))
   }
 
   static visit(route) {

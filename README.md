@@ -73,13 +73,13 @@ Reload current visitable. For example when a connection error view is launched a
 Reload current session.
 
 #### `dismiss(animated)`
-Dismiss a overlaped view presented by visiting a component with modal option.
+Dismiss a overlaped view presented by visiting a component with modal option. Return a promise.
 
 #### `popToRoot(animated)`
-Back until to root view.
+Back until to root view. Return a promise.
 
 #### `back(animated)`
-Trigger a native back event. For example if you using a custom navbar and need to provide a back button.
+Trigger a native back event. For example if you using a custom navbar and need to provide a back button. Return a promise.
 
 #### `renderTitle(title)`
 #### `renderTitle(title, subtitle)`
