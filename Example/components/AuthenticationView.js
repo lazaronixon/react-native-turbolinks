@@ -11,16 +11,14 @@ export default class AuthenticationView extends Component {
   handleAuthentication = (event) => {
     if (event.nativeEvent.url != signInUrl) {
       this.webview.stopLoading()
-
-      Turbolinks.dismiss()
-      setTimeout(() => Turbolinks.reloadSession(), 1000)
+      Turbolinks.dismiss().then(() => Turbolinks.reloadSession())
     }
   }
 
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
-        <WebView ref={webview => { this.webview = webview }}
+        <WebView ref={ref => (this.webview = ref)}
                  source={{uri: signInUrl}}
                  onLoadStart={this.handleAuthentication}/>
       </SafeAreaView>
