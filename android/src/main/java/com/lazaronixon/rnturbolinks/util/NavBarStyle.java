@@ -20,13 +20,12 @@ public class NavBarStyle {
     private NavBarStyle() {
     }
 
-    public NavBarStyle setData(ReadableMap rp) {
+    private NavBarStyle(ReadableMap rp) {
         ReadableMap menuIcon = rp.hasKey(MENU_ICON) ? rp.getMap(MENU_ICON) : null;
         this.titleTextColor = rp.hasKey(TITLE_TEXT_COLOR) && !rp.isNull(TITLE_TEXT_COLOR) ? rp.getInt(TITLE_TEXT_COLOR) : null;
         this.subtitleTextColor = rp.hasKey(SUBTITLE_TEXT_COLOR) && !rp.isNull(SUBTITLE_TEXT_COLOR) ? rp.getInt(SUBTITLE_TEXT_COLOR) : null;
         this.barTintColor = rp.hasKey(BAR_TINT_COLOR) && !rp.isNull(BAR_TINT_COLOR) ? rp.getInt(BAR_TINT_COLOR) : null;
         this.menuIcon = menuIcon != null ? Arguments.toBundle(menuIcon) : null;
-        return this;
     }
 
     public Integer getTitleTextColor() {
@@ -45,7 +44,7 @@ public class NavBarStyle {
         return menuIcon;
     }
 
-    public static NavBarStyle getInstance() {
+    public static NavBarStyle getDefault() {
         if (defaultInstance == null) {
             synchronized (NavBarStyle.class) {
                 if (defaultInstance == null) {
@@ -54,6 +53,10 @@ public class NavBarStyle {
             }
         }
         return defaultInstance;
+    }
+
+    public static NavBarStyle getNew(ReadableMap rp) {
+        return new NavBarStyle(rp);
     }
 
 }

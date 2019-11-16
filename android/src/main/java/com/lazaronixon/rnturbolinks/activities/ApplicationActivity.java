@@ -58,7 +58,7 @@ public abstract class ApplicationActivity extends ReactActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        setNavBarStyle(NavBarStyle.getInstance());
+        setNavBarStyle(NavBarStyle.getDefault());
     }
 
     @Override
@@ -137,7 +137,7 @@ public abstract class ApplicationActivity extends ReactActivity {
 
         setActionBarNavIcon(route.getNavIcon(), getSupportActionBar());
 
-        setNavBarStyle(NavBarStyle.getInstance());
+        setNavBarStyle(NavBarStyle.getDefault());
 
         if (route.getTitleImage() != null) renderTitleImage(route.getTitleImage());
         if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();

@@ -116,7 +116,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         runOnUiThread(new Runnable() {
             public void run() {
                 ApplicationActivity act = (ApplicationActivity) getCurrentActivity();
-                act.setNavBarStyle(NavBarStyle.getInstance().setData(style));
+                act.setNavBarStyle(NavBarStyle.getNew(style));
             }
         });
     }
@@ -208,7 +208,7 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     private void setNavBarStyle(ReadableMap opts) {
-        if (opts.hasKey("navBarStyle")) NavBarStyle.getInstance().setData(opts.getMap("navBarStyle"));
+        if (opts.hasKey("navBarStyle")) NavBarStyle.getNew(opts.getMap("navBarStyle"));
     }
 
 }
