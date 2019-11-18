@@ -16,7 +16,7 @@ class TurbolinksNavigationController: UINavigationController {
         if manager.messageHandler != nil { result.userContentController.add(manager, name: manager.messageHandler!) }
         if manager.userAgent != nil { result.applicationNameForUserAgent = manager.userAgent }
         if manager.injectedJavaScript != nil { result.userContentController.addUserScript(WKUserScript(source: manager.injectedJavaScript!, injectionTime: .atDocumentEnd, forMainFrameOnly: true)) }
-        result.processPool = RNCWKProcessPoolManager.shared()!.sharedProcessPool()
+        if RNCWKProcessPoolManager.shared() != nil { result.processPool = RNCWKProcessPoolManager.shared().sharedProcessPool() }
         return result
     }
 }
