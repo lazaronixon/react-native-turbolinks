@@ -147,7 +147,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
     @Override
     public void reloadSession() {
-        refreshCookies();
+        flushCookies();
         TurbolinksSession.getDefault(this).resetToColdBoot();
         TurbolinksSession.getDefault(this).visit(route.getUrl());
     }
@@ -218,7 +218,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     }
 
     @SuppressWarnings("deprecation")
-    private void refreshCookies() {
+    private void flushCookies() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().flush();
         } else {
