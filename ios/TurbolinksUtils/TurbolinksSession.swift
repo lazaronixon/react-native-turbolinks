@@ -7,6 +7,36 @@ class TurbolinksSession: Session {
         self.webView.uiDelegate = self
         self.webView.allowsLinkPreview = false
     }
+    
+    override func reload() {
+        injectSharedCookies()
+        super.reload()
+    }
+    
+    fileprivate func injectSharedCookies() {
+        if #available(iOS 11.0, *) {
+            HTTPCookieStorage.shared.cookies?.forEach({ (cookie) in
+                webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+            })
+        } else {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US")
+            formatter.timeZone = TimeZone(abbreviation: "UTC")
+            formatter.dateFormat = "EEE, d MMM yyyy HH:mm:ss zzz"
+            
+            var script = ""
+            script.append("(function () {\n")
+            HTTPCookieStorage.shared.cookies?.forEach({ (cookie) in
+                script.append(String(format: "document.cookie = \"%@=%@", cookie.name, cookie.value))
+                if (cookie.path != "") { script.append(String(format: "; Path=%@", cookie.path)) }
+                if (cookie.expiresDate != nil) { script.append(String(format: "; Expires=%@)", formatter.string(from: cookie.expiresDate!))) }
+                script.append("\";\n")
+            })
+            script.append("})();\n")
+            
+            webView.evaluateJavaScript(script)
+        }
+    }
 }
 
 extension TurbolinksSession: WKUIDelegate {
