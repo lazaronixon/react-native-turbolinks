@@ -28,8 +28,8 @@ class TurbolinksSession: Session {
             script.append("(function () {\n")
             HTTPCookieStorage.shared.cookies?.forEach({ (cookie) in
                 script.append(String(format: "document.cookie = \"%@=%@", cookie.name, cookie.value))
-                if (cookie.path != "") { script.append(String(format: "; Path=%@", cookie.path)) }
-                if (cookie.expiresDate != nil) { script.append(String(format: "; Expires=%@)", formatter.string(from: cookie.expiresDate!))) }
+                if cookie.path != "" { script.append(String(format: "; Path=%@", cookie.path)) }
+                if cookie.expiresDate != nil { script.append(String(format: "; Expires=%@)", formatter.string(from: cookie.expiresDate!))) }
                 script.append("\";\n")
             })
             script.append("})();\n")
