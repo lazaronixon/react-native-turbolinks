@@ -89,7 +89,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func injectJavaScript(_ script: String) {
-        navigationController.session.webView.evaluateJavaScript(script)
+        session.webView.evaluateJavaScript(script)
     }
     
     fileprivate func presentVisitableForSession(_ route: TurbolinksRoute) {
