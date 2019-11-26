@@ -5,11 +5,12 @@ import Turbolinks from 'react-native-turbolinks'
 import { baseUrl } from './../app.json'
 
 const signInUrl = baseUrl + '/sign-in'
+const signedUrl = baseUrl + '/'
 
 export default class AuthenticationView extends Component {
 
   handleAuthentication = (event) => {
-    if (event.nativeEvent.url != signInUrl) {
+    if (event.nativeEvent.url == signedUrl) {
       this.webview.stopLoading()
       Turbolinks.dismiss().then(() => Turbolinks.reloadSession())
     }
