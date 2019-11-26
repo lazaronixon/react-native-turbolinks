@@ -8,27 +8,23 @@ class TurbolinksSession: Session {
         self.webView.allowsLinkPreview = false
     }
     
-    override func reload() {
-        injectSharedCookies()
-        super.reload()
-    }
-    
-    fileprivate func injectSharedCookies() {
+    func injectSharedCookies() {
         if #available(iOS 11.0, *) {
             HTTPCookieStorage.shared.cookies?.forEach({ (cookie) in
                 webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
             })
         } else {
             var script = ""
-            script.append("(function () {\n")
+            var isEvaluatingJavaScript = true
             HTTPCookieStorage.shared.cookies?.forEach({ (cookie) in
                 script.append(String(format: "document.cookie = \"%@=%@", cookie.name, cookie.value))
                 if cookie.path != "" { script.append(String(format: "; Path=%@", cookie.path)) }
                 if cookie.expiresDate != nil { script.append(String(format: "; Expires=%@", toUTCString(cookie.expiresDate!))) }
                 script.append("\";\n")
             })
-            script.append("})();\n")            
-            webView.evaluateJavaScript(script)
+            
+            webView.evaluateJavaScript(script) { (response, error) in isEvaluatingJavaScript = false }
+            while isEvaluatingJavaScript { RunLoop.main.run(mode: .default, before: .distantFuture) }
         }
         
         func toUTCString(_ date: Date) -> String {
