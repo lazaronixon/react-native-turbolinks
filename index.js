@@ -71,6 +71,7 @@ class Turbolinks {
 
   static injectJavaScript(script) {
     RNTurbolinksManager.injectJavaScript(script)
+    return new Promise((resolve) => setTimeout(() => resolve(), 1000))
   }
 
   static addEventListener(eventName, callback) {

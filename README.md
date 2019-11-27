@@ -95,7 +95,7 @@ Change actions of current view. For example if you want to mount a menu looking 
 Change navbarStyle on run time. For example if you want to provide a way for the user to choose a theme.
 
 #### `injectJavaScript(script)`
-Function that accepts a string that will be passed to the WebView and executed immediately as JavaScript.
+Function that accepts a string that will be passed to the WebView and executed immediately as JavaScript. Return a promise.
 
 #### `addEventListener(eventName, handler)`
 Adds an event handler. Supported events:
