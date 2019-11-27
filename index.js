@@ -26,6 +26,10 @@ class Turbolinks {
     RNTurbolinksManager.reloadSession()
   }
 
+  static removeAllCookies() {
+    RNTurbolinksManager.removeAllCookies()
+  }
+
   static dismiss(animated = true) {
     RNTurbolinksManager.dismiss(animated)
     return new Promise((resolve) => setTimeout(() => resolve(), 1000))

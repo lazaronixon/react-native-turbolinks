@@ -72,6 +72,9 @@ Reload current visitable. For example when a connection error view is launched a
 #### `reloadSession()`
 Reload current session.
 
+#### `removeAllCookies()`
+Remove all cookies.
+
 #### `dismiss(animated)`
 Dismiss a overlaped view presented by visiting a component with modal option. Return a promise.
 

@@ -3,6 +3,7 @@
 @interface RCT_EXTERN_MODULE(RNTurbolinksManager, NSObject)
 RCT_EXTERN_METHOD(reloadVisitable)
 RCT_EXTERN_METHOD(reloadSession)
+RCT_EXTERN_METHOD(removeAllCookies)
 RCT_EXTERN_METHOD(dismiss:(BOOL *))
 RCT_EXTERN_METHOD(popToRoot:(BOOL *))
 RCT_EXTERN_METHOD(back:(BOOL *))

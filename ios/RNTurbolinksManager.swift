@@ -42,6 +42,11 @@ class RNTurbolinksManager: RCTEventEmitter {
         session.reload()
     }
     
+    @objc func removeAllCookies() {
+        removeSharedCookies()
+        removeWKWebViewCookies()
+    }
+    
     @objc func dismiss(_ animated: Bool) {
         navigationController.dismiss(animated: animated)
     }
@@ -155,6 +160,18 @@ class RNTurbolinksManager: RCTEventEmitter {
         rootViewController.dismiss(animated: false)
         rootViewController.addChild(viewController)
         rootViewController.view.addSubview(viewController.view)
+    }
+        
+    fileprivate func removeSharedCookies() {
+        HTTPCookieStorage.shared.cookies?.forEach(HTTPCookieStorage.shared.deleteCookie)
+    }
+    
+    fileprivate func removeWKWebViewCookies() {
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
+        }
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {
