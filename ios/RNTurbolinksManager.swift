@@ -163,15 +163,11 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
         
     fileprivate func removeSharedCookies() {
-        HTTPCookieStorage.shared.cookies?.forEach(HTTPCookieStorage.shared.deleteCookie)
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
     }
     
     fileprivate func removeWKWebViewCookies() {
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-            }
-        }
+        WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeCookies], modifiedSince: Date.distantPast, completionHandler: {})
     }
     
     func handleTitlePress(_ URL: URL?,_ component: String?) {

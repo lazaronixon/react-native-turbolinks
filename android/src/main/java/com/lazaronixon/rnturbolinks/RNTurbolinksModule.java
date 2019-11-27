@@ -3,13 +3,12 @@ package com.lazaronixon.rnturbolinks;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.util.Log;
-import android.webkit.CookieManager;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.bridge.*;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.ReactConstants;
+import com.facebook.react.modules.network.ForwardingCookieHandler;
 import com.lazaronixon.rnturbolinks.activities.ApplicationActivity;
 import com.lazaronixon.rnturbolinks.activities.NativeActivity;
 import com.lazaronixon.rnturbolinks.activities.WebActivity;
@@ -82,16 +81,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
         });
     }
 
-    @SuppressWarnings("deprecation")
     @ReactMethod
-    public void removeAllCookies() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            CookieManager.getInstance().removeSessionCookies(null);
-            CookieManager.getInstance().removeAllCookies(null);
-        } else {
-            CookieManager.getInstance().removeSessionCookie();
-            CookieManager.getInstance().removeAllCookie();
-        }
+    public void removeAllCookies(final Promise promise) {
+        new ForwardingCookieHandler(getReactApplicationContext()).clearCookies(null);
     }
 
     @ReactMethod
