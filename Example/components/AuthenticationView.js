@@ -9,8 +9,13 @@ const signedUrl = baseUrl + '/'
 
 export default class AuthenticationView extends Component {
 
+  componentDidMount() { this.authenticatedFlag = false }
+
+  // authenticatedFlag prevent some android versions handle authentication twice
   handleAuthentication = (event) => {
-    if (event.nativeEvent.url == signedUrl) {
+    if (event.nativeEvent.url == signedUrl && this.authenticatedFlag == false) {
+      this.authenticatedFlag = true
+
       this.webview.stopLoading()
       Turbolinks.dismiss().then(() => Turbolinks.reloadSession())
     }
