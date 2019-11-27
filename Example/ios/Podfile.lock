@@ -182,7 +182,7 @@ PODS:
     - React-cxxreact (= 0.61.3)
     - React-jsi (= 0.61.3)
   - React-jsinspector (0.61.3)
-  - react-native-turbolinks (2.1.10):
+  - react-native-turbolinks (2.1.11):
     - React
   - react-native-webview (7.4.3):
     - React
