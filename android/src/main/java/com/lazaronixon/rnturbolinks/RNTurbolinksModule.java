@@ -82,8 +82,11 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void removeAllCookies(final Promise promise) {
-        new ForwardingCookieHandler(getReactApplicationContext()).clearCookies(null);
+    public void removeAllCookies() {
+        new ForwardingCookieHandler(getReactApplicationContext()).clearCookies(new Callback() {
+            public void invoke(Object... args) {
+            }
+        });
     }
 
     @ReactMethod
