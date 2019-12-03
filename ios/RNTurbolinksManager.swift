@@ -29,8 +29,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func replaceWith(_ route: Dictionary<AnyHashable, Any>) {
-        let tRoute = TurbolinksRoute(route)
-        (navigationController.visibleViewController as! WebViewController).renderComponent(tRoute)
+        (navigationController.visibleViewController as! WebViewController).renderComponent(TurbolinksRoute(route))
     }
     
     @objc func reloadVisitable() {
@@ -68,11 +67,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) {
-        let tRoute = TurbolinksRoute(route)
-        if tRoute.url != nil {
-            presentVisitableForSession(tRoute)
+        if route["url"] != nil {
+            presentVisitableForSession(TurbolinksRoute(route))
         } else {
-            presentNativeView(tRoute)
+            presentNativeView(TurbolinksRoute(route))
         }
     }
     
@@ -130,12 +128,12 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate func setAppOptions(_ options: Dictionary<AnyHashable, Any>) {
-        self.userAgent = RCTConvert.nsString(options["userAgent"])
-        self.messageHandler = RCTConvert.nsString(options["messageHandler"])
-        self.loadingView = RCTConvert.nsString(options["loadingView"])
-        self.injectedJavaScript = RCTConvert.nsString(options["injectedJavaScript"])
-        if (options["automaticallyAdjustContentInsets"] != nil) { self.automaticallyAdjustContentInsets = RCTConvert.bool(options["automaticallyAdjustContentInsets"]) }
-        if (options["contentInset"] != nil) { self.contentInset = RCTConvert.uiEdgeInsets(options["contentInset"]) }
+        userAgent = RCTConvert.nsString(options["userAgent"])
+        messageHandler = RCTConvert.nsString(options["messageHandler"])
+        loadingView = RCTConvert.nsString(options["loadingView"])
+        injectedJavaScript = RCTConvert.nsString(options["injectedJavaScript"])
+        if (options["automaticallyAdjustContentInsets"] != nil) { automaticallyAdjustContentInsets = RCTConvert.bool(options["automaticallyAdjustContentInsets"]) }
+        if (options["contentInset"] != nil) { contentInset = RCTConvert.uiEdgeInsets(options["contentInset"]) }
         if (options["navBarStyle"] != nil) { setNavBarStyle(RCTConvert.nsDictionary(options["navBarStyle"])) }
     }
     
