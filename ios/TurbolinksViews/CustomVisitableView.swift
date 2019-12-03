@@ -21,12 +21,15 @@ class CustomVisitableView : VisitableView {
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: [ "view": loadingView! ]))
     }
     
+    fileprivate func showCustomLoadingView() {
+        if isRefreshing { return }
+        loadingView.isHidden = false
+        bringSubviewToFront(loadingView)
+    }
+    
     override func showActivityIndicator() {
         if (loadingView != nil) {
-            if !isRefreshing {
-                loadingView.isHidden = false
-                bringSubviewToFront(loadingView)
-            }
+            self.showCustomLoadingView()
         } else {
             super.showActivityIndicator()
         }
