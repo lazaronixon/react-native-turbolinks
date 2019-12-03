@@ -32,13 +32,21 @@ extension ApplicationViewController where Self: UIViewController {
     }
     
     func renderLeftButton() {
-        guard let icon = route.leftButtonIcon else { return }
-        _navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+        if let text = route.leftButtonText {
+            _navigationItem.leftBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+        }
+        if let icon = route.leftButtonIcon {
+            _navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+        }
     }
     
     func renderRightButton() {
-        guard let icon = route.rightButtonIcon else { return }
-        _navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleRightButtonPress)
+        if let text = route.rightButtonText {
+            _navigationItem.rightBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+        }
+        if let icon = route.rightButtonIcon {
+            _navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+        }
     }
     
     func renderActions() {

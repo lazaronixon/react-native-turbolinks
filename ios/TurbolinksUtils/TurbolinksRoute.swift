@@ -12,7 +12,9 @@ class TurbolinksRoute {
     var passProps: Dictionary<AnyHashable, Any>?
     var actions: Array<Dictionary<AnyHashable, Any>>?
     var leftButtonIcon: UIImage?
+    var leftButtonText: String?
     var rightButtonIcon: UIImage?
+    var rightButtonText: String?
     var navBarHidden: Bool = false
     var navBarDropDown: Bool = false
     
@@ -28,7 +30,9 @@ class TurbolinksRoute {
         self.passProps = RCTConvert.nsDictionary(route["passProps"])
         self.actions = RCTConvert.nsDictionaryArray(route["actions"])
         self.leftButtonIcon = RCTConvert.uiImage(route["leftButtonIcon"])
+        self.leftButtonText = RCTConvert.nsString(route["leftButtonText"])
         self.rightButtonIcon = RCTConvert.uiImage(route["rightButtonIcon"])
+        self.rightButtonText = RCTConvert.nsString(route["rightButtonText"])
         self.navBarHidden = RCTConvert.bool(route["navBarHidden"])
         self.navBarDropDown = RCTConvert.bool(route["navBarDropDown"])
     }    
