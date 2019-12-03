@@ -94,6 +94,6 @@ extension WebViewController: ApplicationViewController {
     }
     
     @objc func presentActionsGeneric(_ sender: UIBarButtonItem) {
-        self.presentActions(sender)
+        presentActions(sender)
     }
 }
