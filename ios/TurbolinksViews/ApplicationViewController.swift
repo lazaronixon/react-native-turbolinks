@@ -18,40 +18,39 @@ protocol ApplicationViewController {
 
 extension ApplicationViewController where Self: UIViewController {    
     var isRoot: Bool { navigationController?.viewControllers.count == 1 }
-    var _navigationItem: UINavigationItem { (self as UIViewController).navigationItem }
     var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
     var defaultMenuIcon: UIImage { UIImage(named: "ic_menu", in: turbolinksBundle, compatibleWith: nil)! }
     
-    func renderTitle() { _navigationItem.titleView = UITitleView(self) }
+    func renderTitle() { navigationItem.titleView = UITitleView(self) }
     
     func setupNavigationBar() { navigationController?.navigationBar.isHidden = route.navBarHidden }
     
     func renderBackButton() {
-        _navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        _navigationItem.leftItemsSupplementBackButton = true
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        navigationItem.leftItemsSupplementBackButton = true
     }
     
     func renderLeftButton() {
         if let text = route.leftButtonText {
-            _navigationItem.leftBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleLeftButtonPress)
         }
         if let icon = route.leftButtonIcon {
-            _navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
         }
     }
     
     func renderRightButton() {
         if let text = route.rightButtonText {
-            _navigationItem.rightBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleLeftButtonPress)
         }
         if let icon = route.rightButtonIcon {
-            _navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
         }
     }
     
     func renderActions() {
         guard let actions = route.actions, !actions.isEmpty else { return }
-        _navigationItem.rightBarButtonItem = UIBarButtonItem(image: manager.menuIcon ?? defaultMenuIcon, style: .plain, target: self, action: selectorPresentActions)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: manager.menuIcon ?? defaultMenuIcon, style: .plain, target: self, action: selectorPresentActions)
     }
     
     func presentActions(_ sender: UIBarButtonItem) {
