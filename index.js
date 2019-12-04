@@ -18,6 +18,12 @@ class Turbolinks {
     RNTurbolinksManager.startSingleScreenApp(route, options)
   }
 
+  static startSplitScreenApp(primaryComponent, secondaryRoute, options = {}) {
+    this._processRoute(secondaryRoute)
+    this._processNavBarStyle(options.navBarStyle)
+    RNTurbolinksManager.startSplitScreenApp(primaryComponent, secondaryRoute, options)
+  }
+
   static reloadVisitable() {
     RNTurbolinksManager.reloadVisitable()
   }

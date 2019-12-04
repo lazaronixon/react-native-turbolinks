@@ -52,6 +52,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void startSplitScreenApp(String primaryComponent, ReadableMap secondaryRoute, ReadableMap options) {}
+
+    @ReactMethod
     public void visit(ReadableMap route) { visit(route, false); }
 
     @ReactMethod

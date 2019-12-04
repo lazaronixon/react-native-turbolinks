@@ -60,6 +60,10 @@ Once you’ve started the demo server, explore the demo application in the Simul
 #### `startSingleScreenApp(route, appOption)`
 Start a Single Screen App. Use it instead visit for first visit.
 
+#### `startSplitScreenApp(primaryComponent, secondaryRoute)`
+#### `startSplitScreenApp(primaryComponent, secondaryRoute, appOption)`
+Start a Splitted Screen App. Use it instead visit for first visit. It is a good choice for iPad. (iOS Only)
+
 #### `visit(route)`
 Visit a URL or Component.
 

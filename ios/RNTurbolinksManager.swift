@@ -60,10 +60,23 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
-
         navigationController = TurbolinksNavigationController(self)
         addToRootViewController(navigationController)
+        
         visit(route)
+    }
+    
+    @objc func startSplitScreenApp(_ primaryComponent: String,_ secondaryRoute: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
+        setAppOptions(options)
+        navigationController = TurbolinksNavigationController(self)
+        
+        let primaryController = SimpleViewController(self, primaryComponent)
+        let splitViewController = UISplitViewController()
+        splitViewController.preferredDisplayMode = .allVisible
+        splitViewController.viewControllers = [primaryController, navigationController]
+        addToRootViewController(splitViewController)
+        
+        visit(secondaryRoute)
     }
     
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) {
