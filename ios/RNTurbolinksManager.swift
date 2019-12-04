@@ -132,9 +132,9 @@ class RNTurbolinksManager: RCTEventEmitter {
         messageHandler = RCTConvert.nsString(options["messageHandler"])
         loadingView = RCTConvert.nsString(options["loadingView"])
         injectedJavaScript = RCTConvert.nsString(options["injectedJavaScript"])
-        if (options["automaticallyAdjustContentInsets"] != nil) { automaticallyAdjustContentInsets = RCTConvert.bool(options["automaticallyAdjustContentInsets"]) }
-        if (options["contentInset"] != nil) { contentInset = RCTConvert.uiEdgeInsets(options["contentInset"]) }
-        if (options["navBarStyle"] != nil) { setNavBarStyle(RCTConvert.nsDictionary(options["navBarStyle"])) }
+        if options["automaticallyAdjustContentInsets"] != nil { automaticallyAdjustContentInsets = RCTConvert.bool(options["automaticallyAdjustContentInsets"]) }
+        if options["contentInset"] != nil { contentInset = RCTConvert.uiEdgeInsets(options["contentInset"]) }
+        if options["navBarStyle"] != nil { setNavBarStyle(RCTConvert.nsDictionary(options["navBarStyle"])) }
     }
     
     fileprivate func setNavBarStyle(_ style: Dictionary<AnyHashable, Any>) {

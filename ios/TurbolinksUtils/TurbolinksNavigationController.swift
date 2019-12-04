@@ -13,10 +13,10 @@ class TurbolinksNavigationController: UINavigationController {
 
     fileprivate func setupWebView(_ manager: RNTurbolinksManager) -> WKWebViewConfiguration {
         let result = WKWebViewConfiguration()
-        if manager.messageHandler != nil { result.userContentController.add(manager, name: manager.messageHandler!) }
-        if manager.userAgent != nil { result.applicationNameForUserAgent = manager.userAgent }
-        if manager.injectedJavaScript != nil { result.userContentController.addUserScript(WKUserScript(source: manager.injectedJavaScript!, injectionTime: .atDocumentEnd, forMainFrameOnly: true)) }
-        if RNCWKProcessPoolManager.shared() != nil { result.processPool = RNCWKProcessPoolManager.shared().sharedProcessPool() }
+        result.processPool = RNCWKProcessPoolManager.shared().sharedProcessPool()
+        if let messageHandler = manager.messageHandler { result.userContentController.add(manager, name: messageHandler) }
+        if let userAgent = manager.userAgent { result.applicationNameForUserAgent = userAgent }
+        if let source = manager.injectedJavaScript { result.userContentController.addUserScript(WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: true)) }
         return result
     }
 }
