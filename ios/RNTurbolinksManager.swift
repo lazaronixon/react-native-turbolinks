@@ -69,12 +69,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSplitScreenApp(_ primaryComponent: String,_ secondaryRoute: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
         navigationController = TurbolinksNavigationController(self)
-        
-        let primaryController = SimpleViewController(self, primaryComponent)
-        let splitViewController = UISplitViewController()
-        splitViewController.preferredDisplayMode = .allVisible
-        splitViewController.viewControllers = [primaryController, navigationController]
-        addToRootViewController(splitViewController)
+        addToRootViewController(buildSplitViewController(SimpleViewController(self, primaryComponent), navigationController))
         
         visit(secondaryRoute)
     }
@@ -122,6 +117,13 @@ class RNTurbolinksManager: RCTEventEmitter {
             }
         }
         session.visit(visitable)
+    }
+    
+    fileprivate func buildSplitViewController(_ primaryController: UIViewController,_ secondaryController: UIViewController) -> UISplitViewController {
+        let splitViewController = UISplitViewController()
+        splitViewController.preferredDisplayMode = .allVisible
+        splitViewController.viewControllers = [primaryController, secondaryController]
+        return splitViewController
     }
     
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
