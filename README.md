@@ -56,12 +56,10 @@ Once you’ve started the demo server, explore the demo application in the Simul
 
 ## Methods
 
-#### `startSingleScreenApp(route)`
-#### `startSingleScreenApp(route, appOption)`
+#### `startSingleScreenApp(route, appOption = {})`
 Start a Single Screen App. Use it instead visit for first visit.
 
-#### `startSplitScreenApp(primaryComponent, secondaryRoute)`
-#### `startSplitScreenApp(primaryComponent, secondaryRoute, appOption)`
+#### `startSplitScreenApp(primaryComponent, secondaryRoute, appOption = {})`
 Start a Splitted Screen App. Use it instead visit for first visit. It is a good choice for iPad. (iOS Only)
 
 #### `visit(route)`
@@ -82,14 +80,13 @@ Remove all cookies. Return a promise.
 #### `dismiss(animated)`
 Dismiss a overlaped view presented by visiting a component with modal option. Return a promise.
 
-#### `popToRoot(animated)`
+#### `popToRoot(animated = true)`
 Back until to root view. Return a promise.
 
-#### `back(animated)`
+#### `back(animated = true)`
 Trigger a native back event. For example if you using a custom navbar and need to provide a back button. Return a promise.
 
-#### `renderTitle(title)`
-#### `renderTitle(title, subtitle)`
+#### `renderTitle(title, subtitle = null)`
 Change title of current view. For example if you want to get title from page source.
 
 #### `renderActions(actions)`
