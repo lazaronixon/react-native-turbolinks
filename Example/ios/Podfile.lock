@@ -182,7 +182,7 @@ PODS:
     - React-cxxreact (= 0.61.3)
     - React-jsi (= 0.61.3)
   - React-jsinspector (0.61.3)
-  - react-native-turbolinks (2.1.11):
+  - react-native-turbolinks (2.1.15):
     - React
   - react-native-webview (7.4.3):
     - React
@@ -331,7 +331,7 @@ SPEC CHECKSUMS:
   React-jsi: 8bcf5836caa8a759c135ab9ef97f3e023a7b94af
   React-jsiexecutor: ae078e9df9c65bcdcf68f9a17656657932d95528
   React-jsinspector: a8939cc6909607eb5e8a5ecfff7c6226984e174d
-  react-native-turbolinks: 5652cda6a29314f05b9d28526bbe0638a8258da9
+  react-native-turbolinks: 51bec3c51c1681bb195572a599d631816b855eb1
   react-native-webview: 82d6456dfae1b3ef70c3939135536342afc96373
   React-RCTActionSheet: 94671eef55b01a93be735605822ef712d5ea208e
   React-RCTAnimation: 524ae33e73de9c0fe6501a7a4bda8e01d26499d9
