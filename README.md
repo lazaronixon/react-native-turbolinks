@@ -77,7 +77,7 @@ Reload current session.
 #### `removeAllCookies()`
 Remove all cookies. Return a promise.
 
-#### `dismiss(animated)`
+#### `dismiss(animated = true)`
 Dismiss a overlaped view presented by visiting a component with modal option. Return a promise.
 
 #### `popToRoot(animated = true)`
