@@ -14,6 +14,7 @@ import com.lazaronixon.rnturbolinks.activities.NativeActivity;
 import com.lazaronixon.rnturbolinks.activities.WebActivity;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -52,7 +53,9 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startSplitScreenApp(String primaryComponent, ReadableMap secondaryRoute, ReadableMap options) {}
+    public void startSplitScreenApp(String primaryComponent, ReadableMap secondaryRoute, ReadableMap options) {
+        throw new NotImplementedException("Not supported on android.");
+    }
 
     @ReactMethod
     public void visit(ReadableMap route) { visit(route, false); }
@@ -87,15 +90,12 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void removeAllCookies() {
         new ForwardingCookieHandler(getReactApplicationContext()).clearCookies(new Callback() {
-            public void invoke(Object... args) {
-            }
+            public void invoke(Object... args) {}
         });
     }
 
     @ReactMethod
-    public void dismiss(Boolean animated) {
-        getCurrentActivity().finish();
-    }
+    public void dismiss(Boolean animated) { getCurrentActivity().finish(); }
 
     @ReactMethod
     public void popToRoot(Boolean animated) { getCurrentActivity().startActivity(initialIntent); }
