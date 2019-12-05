@@ -156,12 +156,10 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     fileprivate func refreshAppearence() {
-        for window in application.windows {
-            for view in window.subviews {
-                view.removeFromSuperview()
-                window.addSubview(view)
-            }
-        }
+        let rootView = rootViewController.view!
+        let superView = rootViewController.view.superview!
+        rootView.removeFromSuperview()
+        superView.addSubview(rootView)
     }
     
     fileprivate func addToRootViewController(_ viewController: UIViewController) {
