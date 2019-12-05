@@ -2,7 +2,8 @@ import WebKit
 import Turbolinks
 
 @objc(RNTurbolinksManager)
-class RNTurbolinksManager: RCTEventEmitter {    
+class RNTurbolinksManager: RCTEventEmitter {
+    var splitViewController: UISplitViewController?
     var navigationController: TurbolinksNavigationController!
     var messageHandler: String?
     var injectedJavaScript: String?
@@ -69,7 +70,8 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSplitScreenApp(_ primaryComponent: String,_ secondaryRoute: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
         navigationController = TurbolinksNavigationController(self)
-        addToRootViewController(buildSplitViewController(SimpleViewController(self, primaryComponent), navigationController))
+        splitViewController = SplitViewController(PrimaryViewController(self, primaryComponent), navigationController)
+        addToRootViewController(splitViewController!)
         
         visit(secondaryRoute)
     }
@@ -117,14 +119,7 @@ class RNTurbolinksManager: RCTEventEmitter {
             }
         }
         session.visit(visitable)
-    }
-    
-    fileprivate func buildSplitViewController(_ primaryController: UIViewController,_ secondaryController: UIViewController) -> UISplitViewController {
-        let splitViewController = UISplitViewController()
-        splitViewController.preferredDisplayMode = .allVisible
-        splitViewController.viewControllers = [primaryController, secondaryController]
-        return splitViewController
-    }
+    }    
     
     fileprivate func presentNativeView(_ route: TurbolinksRoute) {
         let viewController = NativeViewController(self, route)
