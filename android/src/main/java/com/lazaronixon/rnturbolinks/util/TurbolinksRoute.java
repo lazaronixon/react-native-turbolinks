@@ -29,7 +29,6 @@ public class TurbolinksRoute implements Parcelable {
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
         ReadableArray actions = rp.hasKey("actions") ? rp.getArray("actions") : null;
-        ReadableMap navIcon = rp.hasKey("navIcon") ? rp.getMap("navIcon") : null;
         ReadableMap titleImage = rp.hasKey("titleImage") ? rp.getMap("titleImage") : null;
         this.url = rp.hasKey("url") ? rp.getString("url") : null;
         this.component = rp.hasKey("component") ? rp.getString("component") : null;

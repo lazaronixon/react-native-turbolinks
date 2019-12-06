@@ -190,22 +190,6 @@ public abstract class ApplicationActivity extends ReactActivity {
         });
     }
 
-    private void setActionBarNavIcon(Bundle icon, final ActionBar actionBar) {
-        if (icon != null) {
-            bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {
-                @Override
-                public void onNewResultImpl(@Nullable Bitmap bitmap) {
-                    actionBar.setIcon(new BitmapDrawable(getApplicationContext().getResources(), bitmap));
-                }
-
-                @Override
-                public void onFailureImpl(DataSource dataSource) {
-                    Log.e(ApplicationActivity.class.getName(), "Invalid bitmap: ", dataSource.getFailureCause());
-                }
-            });
-        }
-    }
-
     private void setMenuItemIcon(Bundle icon, final MenuItem menuItem) {
         bitmapFor(icon, getApplicationContext(), new BaseBitmapDataSubscriber() {
             @Override
