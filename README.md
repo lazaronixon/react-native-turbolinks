@@ -129,7 +129,6 @@ Removes the listener for given event.
   - `navBarDropDown`: Show a small dropdown next to the title. (Default false)(iOS Only)
   - `leftButtonText/leftButtonIcon`: A left button text/icon. (iOS Only)
   - `rightButtonText/rightButtonIcon`: A right button text/icon. (iOS Only)
-  - `navIcon`: Set the icon to display in the 'home' section of the action bar. (Android Only)
   - `actions`: A Array of `action` objects to mount a menu.
   - `action`: If action is 'advance', so it will perform a animated push, if "replace" will perform a pop without animation. (Default 'advance')
 

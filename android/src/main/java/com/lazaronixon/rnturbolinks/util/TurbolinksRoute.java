@@ -25,7 +25,6 @@ public class TurbolinksRoute implements Parcelable {
     private Bundle titleImage;
     private ArrayList<Bundle> actions;
     private boolean navBarHidden;
-    private Bundle navIcon;
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
@@ -43,7 +42,6 @@ public class TurbolinksRoute implements Parcelable {
         this.titleImage = titleImage != null ? Arguments.toBundle(titleImage) : null;
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
         this.navBarHidden = rp.hasKey("navBarHidden") && rp.getBoolean("navBarHidden");
-        this.navIcon = navIcon != null ? Arguments.toBundle(navIcon) : null;
     }
 
     public TurbolinksRoute(Bundle bundle) {
@@ -58,7 +56,6 @@ public class TurbolinksRoute implements Parcelable {
         this.titleImage = bundle.getBundle("titleImage");
         this.actions = bundle.getParcelableArrayList("actions");
         this.navBarHidden = bundle.getBoolean("navBarHidden");
-        this.navIcon = bundle.getBundle("navIcon");
     }
 
     protected TurbolinksRoute(Parcel in) {
@@ -73,7 +70,6 @@ public class TurbolinksRoute implements Parcelable {
         titleImage = in.readBundle();
         actions = in.createTypedArrayList(Bundle.CREATOR);
         navBarHidden = in.readByte() != 0;
-        navIcon = in.readBundle();
     }
 
     @Override
@@ -89,7 +85,6 @@ public class TurbolinksRoute implements Parcelable {
         dest.writeBundle(titleImage);
         dest.writeTypedList(actions);
         dest.writeByte((byte) (navBarHidden ? 1 : 0));
-        dest.writeBundle(navIcon);
     }
 
     @Override
@@ -155,10 +150,6 @@ public class TurbolinksRoute implements Parcelable {
 
     public boolean getNavBarHidden() {
         return navBarHidden;
-    }
-
-    public Bundle getNavIcon() {
-        return navIcon;
     }
 
 }

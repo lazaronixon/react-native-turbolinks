@@ -128,14 +128,11 @@ public abstract class ApplicationActivity extends ReactActivity {
 
     protected void setupToolBar() {
         toolBar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
-
-        setActionBarNavIcon(route.getNavIcon(), getSupportActionBar());
 
         setNavBarStyle(NavBarStyle.getDefault());
 
