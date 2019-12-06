@@ -101,9 +101,6 @@ public class RNTurbolinksModule extends ReactContextBaseJavaModule {
     public void popToRoot(Boolean animated) { getCurrentActivity().startActivity(initialIntent); }
 
     @ReactMethod
-    public void back(Boolean animated) { getCurrentActivity().finish(); }
-
-    @ReactMethod
     public void renderTitle(final String title, final String subtitle) {
         runOnUiThread(new Runnable() {
             public void run() {

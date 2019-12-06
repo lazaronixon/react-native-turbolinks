@@ -47,11 +47,6 @@ class Turbolinks {
     return new Promise((resolve) => setTimeout(() => resolve(), 1000))
   }
 
-  static back(animated = true) {
-    RNTurbolinksManager.back(animated)
-    return new Promise((resolve) => setTimeout(() => resolve(), 1000))
-  }
-
   static visit(route) {
     this._processRoute(route)
     RNTurbolinksManager.visit(route)

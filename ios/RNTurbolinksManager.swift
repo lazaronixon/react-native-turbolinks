@@ -10,8 +10,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     var userAgent: String?
     var menuIcon: UIImage?
     var loadingView: String?
-    var automaticallyAdjustContentInsets: Bool?
-    var contentInset: UIEdgeInsets?
     
     var application: UIApplication {
         return UIApplication.shared
@@ -53,10 +51,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     @objc func popToRoot(_ animated: Bool) {
         navigationController.popToRootViewController(animated: animated)
-    }
-    
-    @objc func back(_ animated: Bool) {
-        navigationController.popViewController(animated: animated)
     }
     
     @objc func startSingleScreenApp(_ route: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
@@ -142,8 +136,6 @@ class RNTurbolinksManager: RCTEventEmitter {
         messageHandler = RCTConvert.nsString(options["messageHandler"])
         loadingView = RCTConvert.nsString(options["loadingView"])
         injectedJavaScript = RCTConvert.nsString(options["injectedJavaScript"])
-        if options["automaticallyAdjustContentInsets"] != nil { automaticallyAdjustContentInsets = RCTConvert.bool(options["automaticallyAdjustContentInsets"]) }
-        if options["contentInset"] != nil { contentInset = RCTConvert.uiEdgeInsets(options["contentInset"]) }
         if options["navBarStyle"] != nil { setNavBarStyle(RCTConvert.nsDictionary(options["navBarStyle"])) }
     }
     

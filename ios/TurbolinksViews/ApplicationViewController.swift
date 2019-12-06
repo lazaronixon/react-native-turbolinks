@@ -24,8 +24,6 @@ extension ApplicationViewController where Self: UIViewController {
     
     func renderTitle() { navigationItem.titleView = UITitleView(self) }
     
-    func setupNavigationBar() { navigationController?.navigationBar.isHidden = route.navBarHidden }
-    
     func renderBackButton() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         navigationItem.leftItemsSupplementBackButton = true

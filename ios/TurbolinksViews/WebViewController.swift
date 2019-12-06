@@ -53,11 +53,6 @@ class WebViewController: VisitableViewController {
         renderTitle()
         handleVisitCompleted()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
 
     fileprivate var dummyVisitableView: VisitableView!
     override var visitableView: VisitableView! {
@@ -65,17 +60,6 @@ class WebViewController: VisitableViewController {
         dummyVisitableView = CustomVisitableView(self.manager)
         dummyVisitableView.translatesAutoresizingMaskIntoConstraints = false
         return dummyVisitableView
-    }
-    
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if !(manager.automaticallyAdjustContentInsets ?? true) {
-            if let contentInset = manager.contentInset {
-                visitableView.contentInset = contentInset
-            } else {
-                visitableView.contentInset = UIEdgeInsets.zero
-            }
-        }
     }
 }
 

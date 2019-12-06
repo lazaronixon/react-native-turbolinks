@@ -23,13 +23,7 @@ class NativeViewController: UIViewController {
         renderBackButton()
         renderLeftButton()
         renderRightButton()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationBar()
-    }
-    
+    }    
 }
 
 extension NativeViewController: ApplicationViewController {

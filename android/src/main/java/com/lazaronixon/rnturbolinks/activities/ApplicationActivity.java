@@ -136,8 +136,7 @@ public abstract class ApplicationActivity extends ReactActivity {
 
         setNavBarStyle(NavBarStyle.getDefault());
 
-        if (route.getTitleImage() != null) renderTitleImage(route.getTitleImage());
-        if (route.getNavBarHidden() || route.getModal()) getSupportActionBar().hide();
+        renderTitleImage(route.getTitleImage());
     }
 
     protected void handleTitlePress(final String component, final String url, final String path) {
@@ -155,15 +154,17 @@ public abstract class ApplicationActivity extends ReactActivity {
     protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
 
     private void renderTitleImage(Bundle image) {
-        ImageSource source = new ImageSource(getApplicationContext(), image.getString("uri"));
+        if (image != null) {
+            ImageSource source = new ImageSource(getApplicationContext(), image.getString("uri"));
 
-        SimpleDraweeView draweeView = new SimpleDraweeView(getApplicationContext());
-        draweeView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        draweeView.setPadding(0, 15, 0, 15);
-        draweeView.setAspectRatio(1);
-        draweeView.getHierarchy().setActualImageScaleType(ScaleType.FIT_CENTER);
-        draweeView.setImageURI(source.getUri());
-        toolBar.addView(draweeView);
+            SimpleDraweeView draweeView = new SimpleDraweeView(getApplicationContext());
+            draweeView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            draweeView.setPadding(0, 15, 0, 15);
+            draweeView.setAspectRatio(1);
+            draweeView.getHierarchy().setActualImageScaleType(ScaleType.FIT_CENTER);
+            draweeView.setImageURI(source.getUri());
+            toolBar.addView(draweeView);
+        }
     }
 
     @SuppressLint("RestrictedApi")

@@ -81,9 +81,6 @@ Dismiss a overlaped view presented by visiting a component with modal option. Re
 #### `popToRoot(animated = true)`
 Back until to root view. Return a promise.
 
-#### `back(animated = true)`
-Trigger a native back event. For example if you using a custom navbar and need to provide a back button. Return a promise.
-
 #### `renderTitle(title, subtitle = null)`
 Change title of current view. For example if you want to get title from page source.
 
@@ -123,7 +120,6 @@ Removes the listener for given event.
   - `title`: The default value is the title of the Web page.
   - `subtitle`: A subtitle for visitable view.
   - `titleImage`: A image to show on navbar.
-  - `navBarHidden`: Hidden navigation bar. (Default false)
   - `navBarDropDown`: Show a small dropdown next to the title. (Default false) (iOS Only)
   - `leftButtonText/leftButtonIcon`: A left button text/icon. (iOS Only)
   - `rightButtonText/rightButtonIcon`: A right button text/icon. (iOS Only)
@@ -136,8 +132,6 @@ Removes the listener for given event.
   - `loadingView`: Set a custom loadingView using a react component.
   - `navBarStyle`: {titleTextColor, subtitleTextColor, barTintColor, tintColor, menuIcon}.
   - `injectedJavaScript`: Set this to provide JavaScript that will be injected into the web page when the view loads.
-  - `automaticallyAdjustContentInsets`: Controls whether to adjust the content inset for web views that are placed behind of navigation bar. (Default true) (iOS Only)
-  - `contentInset`: The amount by which the web view content is inset from the edges of the scroll view. Defaults to {top: 0, left: 0, bottom: 0, right: 0}. (iOS Only)
 
 #### `Action`
   - `id`: A integer identifier for the action. (Required)
