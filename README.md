@@ -16,8 +16,6 @@ cd ios && pod install && cd .. # CocoaPods on iOS needs this extra step
 
 - React Native Turbolinks doesn't support [Fast Refresh](https://facebook.github.io/react-native/docs/fast-refresh), please disable it on React Native developer menu `⌘ D`.
 
-- Upload files using web forms is [not widely compatible](https://github.com/react-native-community/react-native-webview/blob/master/docs/Guide.md#add-support-for-file-upload), please use a native approach for that.
-
 - Start rails with `rails s -b 0.0.0.0`.
 
 ## Basic Usage
