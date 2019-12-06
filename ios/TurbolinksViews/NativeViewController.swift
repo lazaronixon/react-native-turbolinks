@@ -16,6 +16,10 @@ class NativeViewController: UIViewController {
         self.view = RCTRootView(bridge: manager.bridge, moduleName: route.component!, initialProperties: route.passProps)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        self.view = nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         renderTitle()
@@ -23,7 +27,7 @@ class NativeViewController: UIViewController {
         renderBackButton()
         renderLeftButton()
         renderRightButton()
-    }    
+    }
 }
 
 extension NativeViewController: ApplicationViewController {
@@ -33,11 +37,11 @@ extension NativeViewController: ApplicationViewController {
     }
     
     @objc func handleLeftButtonPress() {
-        manager.handleLeftButtonPress(nil, self.route.component)
+        manager.handleLeftButtonPress(nil, route.component)
     }
     
     @objc func handleRightButtonPress() {
-        manager.handleRightButtonPress(nil, self.route.component)
+        manager.handleRightButtonPress(nil, route.component)
     }
     
     @objc func presentActionsGeneric(_ sender: UIBarButtonItem) {

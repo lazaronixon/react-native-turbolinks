@@ -11,4 +11,8 @@ class PrimaryViewController: UIViewController {
     override func loadView() {
         self.view = RCTRootView(bridge: manager.bridge, moduleName: component, initialProperties: nil)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.view = nil
+    }
 }
