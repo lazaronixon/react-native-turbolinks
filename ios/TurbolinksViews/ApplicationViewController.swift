@@ -17,7 +17,7 @@ protocol ApplicationViewController {
 }
 
 extension ApplicationViewController where Self: UIViewController {    
-    var isRoot: Bool { navigationController?.viewControllers.count == 1 }
+    var isRoot: Bool { navigationController!.viewControllers.count == 1 }
     var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
     var defaultMenuIcon: UIImage { UIImage(named: "ic_menu", in: turbolinksBundle, compatibleWith: nil)! }
     var toolbarIcon: UIImage { UIImage(named: "ic_toolbar", in: turbolinksBundle, compatibleWith: nil)! }

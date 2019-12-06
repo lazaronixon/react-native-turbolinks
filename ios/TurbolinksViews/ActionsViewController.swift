@@ -16,9 +16,9 @@ class ActionsViewController: UITableViewController {
         self.modalPresentationStyle = .popover;
         self.preferredContentSize.width = 300
         self.preferredContentSize.height = CGFloat(route.actions!.count * defaultRowHeight)
-        self.popoverPresentationController?.barButtonItem = barButtonItem
-        self.popoverPresentationController?.delegate = self
-        self.popoverPresentationController?.backgroundColor = self.view.backgroundColor;
+        self.popoverPresentationController!.barButtonItem = barButtonItem
+        self.popoverPresentationController!.delegate = self
+        self.popoverPresentationController!.backgroundColor = self.view.backgroundColor;
         self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 14))
         self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 0))
     }
@@ -33,10 +33,11 @@ class ActionsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { route.actions!.count }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
         let action = TurbolinksAction(route.actions![indexPath.row])
-        cell.textLabel?.text = action.title
-        cell.imageView?.image = action.icon
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
+        cell.textLabel!.text = action.title
+        cell.imageView!.image = action.icon
         return cell
     }
     
