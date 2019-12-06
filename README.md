@@ -10,7 +10,7 @@ cd ios && pod install && cd .. # CocoaPods on iOS needs this extra step
 ```
 
 ### Warning
-- This component only applies to projects made with react-native init or to those made with Create React Native App which have since ejected. For more information about ejecting, please see the [guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) on the Create React Native App repository.
+- This component only applies to projects made with react-native init or to those made with expo-cli which have since ejected. For more information about ejecting, please see the [guide](https://docs.expo.io/versions/latest/expokit/eject/#instructions) on Expo docs.
 
 - On android you should use `Volume UP` to show Developer Menu instead `⌘ M`.
 
