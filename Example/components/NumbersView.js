@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, Text, StyleSheet, SafeAreaView }from 'react-native'
+import { FlatList, Text, StyleSheet, SafeAreaView } from 'react-native'
 
 export default class NumbersView extends Component {
 
