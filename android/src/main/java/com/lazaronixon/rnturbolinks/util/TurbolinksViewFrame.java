@@ -38,8 +38,7 @@ public class TurbolinksViewFrame extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
         resolveAttribute(context, attrs, defStyleAttr, defStyleRes);
     }
-
-
+    
     private void resolveAttribute(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         turbolinksView = new TurbolinksView(context, attrs, defStyleAttr, defStyleRes);
         addView(turbolinksView);
