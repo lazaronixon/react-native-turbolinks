@@ -5,6 +5,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
@@ -16,30 +18,30 @@ public class TurbolinksViewFrame extends FrameLayout {
     private TurbolinksView turbolinksView;
     private ReactRootView customView;
 
-    public TurbolinksViewFrame(Context context) {
+    public TurbolinksViewFrame(@NonNull Context context) {
         super(context);
-        resolveAttribute(context);
+        resolveAttribute(context, null, 0, 0);
     }
 
-    public TurbolinksViewFrame(Context context, AttributeSet attrs) {
+    public TurbolinksViewFrame(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        resolveAttribute(context);
+        resolveAttribute(context, attrs, 0, 0);
     }
 
-    public TurbolinksViewFrame(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TurbolinksViewFrame(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        resolveAttribute(context);
+        resolveAttribute(context, attrs, defStyleAttr, 0);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public TurbolinksViewFrame(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TurbolinksViewFrame(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        resolveAttribute(context);
+        resolveAttribute(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private void resolveAttribute(Context context) {
-        turbolinksView = new TurbolinksView(context);
-        turbolinksView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+    private void resolveAttribute(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        turbolinksView = new TurbolinksView(context, attrs, defStyleAttr, defStyleRes);
         addView(turbolinksView);
     }
 
