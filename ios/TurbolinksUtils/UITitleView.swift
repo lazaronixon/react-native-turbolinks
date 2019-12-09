@@ -30,19 +30,19 @@ open class UITitleView : UIStackView {
     }
     
     fileprivate func addTitle() {
-        let stackView: UIStackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 5
+        let titleView: UIStackView = UIStackView()
+        titleView.axis = .horizontal
+        titleView.alignment = .center
+        titleView.spacing = 5
         
         titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.textColor = titleTextColor
         titleLabel.font = .boldSystemFont(ofSize: 17)
-        stackView.addArrangedSubview(titleLabel)
-        if (navBarDropDown) { stackView.addArrangedSubview(titleDropDown) }
+        titleView.addArrangedSubview(titleLabel)
+        if (navBarDropDown) { titleView.addArrangedSubview(titleDropDown) }
         
-        addArrangedSubview(stackView)
+        addArrangedSubview(titleView)
     }
     
     fileprivate func addSubtitle() {
