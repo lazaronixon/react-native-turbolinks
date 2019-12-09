@@ -18,27 +18,27 @@ public class TurbolinksViewFrame extends FrameLayout {
 
     public TurbolinksViewFrame(Context context) {
         super(context);
-        init();
+        resolveAttribute(context);
     }
 
     public TurbolinksViewFrame(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        resolveAttribute(context);
     }
 
     public TurbolinksViewFrame(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        resolveAttribute(context);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public TurbolinksViewFrame(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        resolveAttribute(context);
     }
 
-    private void init() {
-        turbolinksView = new TurbolinksView(getContext());
+    private void resolveAttribute(Context context) {
+        turbolinksView = new TurbolinksView(context);
         turbolinksView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(turbolinksView);
     }
