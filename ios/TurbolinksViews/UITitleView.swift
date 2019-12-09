@@ -19,8 +19,8 @@ open class UITitleView : UIStackView {
         self.navBarDropDown = viewController.route.navBarDropDown
         self.configureView()
         
-        addTitle()
-        addSubtitle()
+        self.addTitle()
+        self.addSubtitle()
     }
     
     fileprivate func configureView() {
