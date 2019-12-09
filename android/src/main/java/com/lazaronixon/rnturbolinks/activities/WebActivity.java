@@ -122,8 +122,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     @Override
     public void onPageFinished() {
         if (injectedJavaScript != null) {
-            WebView webView = TurbolinksSession.getDefault(this).getWebView();
-            webView.evaluateJavascript(injectedJavaScript, null);
+            sessionWebView().evaluateJavascript(injectedJavaScript, null);
         }
     }
 
@@ -132,8 +131,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
     @Override
     public void renderTitle(String title, String subtitle) {
-        WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        String mTitle = title != null ? title : webView.getTitle();
+        String mTitle = title != null ? title : sessionWebView().getTitle();
         getSupportActionBar().setTitle(mTitle);
         getSupportActionBar().setSubtitle(subtitle);
     }
@@ -157,13 +155,16 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
     @Override
     public void injectJavaScript(String script) {
-        WebView webView = TurbolinksSession.getDefault(this).getWebView();
-        webView.evaluateJavascript(script, null);
+        sessionWebView().evaluateJavascript(script, null);
     }
 
     @JavascriptInterface
     public void postMessage(String message) {
         getEventEmitter().emit(TURBOLINKS_MESSAGE, message);
+    }
+
+    private WebView sessionWebView() {
+        return TurbolinksSession.getDefault(this).getWebView();
     }
 
     private void setupAppOptions() {
@@ -185,10 +186,9 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     }
 
     private void handleVisitCompleted() {
-        WebView webView = TurbolinksSession.getDefault(this).getWebView();
         try {
             WritableMap params = Arguments.createMap();
-            URL urlLocation = new URL(webView.getUrl());
+            URL urlLocation = new URL(sessionWebView().getUrl());
             params.putString("url", urlLocation.toString());
             params.putString("path", urlLocation.getPath());
             getEventEmitter().emit(TURBOLINKS_VISIT_COMPLETED, params);
@@ -199,8 +199,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
     private void handleWebTitlePress() {
         try {
-            WebView webView = TurbolinksSession.getDefault(this).getWebView();
-            URL urlLocation = new URL(webView.getUrl());
+            URL urlLocation = new URL(sessionWebView().getUrl());
             handleTitlePress(null, urlLocation.toString(), urlLocation.getPath());
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
