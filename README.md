@@ -119,7 +119,6 @@ Removes the listener for given event.
 - Common properties
   - `title`: The default value is the title of the Web page.
   - `subtitle`: A subtitle for visitable view.
-  - `titleImage`: A image to show on navbar.
   - `navBarDropDown`: Show a small dropdown next to the title. (Default false) (iOS Only)
   - `leftButtonText/leftButtonIcon`: A left button text/icon. (iOS Only)
   - `rightButtonText/rightButtonIcon`: A right button text/icon. (iOS Only)

@@ -22,13 +22,11 @@ public class TurbolinksRoute implements Parcelable {
     private Bundle passProps;
     private String title;
     private String subtitle;
-    private Bundle titleImage;
     private ArrayList<Bundle> actions;
 
     public TurbolinksRoute(ReadableMap rp) {
         ReadableMap props = rp.hasKey("passProps") ? rp.getMap("passProps") : null;
         ReadableArray actions = rp.hasKey("actions") ? rp.getArray("actions") : null;
-        ReadableMap titleImage = rp.hasKey("titleImage") ? rp.getMap("titleImage") : null;
         this.url = rp.hasKey("url") ? rp.getString("url") : null;
         this.component = rp.hasKey("component") ? rp.getString("component") : null;
         this.action = rp.hasKey("action") ? rp.getString("action") : ACTION_ADVANCE;
@@ -37,7 +35,6 @@ public class TurbolinksRoute implements Parcelable {
         this.passProps = props != null ? Arguments.toBundle(props) : null;
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
-        this.titleImage = titleImage != null ? Arguments.toBundle(titleImage) : null;
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
     }
 
@@ -50,7 +47,6 @@ public class TurbolinksRoute implements Parcelable {
         this.passProps = bundle.getBundle("passProps");
         this.title = bundle.getString("title");
         this.subtitle = bundle.getString("subtitle");
-        this.titleImage = bundle.getBundle("titleImage");
         this.actions = bundle.getParcelableArrayList("actions");
     }
 
@@ -63,7 +59,6 @@ public class TurbolinksRoute implements Parcelable {
         passProps = in.readBundle();
         title = in.readString();
         subtitle = in.readString();
-        titleImage = in.readBundle();
         actions = in.createTypedArrayList(Bundle.CREATOR);
     }
 
@@ -77,7 +72,6 @@ public class TurbolinksRoute implements Parcelable {
         dest.writeBundle(passProps);
         dest.writeString(title);
         dest.writeString(subtitle);
-        dest.writeBundle(titleImage);
         dest.writeTypedList(actions);
     }
 
@@ -128,10 +122,6 @@ public class TurbolinksRoute implements Parcelable {
 
     public String getTitle() {
         return title;
-    }
-
-    public Bundle getTitleImage() {
-        return titleImage;
     }
 
     public ArrayList<Bundle> getActions() {

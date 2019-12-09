@@ -10,17 +10,13 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout.LayoutParams;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.drawable.ScalingUtils.ScaleType;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
@@ -135,8 +131,6 @@ public abstract class ApplicationActivity extends ReactActivity {
         getSupportActionBar().setSubtitle(route.getSubtitle());
 
         setNavBarStyle(NavBarStyle.getDefault());
-
-        renderTitleImage(route.getTitleImage());
     }
 
     protected void handleTitlePress(final String component, final String url, final String path) {
@@ -152,20 +146,6 @@ public abstract class ApplicationActivity extends ReactActivity {
     }
 
     protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
-
-    private void renderTitleImage(Bundle image) {
-        if (image != null) {
-            ImageSource source = new ImageSource(getApplicationContext(), image.getString("uri"));
-
-            SimpleDraweeView draweeView = new SimpleDraweeView(getApplicationContext());
-            draweeView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            draweeView.setPadding(0, 15, 0, 15);
-            draweeView.setAspectRatio(1);
-            draweeView.getHierarchy().setActualImageScaleType(ScaleType.FIT_CENTER);
-            draweeView.setImageURI(source.getUri());
-            toolBar.addView(draweeView);
-        }
-    }
 
     @SuppressLint("RestrictedApi")
     private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
