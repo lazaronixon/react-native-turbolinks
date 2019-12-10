@@ -97,8 +97,8 @@ public abstract class ApplicationActivity extends ReactActivity {
     }
 
     public void renderTitle(String title, String subtitle) {
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setSubtitle(subtitle);
+        toolBar.setTitle(title);
+        toolBar.setSubtitle(subtitle);
     }
 
     public void setNavBarStyle(NavBarStyle style) {
@@ -129,6 +129,8 @@ public abstract class ApplicationActivity extends ReactActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
+
+        handleTitlePress(route.getComponent(), null, null);
 
         setNavBarStyle(NavBarStyle.getDefault());
     }

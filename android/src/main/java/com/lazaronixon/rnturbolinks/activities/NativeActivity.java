@@ -16,8 +16,6 @@ public class NativeActivity extends ApplicationActivity {
         setContentView(R.layout.activity_native);
         setupToolBar();
 
-        handleTitlePress(route.getComponent(), null, null);
-
         rootView = findViewById(R.id.react_root_view);
         rootView.startReactApplication(getReactInstanceManager(), route.getComponent(), route.getPassProps());
     }
