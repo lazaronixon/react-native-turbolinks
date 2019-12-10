@@ -56,7 +56,7 @@ public class NavBarStyle {
     }
 
     public static NavBarStyle getNew(ReadableMap rp) {
-        return new NavBarStyle(rp);
+        defaultInstance = new NavBarStyle(rp);
+        return defaultInstance;
     }
-
 }
