@@ -5,8 +5,7 @@ open class UITitleView : UIStackView {
     fileprivate var titleLabel: UILabel!
     fileprivate var subtitleLabel: UILabel!
     fileprivate var navBarDropDown: Bool = false
-    fileprivate var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
-    fileprivate var titleDropDown: UIImageView { UIImageView(image: UIImage(named: "ic_caret", in: turbolinksBundle, compatibleWith: nil)) }
+    fileprivate var titleDropDown: UIImageView!
         
     @objc dynamic var titleTextColor: UIColor? { willSet { titleLabel.textColor = newValue } }
     @objc dynamic var subtitleTextColor: UIColor? { willSet { subtitleLabel.textColor = newValue } }
@@ -17,6 +16,7 @@ open class UITitleView : UIStackView {
         self.title = viewController.route.title ?? viewController.navigationItem.title
         self.subtitle = viewController.route.subtitle
         self.navBarDropDown = viewController.route.navBarDropDown
+        self.titleDropDown = UIImageView(image: UIImage(named: "ic_caret", in: viewController.turbolinksBundle, compatibleWith: nil))
         self.configureView()
         
         self.addTitle()

@@ -1,6 +1,7 @@
 protocol ApplicationViewController {
     var manager: RNTurbolinksManager! { get set }
     var route: TurbolinksRoute! { get set }
+    var turbolinksBundle: Bundle { get }
     var selectorHandleLeftButtonPress: Selector { get }
     var selectorHandleRightButtonPress: Selector { get }
     var selectorPresentActions: Selector { get }
