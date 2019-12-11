@@ -125,12 +125,12 @@ public abstract class ApplicationActivity extends ReactActivity {
 
     protected void setupToolBar() {
         toolBar = findViewById(R.id.toolbar);
-        toolBar.setSpinner(route.getNavBarDropDown());
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
+        toolBar.setSpinner(route.getNavBarDropDown());
 
         handleTitlePress(route.getComponent(), null, null);
 

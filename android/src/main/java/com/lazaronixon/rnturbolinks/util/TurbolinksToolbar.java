@@ -28,7 +28,8 @@ public class TurbolinksToolbar extends Toolbar {
             spinner = new ImageView(getContext());
             spinner.setColorFilter(getThemeAttrColor(getContext(), R.attr.colorControlNormal));
             spinner.setImageResource(R.drawable.abc_spinner_mtrl_am_alpha);
-            addView(spinner);
+
+            addView(spinner, spinnerLayoutParam());
         } else if (spinner != null) {
             removeView(spinner);
         }
@@ -43,5 +44,12 @@ public class TurbolinksToolbar extends Toolbar {
         } finally {
             a.recycle();
         }
+    }
+
+    private LayoutParams spinnerLayoutParam() {
+        int marginTop = getSubtitle() != null ? 76 : 0;
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0,0,0, marginTop);
+        return layoutParams;
     }
 }
