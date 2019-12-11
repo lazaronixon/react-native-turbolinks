@@ -31,6 +31,7 @@ import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
+import com.lazaronixon.rnturbolinks.util.TurbolinksToolbar;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public abstract class ApplicationActivity extends ReactActivity {
     private static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
     private static final String TURBOLINKS_TITLE_PRESS = "turbolinksTitlePress";
 
-    protected Toolbar toolBar;
+    protected TurbolinksToolbar toolBar;
     protected TurbolinksRoute route;
 
     @Override
@@ -97,8 +98,8 @@ public abstract class ApplicationActivity extends ReactActivity {
     }
 
     public void renderTitle(String title, String subtitle) {
-        toolBar.setTitle(title);
-        toolBar.setSubtitle(subtitle);
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setSubtitle(subtitle);
     }
 
     public void setNavBarStyle(NavBarStyle style) {
@@ -124,6 +125,7 @@ public abstract class ApplicationActivity extends ReactActivity {
 
     protected void setupToolBar() {
         toolBar = findViewById(R.id.toolbar);
+        toolBar.setSpinner(route.getNavBarDropDown());
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());

@@ -131,8 +131,8 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
     @Override
     public void renderTitle(String title, String subtitle) {
-        toolBar.setTitle(title != null ? title : sessionWebView().getTitle());
-        toolBar.setSubtitle(subtitle);
+        getSupportActionBar().setTitle(title != null ? title : sessionWebView().getTitle());
+        getSupportActionBar().setSubtitle(subtitle);
     }
 
     @Override

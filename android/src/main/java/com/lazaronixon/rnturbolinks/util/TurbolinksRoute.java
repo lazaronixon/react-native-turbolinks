@@ -22,6 +22,7 @@ public class TurbolinksRoute implements Parcelable {
     private Bundle passProps;
     private String title;
     private String subtitle;
+    private boolean navBarDropDown;
     private ArrayList<Bundle> actions;
 
     public TurbolinksRoute(ReadableMap rp) {
@@ -35,6 +36,7 @@ public class TurbolinksRoute implements Parcelable {
         this.passProps = props != null ? Arguments.toBundle(props) : null;
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
+        this.navBarDropDown = rp.hasKey("navBarDropDown") && rp.getBoolean("navBarDropDown");
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
     }
 
@@ -47,6 +49,7 @@ public class TurbolinksRoute implements Parcelable {
         this.passProps = bundle.getBundle("passProps");
         this.title = bundle.getString("title");
         this.subtitle = bundle.getString("subtitle");
+        this.navBarDropDown = bundle.getBoolean("navBarDropDown");
         this.actions = bundle.getParcelableArrayList("actions");
     }
 
@@ -56,6 +59,7 @@ public class TurbolinksRoute implements Parcelable {
         action = in.readString();
         modal = in.readByte() != 0;
         dismissable = in.readByte() != 0;
+        navBarDropDown = in.readByte() != 0;
         passProps = in.readBundle();
         title = in.readString();
         subtitle = in.readString();
@@ -69,6 +73,7 @@ public class TurbolinksRoute implements Parcelable {
         dest.writeString(action);
         dest.writeByte((byte) (modal ? 1 : 0));
         dest.writeByte((byte) (dismissable ? 1 : 0));
+        dest.writeByte((byte) (navBarDropDown ? 1 : 0));
         dest.writeBundle(passProps);
         dest.writeString(title);
         dest.writeString(subtitle);
@@ -114,6 +119,10 @@ public class TurbolinksRoute implements Parcelable {
 
     public boolean getDismissable() {
         return dismissable;
+    }
+
+    public boolean getNavBarDropDown() {
+        return navBarDropDown;
     }
 
     public Bundle getPassProps() {
