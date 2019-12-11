@@ -132,9 +132,9 @@ public abstract class ApplicationActivity extends ReactActivity {
         getSupportActionBar().setSubtitle(route.getSubtitle());
         toolBar.setSpinner(route.getNavBarDropDown());
 
-        handleTitlePress(route.getComponent(), null, null);
-
         setNavBarStyle(NavBarStyle.getDefault());
+
+        handleTitlePress(route.getComponent(), null, null);
     }
 
     protected void handleTitlePress(final String component, final String url, final String path) {
