@@ -161,6 +161,21 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
         getEventEmitter().emit(TURBOLINKS_MESSAGE, message);
     }
 
+    @Override
+    public void handleActionPress(int itemId) {
+        try {
+            URL urlLocation = new URL(sessionWebView().getUrl());
+            WritableMap params = Arguments.createMap();
+            params.putString("component", null);
+            params.putString("url", urlLocation.toString());
+            params.putString("path", urlLocation.getPath());
+            params.putInt("actionId", itemId);
+            getEventEmitter().emit(TURBOLINKS_ACTION_PRESS, params);
+        } catch (MalformedURLException e) {
+            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+        }
+    }
+
     private WebView sessionWebView() {
         return TurbolinksSession.getDefault(this).getWebView();
     }
@@ -185,8 +200,8 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
 
     private void handleVisitCompleted() {
         try {
-            WritableMap params = Arguments.createMap();
             URL urlLocation = new URL(sessionWebView().getUrl());
+            WritableMap params = Arguments.createMap();
             params.putString("url", urlLocation.toString());
             params.putString("path", urlLocation.getPath());
             getEventEmitter().emit(TURBOLINKS_VISIT_COMPLETED, params);

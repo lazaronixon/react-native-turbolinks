@@ -98,7 +98,7 @@ Adds an event handler. Supported events:
 - `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link. The argument to the event handler is an object with keys: `url, path, action`.
 - `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
 - `turbolinksMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
-- `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
+- `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event handler is an object with keys: `url, path, component, actionId`.
 - `turbolinksLeftButtonPress`: Fire when left button item is tapped. The arguments to the event handler is an object with keys: `url, path, component`. (iOS Only)
 - `turbolinksRightButtonPress`: Fire when right button item is tapped. The arguments to the event handler is an object with keys: `url, path, component`. (iOS Only)
 - `turbolinksVisitCompleted`: Fire when the request has been fulfilled successfully and the page fully rendered, Here you can parse html and create a dynamic menu for example. The arguments to the event handler is `url, path`.

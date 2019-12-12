@@ -43,7 +43,7 @@ class ActionsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let action = TurbolinksAction(route.actions![indexPath.row])
-        dismiss(animated: true) { self.manager.handleActionPress(action.id) }
+        dismiss(animated: true) { self.manager.handleActionPress(self.route.url, self.route.component, action.id) }
     }
 }
 

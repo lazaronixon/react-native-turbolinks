@@ -166,8 +166,8 @@ class RNTurbolinksManager: RCTEventEmitter {
         WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeCookies], modifiedSince: Date.distantPast, completionHandler: {})
     }
     
-    func handleActionPress(_ actionId: Int) {
-        sendEvent(withName: "turbolinksActionPress", body: actionId)
+    func handleActionPress(_ URL: URL?,_ component: String?, _ actionId: Int) {
+        sendEvent(withName: "turbolinksActionPress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component, "actionId": actionId])
     }
     
     func handleLeftButtonPress(_ URL: URL?,_ component: String?) {

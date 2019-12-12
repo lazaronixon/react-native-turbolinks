@@ -36,7 +36,7 @@ import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 
 public abstract class ApplicationActivity extends ReactActivity {
 
-    private static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
+    protected static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
 
     protected Toolbar toolBar;
     protected TurbolinksRoute route;
@@ -79,7 +79,7 @@ public abstract class ApplicationActivity extends ReactActivity {
             onBackPressed();
             return false;
         } else {
-            getEventEmitter().emit(TURBOLINKS_ACTION_PRESS, item.getItemId());
+            handleActionPress(item.getItemId());
             return true;
         }
     }
@@ -114,6 +114,8 @@ public abstract class ApplicationActivity extends ReactActivity {
     public abstract void reloadSession();
 
     public abstract void injectJavaScript(String script);
+
+    protected abstract void handleActionPress(int itemId);
 
     protected RCTDeviceEventEmitter getEventEmitter() {
         return getReactInstanceManager().getCurrentReactContext().getJSModule(RCTDeviceEventEmitter.class);

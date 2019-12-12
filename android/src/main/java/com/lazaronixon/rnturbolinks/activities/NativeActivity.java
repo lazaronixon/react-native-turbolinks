@@ -3,6 +3,8 @@ package com.lazaronixon.rnturbolinks.activities;
 import android.os.Bundle;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.facebook.react.ReactRootView;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
 
@@ -38,5 +40,15 @@ public class NativeActivity extends ApplicationActivity {
 
     @Override
     public void injectJavaScript(String script) {}
+
+    @Override
+    public void handleActionPress(int itemId) {
+        WritableMap params = Arguments.createMap();
+        params.putString("component", route.getComponent());
+        params.putString("url", null);
+        params.putString("path", null);
+        params.putInt("actionId", itemId);
+        getEventEmitter().emit(TURBOLINKS_ACTION_PRESS, params);
+    }
 
 }
