@@ -1,6 +1,5 @@
 package com.lazaronixon.rnturbolinks.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
 import com.facebook.common.references.CloseableReference;
@@ -31,10 +29,11 @@ import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
-import com.lazaronixon.rnturbolinks.util.TurbolinksToolbar;
 
 import java.util.ArrayList;
 
+import static android.view.MenuItem.SHOW_AS_ACTION_ALWAYS;
+import static android.view.MenuItem.SHOW_AS_ACTION_NEVER;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_INITIAL;
 import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 
@@ -43,7 +42,7 @@ public abstract class ApplicationActivity extends ReactActivity {
     private static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
     private static final String TURBOLINKS_TITLE_PRESS = "turbolinksTitlePress";
 
-    protected TurbolinksToolbar toolBar;
+    protected Toolbar toolBar;
     protected TurbolinksRoute route;
 
     @Override
@@ -67,11 +66,12 @@ public abstract class ApplicationActivity extends ReactActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
         if (route.getActions() != null) {
-            for (Bundle bundle : route.getActions()) {
-                TurbolinksAction action = new TurbolinksAction(bundle);
-                MenuItem menuItem = menu.add(Menu.NONE, action.getId(), route.getActions().indexOf(bundle), action.getTitle());
-                menuItem.setShowAsAction(action.getButton() ? MenuItem.SHOW_AS_ACTION_ALWAYS : MenuItem.SHOW_AS_ACTION_NEVER);
-                renderActionIcon(menu, menuItem, action.getIcon());
+            for (int i = 0; i < route.getActions().size(); i++) {
+                TurbolinksAction action = new TurbolinksAction(route.getActions().get(i));
+
+                MenuItem menuItem = menu.add(Menu.NONE, action.getId(), i, action.getTitle());
+                menuItem.setShowAsAction(action.getButton() ? SHOW_AS_ACTION_ALWAYS : SHOW_AS_ACTION_NEVER);
+                if (action.getIcon() != null) setMenuItemIcon(action.getIcon(), menuItem);
             }
         }
         return true;
@@ -126,14 +126,10 @@ public abstract class ApplicationActivity extends ReactActivity {
     protected void setupToolBar() {
         toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
-        toolBar.setSpinner(route.getNavBarDropDown());
-
         setNavBarStyle(NavBarStyle.getDefault());
-
         handleTitlePress(route.getComponent(), null, null);
     }
 
@@ -150,12 +146,6 @@ public abstract class ApplicationActivity extends ReactActivity {
     }
 
     protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
-
-    @SuppressLint("RestrictedApi")
-    private void renderActionIcon(Menu menu, MenuItem menuItem, Bundle icon) {
-        if (icon != null && menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        if (icon != null) setMenuItemIcon(icon, menuItem);
-    }
 
     private boolean isModal() { return route.getModal(); }
 
