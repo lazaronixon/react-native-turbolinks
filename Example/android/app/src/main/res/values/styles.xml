@@ -5,16 +5,16 @@
         <!-- Customize your theme here. -->
         <item name="android:textColor">#000000</item>
 
-        <!--   your app branding color for the app bar -->
+        <!-- The primary branding color for the app. By default, this is the color applied to the action bar background. -->
         <item name="colorPrimary">#F5F5F5</item>
-        <!--   darker variant for the status bar and contextual app bars -->
-        <item name="colorPrimaryDark">#BDBDBD</item>
-        <!--   theme UI controls like checkboxes and text fields -->
+        <!-- Dark variant of the primary branding color. By default, this is the color applied to the status bar (via statusBarColor) and navigation bar (via navigationBarColor). -->
+        <item name="colorPrimaryDark">#757575</item>
+        <!-- Bright complement to the primary branding color. By default, this is the color applied to framework controls (via colorControlActivated). -->
         <item name="colorAccent">#009688</item>
     </style>
 
     <!-- action bar style -->
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">#DD000000</item>
+        <item name="colorControlNormal">#000000</item>
     </style>
 </resources>
