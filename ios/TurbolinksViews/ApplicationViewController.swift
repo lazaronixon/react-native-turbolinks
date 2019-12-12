@@ -8,6 +8,7 @@ protocol ApplicationViewController {
     var navigationItem: UINavigationItem { get }
     
     init(_ manager: RNTurbolinksManager,_ route: TurbolinksRoute)
+    func hidesShadow()
     func renderTitle()
     func renderActions()
     func renderBackButton()
@@ -21,6 +22,8 @@ extension ApplicationViewController where Self: UIViewController {
     var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
     var defaultMenuIcon: UIImage { UIImage(named: "ic_menu", in: turbolinksBundle, compatibleWith: nil)! }
     var toolbarIcon: UIImage { UIImage(named: "ic_toolbar", in: turbolinksBundle, compatibleWith: nil)! }
+    
+    func hidesShadow() { navigationController!.navigationBar.setValue(route.hidesShadow, forKey: "hidesShadow") }
     
     func renderTitle() { navigationItem.title = route.title ?? navigationItem.title }
     

@@ -38,6 +38,11 @@ class WebViewController: VisitableViewController {
         manager.handleVisitCompleted(self.visitableView.webView!.url!)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hidesShadow()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         renderBackButton()

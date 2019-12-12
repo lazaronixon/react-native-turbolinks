@@ -13,6 +13,7 @@ class TurbolinksRoute {
     var leftButtonText: String?
     var rightButtonIcon: UIImage?
     var rightButtonText: String?
+    var hidesShadow: Bool = false
     
     init(_ route: Dictionary<AnyHashable, Any>) {
         self.title = RCTConvert.nsString(route["title"])
@@ -27,5 +28,6 @@ class TurbolinksRoute {
         self.leftButtonText = RCTConvert.nsString(route["leftButtonText"])
         self.rightButtonIcon = RCTConvert.uiImage(route["rightButtonIcon"])
         self.rightButtonText = RCTConvert.nsString(route["rightButtonText"])
-    }    
+        self.hidesShadow = RCTConvert.bool(route["hidesShadow"])
+    }
 }

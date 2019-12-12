@@ -20,6 +20,11 @@ class NativeViewController: UIViewController {
         self.view = nil
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hidesShadow()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         renderTitle()
