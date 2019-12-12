@@ -115,7 +115,6 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     @Override
     public void visitCompleted() {
         renderTitle(route.getTitle(), route.getSubtitle());
-        handleWebTitlePress();
         handleVisitCompleted();
     }
 
@@ -191,15 +190,6 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
             params.putString("url", urlLocation.toString());
             params.putString("path", urlLocation.getPath());
             getEventEmitter().emit(TURBOLINKS_VISIT_COMPLETED, params);
-        } catch (MalformedURLException e) {
-            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
-        }
-    }
-
-    private void handleWebTitlePress() {
-        try {
-            URL urlLocation = new URL(sessionWebView().getUrl());
-            handleTitlePress(null, urlLocation.toString(), urlLocation.getPath());
         } catch (MalformedURLException e) {
             Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
         }
