@@ -98,7 +98,6 @@ Adds an event handler. Supported events:
 - `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link. The argument to the event handler is an object with keys: `url, path, action`.
 - `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
 - `turbolinksMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
-- `turbolinksTitlePress`: Fires when you tap view title. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event is a integer with the action id.
 - `turbolinksLeftButtonPress`: Fire when left button item is tapped. The arguments to the event handler is an object with keys: `url, path, component`. (iOS Only)
 - `turbolinksRightButtonPress`: Fire when right button item is tapped. The arguments to the event handler is an object with keys: `url, path, component`. (iOS Only)
@@ -118,8 +117,7 @@ Removes the listener for given event.
   - `passProps`: Passes this in as props to the rendered component.
 - Common properties
   - `title`: The default value is the title of the Web page.
-  - `subtitle`: A subtitle for visitable view.
-  - `navBarDropDown`: Show a small dropdown next to the title. (Default false)
+  - `subtitle`: A subtitle for visitable view. (Android Only)
   - `leftButtonText/leftButtonIcon`: A left button text/icon. (iOS Only)
   - `rightButtonText/rightButtonIcon`: A right button text/icon. (iOS Only)
   - `actions`: A Array of `action` objects to mount a menu.
