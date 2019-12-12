@@ -2,7 +2,6 @@ import Turbolinks
 
 class TurbolinksRoute {
     var title: String?
-    var subtitle: String?
     var action: Action?
     var url: URL?
     var component: String?
@@ -14,11 +13,9 @@ class TurbolinksRoute {
     var leftButtonText: String?
     var rightButtonIcon: UIImage?
     var rightButtonText: String?
-    var navBarDropDown: Bool = false
     
     init(_ route: Dictionary<AnyHashable, Any>) {
         self.title = RCTConvert.nsString(route["title"])
-        self.subtitle = RCTConvert.nsString(route["subtitle"])
         self.action = Action(rawValue: RCTConvert.nsString(route["action"]) ?? "advance")
         self.url = RCTConvert.nsurl(route["url"])
         self.component = RCTConvert.nsString(route["component"])
@@ -30,6 +27,5 @@ class TurbolinksRoute {
         self.leftButtonText = RCTConvert.nsString(route["leftButtonText"])
         self.rightButtonIcon = RCTConvert.uiImage(route["rightButtonIcon"])
         self.rightButtonText = RCTConvert.nsString(route["rightButtonText"])
-        self.navBarDropDown = RCTConvert.bool(route["navBarDropDown"])
     }    
 }

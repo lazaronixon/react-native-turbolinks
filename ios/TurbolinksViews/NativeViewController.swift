@@ -30,12 +30,7 @@ class NativeViewController: UIViewController {
     }
 }
 
-extension NativeViewController: ApplicationViewController {
-    
-    func handleTitlePress() {
-        manager.handleTitlePress(nil, route.component)
-    }
-    
+extension NativeViewController: ApplicationViewController {    
     @objc func handleLeftButtonPress() {
         manager.handleLeftButtonPress(nil, route.component)
     }

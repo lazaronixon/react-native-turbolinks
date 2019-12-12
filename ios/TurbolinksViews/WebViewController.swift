@@ -9,6 +9,8 @@ class WebViewController: VisitableViewController {
     var selectorHandleRightButtonPress: Selector = #selector(handleRightButtonPress)
     var selectorPresentActions: Selector = #selector(presentActionsGeneric)
     
+    fileprivate var dummyVisitableView: VisitableView!
+    
     convenience required init(_ manager: RNTurbolinksManager,_ route: TurbolinksRoute) {
         self.init(url: route.url!)
         self.manager = manager
@@ -36,10 +38,6 @@ class WebViewController: VisitableViewController {
         manager.handleVisitCompleted(self.visitableView.webView!.url!)
     }
     
-    fileprivate func setWebViewTitle() {
-        navigationItem.title = visitableView.webView!.title
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         renderBackButton()
@@ -49,26 +47,23 @@ class WebViewController: VisitableViewController {
     }
     
     override func visitableDidRender() {
-        setWebViewTitle()
+        super.visitableDidRender()
         renderTitle()
         handleVisitCompleted()
     }
 
-    fileprivate var dummyVisitableView: VisitableView!
     override var visitableView: VisitableView! {
-        if dummyVisitableView != nil { return dummyVisitableView }
-        dummyVisitableView = CustomVisitableView(self.manager)
-        dummyVisitableView.translatesAutoresizingMaskIntoConstraints = false
-        return dummyVisitableView
+        if dummyVisitableView == nil {
+            dummyVisitableView = CustomVisitableView(self.manager)
+            dummyVisitableView.translatesAutoresizingMaskIntoConstraints = false
+            return dummyVisitableView
+        } else {
+            return dummyVisitableView
+        }
     }
 }
 
 extension WebViewController: ApplicationViewController {
-    
-    func handleTitlePress() {
-        manager.handleTitlePress(visitableView.webView!.url, nil)
-    }
-    
     @objc func handleLeftButtonPress() {
         manager.handleLeftButtonPress(visitableView.webView!.url, nil)
     }

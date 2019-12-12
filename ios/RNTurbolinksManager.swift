@@ -86,7 +86,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func renderTitle(_ title: String,_ subtitle: String) {
         guard let visitable = navigationController.visibleViewController as? ApplicationViewController else { return }
         visitable.route.title = title
-        visitable.route.subtitle = subtitle
         visitable.renderTitle()
     }
     
@@ -142,8 +141,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     fileprivate func setNavBarStyle(_ style: Dictionary<AnyHashable, Any>) {
         UINavigationBar.appearance().barTintColor = RCTConvert.uiColor(style["barTintColor"])
         UINavigationBar.appearance().tintColor = RCTConvert.uiColor(style["tintColor"])
-        UITitleView.appearance().titleTextColor = RCTConvert.uiColor(style["titleTextColor"])
-        UITitleView.appearance().subtitleTextColor = RCTConvert.uiColor(style["subtitleTextColor"])
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : RCTConvert.uiColor(style["titleTextColor"]) ?? .black]
         menuIcon = RCTConvert.uiImage(style["menuIcon"])
     }
     
@@ -166,10 +164,6 @@ class RNTurbolinksManager: RCTEventEmitter {
     
     fileprivate func removeWKWebViewCookies() {
         WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeCookies], modifiedSince: Date.distantPast, completionHandler: {})
-    }
-    
-    func handleTitlePress(_ URL: URL?,_ component: String?) {
-        sendEvent(withName: "turbolinksTitlePress", body: ["url": URL?.absoluteString, "path": URL?.path, "component": component])
     }
     
     func handleActionPress(_ actionId: Int) {
@@ -211,7 +205,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     }
     
     override func supportedEvents() -> [String]! {
-        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksTitlePress", "turbolinksActionPress", "turbolinksLeftButtonPress", "turbolinksRightButtonPress", "turbolinksVisitCompleted"]
+        return ["turbolinksVisit", "turbolinksMessage", "turbolinksError", "turbolinksActionPress", "turbolinksLeftButtonPress", "turbolinksRightButtonPress", "turbolinksVisitCompleted"]
     }
 }
 

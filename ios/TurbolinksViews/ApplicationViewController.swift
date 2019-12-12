@@ -13,7 +13,6 @@ protocol ApplicationViewController {
     func renderBackButton()
     func renderLeftButton()
     func renderRightButton()
-    func handleTitlePress()
     func presentActionsGeneric(_ sender: UIBarButtonItem)
 }
 
@@ -23,7 +22,7 @@ extension ApplicationViewController where Self: UIViewController {
     var defaultMenuIcon: UIImage { UIImage(named: "ic_menu", in: turbolinksBundle, compatibleWith: nil)! }
     var toolbarIcon: UIImage { UIImage(named: "ic_toolbar", in: turbolinksBundle, compatibleWith: nil)! }
     
-    func renderTitle() { navigationItem.titleView = UITitleView(self) }
+    func renderTitle() { navigationItem.title = route.title ?? navigationItem.title }
     
     func renderBackButton() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
