@@ -25,7 +25,10 @@ extension ApplicationViewController where Self: UIViewController {
     
     func hidesShadow() { navigationController!.navigationBar.setValue(route.hidesShadow, forKey: "hidesShadow") }
     
-    func renderTitle() { navigationItem.title = route.title ?? navigationItem.title }
+    func renderTitle() {
+        navigationItem.title = route.title ?? navigationItem.title
+        navigationItem.prompt = route.subtitle
+    }
     
     func renderBackButton() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
