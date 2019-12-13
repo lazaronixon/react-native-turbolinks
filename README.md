@@ -1,7 +1,7 @@
 # React Native Turbolinks
 A implementation of [Turbolinks for iOS](https://github.com/turbolinks/turbolinks-ios) and [Turbolinks Android](https://github.com/turbolinks/turbolinks-android) for React Native.
 
-[![React Native Turbolinks](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/intro-turbolinks.gif)](https://youtu.be/2biqMoHn3jk "Quick Start Video")
+[![React Native Turbolinks](https://nixo-etc.s3-sa-east-1.amazonaws.com/intro-turbolinks.gif)](https://youtu.be/2biqMoHn3jk "Quick Start Video")
 
 ## [Getting started](https://youtu.be/2biqMoHn3jk "Quick Start Video")
 ```sh
@@ -50,7 +50,7 @@ To run the demo, clone this repository to your computer and change into its dire
 
 Once you’ve started the demo server, explore the demo application in the Simulator by running `react-native run-ios` or `react-native run-android` on `Example` folder.
 
-![React Native Turbolinks Demo Application](https://raw.githubusercontent.com/lazaronixon/react-native-turbolinks/master/Example/screenshots/application-demo.png)
+![React Native Turbolinks Demo Application](https://nixo-etc.s3-sa-east-1.amazonaws.com/application-demo.png)
 
 ## Methods
 
