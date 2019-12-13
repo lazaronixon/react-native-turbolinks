@@ -2,6 +2,7 @@ import Turbolinks
 
 class TurbolinksRoute {
     var title: String?
+    var subtitle: String?
     var action: Action?
     var url: URL?
     var component: String?
@@ -17,6 +18,7 @@ class TurbolinksRoute {
     
     init(_ route: Dictionary<AnyHashable, Any>) {
         self.title = RCTConvert.nsString(route["title"])
+        self.subtitle = RCTConvert.nsString(route["subtitle"])
         self.action = Action(rawValue: RCTConvert.nsString(route["action"]) ?? "advance")
         self.url = RCTConvert.nsurl(route["url"])
         self.component = RCTConvert.nsString(route["component"])

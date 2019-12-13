@@ -117,7 +117,7 @@ Removes the listener for given event.
   - `passProps`: Passes this in as props to the rendered component.
 - Common properties
   - `title`: The default value is the title of the Web page.
-  - `subtitle`: A subtitle for visitable view. (Android Only)
+  - `subtitle`: A subtitle for visitable view.
   - `hidesShadow`: Indicates whether to hide the navigation 1px hairline shadow. (Default false) (iOS Only)  
   - `leftButtonText/leftButtonIcon`: A left button text/icon. (iOS Only)
   - `rightButtonText/rightButtonIcon`: A right button text/icon. (iOS Only)
