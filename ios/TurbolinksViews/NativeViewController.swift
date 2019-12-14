@@ -17,12 +17,13 @@ class NativeViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         self.view = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hidesShadow()
+        hideOrDisplayShadow()
     }
     
     override func viewDidLoad() {

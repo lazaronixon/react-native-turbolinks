@@ -30,6 +30,7 @@ class SplitViewController: UISplitViewController {
         }
         
         override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(animated)
             self.view = nil
         }
     }

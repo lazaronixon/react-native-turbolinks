@@ -40,7 +40,7 @@ class WebViewController: VisitableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hidesShadow()
+        hideOrDisplayShadow()
     }
     
     override func viewDidLoad() {
