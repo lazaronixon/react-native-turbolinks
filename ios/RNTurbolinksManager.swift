@@ -11,7 +11,11 @@ class RNTurbolinksManager: RCTEventEmitter {
     var menuIcon: UIImage?
     var loadingView: String?
     
-    var application: UIApplication {
+    var turbolinksBundle: Bundle! {
+        return Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)
+    }
+    
+    fileprivate var application: UIApplication {
         return UIApplication.shared
     }
     
@@ -64,7 +68,7 @@ class RNTurbolinksManager: RCTEventEmitter {
     @objc func startSplitScreenApp(_ primaryComponent: String,_ secondaryRoute: Dictionary<AnyHashable, Any>,_ options: Dictionary<AnyHashable, Any>) {
         setAppOptions(options)
         navigationController = TurbolinksNavigationController(self)
-        splitViewController = SplitViewController(PrimaryViewController(self, primaryComponent), navigationController)
+        splitViewController = SplitViewController(self, primaryComponent, navigationController)
         addToRootViewController(splitViewController!)
         
         visit(secondaryRoute)

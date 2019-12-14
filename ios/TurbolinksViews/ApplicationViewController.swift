@@ -1,7 +1,6 @@
 protocol ApplicationViewController {
     var manager: RNTurbolinksManager! { get set }
     var route: TurbolinksRoute! { get set }
-    var turbolinksBundle: Bundle { get }
     var selectorHandleLeftButtonPress: Selector { get }
     var selectorHandleRightButtonPress: Selector { get }
     var selectorPresentActions: Selector { get }
@@ -19,9 +18,7 @@ protocol ApplicationViewController {
 
 extension ApplicationViewController where Self: UIViewController {    
     var isRoot: Bool { navigationController?.viewControllers.count == 1 }
-    var turbolinksBundle: Bundle { Bundle(path: Bundle.main.path(forResource: "RNTurbolinks", ofType: "bundle")!)! }
-    var defaultMenuIcon: UIImage { UIImage(named: "ic_menu", in: turbolinksBundle, compatibleWith: nil)! }
-    var toolbarIcon: UIImage { UIImage(named: "ic_toolbar", in: turbolinksBundle, compatibleWith: nil)! }
+    var defaultMenuIcon: UIImage { UIImage(named: "ic_menu", in: manager.turbolinksBundle, compatibleWith: nil)! }
     
     func hidesShadow() { navigationController?.navigationBar.setValue(route.hidesShadow, forKey: "hidesShadow") }
     
@@ -36,8 +33,8 @@ extension ApplicationViewController where Self: UIViewController {
     }
     
     func renderLeftButton() {
-        if let splitView = manager.splitViewController {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: toolbarIcon, style: .plain, target: splitView.displayModeButtonItem.target, action: splitView.displayModeButtonItem.action)
+        if let splitViewController = manager.splitViewController {
+            navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         }
         if let text = route.leftButtonText {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleLeftButtonPress)
