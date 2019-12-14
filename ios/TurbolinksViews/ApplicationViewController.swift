@@ -20,7 +20,9 @@ extension ApplicationViewController where Self: UIViewController {
     var isRoot: Bool { navigationController?.viewControllers.count == 1 }
     var defaultMenuIcon: UIImage { UIImage(named: "ic_menu", in: manager.turbolinksBundle, compatibleWith: nil)! }
     
-    func hideOrDisplayShadow() { navigationController?.navigationBar.setValue(route.hidesShadow, forKey: "hidesShadow") }
+    func hideOrDisplayShadow() {
+        navigationController?.navigationBar.setValue(route.hidesShadow, forKey: "hidesShadow")        
+    }
     
     func renderTitle() {
         navigationItem.title = route.title ?? navigationItem.title

@@ -22,13 +22,14 @@ class CustomVisitableView : VisitableView {
     }
     
     fileprivate func showCustomLoadingView() {
-        if isRefreshing { return }
-        loadingView.isHidden = false
-        bringSubviewToFront(loadingView)
+        if isRefreshing == false {
+            loadingView.isHidden = false
+            bringSubviewToFront(loadingView)
+        }
     }
     
     override func showActivityIndicator() {
-        if (loadingView != nil) {
+        if loadingView != nil {
             self.showCustomLoadingView()
         } else {
             super.showActivityIndicator()
@@ -36,7 +37,7 @@ class CustomVisitableView : VisitableView {
     }
     
     override func hideActivityIndicator() {
-        if (loadingView != nil) {
+        if loadingView != nil {
             loadingView.isHidden = true
         } else {
             super.hideActivityIndicator()
