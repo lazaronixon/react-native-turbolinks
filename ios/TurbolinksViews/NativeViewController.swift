@@ -26,6 +26,11 @@ class NativeViewController: UIViewController {
         hideOrDisplayShadow()
     }
     
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        renderLeftButton()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         renderTitle()

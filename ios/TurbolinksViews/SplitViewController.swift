@@ -2,6 +2,7 @@ class SplitViewController: UISplitViewController {
     var manager: RNTurbolinksManager!
     var primaryController: UIViewController!
     var secondaryController: UIViewController!
+    var toolbarIcon: UIImage { UIImage(named: "toolbar", in: manager.turbolinksBundle, compatibleWith: nil)! }
         
     convenience required init(_ manager: RNTurbolinksManager,_ primaryComponent: String,_ secondaryController: UIViewController) {
         self.init()
@@ -13,6 +14,14 @@ class SplitViewController: UISplitViewController {
         self.preferredDisplayMode = .allVisible
         self.preferredPrimaryColumnWidthFraction = 0.4
         self.viewControllers = [self.primaryController, self.secondaryController]
+    }
+    
+    override var displayModeButtonItem: UIBarButtonItem {
+        get {
+            let icon = isCollapsed ? nil : toolbarIcon
+            let originalButton = super.displayModeButtonItem
+            return UIBarButtonItem(image: icon, style: .plain, target: originalButton.target, action: originalButton.action)
+        }
     }
     
     class PrimaryViewController: UIViewController {
