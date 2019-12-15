@@ -18,7 +18,7 @@ protocol ApplicationViewController {
 
 extension ApplicationViewController where Self: UIViewController {    
     var isRoot: Bool { navigationController?.viewControllers.count == 1 }
-    var defaultMenuIcon: UIImage { UIImage(named: "ic_menu", in: manager.turbolinksBundle, compatibleWith: nil)! }
+    var defaultMenuIcon: UIImage { UIImage(named: "menu", in: manager.turbolinksBundle, compatibleWith: nil)! }
     
     func hideOrDisplayShadow() {
         navigationController?.navigationBar.setValue(route.hidesShadow, forKey: "hidesShadow")        
