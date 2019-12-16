@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
@@ -20,12 +21,15 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.react.ReactActivity;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.facebook.react.views.imagehelper.ImageSource;
 import com.lazaronixon.rnturbolinks.R;
 import com.lazaronixon.rnturbolinks.util.NavBarStyle;
 import com.lazaronixon.rnturbolinks.util.TurbolinksAction;
 import com.lazaronixon.rnturbolinks.util.TurbolinksRoute;
+import com.lazaronixon.rnturbolinks.util.TurbolinksToolbar;
 
 import java.util.ArrayList;
 
@@ -37,8 +41,9 @@ import static com.lazaronixon.rnturbolinks.RNTurbolinksModule.INTENT_ROUTE;
 public abstract class ApplicationActivity extends ReactActivity {
 
     protected static final String TURBOLINKS_ACTION_PRESS = "turbolinksActionPress";
+    private static final String TURBOLINKS_TITLE_PRESS = "turbolinksTitlePress";
 
-    protected Toolbar toolBar;
+    protected TurbolinksToolbar toolBar;
     protected TurbolinksRoute route;
 
     @Override
@@ -127,7 +132,22 @@ public abstract class ApplicationActivity extends ReactActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
         getSupportActionBar().setTitle(route.getTitle());
         getSupportActionBar().setSubtitle(route.getSubtitle());
+        toolBar.setVisibleDropDown(route.getVisibleDropDown());
+
         setNavBarStyle(NavBarStyle.getDefault());
+    }
+
+    protected void handleTitlePress(final String component, final String url, final String path) {
+        toolBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WritableMap params = Arguments.createMap();
+                params.putString("component", component);
+                params.putString("url", url);
+                params.putString("path", path);
+                ApplicationActivity.this.getEventEmitter().emit(TURBOLINKS_TITLE_PRESS, params);
+            }
+        });
     }
 
     protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }

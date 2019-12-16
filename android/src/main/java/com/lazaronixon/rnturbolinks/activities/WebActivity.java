@@ -116,6 +116,7 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
     public void visitCompleted() {
         renderTitle(route.getTitle(), route.getSubtitle());
         handleVisitCompleted();
+        handleWebTitlePress();
     }
 
     @Override
@@ -196,6 +197,15 @@ public class WebActivity extends ApplicationActivity implements TurbolinksAdapte
         progressIndicator = progressView.findViewById(R.id.turbolinks_custom_progress_indicator);
         progressIndicator.startReactApplication(getReactInstanceManager(), loadingView, null);
         turbolinksSession.progressView(progressView, progressIndicator.getId(), 500);
+    }
+
+    private void handleWebTitlePress() {
+        try {
+            URL urlLocation = new URL(sessionWebView().getUrl());
+            handleTitlePress(null, urlLocation.toString(), urlLocation.getPath());
+        } catch (MalformedURLException e) {
+            Log.e(ReactConstants.TAG, "Error parsing URL. " + e.toString());
+        }
     }
 
     private void handleVisitCompleted() {

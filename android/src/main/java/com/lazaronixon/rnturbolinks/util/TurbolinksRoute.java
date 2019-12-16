@@ -22,6 +22,7 @@ public class TurbolinksRoute implements Parcelable {
     private Bundle passProps;
     private String title;
     private String subtitle;
+    private boolean visibleDropDown;
     private ArrayList<Bundle> actions;
 
     public TurbolinksRoute(ReadableMap rp) {
@@ -35,6 +36,7 @@ public class TurbolinksRoute implements Parcelable {
         this.passProps = props != null ? Arguments.toBundle(props) : null;
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
+        this.visibleDropDown = rp.hasKey("visibleDropDown") && rp.getBoolean("visibleDropDown");
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
     }
 
@@ -47,6 +49,7 @@ public class TurbolinksRoute implements Parcelable {
         this.passProps = bundle.getBundle("passProps");
         this.title = bundle.getString("title");
         this.subtitle = bundle.getString("subtitle");
+        this.visibleDropDown = bundle.getBoolean("visibleDropDown");
         this.actions = bundle.getParcelableArrayList("actions");
     }
 
@@ -59,6 +62,7 @@ public class TurbolinksRoute implements Parcelable {
         passProps = in.readBundle();
         title = in.readString();
         subtitle = in.readString();
+        visibleDropDown = in.readByte() != 0;
         actions = in.createTypedArrayList(Bundle.CREATOR);
     }
 
@@ -72,6 +76,7 @@ public class TurbolinksRoute implements Parcelable {
         dest.writeBundle(passProps);
         dest.writeString(title);
         dest.writeString(subtitle);
+        dest.writeByte((byte) (visibleDropDown ? 1 : 0));
         dest.writeTypedList(actions);
     }
 
@@ -122,6 +127,10 @@ public class TurbolinksRoute implements Parcelable {
 
     public String getTitle() {
         return title;
+    }
+
+    public boolean getVisibleDropDown() {
+        return visibleDropDown;
     }
 
     public ArrayList<Bundle> getActions() {
