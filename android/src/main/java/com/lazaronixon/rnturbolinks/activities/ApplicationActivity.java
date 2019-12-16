@@ -128,12 +128,11 @@ public abstract class ApplicationActivity extends ReactActivity {
 
     protected void setupToolBar() {
         toolBar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(!isInitial());
-        getSupportActionBar().setTitle(route.getTitle());
-        getSupportActionBar().setSubtitle(route.getSubtitle());
+        toolBar.setTitle("");
         toolBar.setVisibleDropDown(route.getVisibleDropDown());
+        setSupportActionBar(toolBar);
 
+        setDisplayHomeAsUpEnabled(!isInitial());
         setNavBarStyle(NavBarStyle.getDefault());
     }
 
@@ -151,6 +150,10 @@ public abstract class ApplicationActivity extends ReactActivity {
     }
 
     protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
+
+    private void setDisplayHomeAsUpEnabled(boolean displayHomeAsUpEnabled) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled);
+    }
 
     private boolean isModal() { return route.getModal(); }
 
@@ -193,5 +196,4 @@ public abstract class ApplicationActivity extends ReactActivity {
 
         dataSource.subscribe(baseBitmapDataSubscriber, UiThreadImmediateExecutorService.getInstance());
     }
-
 }

@@ -2,16 +2,18 @@ package com.lazaronixon.rnturbolinks.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.TintTypedArray;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.R;
+import androidx.core.graphics.drawable.DrawableCompat;
+import com.lazaronixon.rnturbolinks.R;
 
 public class TurbolinksToolbar extends Toolbar {
 
-    private ImageView dropdownIcon;
+    private boolean visibleDropDown = false;
 
     private static final int[] TEMP_ARRAY = new int[1];
 
@@ -24,15 +26,29 @@ public class TurbolinksToolbar extends Toolbar {
     }
 
     public void setVisibleDropDown(boolean visibleDropDown) {
-        if (visibleDropDown) {
-            dropdownIcon = new ImageView(getContext());
-            dropdownIcon.setColorFilter(getThemeAttrColor(getContext(), R.attr.colorControlNormal));
-            dropdownIcon.setImageResource(com.lazaronixon.rnturbolinks.R.drawable.ic_caret);
+        this.visibleDropDown = visibleDropDown;
+    }
 
-            addView(dropdownIcon, dropDownLayoutParam());
-        } else if (dropdownIcon != null) {
-            removeView(dropdownIcon);
+    @Override
+    public void setTitle(CharSequence title) {
+        if (visibleDropDown) {
+            this.setTitleWithDropDown(title);
+        } else {
+            super.setTitle(title);
         }
+    }
+
+    private void setTitleWithDropDown(CharSequence title) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append(title).append(" ");
+        builder.setSpan(dropDownIcon(), builder.length() - 1, builder.length(), 0);
+        super.setTitle(builder);
+    }
+
+    private ImageSpan dropDownIcon() {
+        ImageSpan imageSpan = new ImageSpan(getContext(), R.drawable.ic_caret);
+        DrawableCompat.setTint(imageSpan.getDrawable(), getThemeAttrColor(getContext(), R.attr.colorControlNormal));
+        return imageSpan;
     }
 
     @SuppressLint("RestrictedApi")
@@ -44,12 +60,5 @@ public class TurbolinksToolbar extends Toolbar {
         } finally {
             a.recycle();
         }
-    }
-
-    private LayoutParams dropDownLayoutParam() {
-        int marginBottom = getSubtitle() != null ? 76 : 0;
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,0,0, marginBottom);
-        return layoutParams;
     }
 }
