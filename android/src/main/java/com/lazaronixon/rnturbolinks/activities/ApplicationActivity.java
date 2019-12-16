@@ -132,6 +132,7 @@ public abstract class ApplicationActivity extends ReactActivity {
         toolBar.setVisibleDropDown(route.getVisibleDropDown());
         setSupportActionBar(toolBar);
 
+        setHiddenNavBar();
         setDisplayHomeAsUpEnabled(!isInitial());
         setNavBarStyle(NavBarStyle.getDefault());
     }
@@ -149,10 +150,16 @@ public abstract class ApplicationActivity extends ReactActivity {
         });
     }
 
-    protected boolean isInitial() { return getIntent().getBooleanExtra(INTENT_INITIAL, true); }
+    protected boolean isInitial() {
+        return getIntent().getBooleanExtra(INTENT_INITIAL, true);
+    }
 
     private void setDisplayHomeAsUpEnabled(boolean displayHomeAsUpEnabled) {
         getSupportActionBar().setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled);
+    }
+
+    private void setHiddenNavBar() {
+        if (route.getHidesNavBar() || route.getModal()) getSupportActionBar().hide();
     }
 
     private boolean isModal() { return route.getModal(); }

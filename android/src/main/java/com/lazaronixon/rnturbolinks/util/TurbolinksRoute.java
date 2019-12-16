@@ -23,6 +23,7 @@ public class TurbolinksRoute implements Parcelable {
     private String title;
     private String subtitle;
     private boolean visibleDropDown;
+    private boolean hidesNavBar;
     private ArrayList<Bundle> actions;
 
     public TurbolinksRoute(ReadableMap rp) {
@@ -37,6 +38,7 @@ public class TurbolinksRoute implements Parcelable {
         this.title = rp.hasKey("title") ? rp.getString("title") : null;
         this.subtitle = rp.hasKey("subtitle") ? rp.getString("subtitle") : null;
         this.visibleDropDown = rp.hasKey("visibleDropDown") && rp.getBoolean("visibleDropDown");
+        this.hidesNavBar = rp.hasKey("hidesNavBar") && rp.getBoolean("hidesNavBar");
         this.actions = rp.hasKey("actions") ? Arguments.toList(actions) : null;
     }
 
@@ -50,6 +52,7 @@ public class TurbolinksRoute implements Parcelable {
         this.title = bundle.getString("title");
         this.subtitle = bundle.getString("subtitle");
         this.visibleDropDown = bundle.getBoolean("visibleDropDown");
+        this.hidesNavBar = bundle.getBoolean("hidesNavBar");
         this.actions = bundle.getParcelableArrayList("actions");
     }
 
@@ -63,6 +66,7 @@ public class TurbolinksRoute implements Parcelable {
         title = in.readString();
         subtitle = in.readString();
         visibleDropDown = in.readByte() != 0;
+        hidesNavBar = in.readByte() != 0;
         actions = in.createTypedArrayList(Bundle.CREATOR);
     }
 
@@ -77,6 +81,7 @@ public class TurbolinksRoute implements Parcelable {
         dest.writeString(title);
         dest.writeString(subtitle);
         dest.writeByte((byte) (visibleDropDown ? 1 : 0));
+        dest.writeByte((byte) (hidesNavBar ? 1 : 0));
         dest.writeTypedList(actions);
     }
 
@@ -131,6 +136,10 @@ public class TurbolinksRoute implements Parcelable {
 
     public boolean getVisibleDropDown() {
         return visibleDropDown;
+    }
+
+    public boolean getHidesNavBar() {
+        return hidesNavBar;
     }
 
     public ArrayList<Bundle> getActions() {
