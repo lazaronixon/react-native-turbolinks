@@ -74,6 +74,10 @@ class WebViewController: VisitableViewController {
 }
 
 extension WebViewController: ApplicationViewController {
+    func handleTitlePress() {
+        manager.handleTitlePress(visitableView.webView!.url, nil)
+    }
+    
     @objc func handleLeftButtonPress() {
         manager.handleLeftButtonPress(visitableView.webView!.url, nil)
     }

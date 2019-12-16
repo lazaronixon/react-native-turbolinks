@@ -13,6 +13,7 @@ protocol ApplicationViewController {
     func renderBackButton()
     func renderLeftButton()
     func renderRightButton()
+    func handleTitlePress()
     func presentActionsGeneric(_ sender: UIBarButtonItem)
 }
 
@@ -25,8 +26,7 @@ extension ApplicationViewController where Self: UIViewController {
     }
     
     func renderTitle() {
-        navigationItem.title = route.title ?? navigationItem.title
-        navigationItem.prompt = route.subtitle
+        navigationItem.titleView = TurbolinksTitleView(self)
     }
     
     func renderBackButton() {

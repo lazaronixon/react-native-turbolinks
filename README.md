@@ -98,6 +98,7 @@ Adds an event handler. Supported events:
 - `turbolinksVisit`: Fires when you tap a Turbolinks-enabled link. The argument to the event handler is an object with keys: `url, path, action`.
 - `turbolinksError`: Fires when your visit’s network request fails.The argument to the event handler is an object with keys: `code, statusCode, description`.
 - `turbolinksMessage`: Fires when you send messages from JavaScript to your native application. The argument to the event handler is a string with the message.
+- `turbolinksTitlePress`: Fire when title is tapped. The arguments to the event handler is an object with keys: `url, path, component`.
 - `turbolinksActionPress`: Fire when a action is tapped. The arguments to the event handler is an object with keys: `url, path, component, actionId`.
 - `turbolinksLeftButtonPress`: Fire when left button item is tapped. The arguments to the event handler is an object with keys: `url, path, component`. (iOS Only)
 - `turbolinksRightButtonPress`: Fire when right button item is tapped. The arguments to the event handler is an object with keys: `url, path, component`. (iOS Only)
@@ -118,6 +119,7 @@ Removes the listener for given event.
 - Common properties
   - `title`: The default value is the title of the Web page.
   - `subtitle`: A subtitle for visitable view.
+  - `visibleDropDown`: Show a small arrow next to title.  
   - `hidesShadow`: Indicates whether to hide the navigation 1px hairline shadow. (Default false) (iOS Only)  
   - `leftButtonText/leftButtonIcon`: A left button text/icon. (iOS Only)
   - `rightButtonText/rightButtonIcon`: A right button text/icon. (iOS Only)
