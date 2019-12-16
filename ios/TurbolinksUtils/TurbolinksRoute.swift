@@ -15,6 +15,7 @@ class TurbolinksRoute {
     var rightButtonIcon: UIImage?
     var rightButtonText: String?
     var hidesShadow: Bool = false
+    var hidesNavBar: Bool = false
     var visibleDropDown: Bool = false
     
     init(_ route: Dictionary<AnyHashable, Any>) {
@@ -32,6 +33,7 @@ class TurbolinksRoute {
         self.rightButtonIcon = RCTConvert.uiImage(route["rightButtonIcon"])
         self.rightButtonText = RCTConvert.nsString(route["rightButtonText"])
         self.hidesShadow = RCTConvert.bool(route["hidesShadow"])
+        self.hidesNavBar = RCTConvert.bool(route["hidesNavBar"])
         self.visibleDropDown = RCTConvert.bool(route["visibleDropDown"])
     }
 }

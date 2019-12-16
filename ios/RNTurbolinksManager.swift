@@ -74,6 +74,10 @@ class RNTurbolinksManager: RCTEventEmitter {
         visit(secondaryRoute)
     }
     
+    @objc func back(_ animated: Bool) {
+        navigationController.popViewController(animated: animated)
+    }
+    
     @objc func visit(_ route: Dictionary<AnyHashable, Any>) {
         if route["url"] != nil {
             presentVisitableForSession(TurbolinksRoute(route))

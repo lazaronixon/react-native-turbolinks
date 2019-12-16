@@ -81,6 +81,9 @@ Dismiss a overlaped view presented by visiting a component with modal option. Re
 #### `popToRoot(animated = true)`
 Back until to root view. Return a promise.
 
+#### `back(animated = true)`
+Trigger a native back event. For example if you using a custom navbar and need to provide a back button. Return a promise.
+
 #### `renderTitle(title, subtitle = null)`
 Change title of current view. For example if you want to get title from page source.
 
@@ -119,7 +122,8 @@ Removes the listener for given event.
 - Common properties
   - `title`: The default value is the title of the Web page.
   - `subtitle`: A subtitle for visitable view.
-  - `visibleDropDown`: Show a small arrow next to title.  
+  - `visibleDropDown`: Show a small arrow next to title.
+  - `hidesNavBar`: Hide navigation bar. (Default false)  
   - `hidesShadow`: Indicates whether to hide the navigation 1px hairline shadow. (Default false) (iOS Only)  
   - `leftButtonText/leftButtonIcon`: A left button text/icon. (iOS Only)
   - `rightButtonText/rightButtonIcon`: A right button text/icon. (iOS Only)
