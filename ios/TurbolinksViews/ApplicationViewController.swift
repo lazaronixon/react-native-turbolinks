@@ -52,10 +52,10 @@ extension ApplicationViewController where Self: UIViewController {
     
     func renderRightButton() {
         if let text = route.rightButtonText {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: text, style: .plain, target: self, action: selectorHandleRightButtonPress)
         }
         if let icon = route.rightButtonIcon {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleLeftButtonPress)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: selectorHandleRightButtonPress)
         }
     }
     
