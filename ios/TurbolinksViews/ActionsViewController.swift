@@ -36,7 +36,8 @@ class ActionsViewController: UITableViewController {
         let action = TurbolinksAction(route.actions![indexPath.row])
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
-        cell.textLabel!.text = action.title
+        cell.textLabel!.font  = .systemFont(ofSize: 17)
+        cell.textLabel!.text  = action.title
         cell.imageView!.image = action.icon
         return cell
     }
