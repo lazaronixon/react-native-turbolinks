@@ -12,15 +12,12 @@ class ActionsViewController: UITableViewController {
         self.manager = manager
         self.route = route        
         self.tableView.rowHeight = CGFloat(defaultRowHeight)
-        self.tableView.isScrollEnabled = false
-        self.modalPresentationStyle = .popover;
+        self.tableView.alwaysBounceVertical = false
+        self.modalPresentationStyle = .popover
         self.preferredContentSize.width = 300
         self.preferredContentSize.height = CGFloat(route.actions!.count * defaultRowHeight)
         self.popoverPresentationController!.barButtonItem = barButtonItem
         self.popoverPresentationController!.delegate = self
-        self.popoverPresentationController!.backgroundColor = self.view.backgroundColor;
-        self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 14))
-        self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 0))
     }
     
     override func viewDidLoad() {
