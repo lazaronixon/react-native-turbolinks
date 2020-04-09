@@ -1,6 +1,6 @@
 {
   "name": "react-native-turbolinks",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Turbolinks for React Native.",
   "author": "Lázaro Nixon <lazaronixon@hotmail.com>",
   "homepage": "https://github.com/lazaronixon/react-native-turbolinks",
@@ -20,7 +20,7 @@
     "postinstall": "node scripts/postinstall/run"
   },
   "peerDependencies": {
-    "react-native": "^0.61",
-    "react-native-webview": "^7.4"
+    "react-native": "^0.62",
+    "react-native-webview": "^9.1.1"
   }
 }
