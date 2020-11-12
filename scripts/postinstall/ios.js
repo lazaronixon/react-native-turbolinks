@@ -1,6 +1,4 @@
-/** https://github.com/transistorsoft/react-native-background-geolocation/blob/master/scripts/postlink.js */
-
-const fs = require('fs');
+const fs = require("fs");
 const glob = require("glob");
 const pbxproj = require("xcode");
 
@@ -12,8 +10,17 @@ module.exports = () => {
 
   function installSwift() {
     fs.writeFileSync("../../ios/RNPlaceholder.swift", "");
+    fs.writeFileSync("../../ios/RNPlaceholderTests.swift", "");
 
-    project.addSourceFile("RNPlaceholder.swift", { target: project.getFirstTarget().uuid }, project.getFirstProject());
+    const name = project.getFirstTarget().firstTarget.name
+    const mainGroup = project.findPBXGroupKey({ name: name })
+
+    const mainTarget = project.findTargetKey(name)
+    project.addSourceFile("RNPlaceholder.swift", { target:  mainTarget }, mainGroup);
+
+    const testTarget = project.findTargetKey(name + "Tests")
+    project.addSourceFile("RNPlaceholderTests.swift", { target:  testTarget }, mainGroup);
+
     project.addBuildProperty("SWIFT_VERSION", "5.0");
     fs.writeFileSync(projectPath, project.writeSync());
   }
