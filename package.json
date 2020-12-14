@@ -21,6 +21,6 @@
   },
   "peerDependencies": {
     "react-native": "^0.63",
-    "react-native-webview": "^10.10.0"
+    "react-native-webview": "^11.0.0"
   }
 }
