@@ -18,7 +18,7 @@
 		87A7F684207C55D5009E0A9B /* CustomVisitableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A7F683207C55D5009E0A9B /* CustomVisitableView.swift */; };
 		87B4C2BF2014DF9800FA5A46 /* TurbolinksRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */; };
 		87B4C2DB2015946400FA5A46 /* NativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B4C2DA2015946400FA5A46 /* NativeViewController.swift */; };
-		87BFAD8020195D4E0063FCDF /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BFAD7F20195D4E0063FCDF /* TitleView.swift */; };
+		87BFAD8020195D4E0063FCDF /* TurbolinksTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BFAD7F20195D4E0063FCDF /* TurbolinksTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,7 +48,7 @@
 		87A7F683207C55D5009E0A9B /* CustomVisitableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVisitableView.swift; sourceTree = "<group>"; };
 		87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksRoute.swift; sourceTree = "<group>"; };
 		87B4C2DA2015946400FA5A46 /* NativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeViewController.swift; sourceTree = "<group>"; };
-		87BFAD7F20195D4E0063FCDF /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		87BFAD7F20195D4E0063FCDF /* TurbolinksTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurbolinksTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				87FF4E5E2367A71C005DEA90 /* Resources */,
-				87BFAD82201A06E70063FCDF /* TurbolinksModels */,
+				87BFAD82201A06E70063FCDF /* TurbolinksUtils */,
 				87BFAD81201A06990063FCDF /* TurbolinksViews */,
 				8761009C1FF01D3900C90539 /* RNTurbolinks-Bridging-Header.h */,
 				8761009A1FF01D1700C90539 /* RNTurbolinksManagerBridge.m */,
@@ -86,7 +86,6 @@
 		87BFAD81201A06990063FCDF /* TurbolinksViews */ = {
 			isa = PBXGroup;
 			children = (
-				87BFAD7F20195D4E0063FCDF /* TitleView.swift */,
 				877053121FF27E900089741D /* WebViewController.swift */,
 				87B4C2DA2015946400FA5A46 /* NativeViewController.swift */,
 				872FD3FB2021CE360063E5CE /* ActionsViewController.swift */,
@@ -96,15 +95,15 @@
 			path = TurbolinksViews;
 			sourceTree = "<group>";
 		};
-		87BFAD82201A06E70063FCDF /* TurbolinksModels */ = {
+		87BFAD82201A06E70063FCDF /* TurbolinksUtils */ = {
 			isa = PBXGroup;
 			children = (
+				87BFAD7F20195D4E0063FCDF /* TurbolinksTitleView.swift */,
 				87201D672029B94600BDC864 /* TurbolinksNavigationController.swift */,
 				87B4C2BE2014DF9800FA5A46 /* TurbolinksRoute.swift */,
 				872FD3FD2021E1B80063E5CE /* TurbolinksAction.swift */,
 				87441D5D2037935400C938EC /* TurbolinksSession.swift */,
 			);
-			name = TurbolinksModels;
 			path = TurbolinksUtils;
 			sourceTree = "<group>";
 		};
@@ -181,7 +180,7 @@
 				87A7F684207C55D5009E0A9B /* CustomVisitableView.swift in Sources */,
 				87201D682029B94600BDC864 /* TurbolinksNavigationController.swift in Sources */,
 				87201D1B2025707100BDC864 /* ApplicationViewController.swift in Sources */,
-				87BFAD8020195D4E0063FCDF /* TitleView.swift in Sources */,
+				87BFAD8020195D4E0063FCDF /* TurbolinksTitleView.swift in Sources */,
 				872FD3FE2021E1B80063E5CE /* TurbolinksAction.swift in Sources */,
 				877053131FF27E910089741D /* WebViewController.swift in Sources */,
 				872FD3FC2021CE360063E5CE /* ActionsViewController.swift in Sources */,
